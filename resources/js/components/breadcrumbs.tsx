@@ -1,0 +1,34 @@
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
+import { useI18n } from '@/lib/i18n';
+import { type BreadcrumbItem as BreadcrumbItemType } from '@/types';
+import { Fragment } from 'react';
+
+export function Breadcrumbs({ breadcrumbs }: { breadcrumbs: BreadcrumbItemType[] }) {
+    const { t } = useI18n();
+
+    return (
+        <>
+            {breadcrumbs.length > 0 && (
+                <Breadcrumb>
+                    <BreadcrumbList>
+                        {breadcrumbs.map((item, index) => {
+                            const isLast = index === breadcrumbs.length - 1;
+                            return (
+                                <Fragment key={index}>
+                                    <BreadcrumbItem>
+                                        {isLast ? (
+                                            <BreadcrumbPage>{t(item.title)}</BreadcrumbPage>
+                                        ) : (
+                                            <BreadcrumbLink href={item.href}>{t(item.title)}</BreadcrumbLink>
+                                        )}
+                                    </BreadcrumbItem>
+                                    {!isLast && <BreadcrumbSeparator />}
+                                </Fragment>
+                            );
+                        })}
+                    </BreadcrumbList>
+                </Breadcrumb>
+            )}
+        </>
+    );
+}

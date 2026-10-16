@@ -1,0 +1,302 @@
+{
+  "base": "http://127.0.0.1:8000",
+  "at": "2026-10-11T17:03:54.277Z",
+  "roles": {
+    "public": {
+      "leaks": [],
+      "pages": {
+        "home": {
+          "url": "/",
+          "final": "/",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "medicines": {
+          "url": "/medicines",
+          "final": "/medicines",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "results": {
+          "url": "/medicines?q=napa",
+          "final": "/medicines",
+          "status": 200,
+          "axe": [
+            {
+              "id": "color-contrast",
+              "impact": "serious",
+              "nodes": 1,
+              "sample": ".opacity-40 > .sm\\:inline.hidden"
+            }
+          ],
+          "cls": 0,
+          "hscroll": false
+        },
+        "empty": {
+          "url": "/medicines?q=zzqxv",
+          "final": "/medicines",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "medicine": {
+          "url": "/medicines/4863",
+          "final": "/medicines/4863",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "companies": {
+          "url": "/companies",
+          "final": "/companies",
+          "status": 200,
+          "axe": [
+            {
+              "id": "color-contrast",
+              "impact": "serious",
+              "nodes": 1,
+              "sample": ".opacity-40 > .sm\\:inline.hidden"
+            }
+          ],
+          "cls": 0,
+          "hscroll": false
+        },
+        "company": {
+          "url": "/companies/194",
+          "final": "/companies/194",
+          "status": 200,
+          "axe": [
+            {
+              "id": "color-contrast",
+              "impact": "serious",
+              "nodes": 1,
+              "sample": ".opacity-40 > .sm\\:inline.hidden"
+            }
+          ],
+          "cls": 0,
+          "hscroll": false
+        },
+        "form": {
+          "url": "/forms/tablet",
+          "final": "/forms/tablet",
+          "status": 200,
+          "axe": [
+            {
+              "id": "color-contrast",
+              "impact": "serious",
+              "nodes": 1,
+              "sample": ".opacity-40 > .sm\\:inline.hidden"
+            }
+          ],
+          "cls": 0,
+          "hscroll": false
+        },
+        "account": {
+          "url": "/dashboard",
+          "final": "/dashboard",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "profile": {
+          "url": "/settings/profile",
+          "final": "/settings/profile",
+          "status": 200,
+          "axe": [
+            {
+              "id": "color-contrast",
+              "impact": "serious",
+              "nodes": 1,
+              "sample": ".bg-danger"
+            }
+          ],
+          "cls": 0,
+          "hscroll": false
+        },
+        "password": {
+          "url": "/settings/password",
+          "final": "/settings/password",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        }
+      }
+    },
+    "paikari": {
+      "leaks": [],
+      "pages": {
+        "home": {
+          "url": "/",
+          "final": "/",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "medicine": {
+          "url": "/medicines/4863",
+          "final": "/medicines/4863",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "account": {
+          "url": "/dashboard",
+          "final": "/dashboard",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        }
+      }
+    },
+    "wholesaler": {
+      "leaks": [],
+      "pages": {
+        "home": {
+          "url": "/",
+          "final": "/",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "medicine": {
+          "url": "/medicines/4863",
+          "final": "/medicines/4863",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "account": {
+          "url": "/dashboard",
+          "final": "/dashboard",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        }
+      }
+    },
+    "staff": {
+      "leaks": [],
+      "pages": {
+        "home": {
+          "url": "/",
+          "final": "/",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "account": {
+          "url": "/dashboard",
+          "final": "/dashboard",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "admin_try": {
+          "url": "/admin/customers",
+          "final": "/",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        }
+      }
+    },
+    "admin": {
+      "leaks": [],
+      "pages": {
+        "dashboard": {
+          "url": "/dashboard",
+          "final": "/dashboard",
+          "status": 200,
+          "axe": [
+            {
+              "id": "definition-list",
+              "impact": "serious",
+              "nodes": 1,
+              "sample": "dl"
+            },
+            {
+              "id": "dlitem",
+              "impact": "serious",
+              "nodes": 3,
+              "sample": ".transition-colors.hover\\:bg-sunken[href$=\"customers\"] > dt"
+            }
+          ],
+          "cls": 0,
+          "hscroll": false
+        },
+        "customers": {
+          "url": "/admin/customers",
+          "final": "/admin/customers",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "customer": {
+          "url": "/admin/customers/3",
+          "final": "/admin/customers/3",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "tiers": {
+          "url": "/admin/tiers",
+          "final": "/admin/tiers",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "requests": {
+          "url": "/admin/requests",
+          "final": "/admin/requests",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "uikit": {
+          "url": "/admin/ui-kit",
+          "final": "/admin/ui-kit",
+          "status": 200,
+          "axe": [
+            {
+              "id": "color-contrast",
+              "impact": "serious",
+              "nodes": 2,
+              "sample": ".flex-wrap.gap-2.items-center > .bg-danger.text-danger-contrast.hover\\:opacity-90"
+            }
+          ],
+          "cls": 0,
+          "hscroll": false
+        },
+        "home": {
+          "url": "/",
+          "final": "/",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        }
+      }
+    }
+  }
+}

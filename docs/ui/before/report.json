@@ -1,0 +1,481 @@
+{
+  "base": "http://127.0.0.1:8000",
+  "at": "2026-10-11T16:28:11.257Z",
+  "roles": {
+    "guest": {
+      "leaks": [],
+      "pages": {
+        "home": {
+          "url": "/",
+          "final": "/",
+          "status": 200,
+          "axe": [],
+          "cls": 0.001,
+          "hscroll": false
+        },
+        "medicines": {
+          "url": "/medicines",
+          "final": "/medicines",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "results": {
+          "url": "/medicines?q=napa",
+          "final": "/medicines",
+          "status": 200,
+          "axe": [],
+          "cls": 0.017,
+          "hscroll": false
+        },
+        "empty": {
+          "url": "/medicines?q=zzqxv",
+          "final": "/medicines",
+          "status": 200,
+          "axe": [],
+          "cls": 0.063,
+          "hscroll": false
+        },
+        "medicine": {
+          "url": "/medicines/4863",
+          "final": "/medicines/4863",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "companies": {
+          "url": "/companies",
+          "final": "/companies",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "company": {
+          "url": "/companies/194",
+          "final": "/companies/194",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "form": {
+          "url": "/forms/tablet",
+          "final": "/forms/tablet",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "login": {
+          "url": "/login",
+          "final": "/login",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "register": {
+          "url": "/register",
+          "final": "/register",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "forgot": {
+          "url": "/forgot-password",
+          "final": "/forgot-password",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        }
+      }
+    },
+    "public": {
+      "leaks": [
+        {
+          "word": "paikari",
+          "url": "/build/assets/account-DRpHtEDV.js",
+          "context": "({account:r}){const{t:e}=y(),i={public:e(\"Public customer\"),paikari:e(\"Paikari customer\"),wholesaler:e(\"Wholesale custom"
+        },
+        {
+          "word": "paikari",
+          "url": "/build/assets/account-DRpHtEDV.js",
+          "context": "}){const{t:e}=y(),i={public:e(\"Public customer\"),paikari:e(\"Paikari customer\"),wholesaler:e(\"Wholesale customer\"),mpo:e("
+        },
+        {
+          "word": "wholesale",
+          "url": "/build/assets/account-DRpHtEDV.js",
+          "context": "blic customer\"),paikari:e(\"Paikari customer\"),wholesaler:e(\"Wholesale customer\"),mpo:e(\"MPO\"),food_vendor:e(\"Food vendor"
+        },
+        {
+          "word": "wholesaler",
+          "url": "/build/assets/account-DRpHtEDV.js",
+          "context": "={public:e(\"Public customer\"),paikari:e(\"Paikari customer\"),wholesaler:e(\"Wholesale customer\"),mpo:e(\"MPO\"),food_vendor:"
+        },
+        {
+          "word": "mpo",
+          "url": "/build/assets/account-DRpHtEDV.js",
+          "context": "ri:e(\"Paikari customer\"),wholesaler:e(\"Wholesale customer\"),mpo:e(\"MPO\"),food_vendor:e(\"Food vendor\"),craftsman:e(\"Craft"
+        },
+        {
+          "word": "mpo",
+          "url": "/build/assets/account-DRpHtEDV.js",
+          "context": "aikari customer\"),wholesaler:e(\"Wholesale customer\"),mpo:e(\"MPO\"),food_vendor:e(\"Food vendor\"),craftsman:e(\"Craftsman\"),"
+        },
+        {
+          "word": "craftsman",
+          "url": "/build/assets/account-DRpHtEDV.js",
+          "context": "lesale customer\"),mpo:e(\"MPO\"),food_vendor:e(\"Food vendor\"),craftsman:e(\"Craftsman\"),staff:e(\"Staff\"),admin:e(\"Admin\")};"
+        },
+        {
+          "word": "craftsman",
+          "url": "/build/assets/account-DRpHtEDV.js",
+          "context": "er\"),mpo:e(\"MPO\"),food_vendor:e(\"Food vendor\"),craftsman:e(\"Craftsman\"),staff:e(\"Staff\"),admin:e(\"Admin\")};return t.jsxs"
+        }
+      ],
+      "pages": {
+        "home": {
+          "url": "/",
+          "final": "/",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "medicines": {
+          "url": "/medicines",
+          "final": "/medicines",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "results": {
+          "url": "/medicines?q=napa",
+          "final": "/medicines",
+          "status": 200,
+          "axe": [],
+          "cls": 0.017,
+          "hscroll": false
+        },
+        "empty": {
+          "url": "/medicines?q=zzqxv",
+          "final": "/medicines",
+          "status": 200,
+          "axe": [],
+          "cls": 0.063,
+          "hscroll": false
+        },
+        "medicine": {
+          "url": "/medicines/4863",
+          "final": "/medicines/4863",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "companies": {
+          "url": "/companies",
+          "final": "/companies",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "company": {
+          "url": "/companies/194",
+          "final": "/companies/194",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "form": {
+          "url": "/forms/tablet",
+          "final": "/forms/tablet",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "account": {
+          "url": "/dashboard",
+          "final": "/dashboard",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "profile": {
+          "url": "/settings/profile",
+          "final": "/settings/profile",
+          "status": 200,
+          "axe": [
+            {
+              "id": "color-contrast",
+              "impact": "serious",
+              "nodes": 2,
+              "sample": "p:nth-child(1)"
+            }
+          ],
+          "cls": 0,
+          "hscroll": false
+        },
+        "password": {
+          "url": "/settings/password",
+          "final": "/settings/password",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        }
+      }
+    },
+    "paikari": {
+      "leaks": [
+        {
+          "word": "wholesale",
+          "url": "/build/assets/account-DRpHtEDV.js",
+          "context": "blic customer\"),paikari:e(\"Paikari customer\"),wholesaler:e(\"Wholesale customer\"),mpo:e(\"MPO\"),food_vendor:e(\"Food vendor"
+        },
+        {
+          "word": "wholesaler",
+          "url": "/build/assets/account-DRpHtEDV.js",
+          "context": "={public:e(\"Public customer\"),paikari:e(\"Paikari customer\"),wholesaler:e(\"Wholesale customer\"),mpo:e(\"MPO\"),food_vendor:"
+        },
+        {
+          "word": "mpo",
+          "url": "/build/assets/account-DRpHtEDV.js",
+          "context": "ri:e(\"Paikari customer\"),wholesaler:e(\"Wholesale customer\"),mpo:e(\"MPO\"),food_vendor:e(\"Food vendor\"),craftsman:e(\"Craft"
+        },
+        {
+          "word": "mpo",
+          "url": "/build/assets/account-DRpHtEDV.js",
+          "context": "aikari customer\"),wholesaler:e(\"Wholesale customer\"),mpo:e(\"MPO\"),food_vendor:e(\"Food vendor\"),craftsman:e(\"Craftsman\"),"
+        },
+        {
+          "word": "craftsman",
+          "url": "/build/assets/account-DRpHtEDV.js",
+          "context": "lesale customer\"),mpo:e(\"MPO\"),food_vendor:e(\"Food vendor\"),craftsman:e(\"Craftsman\"),staff:e(\"Staff\"),admin:e(\"Admin\")};"
+        },
+        {
+          "word": "craftsman",
+          "url": "/build/assets/account-DRpHtEDV.js",
+          "context": "er\"),mpo:e(\"MPO\"),food_vendor:e(\"Food vendor\"),craftsman:e(\"Craftsman\"),staff:e(\"Staff\"),admin:e(\"Admin\")};return t.jsxs"
+        }
+      ],
+      "pages": {
+        "home": {
+          "url": "/",
+          "final": "/",
+          "status": 200,
+          "axe": [],
+          "cls": 0.001,
+          "hscroll": false
+        },
+        "medicine": {
+          "url": "/medicines/4863",
+          "final": "/medicines/4863",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "account": {
+          "url": "/dashboard",
+          "final": "/dashboard",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        }
+      }
+    },
+    "wholesaler": {
+      "leaks": [
+        {
+          "word": "paikari",
+          "url": "/build/assets/account-DRpHtEDV.js",
+          "context": "({account:r}){const{t:e}=y(),i={public:e(\"Public customer\"),paikari:e(\"Paikari customer\"),wholesaler:e(\"Wholesale custom"
+        },
+        {
+          "word": "paikari",
+          "url": "/build/assets/account-DRpHtEDV.js",
+          "context": "}){const{t:e}=y(),i={public:e(\"Public customer\"),paikari:e(\"Paikari customer\"),wholesaler:e(\"Wholesale customer\"),mpo:e("
+        },
+        {
+          "word": "mpo",
+          "url": "/build/assets/account-DRpHtEDV.js",
+          "context": "ri:e(\"Paikari customer\"),wholesaler:e(\"Wholesale customer\"),mpo:e(\"MPO\"),food_vendor:e(\"Food vendor\"),craftsman:e(\"Craft"
+        },
+        {
+          "word": "mpo",
+          "url": "/build/assets/account-DRpHtEDV.js",
+          "context": "aikari customer\"),wholesaler:e(\"Wholesale customer\"),mpo:e(\"MPO\"),food_vendor:e(\"Food vendor\"),craftsman:e(\"Craftsman\"),"
+        },
+        {
+          "word": "craftsman",
+          "url": "/build/assets/account-DRpHtEDV.js",
+          "context": "lesale customer\"),mpo:e(\"MPO\"),food_vendor:e(\"Food vendor\"),craftsman:e(\"Craftsman\"),staff:e(\"Staff\"),admin:e(\"Admin\")};"
+        },
+        {
+          "word": "craftsman",
+          "url": "/build/assets/account-DRpHtEDV.js",
+          "context": "er\"),mpo:e(\"MPO\"),food_vendor:e(\"Food vendor\"),craftsman:e(\"Craftsman\"),staff:e(\"Staff\"),admin:e(\"Admin\")};return t.jsxs"
+        }
+      ],
+      "pages": {
+        "home": {
+          "url": "/",
+          "final": "/",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "medicine": {
+          "url": "/medicines/4863",
+          "final": "/medicines/4863",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "account": {
+          "url": "/dashboard",
+          "final": "/dashboard",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        }
+      }
+    },
+    "staff": {
+      "leaks": [
+        {
+          "word": "wholesale",
+          "url": "/build/assets/account-DRpHtEDV.js",
+          "context": "blic customer\"),paikari:e(\"Paikari customer\"),wholesaler:e(\"Wholesale customer\"),mpo:e(\"MPO\"),food_vendor:e(\"Food vendor"
+        },
+        {
+          "word": "wholesaler",
+          "url": "/build/assets/account-DRpHtEDV.js",
+          "context": "={public:e(\"Public customer\"),paikari:e(\"Paikari customer\"),wholesaler:e(\"Wholesale customer\"),mpo:e(\"MPO\"),food_vendor:"
+        },
+        {
+          "word": "mpo",
+          "url": "/build/assets/account-DRpHtEDV.js",
+          "context": "ri:e(\"Paikari customer\"),wholesaler:e(\"Wholesale customer\"),mpo:e(\"MPO\"),food_vendor:e(\"Food vendor\"),craftsman:e(\"Craft"
+        },
+        {
+          "word": "mpo",
+          "url": "/build/assets/account-DRpHtEDV.js",
+          "context": "aikari customer\"),wholesaler:e(\"Wholesale customer\"),mpo:e(\"MPO\"),food_vendor:e(\"Food vendor\"),craftsman:e(\"Craftsman\"),"
+        },
+        {
+          "word": "craftsman",
+          "url": "/build/assets/account-DRpHtEDV.js",
+          "context": "lesale customer\"),mpo:e(\"MPO\"),food_vendor:e(\"Food vendor\"),craftsman:e(\"Craftsman\"),staff:e(\"Staff\"),admin:e(\"Admin\")};"
+        },
+        {
+          "word": "craftsman",
+          "url": "/build/assets/account-DRpHtEDV.js",
+          "context": "er\"),mpo:e(\"MPO\"),food_vendor:e(\"Food vendor\"),craftsman:e(\"Craftsman\"),staff:e(\"Staff\"),admin:e(\"Admin\")};return t.jsxs"
+        }
+      ],
+      "pages": {
+        "home": {
+          "url": "/",
+          "final": "/",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "account": {
+          "url": "/dashboard",
+          "final": "/dashboard",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "admin_try": {
+          "url": "/admin/customers",
+          "final": "/admin/customers",
+          "status": 403,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        }
+      }
+    },
+    "admin": {
+      "leaks": [],
+      "pages": {
+        "dashboard": {
+          "url": "/dashboard",
+          "final": "/dashboard",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "customers": {
+          "url": "/admin/customers",
+          "final": "/admin/customers",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "customer": {
+          "url": "/admin/customers/3",
+          "final": "/admin/customers/3",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "tiers": {
+          "url": "/admin/tiers",
+          "final": "/admin/tiers",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "requests": {
+          "url": "/admin/requests",
+          "final": "/admin/requests",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "uikit": {
+          "url": "/admin/ui-kit",
+          "final": "/",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "home": {
+          "url": "/",
+          "final": "/",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        }
+      }
+    }
+  }
+}

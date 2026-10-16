@@ -1,0 +1,139 @@
+{
+  "base": "http://127.0.0.1:8000",
+  "at": "2026-10-11T17:01:48.265Z",
+  "roles": {
+    "guest": {
+      "leaks": [],
+      "pages": {
+        "home": {
+          "url": "/",
+          "final": "/",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "medicines": {
+          "url": "/medicines",
+          "final": "/medicines",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "results": {
+          "url": "/medicines?q=napa",
+          "final": "/medicines",
+          "status": 200,
+          "axe": [
+            {
+              "id": "color-contrast",
+              "impact": "serious",
+              "nodes": 1,
+              "sample": ".opacity-40 > .sm\\:inline.hidden"
+            }
+          ],
+          "cls": 0,
+          "hscroll": false
+        },
+        "empty": {
+          "url": "/medicines?q=zzqxv",
+          "final": "/medicines",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "medicine": {
+          "url": "/medicines/4863",
+          "final": "/medicines/4863",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "companies": {
+          "url": "/companies",
+          "final": "/companies",
+          "status": 200,
+          "axe": [
+            {
+              "id": "color-contrast",
+              "impact": "serious",
+              "nodes": 1,
+              "sample": ".opacity-40 > .sm\\:inline.hidden"
+            }
+          ],
+          "cls": 0,
+          "hscroll": false,
+          "overflow": {
+            "320-bn-light": 43,
+            "320-bn-dark": 43,
+            "320-en-light": 43,
+            "320-en-dark": 43
+          }
+        },
+        "company": {
+          "url": "/companies/194",
+          "final": "/companies/194",
+          "status": 200,
+          "axe": [
+            {
+              "id": "color-contrast",
+              "impact": "serious",
+              "nodes": 1,
+              "sample": ".opacity-40 > .sm\\:inline.hidden"
+            }
+          ],
+          "cls": 0,
+          "hscroll": false,
+          "overflow": {
+            "320-bn-light": 8,
+            "320-bn-dark": 8,
+            "320-en-light": 8,
+            "320-en-dark": 8
+          }
+        },
+        "form": {
+          "url": "/forms/tablet",
+          "final": "/forms/tablet",
+          "status": 200,
+          "axe": [
+            {
+              "id": "color-contrast",
+              "impact": "serious",
+              "nodes": 1,
+              "sample": ".opacity-40 > .sm\\:inline.hidden"
+            }
+          ],
+          "cls": 0,
+          "hscroll": false
+        },
+        "login": {
+          "url": "/login",
+          "final": "/login",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "register": {
+          "url": "/register",
+          "final": "/register",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        },
+        "forgot": {
+          "url": "/forgot-password",
+          "final": "/forgot-password",
+          "status": 200,
+          "axe": [],
+          "cls": 0,
+          "hscroll": false
+        }
+      }
+    }
+  }
+}

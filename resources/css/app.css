@@ -1,0 +1,395 @@
+@import 'tailwindcss';
+
+@plugin 'tailwindcss-animate';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+    --font-display: 'Baloo Da 2', 'Hind Siliguri', ui-sans-serif, system-ui, sans-serif;
+
+    --font-sans:
+        'Hind Siliguri', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+    --radius-lg: var(--radius);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-sm: calc(var(--radius) - 4px);
+
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+
+    --color-chart-1: var(--chart-1);
+    --color-chart-2: var(--chart-2);
+    --color-chart-3: var(--chart-3);
+    --color-chart-4: var(--chart-4);
+    --color-chart-5: var(--chart-5);
+
+    --color-sidebar: var(--sidebar-background);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-ring: var(--sidebar-ring);
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+    *,
+    ::after,
+    ::before,
+    ::backdrop,
+    ::file-selector-button {
+        border-color: var(--border, currentColor);
+    }
+}
+
+:root {
+    /* Luxury palette: midnight ink, ivory paper, champagne gold as the one accent, a touch of violet. */
+    --background: #f7f4ec;
+    --foreground: #14120f;
+    --card: #ffffff;
+    --card-foreground: #14120f;
+    --popover: #ffffff;
+    --popover-foreground: #14120f;
+    --primary: #14120f;
+    --primary-foreground: #fbf8f1;
+    --secondary: #f1ece1;
+    --secondary-foreground: #14120f;
+    --muted: #f1ece1;
+    --muted-foreground: #6b645a;
+    --accent: #f1e6c8;
+    --accent-foreground: #4a3508;
+    --destructive: #b3261e;
+    --destructive-foreground: #ffffff;
+    --border: #e6dfcf;
+    --input: #d9d0be;
+    --ring: #c9a24b;
+    --chart-1: #c9a24b;
+    --chart-2: #8a6a2b;
+    --chart-3: #14120f;
+    --chart-4: #a89c84;
+    --chart-5: #b8864b;
+    --radius: 0.625rem;
+    --sidebar-background: #ffffff;
+    --sidebar-foreground: #4d463b;
+    --sidebar-primary: #14120f;
+    --sidebar-primary-foreground: #fbf8f1;
+    --sidebar-accent: #f1e6c8;
+    --sidebar-accent-foreground: #4a3508;
+    --sidebar-border: #e6dfcf;
+    --sidebar-ring: #c9a24b;
+}
+
+.dark {
+    --background: #0b1624;
+    --foreground: #e8eef3;
+    --card: #12233a;
+    --card-foreground: #e8eef3;
+    --popover: #12233a;
+    --popover-foreground: #e8eef3;
+    --primary: #f0b43a;
+    --primary-foreground: #1b1300;
+    --secondary: #1b3150;
+    --secondary-foreground: #e8eef3;
+    --muted: #172a42;
+    --muted-foreground: #93a6b8;
+    --accent: #3a2f10;
+    --accent-foreground: #ffe3a3;
+    --destructive: #ff6b61;
+    --destructive-foreground: #1b0300;
+    --border: #243a55;
+    --input: #2c4565;
+    --ring: #f0b43a;
+    --chart-1: #f0b43a;
+    --chart-2: #43b5b5;
+    --chart-3: #e8eef3;
+    --chart-4: #7a8da0;
+    --chart-5: #ef8a73;
+    --sidebar-background: #0d1b2d;
+    --sidebar-foreground: #b9c8d6;
+    --sidebar-primary: #f0b43a;
+    --sidebar-primary-foreground: #1b1300;
+    --sidebar-accent: #1b3150;
+    --sidebar-accent-foreground: #ffe3a3;
+    --sidebar-border: #243a55;
+    --sidebar-ring: #f0b43a;
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+    }
+}
+
+/* Semantic tokens used by the shell, medicine and auth components. They follow the current aqua palette. */
+:root {
+    --ink: #14120f;
+    --ink-muted: #6b645a;
+    --line: #e6dfcf;
+    --surface: #f7f4ec;
+    --raised: #ffffff;
+    --sunken: #f1ece1;
+    --danger: #b3261e;
+    --success: #14733a;
+    --warning: #8a5a00;
+    --info: #8a6a2b;
+}
+
+.dark {
+    --ink: #eaf5f3;
+    --ink-muted: #94b0ae;
+    --line: #1d3b3f;
+    --surface: #06171a;
+    --raised: #0d2428;
+    --sunken: #0a1d20;
+    --danger: #ff8a80;
+    --success: #6fd39a;
+    --warning: #f3c969;
+    --info: #5eead4;
+}
+
+@theme inline {
+    --color-ink: var(--ink);
+    --color-ink-muted: var(--ink-muted);
+    --color-line: var(--line);
+    --color-surface: var(--surface);
+    --color-raised: var(--raised);
+    --color-sunken: var(--sunken);
+    --color-danger: var(--danger);
+    --color-success: var(--success);
+    --color-warning: var(--warning);
+    --color-info: var(--info);
+    --radius-control: 0.625rem;
+    --radius-box: 1.25rem;
+}
+
+/* Public storefront theme (medicine search and other public pages). Scoped so the admin UI is untouched. */
+.public-theme {
+    --pt-ink: #14120f;
+    --pt-paper: #f7f4ec;
+    --pt-surface: #ffffff;
+    --pt-line: #e6dfcf;
+    --pt-muted: #6b645a;
+    --pt-amber: #c9a24b; /* brand accent: aqua. Name kept so existing components pick it up */
+    --pt-amber-ink: #0e0d0c;
+    --pt-danger: #b3261e;
+    --pt-aqua: #f1ead9;
+    --pt-sage: #f1ece1;
+    --pt-deep: #0e0d0c;
+    --pt-teal: #8a6a2b;
+    --pt-coral: #b8864b;
+    --wave-1: rgba(138,106,43, 0.12);
+    --wave-2: rgba(138,106,43, 0.22);
+    --wave-3: var(--pt-paper);
+    font-family: 'Hind Siliguri', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+    background: var(--pt-paper);
+    color: var(--pt-ink);
+}
+
+.dark .public-theme {
+    --pt-ink: #eaf5f3;
+    --pt-paper: #06171a;
+    --pt-surface: #0d2428;
+    --pt-line: #1d3b3f;
+    --pt-muted: #94b0ae;
+    --pt-amber: #2dd4bf;
+    --pt-amber-ink: #c9f5ee;
+    --pt-danger: #ff8a80;
+    --pt-aqua: #0e2d33;
+    --pt-sage: #11302f;
+    --pt-deep: #021f20;
+    --pt-teal: #5eead4;
+    --pt-coral: #ff8f73;
+    --wave-1: rgba(94, 234, 212, 0.12);
+    --wave-2: rgba(94, 234, 212, 0.22);
+}
+
+.public-theme .tabular {
+    font-variant-numeric: tabular-nums;
+}
+
+/* One orchestrated moment: the hero photo settles in. Skipped entirely for reduced-motion users. */
+@media (prefers-reduced-motion: no-preference) {
+    .hero-settle {
+        animation: hero-settle 1.4s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    }
+
+    @keyframes hero-settle {
+        from {
+            opacity: 0;
+            transform: scale(1.05) translateX(24px);
+        }
+        to {
+            opacity: 1;
+            transform: none;
+        }
+    }
+}
+
+/* Shopfronts on the home street. Motion is decoration only, and is skipped for reduced-motion users. */
+@media (prefers-reduced-motion: no-preference) {
+    .shop-sign-swing {
+        transform-origin: 50% 0;
+        animation: shop-sign-swing 2.8s ease-in-out 0.6s 2 both;
+    }
+
+    .shop-shutter:hover,
+    .shop-shutter:focus-within {
+        animation: shop-rattle 0.4s ease-in-out;
+    }
+
+    @keyframes shop-sign-swing {
+        0%,
+        100% {
+            transform: rotate(0);
+        }
+        25% {
+            transform: rotate(7deg);
+        }
+        60% {
+            transform: rotate(-5deg);
+        }
+    }
+
+    @keyframes shop-rattle {
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+        20% {
+            transform: translateY(-5px);
+        }
+        45% {
+            transform: translateY(2px);
+        }
+        70% {
+            transform: translateY(-2px);
+        }
+    }
+}
+
+/* Waves drift sideways and the 3D pieces bob. All of it stops for reduced-motion users. */
+@media (prefers-reduced-motion: no-preference) {
+    .wave-layer {
+        animation-name: wave-drift;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+    }
+
+    .float-a {
+        animation: float-y 7s ease-in-out infinite;
+    }
+
+    .float-b {
+        animation: float-y 9s ease-in-out -3s infinite;
+    }
+
+    .float-c {
+        animation: float-y 11s ease-in-out -6s infinite;
+    }
+
+    @keyframes wave-drift {
+        from {
+            transform: translateX(0);
+        }
+        to {
+            transform: translateX(-1440px);
+        }
+    }
+
+    @keyframes float-y {
+        0%,
+        100% {
+            transform: translateY(0) rotate(var(--r, 0deg));
+        }
+        50% {
+            transform: translateY(-16px) rotate(calc(var(--r, 0deg) + 4deg));
+        }
+    }
+}
+
+
+@media (prefers-reduced-motion: no-preference) {
+    .aurora-a {
+        animation: aurora 18s ease-in-out infinite alternate;
+    }
+
+    .aurora-b {
+        animation: aurora 24s ease-in-out -8s infinite alternate-reverse;
+    }
+
+    @keyframes aurora {
+        from {
+            transform: translate3d(-4%, -3%, 0) scale(1);
+        }
+        to {
+            transform: translate3d(5%, 4%, 0) scale(1.12);
+        }
+    }
+
+    .tilt-a {
+        animation: tilt 9s ease-in-out infinite alternate;
+    }
+
+    .tilt-b {
+        animation: tilt 11s ease-in-out -4s infinite alternate-reverse;
+    }
+
+    @keyframes tilt {
+        from {
+            transform: translateY(0) rotate(var(--r, 0deg));
+        }
+        to {
+            transform: translateY(-10px) rotate(calc(var(--r, 0deg) + 1.2deg));
+        }
+    }
+}
+
+/* Fluid backdrops fade in once the simulation is ready. */
+@keyframes ether-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
