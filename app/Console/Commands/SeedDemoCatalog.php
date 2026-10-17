@@ -31,6 +31,54 @@ class SeedDemoCatalog extends Command
         'jewellery' => ['Jewellery', 'গয়না', 'piece', 40, [['Gold-plated hoop earrings', 3200, 'ring'], ['Pearl strand necklace', 5800, 'ring'], ['Silver cuff bracelet', 4400, 'ring'], ['Enamel pendant', 2750, 'ring']]],
     ];
 
+    /** What each product says about itself. */
+    private const DESCRIPTIONS = [
+        'Teak dining chair' => 'Solid teak frame with a hand-woven cane back and a gently contoured seat. Finished with a natural oil that keeps the grain visible. Sold singly; they pair well in sets of four or six.',
+        'Handmade walnut tray' => 'Cut and joined by hand from a single walnut board, with cut-out handles and a food-safe oil finish. Good for serving tea, or as a catch-all on a dresser.',
+        'Sheesham bookshelf' => 'A tall five-shelf bookcase in sheesham with a rich, varied grain. Solid joinery, adjustable feet for uneven floors. Flat-packed for delivery with simple assembly.',
+        'Carved bedside table' => 'A single-drawer bedside table in teak with a hand-carved floral drawer front, an open lower shelf and a brass knob. Finished in natural oil.',
+        'Linen kurta, sand' => 'A relaxed kurta in washed linen with a mandarin collar and a two-button placket. Breathable and soft, it gets better with every wash. True to size.',
+        'Cotton panjabi, ivory' => 'A classic panjabi in fine combed cotton with a full button placket and a clean stand collar. Light enough for the humid months, smart enough for Friday prayers and festive days.',
+        'Jamdani scarf' => 'A lightweight scarf woven in the Jamdani tradition, with a delicate gold and grey motif and a hand-knotted fringe. Soft drape, ideal for dressing up a simple outfit.',
+        'Handloom tote' => 'A roomy tote in handloom cotton with vegetable-tanned leather handles and brass rivets. Holds a laptop, a book and a bottle with room to spare.',
+        'Wireless earbuds' => 'Compact true-wireless earbuds with a pocket-sized charging case. Comfortable silicone tips, clear calls and about six hours of playback per charge, with the case adding three more charges.',
+        'Slim power bank 20,000 mAh' => 'A slim aluminium power bank with 20,000 mAh of capacity, one USB-C and one USB-A port, and a small LED level indicator. Charges a typical phone about four times.',
+        'Smart watch, graphite' => 'A round smart watch with a graphite aluminium case, soft silicone strap and a bright always-on display. Tracks steps, sleep and heart rate, and shows phone notifications.',
+        'Desk speaker' => 'A compact Bluetooth speaker wrapped in charcoal fabric, with surprisingly full sound for its size, touch controls on top and about ten hours of playback.',
+        'Stoneware vase' => 'A hand-thrown stoneware vase with a matte cream glaze and visible throwing lines. Each one is slightly different. Water-tight, and lovely with dried grasses or a few stems.',
+        'Brass table lamp' => 'A brushed brass table lamp with a natural linen drum shade and a cloth-covered cord. Warm light for a bedside or a reading corner. Takes a standard E27 bulb.',
+        'Cotton throw blanket' => 'A soft, textured cotton throw in oatmeal with a hand-knotted fringe. Generous enough for a sofa, light enough to use year-round.',
+        'Ceramic dinner set' => 'A stackable dinner set in matte off-white stoneware: plates and bowls with a soft speckle. Dishwasher and microwave safe.',
+        'Rose face serum' => 'A lightweight face serum with rose extract and hyaluronic acid, in an amber glass dropper bottle that protects the formula. Suitable for most skin types. 30 ml.',
+        'Shea body butter' => 'A rich whipped body butter with unrefined shea and a light natural scent, in a frosted glass jar with a wooden lid. Melts in on contact. 200 g.',
+        'Sandalwood soap, set of 3' => 'Three cold-process soap bars scented with sandalwood, tied with natural twine. Gentle on skin, long-lasting and plastic-free. About 100 g each.',
+        'Argan hair oil' => 'A light argan hair oil in a pump bottle that tames frizz and adds shine without weighing hair down. Use a pump on damp or dry hair. 100 ml.',
+        'Leather-bound notebook' => 'A refillable A5 notebook in full-grain tan leather with an elastic closure, a ribbon marker and 192 pages of 100 gsm cream paper.',
+        'Fountain pen, matte black' => 'A weighty fountain pen in matte black aluminium with a steel nib and a clip that sits flat. Takes standard international cartridges. Smooth from the first line.',
+        'Bangla poetry collection' => 'A hardback collection of modern Bangla poetry, sewn binding in a plain green cloth cover. A thoughtful gift for a reader.',
+        'Linen journal, dotted' => 'A dotted-grid journal in a natural linen cover with a ribbon bookmark and 160 pages of thick paper that takes fountain pen ink without bleed-through.',
+        'Sundarbans honey, 500 g' => 'Raw forest honey collected from the Sundarbans in season. Unheated and unfiltered, with a floral, slightly smoky taste. 500 g.',
+        'Cold-pressed mustard oil, 1 L' => 'Traditional kachi ghani mustard oil, cold-pressed from locally grown seeds. Sharp, aromatic and ideal for bhorta, pickles and frying. 1 litre.',
+        'Premium tea leaves, 250 g' => 'Whole-leaf black tea from the hills of Sylhet, picked in the first flush for a bright, malty cup. 250 g in a resealable tin.',
+        'Mixed nuts, 400 g' => 'A generous mix of roasted almonds, cashews, pistachios and walnuts, lightly salted. Packed fresh in a resealable pouch. 400 g.',
+        'Gold-plated hoop earrings' => 'Classic medium hoops in 18k gold plating over brass, hypoallergenic posts and a secure clasp. Light enough to wear all day.',
+        'Pearl strand necklace' => 'A single strand of freshwater cultured pearls hand-knotted on silk thread, with a gold-plated clasp. 45 cm.',
+        'Silver cuff bracelet' => 'An open cuff in polished 925 sterling silver with a slim, modern profile. Adjusts gently to fit most wrists.',
+        'Enamel pendant' => 'A small round pendant in deep teal enamel on a fine gold-plated chain, adjustable from 40 to 45 cm. Comes in a gift pouch.',
+    ];
+
+    /** Real studio photographs (made in Flow, saved in storage/app/private/demo-src) by product title. A product without one keeps its drawn plate. */
+    private const PHOTOS = [
+        'Teak dining chair' => 'teak-dining-chair', 'Handmade walnut tray' => 'walnut-tray', 'Sheesham bookshelf' => 'sheesham-bookshelf', 'Carved bedside table' => 'carved-bedside-table',
+        'Linen kurta, sand' => 'linen-kurta', 'Cotton panjabi, ivory' => 'cotton-panjabi', 'Jamdani scarf' => 'jamdani-scarf', 'Handloom tote' => 'handloom-tote',
+        'Wireless earbuds' => 'wireless-earbuds', 'Slim power bank 20,000 mAh' => 'power-bank', 'Smart watch, graphite' => 'smart-watch', 'Desk speaker' => 'desk-speaker',
+        'Stoneware vase' => 'stoneware-vase', 'Brass table lamp' => 'brass-table-lamp', 'Cotton throw blanket' => 'throw-blanket', 'Ceramic dinner set' => 'dinner-set',
+        'Rose face serum' => 'face-serum', 'Shea body butter' => 'body-butter', 'Sandalwood soap, set of 3' => 'sandalwood-soap', 'Argan hair oil' => 'hair-oil',
+        'Leather-bound notebook' => 'leather-notebook', 'Fountain pen, matte black' => 'fountain-pen', 'Bangla poetry collection' => 'poetry-book', 'Linen journal, dotted' => 'linen-journal',
+        'Sundarbans honey, 500 g' => 'honey', 'Cold-pressed mustard oil, 1 L' => 'mustard-oil', 'Premium tea leaves, 250 g' => 'tea', 'Mixed nuts, 400 g' => 'mixed-nuts',
+        'Gold-plated hoop earrings' => 'hoop-earrings', 'Pearl strand necklace' => 'pearl-necklace', 'Silver cuff bracelet' => 'silver-cuff', 'Enamel pendant' => 'enamel-pendant',
+    ];
+
     public function handle(): int
     {
         if (app()->isProduction() && ! $this->option('force')) {
@@ -57,14 +105,18 @@ class SeedDemoCatalog extends Command
 
             foreach ($items as $i => [$title, $price, $shape]) {
                 $path = 'listings/demo-'.$slug.'-'.($i + 1).'.jpg';
-                Storage::put($path, $this->plate($hue + $i * 7, $shape, $i));
+                Storage::put($path, $this->photo($title) ?? $this->plate($hue + $i * 7, $shape, $i));
 
-                if (Listing::where('seller_id', $seller->id)->where('title', $title)->exists()) {
+                $say = self::DESCRIPTIONS[$title] ?? 'A sample product for the demo shop.';
+
+                if ($old = Listing::where('seller_id', $seller->id)->where('title', $title)->first()) {
+                    $old->update(['description' => $say, 'photo_path' => $path]);
+
                     continue;
                 }
 
                 Listing::create([
-                    'seller_id' => $seller->id, 'sector_id' => $sector->id, 'title' => $title, 'description' => 'A sample product for the demo shop. Replace it with your own.',
+                    'seller_id' => $seller->id, 'sector_id' => $sector->id, 'title' => $title, 'description' => $say,
                     'public_price' => $price, 'delivery_charge' => 80, 'stock' => 25, 'status' => 'published', 'photo_path' => $path,
                     'commission_kind' => 'percent', 'commission_value' => 2, 'approved_at' => now()->subMinutes($made), 'cod_allowed' => true,
                 ]);
@@ -75,6 +127,21 @@ class SeedDemoCatalog extends Command
         $this->info("Added {$made} sample products.");
 
         return self::SUCCESS;
+    }
+
+    /** The real photograph for a product, as a JPEG, or null when there is none yet. */
+    private function photo(string $title): ?string
+    {
+        $file = storage_path('app/private/demo-src/'.(self::PHOTOS[$title] ?? '-').'.png');
+
+        if (! is_file($file) || ! ($img = @imagecreatefrompng($file))) {
+            return null;
+        }
+
+        ob_start();
+        imagejpeg($img, null, 90);
+
+        return (string) ob_get_clean();
     }
 
     /** A 900 x 900 studio plate: a soft wall and floor in one hue, a shadow, and a simple form that hints at the kind of product. @return string JPEG bytes */

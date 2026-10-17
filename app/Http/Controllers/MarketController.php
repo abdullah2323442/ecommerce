@@ -92,7 +92,15 @@ class MarketController extends Controller
         $page = max(1, (int) $request->query('page', 1));
         $total = $rows->count();
 
+        // One banner for the kind of business being looked at: its own picture and line.
+        $chosen = is_string($sector) ? Sector::where('slug', $sector)->where('is_active', true)->first() : null;
+        $hero = $chosen ? [
+            'slug' => $chosen->slug, 'name' => $chosen->name, 'name_bn' => $chosen->name_bn, 'tagline' => $chosen->tagline, 'tagline_bn' => $chosen->tagline_bn,
+            'image' => $chosen->hero_path ? route('market.hero', ['slug' => $chosen->slug, 'v' => substr(md5($chosen->hero_path), 0, 8)]) : null,
+        ] : null;
+
         return Inertia::render('market/index', [
+            'hero' => $hero,
             'sectors' => $sectors,
             'ranges' => $ranges,
             'hasPremium' => $all->contains(fn ($r) => $r['premium']),
@@ -176,6 +184,15 @@ class MarketController extends Controller
         }
 
         return back()->with('status', __('Thank you. We will look at it.'));
+    }
+
+    /** A kind of business's banner, shown to everyone. Only the file the owner saved for that sector. */
+    public function hero(string $slug): StreamedResponse
+    {
+        $path = Sector::where('slug', $slug)->where('is_active', true)->value('hero_path');
+        abort_unless($path && Storage::exists($path), 404);
+
+        return Storage::response($path, null, ['Cache-Control' => 'public, max-age=31536000, immutable', 'X-Content-Type-Options' => 'nosniff']);
     }
 
     /** The picture: the public sees it only while the listing is shown to them; its seller and our staff see it any time. */
@@ -303,7 +320,7 @@ class MarketController extends Controller
         return [
             'id' => $l->id, 'title' => $l->title, 'price' => $r['price'], 'premium' => $r['premium'] ?? false, 'near' => $r['near'] ?? false,
             'unit' => $l->sector->unit, 'sector' => $l->sector->slug, 'sector_name' => $l->sector->name,
-            'photo' => $l->photo_path !== null ? route('market.photo', $l) : null, 'seller' => $this->market->sellerName($l),
+            'photo' => $l->photo_path !== null ? route('market.photo', ['listing' => $l->id, 'v' => substr(md5($l->photo_path.$l->updated_at), 0, 8)]) : null, 'seller' => $this->market->sellerName($l),
             // A seller with a clean record (or whom we marked) wears the badge; it says nothing about who they are.
             'trusted' => $l->seller ? $this->trustedSeller($l->seller) : false,
             // Only a shop with its own page can be opened.

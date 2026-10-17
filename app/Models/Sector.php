@@ -10,7 +10,7 @@ class Sector extends Model
 {
     public const FIELDS = ['color', 'size', 'measurements', 'weight', 'expiry', 'warranty'];
 
-    protected $fillable = ['slug', 'name', 'name_bn', 'unit', 'allow_fraction', 'fields', 'custom_orders', 'catalog_required', 'premium_over', 'preorder', 'chat', 'return_rule', 'is_active', 'sort'];
+    protected $fillable = ['slug', 'name', 'name_bn', 'unit', 'allow_fraction', 'fields', 'custom_orders', 'catalog_required', 'premium_over', 'preorder', 'chat', 'return_rule', 'is_active', 'sort', 'hero_path', 'tagline', 'tagline_bn'];
 
     protected function casts(): array
     {

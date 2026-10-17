@@ -3,8 +3,6 @@ import PwaBanner from '@/components/pwa-banner';
 import SiteNotice from '@/components/site-notice';
 import { Bunting } from '@/components/art/craft';
 import TextSize from '@/components/text-size';
-import EtherBackground from '@/components/home/ether-background';
-import { DustBackdrop } from '@/components/home/three-scenes';
 import { LanguageToggle, useI18n } from '@/lib/i18n';
 import { type SharedData } from '@/types';
 import { Head, Link, usePage } from '@inertiajs/react';
@@ -39,7 +37,7 @@ export default function PublicLayout({ children, bleed = false, calm = false }: 
 
     return (
         <div className="public-theme relative isolate flex min-h-screen flex-col pb-[calc(6.5rem+env(safe-area-inset-bottom))] md:pb-0">
-            {!calm && <DustBackdrop />}
+            
             <Head>
                 <link rel="preconnect" href="https://fonts.bunny.net" />
                 <link href="https://fonts.bunny.net/css?family=hind-siliguri:400,500,600,700|baloo-da-2:600,700,800&display=swap" rel="stylesheet" />
@@ -116,7 +114,7 @@ export default function PublicLayout({ children, bleed = false, calm = false }: 
             </main>
 
             <footer className="relative isolate mt-20 overflow-hidden bg-[var(--pt-deep)] text-white">
-                <EtherBackground variant="footer" />
+                
                 <Bunting className="-mt-9 sm:-mt-12" />
                 <div className="mx-auto grid w-full max-w-6xl gap-10 px-4 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
                     <div>

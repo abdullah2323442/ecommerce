@@ -20,7 +20,17 @@ interface Item {
     stars?: { average: number; count: number } | null;
 }
 
+interface Hero {
+    slug: string;
+    name: string;
+    name_bn: string | null;
+    tagline: string | null;
+    tagline_bn: string | null;
+    image: string | null;
+}
+
 interface Props {
+    hero: Hero | null;
     sectors: { slug: string; name: string; count: number }[];
     ranges: { from: number; to: number | null }[];
     hasPremium: boolean;
@@ -33,8 +43,8 @@ interface Props {
 
 export const unitLabel = (u: string) => u.charAt(0).toUpperCase() + u.slice(1);
 
-export default function MarketIndex({ sectors, ranges, hasPremium, items, total, page, perPage, filters }: Props) {
-    const { t, num, money } = useI18n();
+export default function MarketIndex({ hero, sectors, ranges, hasPremium, items, total, page, perPage, filters }: Props) {
+    const { t, num, money, isBn } = useI18n();
     const [q, setQ] = useState(filters.q);
     const go = (next: Record<string, string | number | boolean | null>) => {
         const merged: Record<string, string | number | boolean | null> = { ...filters, page: 1, ...next };
@@ -47,6 +57,19 @@ export default function MarketIndex({ sectors, ranges, hasPremium, items, total,
         <PublicLayout>
             <Head title={t('Market')} />
             <div className="mx-auto max-w-5xl space-y-6">
+                {hero && (
+                    <section aria-label={isBn && hero.name_bn ? hero.name_bn : hero.name} className="relative isolate -mx-4 flex min-h-[15rem] items-end overflow-hidden rounded-3xl bg-[var(--pt-deep)] text-white sm:mx-0 sm:min-h-[22rem]">
+                        {hero.image && <img src={hero.image} alt="" fetchPriority="high" decoding="async" className="absolute inset-0 -z-20 size-full object-cover" />}
+                        <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-r from-black/65 via-black/30 to-transparent" />
+                        <div className="max-w-xl px-6 py-8 sm:px-12 sm:py-12">
+                            <h2 style={{ fontFamily: "'Cormorant Garamond', 'Hind Siliguri', Georgia, serif" }} className="text-4xl leading-none font-medium tracking-tight sm:text-6xl">
+                                {isBn && hero.name_bn ? hero.name_bn : hero.name}
+                            </h2>
+                            {(isBn && hero.tagline_bn ? hero.tagline_bn : hero.tagline) && <p className="mt-3 max-w-md text-[15px] leading-relaxed text-white/85 sm:text-lg">{isBn && hero.tagline_bn ? hero.tagline_bn : hero.tagline}</p>}
+                        </div>
+                    </section>
+                )}
+
                 <div>
                     <Link href="/market-cart" className="float-right text-sm font-semibold underline underline-offset-4">
                         {t('Your market cart')}

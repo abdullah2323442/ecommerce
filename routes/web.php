@@ -101,7 +101,6 @@ Route::get('sitemap-medicines-{page}.xml', [SitemapController::class, 'medicines
 
 // Medicine database: open to everyone (spec ch 11). MRP only; never any stock information.
 Route::get('search', [\App\Http\Controllers\SiteSearchController::class, 'index'])->middleware('throttle:60,1,site-search')->name('search');
-Route::get('search', [\App\Http\Controllers\SiteSearchController::class, 'index'])->middleware('throttle:60,1,site-search')->name('search');
 Route::get('medicines', [MedicineSearchController::class, 'index'])
     ->middleware('throttle:90,1,medicine-search')
     ->name('medicines.index');
@@ -140,6 +139,7 @@ Route::get('manifest.webmanifest', [\App\Http\Controllers\PwaController::class, 
 Route::get('pwa/icon/{name}.png', [\App\Http\Controllers\PwaController::class, 'icon'])->whereIn('name', ['192', '512', 'maskable-512', 'apple-180'])->name('pwa.icon');
 Route::get('sw.js', [\App\Http\Controllers\PwaController::class, 'worker'])->name('pwa.worker');
 Route::get('offline', [\App\Http\Controllers\PwaController::class, 'offline'])->name('pwa.offline');
+Route::get('sector-hero/{slug}', [\App\Http\Controllers\MarketController::class, 'hero'])->where('slug', '[a-z0-9_]+')->name('market.hero');
 Route::get('site-image/{name}', [BrandImageController::class, 'block'])->where('name', '[A-Za-z0-9_.-]+')->name('site.block-image');
 Route::get('brand/{which}', [BrandImageController::class, 'show'])->whereIn('which', ['logo', 'favicon'])->name('brand.image');
 Route::get('shop/{seller}', [MarketController::class, 'shop'])->whereNumber('seller')->name('shop.show');
@@ -648,6 +648,7 @@ Route::middleware(['auth', 'section:admin_panel', 'two-factor.required'])->prefi
     Route::put('market/{listing}/commission', [AdminMarketController::class, 'commission'])->name('market.commission');
     Route::post('market/sectors', [AdminMarketController::class, 'storeSector'])->name('market.sectors.store');
     Route::put('market/sectors/{sector}', [AdminMarketController::class, 'updateSector'])->name('market.sectors.update');
+    Route::post('market/sectors/{sector}/hero', [AdminMarketController::class, 'sectorHero'])->whereNumber('sector')->middleware('throttle:20,1,sector-hero')->name('market.sectors.hero');
     Route::put('market/sellers/{user}/shop-name', [AdminMarketController::class, 'shopName'])->name('market.shop-name');
     Route::get('help', [AdminHelpController::class, 'index'])->name('help.index');
     Route::post('help/{post}/approve', [AdminHelpController::class, 'approve'])->name('help.approve');

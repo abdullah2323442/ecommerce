@@ -41,6 +41,9 @@ interface Sector {
     custom_orders: boolean;
     catalog_required: boolean;
     premium_over: string | null;
+    hero_path?: string | null;
+    tagline?: string | null;
+    tagline_bn?: string | null;
     preorder: boolean;
     chat: boolean;
     return_rule: string | null;
@@ -129,11 +132,11 @@ function SectorForm({ s }: { s?: Sector }) {
     const { t } = useI18n();
     const errors = usePage().props.errors as Record<string, string>;
     const [f, setF] = useState({
-        slug: s?.slug ?? '', name: s?.name ?? '', name_bn: s?.name_bn ?? '', unit: s?.unit ?? 'piece', premium_over: s?.premium_over ? String(Number(s.premium_over)) : '', return_rule: s?.return_rule ?? '', sort: String(s?.sort ?? 0),
+        slug: s?.slug ?? '', name: s?.name ?? '', name_bn: s?.name_bn ?? '', unit: s?.unit ?? 'piece', premium_over: s?.premium_over ? String(Number(s.premium_over)) : '', return_rule: s?.return_rule ?? '', sort: String(s?.sort ?? 0), tagline: s?.tagline ?? '', tagline_bn: s?.tagline_bn ?? '',
         fields: s?.fields ?? (s ? ['color', 'size', 'measurements'] : []), custom_orders: s?.custom_orders ?? false, catalog_required: s?.catalog_required ?? false,
         allow_fraction: s?.allow_fraction ?? false, preorder: s?.preorder ?? false, chat: s?.chat ?? false, is_active: s?.is_active ?? true,
     });
-    const text = (k: 'slug' | 'name' | 'name_bn' | 'unit' | 'premium_over' | 'return_rule' | 'sort') => (e: React.ChangeEvent<HTMLInputElement>) => setF({ ...f, [k]: e.target.value });
+    const text = (k: 'slug' | 'name' | 'name_bn' | 'unit' | 'premium_over' | 'return_rule' | 'sort' | 'tagline' | 'tagline_bn') => (e: React.ChangeEvent<HTMLInputElement>) => setF({ ...f, [k]: e.target.value });
     const flag = (k: 'allow_fraction' | 'preorder' | 'chat' | 'is_active' | 'custom_orders' | 'catalog_required', label: string) => (
         <label className="flex items-center gap-1.5 text-xs">
             <input type="checkbox" checked={f[k]} onChange={(e) => setF({ ...f, [k]: e.target.checked })} />
@@ -146,7 +149,7 @@ function SectorForm({ s }: { s?: Sector }) {
             className="grid gap-2 rounded-md border bg-card p-3 sm:grid-cols-4"
             onSubmit={(e) => {
                 e.preventDefault();
-                const body = { ...f, premium_over: f.premium_over || null, name_bn: f.name_bn || null, return_rule: f.return_rule || null };
+                const body = { ...f, premium_over: f.premium_over || null, name_bn: f.name_bn || null, return_rule: f.return_rule || null, tagline: f.tagline || null, tagline_bn: f.tagline_bn || null };
                 s ? router.put(`/admin/market/sectors/${s.id}`, body, { preserveScroll: true }) : router.post('/admin/market/sectors', body, { preserveScroll: true });
             }}
         >
@@ -157,6 +160,15 @@ function SectorForm({ s }: { s?: Sector }) {
             <Input aria-label={t('Premium from')} type="number" min="0" placeholder={t('Premium from (taka)')} value={f.premium_over} onChange={text('premium_over')} />
             <Input aria-label={t('Return rule')} className="sm:col-span-2" placeholder={t('Return rule shown on the product page')} value={f.return_rule} onChange={text('return_rule')} />
             <Input aria-label={t('Order on the menu')} type="number" min="0" value={f.sort} onChange={text('sort')} />
+            <Input aria-label={t('Banner line')} className="sm:col-span-2" maxLength={160} placeholder={t('Line under the banner title')} value={f.tagline} onChange={text('tagline')} />
+            <Input aria-label={t('Banner line in Bangla')} className="sm:col-span-2" maxLength={160} placeholder={t('Banner line in Bangla')} value={f.tagline_bn} onChange={text('tagline_bn')} />
+            {s && (
+                <label className="flex flex-wrap items-center gap-2 text-xs sm:col-span-4">
+                    <span className="font-medium">{s.hero_path ? t('Replace the banner picture') : t('Banner picture (wide, about 16 by 9)')}</span>
+                    <input type="file" accept="image/png,image/jpeg,image/webp" onChange={(e) => e.target.files?.[0] && router.post(`/admin/market/sectors/${s.id}/hero`, { image: e.target.files[0] }, { forceFormData: true, preserveScroll: true })} />
+                    {errors.image && <span className="text-red-600">{errors.image}</span>}
+                </label>
+            )}
             <div className="flex flex-wrap items-center gap-3 sm:col-span-3">
                 {flag('allow_fraction', t('Fractions allowed'))}
                 {flag('preorder', t('Pre-order'))}

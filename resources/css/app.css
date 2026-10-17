@@ -425,3 +425,6 @@
 }
 @supports not (backdrop-filter: blur(1px)) { .glass { background: var(--card); } }
 .classic { font-family: 'Cormorant Garamond', 'Hind Siliguri', Georgia, serif; }
+
+/* The public site is still: no looping or entrance motion. Loading spinners and skeletons are kept, since they say something is happening. */
+.hero-settle, .home-reveal, .shop-shutter, .shop-shutter *, .float-a, .float-b, .float-c, .aurora-a, .aurora-b, .tilt-a, .tilt-b { animation: none !important; }

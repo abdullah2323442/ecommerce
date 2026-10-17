@@ -305,6 +305,24 @@ class MarketController extends Controller
         return back()->with('status', __('Saved.'));
     }
 
+    /** The banner at the top of one kind of business: a wide picture, replaced at once and the old one deleted. */
+    public function sectorHero(Request $request, Sector $sector): RedirectResponse
+    {
+        $this->authorize('manage-accounts');
+        $request->validate(['image' => ['required', 'file', 'mimes:png,jpg,jpeg,webp', 'max:6144']]);
+
+        $old = $sector->hero_path;
+        $sector->update(['hero_path' => app(\App\Services\Media\ImageCompressor::class)->store($request->file('image'), 'sectors', 2400)]);
+
+        if ($old && \Illuminate\Support\Facades\Storage::exists($old)) {
+            \Illuminate\Support\Facades\Storage::delete($old);
+        }
+
+        $this->activity->record('sector.hero', null, ['sector' => $sector->slug], $request->user());
+
+        return back()->with('status', __('Saved.'));
+    }
+
     /** Whether a seller's own name is shown instead of ours (spec ch 05): a deal we make with them. */
     public function shopName(Request $request, User $user): RedirectResponse
     {
@@ -334,6 +352,7 @@ class MarketController extends Controller
             'custom_orders' => ['sometimes', 'boolean'], 'catalog_required' => ['sometimes', 'boolean'],
             'is_active' => ['required', 'boolean'],
             'sort' => ['nullable', 'integer', 'min:0', 'max:1000'],
+            'tagline' => ['nullable', 'string', 'max:160'], 'tagline_bn' => ['nullable', 'string', 'max:160'],
         ]);
 
         // A field left empty means "none": the premium amount, the Bangla name, the return rule.
@@ -341,7 +360,7 @@ class MarketController extends Controller
         $data['custom_orders'] = (bool) ($data['custom_orders'] ?? false);
         $data['catalog_required'] = (bool) ($data['catalog_required'] ?? false);
 
-        return $data + ['premium_over' => null, 'name_bn' => null, 'return_rule' => null] + ['sort' => (int) $request->input('sort', 0)];
+        return $data + ['premium_over' => null, 'name_bn' => null, 'return_rule' => null, 'tagline' => null, 'tagline_bn' => null] + ['sort' => (int) $request->input('sort', 0)];
     }
 
     private function attempt(callable $do, string $action, Listing $listing, Request $request, string $done): RedirectResponse

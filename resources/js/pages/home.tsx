@@ -1,210 +1,175 @@
-import CompanyLogo from '@/components/companies/company-logo';
-import FormTiles, { type FormTile } from '@/components/home/form-tiles';
-import Hero from '@/components/home/hero';
-import JourneyLine from '@/components/home/journey-line';
-import MedicineRail from '@/components/home/medicine-rail';
-import ShopsBento from '@/components/home/shops-bento';
-import { type MedicineSummary } from '@/components/medicines/types';
-import RequestButton from '@/components/requests/request-button';
 import PublicLayout from '@/layouts/public-layout';
 import { useI18n } from '@/lib/i18n';
 import { type SharedData } from '@/types';
 import { Head, Link, usePage } from '@inertiajs/react';
-import { Check, Languages, LayoutGrid, Tag } from 'lucide-react';
-import { type ReactNode, useState } from 'react';
+import { Banknote, Headset, ShieldCheck, Truck } from 'lucide-react';
+
+interface Aisle {
+    slug: string;
+    name: string;
+    line: string | null;
+    image: string | null;
+    count: number;
+    items: { id: number; title: string; price: number; unit: string | null; photo: string | null }[];
+}
 
 interface Props {
     stats: { medicines: number; companies: number; generics: number };
-    companies: { id: number; name: string; logo: string | null; count: number }[];
-    featured: MedicineSummary[];
-    forms: FormTile[];
+    aisles: Aisle[];
 }
 
-function Section({ id, title, hint, action, children }: { id?: string; title: string; hint?: string; action?: ReactNode; children: ReactNode }) {
+const SERIF = { fontFamily: "'Cormorant Garamond', 'Hind Siliguri', Georgia, serif" };
+
+/** A quiet section heading: a rule, the title, and one link. Nothing moves. */
+function Head2({ title, href, link }: { title: string; href?: string; link?: string }) {
     return (
-        <section id={id} aria-label={title} className="mx-auto w-full max-w-6xl scroll-mt-20 px-4 pt-16 sm:pt-24">
-            <div className="mb-7 flex flex-wrap items-end justify-between gap-3">
-                <div>
-                    <h2 className="font-display text-3xl leading-tight font-bold sm:text-5xl">{title}</h2>
-                    {hint && <p className="mt-2 max-w-xl text-lg text-[var(--pt-muted)]">{hint}</p>}
-                </div>
-                {action}
-            </div>
-            {children}
-        </section>
-    );
-}
-
-/** A photo on one side, the shop's story on the other. Alternates sides down the page. */
-function Split({ id, image, title, line, points, flip }: { id: string; image: string; title: string; line: string; points: string[]; flip?: boolean }) {
-    const { t } = useI18n();
-    const { site } = usePage<SharedData>().props;
-    // The owner can hide this section or open it (Admin > Site design).
-    const card = site.home.sections.find((x) => x.key === id);
-
-    if (!card) {
-        return null;
-    }
-
-    return (
-        <section aria-label={title} className="mx-auto w-full max-w-6xl px-4 pt-16 sm:pt-24">
-            <div className="grid items-center gap-8 overflow-hidden rounded-[2.5rem] border border-[var(--pt-line)] bg-[var(--pt-surface)] p-4 sm:p-6 lg:grid-cols-2 lg:gap-14">
-                <div className={`relative overflow-hidden rounded-[2rem] ${flip ? 'lg:order-2' : ''}`}>
-                    <img src={`${image}-1280.webp`} srcSet={`${image}-720.webp 720w, ${image}-1280.webp 1280w`} sizes="(min-width: 1024px) 560px, 100vw" alt="" loading="lazy" decoding="async" className="aspect-[4/3] w-full object-cover" />
-                    <span className="absolute top-4 left-4 rounded-full bg-white/90 px-4 py-1 text-sm font-semibold text-[#0e0d0c] backdrop-blur">{card.open ? t('Open now') : t('Opening soon')}</span>
-                </div>
-                <div className="px-2 pb-4 sm:px-6 lg:py-6">
-                    <h2 className="font-display text-4xl leading-tight font-bold sm:text-5xl">{title}</h2>
-                    <p className="mt-3 max-w-md text-xl text-[var(--pt-muted)]">{line}</p>
-                    <ul className="mt-7 space-y-3">
-                        {points.map((p) => (
-                            <li key={p} className="flex items-center gap-3 text-lg">
-                                <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-[var(--pt-sage)] text-[var(--pt-teal)]">
-                                    <Check aria-hidden className="size-4" strokeWidth={3} />
-                                </span>
-                                {t(p)}
-                            </li>
-                        ))}
-                    </ul>
-                    {card.open && card.href && (
-                        <Link href={card.href} className="mt-7 inline-flex h-12 items-center rounded-full bg-[var(--pt-ink)] px-6 font-semibold text-[var(--pt-paper)] hover:opacity-90">
-                            {t('Open')}
-                        </Link>
-                    )}
-                </div>
-            </div>
-        </section>
-    );
-}
-
-function Counter() {
-    const { t } = useI18n();
-    const [q, setQ] = useState('');
-    const ready = q.trim().length >= 2;
-
-    return (
-        <div className="relative isolate overflow-hidden rounded-[2.5rem] bg-[#0e0d0c] px-6 py-14 text-white sm:px-14 sm:py-20">
-            <div aria-hidden className="aurora-b absolute -top-32 -right-24 -z-10 size-[28rem] rounded-full bg-[#c9a24b]/40 blur-[100px]" />
-            <div className="grid gap-8 md:grid-cols-5">
-                <div className="md:col-span-2">
-                    <h2 className="font-display text-4xl leading-tight font-bold text-balance sm:text-5xl">{t('Cannot find it? Ask at the counter.')}</h2>
-                    <p className="mt-3 max-w-md text-lg text-white/75">{t('Tell us the medicine you were looking for. Every request is counted, and the ones asked for most are stocked first.')}</p>
-                </div>
-                <div className="md:col-span-3">
-                    <label htmlFor="counter-q" className="block text-sm font-semibold text-white/85">
-                        {t('The medicine you were looking for')}
-                    </label>
-                    <input
-                        id="counter-q"
-                        value={q}
-                        onChange={(e) => setQ(e.target.value)}
-                        maxLength={120}
-                        autoComplete="off"
-                        placeholder={t('Name and strength, for example Insulin glargine 100 IU')}
-                        className="mt-2 h-14 w-full max-w-lg rounded-2xl border border-white/20 bg-white/10 px-5 text-lg text-white outline-none backdrop-blur placeholder:text-white/50 focus:border-[#f3d995] focus:ring-4 focus:ring-[#f3d995]/25"
-                    />
-                    {/* Remount on change so a finished request does not stay "done" for the next medicine. */}
-                    {ready ? <RequestButton key={q.trim().toLowerCase()} query={q.trim()} className="mt-3" /> : <p className="mt-3 text-sm text-white/65">{t('Type at least two letters to send a request.')}</p>}
-                </div>
-            </div>
+        <div className="flex items-baseline justify-between gap-4 border-t border-[var(--pt-ink)] pt-4">
+            <h2 style={SERIF} className="text-3xl leading-none font-medium tracking-tight sm:text-4xl">
+                {title}
+            </h2>
+            {href && link && (
+                <Link href={href} className="shrink-0 text-sm underline underline-offset-4">
+                    {link}
+                </Link>
+            )}
         </div>
     );
 }
 
-export default function Home({ stats, companies, featured, forms }: Props) {
-    const { t, num } = useI18n();
+export default function Home({ stats, aisles }: Props) {
+    const { t, num, money } = useI18n();
+    const { site } = usePage<SharedData>().props;
+    const open = (key: string) => site.home.sections.find((s) => s.key === key);
 
-    const values = [
-        { Icon: Languages, title: t('Everything in Bangla'), line: t('Read, search and shop in Bangla, with English one tap away.') },
-        { Icon: Tag, title: t('Honest prices'), line: t('You see the printed price before anything else.') },
-        { Icon: LayoutGrid, title: t('One place'), line: t('Many shops under one roof, opened one at a time.') },
+    // Shops that are not products on a shelf: each one opens only when the owner has opened it.
+    const services = [
+        { key: 'pharmacy', title: t('Pharmacy'), line: t('{n} medicines, searched by brand or generic name.', { n: num(stats.medicines) }), image: '/images/home/pharmacy', href: route('medicines.index') },
+        { key: 'food', title: t('Food'), line: t('Fast food from local restaurants, ordered online.'), image: '/images/home/food', href: open('food')?.open ? open('food')?.href : null },
+        { key: 'custom', title: t('Made to order'), line: t('Wood and clothing made to your size.'), image: '/images/home/custom', href: open('custom')?.open ? open('custom')?.href : null },
+        { key: 'games', title: t('Gaming'), line: t('Game top-ups and diamonds, paid online.'), image: '/images/home/gaming', href: open('games')?.open ? open('games')?.href : null },
+    ];
+
+    const trust = [
+        { Icon: Banknote, title: t('Cash on delivery'), line: t('Pay when it reaches your door.') },
+        { Icon: Truck, title: t('Delivery across Bangladesh'), line: t('Dhaka and every district.') },
+        { Icon: ShieldCheck, title: t('Checked sellers'), line: t('Real shops, with reviews you can read.') },
+        { Icon: Headset, title: t('Help in Bangla'), line: t('Questions answered by real people.') },
     ];
 
     return (
-        <PublicLayout bleed>
+        <PublicLayout bleed calm>
             <Head title={t('Every shop. One place.')}>
-                <meta name="description" content={t("Siam's Aqua: search {n} medicines by brand or generic name, in English or Bangla, and compare what different brands charge for the same medicine.", { n: num(stats.medicines) })} />
+                <meta name="description" content={t('Furniture, jewellery, electronics, books, home, beauty, groceries, clothing, medicine, food and game top-ups, in one place.')} />
             </Head>
 
-            <Hero />
+            <div className="mx-auto w-full max-w-6xl px-4 pb-24">
+                {/* Opening: one sentence, one photograph, and the reasons to trust us. */}
+                <section aria-label={t('Welcome')} className="relative isolate -mx-4 mt-0 overflow-hidden bg-[#efe6d6] sm:mx-0 sm:mt-6">
+                    <img src="/images/home/hero.jpg" srcSet="/images/home/hero-900.jpg 900w, /images/home/hero.jpg 1566w" sizes="(min-width: 1152px) 1152px, 100vw" alt="" fetchPriority="high" decoding="async" className="absolute inset-0 -z-20 size-full object-cover object-[75%_50%]" />
+                    <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-r from-[#efe6d6] via-[#efe6d6]/70 to-transparent sm:via-[#efe6d6]/30" />
+                    <div className="flex min-h-[28rem] max-w-xl flex-col justify-center px-6 py-14 sm:min-h-[34rem] sm:px-12">
+                        <h1 style={SERIF} className="text-5xl leading-[0.95] font-medium tracking-tight text-balance sm:text-7xl">
+                            {t('Every shop. One place.')}
+                        </h1>
+                        <p className="mt-5 max-w-sm text-lg leading-relaxed">{t('Well-made things from small sellers, with the price shown plainly and the delivery handled for you.')}</p>
+                        <div className="mt-8 flex flex-wrap gap-3">
+                            <Link href={route('market.index')} className="inline-flex h-12 items-center bg-[var(--pt-ink)] px-7 text-[var(--pt-paper)]">
+                                {t('Browse the market')}
+                            </Link>
+                            <Link href={route('search')} className="inline-flex h-12 items-center border border-[var(--pt-ink)] px-7">
+                                {t('Search')}
+                            </Link>
+                        </div>
+                    </div>
+                </section>
 
-            <JourneyLine>
-
-            <Section title={t('The shops')} hint={t('The pharmacy is open. The others are being built, one at a time.')}>
-                <ShopsBento />
-            </Section>
-
-            <section aria-label={t('Why us')} className="mx-auto w-full max-w-6xl px-4 pt-6">
-                <ul className="grid gap-4 md:grid-cols-3">
-                    {values.map(({ Icon, title, line }) => (
-                        <li key={title} className="rounded-[1.75rem] border border-[var(--pt-line)] bg-[var(--pt-surface)] p-7">
-                            <span className="flex size-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#c9a24b] to-[#0e0d0c] text-white shadow-md">
-                                <Icon aria-hidden className="size-6" strokeWidth={1.6} />
+                <ul aria-label={t('Why shop here')} className="grid grid-cols-2 gap-x-4 gap-y-6 border-b border-[var(--pt-line)] py-8 md:grid-cols-4">
+                    {trust.map(({ Icon, title, line }) => (
+                        <li key={title} className="flex items-start gap-3">
+                            <Icon aria-hidden className="mt-0.5 size-6 shrink-0" strokeWidth={1.4} />
+                            <span>
+                                <span className="block font-medium">{title}</span>
+                                <span className="block text-sm text-[var(--pt-muted)]">{line}</span>
                             </span>
-                            <p className="mt-5 font-display text-2xl font-bold">{title}</p>
-                            <p className="mt-1.5 text-[var(--pt-muted)]">{line}</p>
                         </li>
                     ))}
                 </ul>
-            </section>
 
-            {featured.length > 0 && (
-                <Section
-                    id="pharmacy"
-                    title={t('Popular medicines')}
-                    hint={t('Real packs from the biggest companies.')}
-                    action={
-                        <Link href={route('medicines.index')} className="inline-flex h-11 items-center rounded-full bg-[var(--pt-ink)] px-5 font-semibold text-[var(--pt-paper)] hover:opacity-90">
-                            {t('Search medicines')}
-                        </Link>
-                    }
-                >
-                    <MedicineRail medicines={featured} />
-                </Section>
-            )}
-
-            {forms.length > 0 && (
-                <Section title={t('Browse by type')}>
-                    <FormTiles forms={forms} />
-                </Section>
-            )}
-
-            <Split id="food" image="/images/home/food" title={t('Food')} line={t('Fast food from local restaurants, ordered online.')} points={['Menus from local restaurants', 'Order and pay online', 'Follow your order']} />
-            <Split id="custom" image="/images/home/custom" title={t("Custom")} line={t('Wood and clothing made to your size.')} points={['Send your measurements', 'Chat about your order', 'See how far it has come']} />
-            <Split id="games" image="/images/home/gaming" flip title={t('Gaming')} line={t('Game top-ups and diamonds, paid online.')} points={['Top-ups for popular games', 'Pay online only', 'A receipt for every top-up']} />
-
-            {companies.length > 0 && (
-                <Section
-                    title={t('All companies')}
-                    action={
-                        <Link href={route('companies.index')} className="font-semibold underline underline-offset-4">
-                            {t('All {n} companies', { n: num(stats.companies) })}
-                        </Link>
-                    }
-                >
-                    <ul className="-mx-4 flex snap-x gap-3 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0 lg:grid-cols-4">
-                        {companies.map((c) => (
-                            <li key={c.id} className="w-60 shrink-0 snap-start sm:w-auto">
-                                <Link
-                                    href={route('companies.show', c.id)}
-                                    className="flex items-center gap-3 rounded-2xl border border-[var(--pt-line)] bg-[var(--pt-surface)] p-3 outline-none transition-[border-color,box-shadow] duration-150 hover:border-[var(--pt-amber)] hover:shadow-lg focus-visible:ring-4 focus-visible:ring-[var(--pt-amber)]/40"
-                                >
-                                    <CompanyLogo name={c.name} logo={c.logo} className="size-12 rounded-xl border-[var(--pt-line)] bg-white" />
-                                    <span className="min-w-0">
-                                        <span className="block truncate font-semibold">{c.name.replace(/ (Pharmaceuticals|Laboratories|Pharma|Limited|Ltd\.?|PLC)\b\.?/gi, '').trim()}</span>
-                                        <span className="tabular block text-sm text-[var(--pt-muted)]">{t('{n} medicines', { n: num(c.count) })}</span>
-                                    </span>
+                {/* Every category, each with its own picture. */}
+                <section aria-label={t('Categories')} className="mt-8">
+                    <Head2 title={t('Shop by category')} />
+                    <ul className="mt-6 grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-4">
+                        {aisles.map((a) => (
+                            <li key={a.slug}>
+                                <Link href={`/market?sector=${a.slug}`} className="block">
+                                    <div className="aspect-[4/5] overflow-hidden bg-[var(--pt-line)]">{a.image && <img src={a.image} alt="" loading="lazy" decoding="async" className="size-full object-cover" />}</div>
+                                    <p style={SERIF} className="mt-3 text-2xl leading-tight font-medium">
+                                        {a.name}
+                                    </p>
+                                    <p className="tabular text-sm text-[var(--pt-muted)]">{t('{n} products', { n: num(a.count) })}</p>
                                 </Link>
                             </li>
                         ))}
                     </ul>
-                </Section>
-            )}
+                </section>
 
-            <section id="request" aria-label={t('Request a medicine')} className="mx-auto mt-16 w-full max-w-6xl scroll-mt-20 px-4 sm:mt-24">
-                <Counter />
-            </section>
-            </JourneyLine>
+                {/* One shelf per category: four products each. */}
+                {aisles.map((a) => (
+                    <section key={a.slug} aria-label={a.name} className="mt-20">
+                        <Head2 title={a.name} href={`/market?sector=${a.slug}`} link={t('See all')} />
+                        {a.line && <p className="mt-2 max-w-md text-[var(--pt-muted)]">{a.line}</p>}
+                        <ul className="mt-6 grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-4">
+                            {a.items.map((p) => (
+                                <li key={p.id}>
+                                    <Link href={route('market.show', p.id)} className="block">
+                                        <div className="aspect-square overflow-hidden bg-[var(--pt-line)]">{p.photo && <img src={p.photo} alt="" loading="lazy" decoding="async" className="size-full object-cover" />}</div>
+                                        <p className="mt-3 line-clamp-2 leading-snug">{p.title}</p>
+                                        <p className="tabular mt-1 text-sm text-[var(--pt-muted)]">
+                                            {money(p.price)}
+                                            {p.unit ? ` / ${p.unit}` : ''}
+                                        </p>
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </section>
+                ))}
+
+                {/* The shops that are not shelves: one large tile and three smaller, text on the picture. */}
+                <section aria-label={t('More shops')} className="mt-24">
+                    <Head2 title={t('More than things')} />
+                    <ul className="mt-6 grid gap-3 lg:h-[34rem] lg:grid-cols-12 lg:grid-rows-2">
+                        {services.map((s, i) => {
+                            const body = (
+                                <>
+                                    <img src={`${s.image}-1280.webp`} alt="" loading="lazy" decoding="async" className="absolute inset-0 -z-10 size-full object-cover" />
+                                    <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                                    <div className="p-5 sm:p-7">
+                                        <p style={SERIF} className={`leading-none font-medium ${i === 0 ? 'text-4xl sm:text-5xl' : 'text-3xl'}`}>
+                                            {s.title}
+                                        </p>
+                                        <p className="mt-2 max-w-sm text-sm text-white/85">{s.line}</p>
+                                        <p className="mt-3 text-sm underline underline-offset-4">{s.href ? t('Open') : t('Opening soon')}</p>
+                                    </div>
+                                </>
+                            );
+                            const tile = 'relative isolate flex size-full min-h-[16rem] flex-col justify-end overflow-hidden bg-[var(--pt-ink)] text-white';
+
+                            return (
+                                <li key={s.key} className={['lg:col-span-7 lg:row-span-2', 'lg:col-span-5', 'lg:col-span-3', 'lg:col-span-2'][i]}>
+                                    {s.href ? (
+                                        <Link href={s.href} className={tile}>
+                                            {body}
+                                        </Link>
+                                    ) : (
+                                        <div className={tile}>{body}</div>
+                                    )}
+                                </li>
+                            );
+                        })}
+                    </ul>
+                </section>
+            </div>
         </PublicLayout>
     );
 }
