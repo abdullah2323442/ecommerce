@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Services\Site\HomeBlocks;
 use App\Services\Site\Site;
 use App\Services\Stock\StockException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -26,6 +28,36 @@ class SiteController extends Controller
             'images' => ['logo' => ! empty($all['brand']['logo']), 'favicon' => ! empty($all['brand']['favicon'])],
             'preview' => $this->site->forViewer()['brand'],
         ]);
+    }
+
+    /** The page builder: blocks on the left, a live copy of the home page in the middle, the chosen block's settings on the right. */
+    public function builder(): Response
+    {
+        $this->authorize('manage-accounts');
+
+        return Inertia::render('admin/site-builder', ['blocks' => $this->site->blocks(), 'types' => HomeBlocks::TYPES]);
+    }
+
+    public function saveBlocks(Request $request): RedirectResponse
+    {
+        $this->authorize('manage-accounts');
+        $request->validate(['blocks' => ['present', 'array', 'max:'.HomeBlocks::MAX]]);
+
+        try {
+            $this->site->saveBlocks((array) $request->input('blocks'), $request->user());
+        } catch (StockException $e) {
+            throw ValidationException::withMessages(['site' => __($e->getMessage())]);
+        }
+
+        return back()->with('status', __('Saved. The home page shows it now.'));
+    }
+
+    public function blockImage(Request $request): JsonResponse
+    {
+        $this->authorize('manage-accounts');
+        $request->validate(['image' => ['required', 'file', 'mimes:png,jpg,jpeg,webp', 'max:4096']]);
+
+        return response()->json(['name' => $this->site->putBlockImage($request->file('image'), $request->user())]);
     }
 
     public function save(Request $request, string $group): RedirectResponse

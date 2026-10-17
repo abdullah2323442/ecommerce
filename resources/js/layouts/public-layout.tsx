@@ -19,9 +19,11 @@ import { type PropsWithChildren } from 'react';
 interface Props {
     /** Let the page run edge to edge (home page). The page then manages its own width. */
     bleed?: boolean;
+    /** No drifting particles in the background: a still page (home). */
+    calm?: boolean;
 }
 
-export default function PublicLayout({ children, bleed = false }: PropsWithChildren<Props>) {
+export default function PublicLayout({ children, bleed = false, calm = false }: PropsWithChildren<Props>) {
     const { auth, brand, cartCount, canCart, site } = usePage<SharedData>().props;
     const { url } = usePage();
     const { t } = useI18n();
@@ -30,14 +32,14 @@ export default function PublicLayout({ children, bleed = false }: PropsWithChild
 
     const tabs: { href: string; label: string; Icon: LucideIcon; active: boolean }[] = [
         { href: '/', label: t('Home'), Icon: House, active: url === '/' || url.startsWith('/?') },
-        { href: route('medicines.index'), label: t('Search'), Icon: Search, active: url.startsWith('/medicines') || url.startsWith('/forms') },
+        { href: '/search', label: t('Search'), Icon: Search, active: url.startsWith('/search') || url.startsWith('/medicines') || url.startsWith('/forms') },
         { href: route('companies.index'), label: t('Companies'), Icon: Building2, active: url.startsWith('/companies') },
         { ...account, Icon: UserRound, active: url.startsWith('/login') || url.startsWith('/dashboard') || url.startsWith('/account') },
     ];
 
     return (
         <div className="public-theme relative isolate flex min-h-screen flex-col pb-[calc(6.5rem+env(safe-area-inset-bottom))] md:pb-0">
-            <DustBackdrop />
+            {!calm && <DustBackdrop />}
             <Head>
                 <link rel="preconnect" href="https://fonts.bunny.net" />
                 <link href="https://fonts.bunny.net/css?family=hind-siliguri:400,500,600,700|baloo-da-2:600,700,800&display=swap" rel="stylesheet" />
@@ -67,14 +69,10 @@ export default function PublicLayout({ children, bleed = false }: PropsWithChild
                         <span className="hidden sm:inline">{brand.name}</span>
                     </Link>
 
-                    <Link
-                        href={route('medicines.index')}
-                        aria-label={t('Search the shop')}
-                        className="mx-auto hidden h-11 w-full max-w-md items-center gap-3 rounded-full border border-[var(--pt-line)] bg-[var(--pt-surface)] px-4 text-[var(--pt-muted)] transition-shadow hover:shadow-md md:flex"
-                    >
+                    <form action="/search" method="get" role="search" className="mx-auto hidden h-11 w-full max-w-md items-center gap-3 rounded-full border border-[var(--pt-line)] bg-[var(--pt-surface)] px-4 text-[var(--pt-muted)] transition-shadow focus-within:shadow-md hover:shadow-md md:flex">
                         <Search aria-hidden className="size-4" />
-                        {t('Search the shop')}
-                    </Link>
+                        <input name="q" type="search" aria-label={t('Search the shop')} placeholder={t('Search the shop')} autoComplete="off" className="h-full w-full bg-transparent text-[var(--pt-ink)] outline-none placeholder:text-[var(--pt-muted)]" />
+                    </form>
 
                     <div className="ml-auto flex items-center gap-2 md:ml-0">
                         <TextSize />

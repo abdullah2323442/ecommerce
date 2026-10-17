@@ -57,6 +57,7 @@ class DashboardController extends Controller
             'alerts' => $this->alerts($stats, $backups),
             'stats' => $stats,
             'recent' => $this->recentActivity(),
+            'commerce' => app(\App\Services\Admin\CommerceStats::class)->all(),
         ]);
     }
 

@@ -100,6 +100,8 @@ Route::get('sitemap-pages.xml', [SitemapController::class, 'pages'])->name('site
 Route::get('sitemap-medicines-{page}.xml', [SitemapController::class, 'medicines'])->whereNumber('page')->name('sitemap.medicines');
 
 // Medicine database: open to everyone (spec ch 11). MRP only; never any stock information.
+Route::get('search', [\App\Http\Controllers\SiteSearchController::class, 'index'])->middleware('throttle:60,1,site-search')->name('search');
+Route::get('search', [\App\Http\Controllers\SiteSearchController::class, 'index'])->middleware('throttle:60,1,site-search')->name('search');
 Route::get('medicines', [MedicineSearchController::class, 'index'])
     ->middleware('throttle:90,1,medicine-search')
     ->name('medicines.index');
@@ -138,6 +140,7 @@ Route::get('manifest.webmanifest', [\App\Http\Controllers\PwaController::class, 
 Route::get('pwa/icon/{name}.png', [\App\Http\Controllers\PwaController::class, 'icon'])->whereIn('name', ['192', '512', 'maskable-512', 'apple-180'])->name('pwa.icon');
 Route::get('sw.js', [\App\Http\Controllers\PwaController::class, 'worker'])->name('pwa.worker');
 Route::get('offline', [\App\Http\Controllers\PwaController::class, 'offline'])->name('pwa.offline');
+Route::get('site-image/{name}', [BrandImageController::class, 'block'])->where('name', '[A-Za-z0-9_.-]+')->name('site.block-image');
 Route::get('brand/{which}', [BrandImageController::class, 'show'])->whereIn('which', ['logo', 'favicon'])->name('brand.image');
 Route::get('shop/{seller}', [MarketController::class, 'shop'])->whereNumber('seller')->name('shop.show');
 // A friend's referral link (spec ch 24): the code is kept for sign-up, then the visitor lands on the register page.
@@ -590,6 +593,9 @@ Route::middleware(['auth', 'section:admin_panel', 'two-factor.required'])->prefi
     Route::post('craftsmen/{user}/pay', [AdminCraftsmanController::class, 'pay'])->name('craftsmen.pay');
     Route::post('custom/{order}/{step}', [AdminCustomOrderController::class, 'step'])->name('custom.step');
     Route::get('site', [AdminSiteController::class, 'index'])->name('site.index');
+    Route::get('site/builder', [AdminSiteController::class, 'builder'])->name('site.builder');
+    Route::put('site/blocks', [AdminSiteController::class, 'saveBlocks'])->name('site.blocks');
+    Route::post('site/block-image', [AdminSiteController::class, 'blockImage'])->middleware('throttle:30,1,site-block-image')->name('site.block-image');
     Route::put('site/{group}', [AdminSiteController::class, 'save'])->whereIn('group', ['brand', 'contact', 'social', 'footer', 'home', 'announcement', 'seo'])->name('site.save');
     Route::post('site/image/{which}', [AdminSiteController::class, 'image'])->whereIn('which', ['logo', 'favicon'])->name('site.image');
     Route::delete('site/image/{which}', [AdminSiteController::class, 'removeImage'])->whereIn('which', ['logo', 'favicon'])->name('site.image.remove');

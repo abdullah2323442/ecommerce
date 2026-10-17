@@ -44,6 +44,8 @@ return [
     'home' => [
         'hero_title' => ['en' => null, 'bn' => null],
         'hero_text' => ['en' => null, 'bn' => null],
+        // The page built in the home page builder: an ordered list of blocks. Empty: the standard page (see App\Services\Site\HomeBlocks::defaults).
+        'blocks' => null,
         // The shop cards on the home page, in this order. status: open (a link) or soon (a label). A hidden card is not drawn at all.
         'sections' => [
             ['key' => 'pharmacy', 'enabled' => true, 'status' => 'open'],

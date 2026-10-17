@@ -20,7 +20,7 @@
         @endif
 
         <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=hind-siliguri:400,500,600,700|baloo-da-2:600,700,800&display=swap" rel="stylesheet" />
+        <link href="https://fonts.bunny.net/css?family=hind-siliguri:400,500,600,700|baloo-da-2:600,700,800|cormorant-garamond:500,600&display=swap" rel="stylesheet" />
 
         @routes
         @viteReactRefresh

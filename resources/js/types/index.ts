@@ -61,7 +61,7 @@ export interface Brand {
 export interface SiteShared {
     social: Partial<Record<'facebook' | 'instagram' | 'youtube' | 'tiktok', string>>;
     footer: { about: string | null; copyright: string | null; links: { label: string; translate: boolean; url: string }[] };
-    home: { hero_title: string | null; hero_text: string | null; sections: { key: string; open: boolean; href: string | null }[] };
+    home: { hero_title: string | null; hero_text: string | null; blocks: HomeBlock[]; sections: { key: string; open: boolean; href: string | null }[] };
     announcement: { text: string; link: string | null } | null;
     seo: { description: string | null };
 }
@@ -88,4 +88,17 @@ export interface User {
     email: string;
     avatar?: string;
     email_verified_at: string | null;
+}
+
+/** One block of the home page (see App\\Services\\Site\\HomeBlocks). Texts are English and Bangla pairs; empty means the shop's own wording. */
+export interface HomePair {
+    en: string | null;
+    bn: string | null;
+}
+
+export interface HomeBlock {
+    id: string;
+    type: 'hero' | 'categories' | 'arrivals' | 'pharmacy' | 'food' | 'games' | 'promises' | 'banner' | 'text' | 'spacer';
+    enabled: boolean;
+    props: Record<string, HomePair | string | number | undefined>;
 }

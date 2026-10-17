@@ -393,3 +393,35 @@
         opacity: 1;
     }
 }
+
+
+/* The home page opening: the photographs settle in once, on load. Nothing else on the page moves by itself. */
+@keyframes home-reveal { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.home-reveal { animation: home-reveal 900ms cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+@media (prefers-reduced-motion: reduce) { .home-reveal { animation: none; } }
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* The admin dashboard: frosted glass over a soft, slow-moving field of colour. Light and dark each have their own glass. */
+.glass-stage { position: relative; isolation: isolate; min-height: 100%; }
+.glass-stage::before {
+    content: ''; position: absolute; inset: 0; z-index: -1;
+    background:
+        radial-gradient(60rem 40rem at 8% -10%, rgba(201, 162, 75, 0.28), transparent 60%),
+        radial-gradient(50rem 36rem at 95% 8%, rgba(45, 212, 191, 0.22), transparent 60%),
+        radial-gradient(46rem 34rem at 60% 105%, rgba(129, 140, 248, 0.2), transparent 60%);
+}
+.glass {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.66), rgba(255, 255, 255, 0.4));
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(18px) saturate(1.35);
+    -webkit-backdrop-filter: blur(18px) saturate(1.35);
+    box-shadow: 0 10px 34px -12px rgba(15, 23, 42, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+.dark .glass {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.025));
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 14px 40px -14px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.09);
+}
+@supports not (backdrop-filter: blur(1px)) { .glass { background: var(--card); } }
+.classic { font-family: 'Cormorant Garamond', 'Hind Siliguri', Georgia, serif; }

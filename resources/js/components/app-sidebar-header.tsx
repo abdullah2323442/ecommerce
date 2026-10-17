@@ -1,4 +1,5 @@
 import { Breadcrumbs } from '@/components/breadcrumbs';
+import ThemeToggle from '@/components/theme-toggle';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { LanguageToggle } from '@/lib/i18n';
 import { type BreadcrumbItem as BreadcrumbItemType } from '@/types';
@@ -10,7 +11,10 @@ export function AppSidebarHeader({ breadcrumbs = [] }: { breadcrumbs?: Breadcrum
                 <SidebarTrigger className="-ml-1" />
                 <Breadcrumbs breadcrumbs={breadcrumbs} />
             </div>
-            <LanguageToggle className="ml-auto" />
+            <div className="ml-auto flex items-center gap-2">
+                <ThemeToggle />
+                <LanguageToggle />
+            </div>
         </header>
     );
 }

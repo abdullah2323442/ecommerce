@@ -118,6 +118,14 @@ export default function Site({ groups, images }: { groups: Groups; images: { log
                 </div>
                 <InputError message={errors.site} />
 
+                <a href="/admin/site/builder" className="glass flex flex-wrap items-center justify-between gap-3 rounded-2xl p-4 hover:opacity-90">
+                    <span>
+                        <span className="classic block text-xl font-semibold">{t('Home page builder')}</span>
+                        <span className="text-sm opacity-70">{t('Drag blocks to rearrange the home page, change their words and pictures, and watch the real page change as you go.')}</span>
+                    </span>
+                    <span className="rounded-full bg-foreground px-4 py-2 text-sm font-medium text-background">{t('Open the builder')}</span>
+                </a>
+
                 <Box title={t('Name and logo')} onSave={() => save('brand', brand)}>
                     <div className="grid gap-2 sm:grid-cols-2">
                         <Text label={t('Shop name')} value={brand.name} onChange={(name) => setBrand({ ...brand, name })} max={80} />

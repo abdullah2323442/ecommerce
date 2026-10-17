@@ -103,6 +103,49 @@ class Site
         }
     }
 
+    // ------------------------------------------------------------------ the home page builder
+
+    /** The page's blocks, in order: what the owner saved, or the standard page. @return list<array<string, mixed>> */
+    public function blocks(): array
+    {
+        return $this->group('home')['blocks'] ?? HomeBlocks::defaults();
+    }
+
+    /**
+     * Save the arranged page. Pictures no block uses any more are deleted.
+     *
+     * @param  array<int, mixed>  $input
+     * @return list<array<string, mixed>>
+     *
+     * @throws StockException
+     */
+    public function saveBlocks(array $input, User $by): array
+    {
+        $clean = app(HomeBlocks::class)->clean($input);
+        $home = $this->group('home');
+        $old = HomeBlocks::images($home['blocks'] ?? []);
+        $home['blocks'] = $clean;
+        SiteSetting::updateOrCreate(['group' => 'home'], ['value' => $this->stored('home', $home), 'updated_by' => $by->id]);
+        Cache::forget(self::CACHE);
+
+        foreach (array_diff($old, HomeBlocks::images($clean)) as $gone) {
+            Storage::delete('brand/'.$gone);
+        }
+
+        $this->activity->record('site.blocks_saved', null, ['blocks' => count($clean)], $by);
+
+        return $clean;
+    }
+
+    /** A picture for a block, stored at once so the preview can show it; it counts only once the page is saved. @throws StockException */
+    public function putBlockImage(UploadedFile $file, User $by): string
+    {
+        $path = $this->images->store($file, 'brand', 1800);
+        $this->activity->record('site.block_image', null, [], $by);
+
+        return basename($path);
+    }
+
     // ------------------------------------------------------------------ what the pages are given
 
     /**
@@ -138,6 +181,7 @@ class Site
                         ->map(fn ($l) => ['label' => $bn && ! empty($l['label_bn']) ? $l['label_bn'] : $l['label'], 'translate' => ! ($bn && ! empty($l['label_bn'])), 'url' => $l['url']])->values()->all(),
                 ],
                 'home' => [
+                    'blocks' => $all['home']['blocks'] ?? HomeBlocks::defaults(),
                     'hero_title' => $text($all['home']['hero_title']), 'hero_text' => $text($all['home']['hero_text']),
                     'sections' => collect($all['home']['sections'])->filter(fn ($s) => ! empty($s['enabled']))->map(fn ($s) => ['key' => $s['key'], 'open' => ($s['status'] ?? 'open') === 'open', 'href' => config("site.section_links.{$s['key']}")])->values()->all(),
                 ],
@@ -218,6 +262,7 @@ class Site
                 ])->filter(fn ($l) => $l['label'] !== null && $l['url'] !== null)->values()->all(),
             ],
             'home' => [
+                'blocks' => $this->group('home')['blocks'] ?? null,
                 'hero_title' => $pair($d['hero_title'] ?? [], 80), 'hero_text' => $pair($d['hero_text'] ?? [], 300),
                 'sections' => $this->sections((array) ($d['sections'] ?? [])),
             ],
