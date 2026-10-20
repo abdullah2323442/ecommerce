@@ -34,25 +34,13 @@ class HomeAndCompaniesTest extends TestCase
             ->where('stats.medicines', 2)
             ->where('stats.companies', 1)
             ->where('stats.generics', 1)
-            ->has('companies', 1));
+            ->has('aisles', 0));
     }
 
     public function test_home_works_with_an_empty_database(): void
     {
         $this->get('/')->assertOk()->assertInertia(fn (Assert $page) => $page
-            ->where('stats.medicines', 0)->where('forms', [])->where('companies', []));
-    }
-
-    public function test_home_lists_the_forms_with_counts(): void
-    {
-        $square = Company::create(['name' => 'Square']);
-        $this->med($square, 'Napa', ['form' => 'tablet']);
-        $this->med($square, 'Ace', ['form' => 'tablet']);
-        $this->med($square, 'Seclo', ['form' => 'capsule']);
-
-        $this->get('/')->assertInertia(fn (Assert $page) => $page
-            ->where('forms.0.slug', 'tablet')->where('forms.0.count', 2)
-            ->where('forms.1.slug', 'capsule')->where('forms.1.count', 1));
+            ->where('stats.medicines', 0)->where('aisles', []));
     }
 
     public function test_home_never_mentions_a_restricted_section(): void
