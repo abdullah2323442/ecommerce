@@ -2,28 +2,35 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Listing;
-use App\Models\ListingReport;
-use App\Models\ListingVariant;
-use App\Services\Market\ListingVariants;
-use App\Services\Market\Shops;
-use App\Services\Market\Reviews;
-use App\Services\Market\ListingPhotos;
 use App\Models\ListingPhoto;
+use App\Models\ListingReport;
 use App\Models\ListingReviewPhoto;
-use App\Services\Market\Catalog;
+use App\Models\ListingVariant;
+use App\Models\MarketOrder;
+use App\Models\Sector;
+use App\Models\StorefrontBlock;
 use App\Models\User;
+use App\Services\Analytics\Behavior;
+use App\Services\Market\Catalog;
+use App\Services\Market\ListingPhotos;
+use App\Services\Market\ListingQuestions;
+use App\Services\Market\ListingReports;
+use App\Services\Market\ListingVariants;
+use App\Services\Market\MarketCases;
+use App\Services\Market\Marketplace;
+use App\Services\Market\Reviews;
+use App\Services\Market\SellerReports;
+use App\Services\Market\SellerTrust;
+use App\Services\Market\Shops;
+use App\Services\Market\Wishlist;
 use App\Services\Stock\StockException;
 use App\Services\Wallet\Tokens;
 use Illuminate\Http\RedirectResponse;
-use App\Models\Sector;
-use App\Services\Analytics\Behavior;
-use App\Services\Market\ListingReports;
-use App\Services\Market\ListingQuestions;
-use App\Services\Market\Marketplace;
-use App\Services\Market\SellerReports;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -50,6 +57,13 @@ class MarketController extends Controller
         $sort = in_array($request->query('sort'), ['new', 'low', 'high', 'popular'], true) ? $request->query('sort') : 'near';
 
         $all = $this->market->visible($viewer, is_string($sector) ? $sector : null);
+        // Inside a shop, a category narrows to everything at or below it. The rows before narrowing are kept to count each node.
+        $inShop = $all;
+        $category = $this->categoryFor(is_string($sector) ? $sector : null, $request->query('category'));
+        if ($category) {
+            $ids = $category->selfAndDescendantIds();
+            $all = $all->filter(fn ($r) => in_array($r['listing']->category_id, $ids, true))->values();
+        }
         $sectors = Sector::where('is_active', true)->orderBy('sort')->orderBy('name')->get()
             ->map(fn (Sector $s) => ['slug' => $s->slug, 'name' => app()->getLocale() === 'bn' && $s->name_bn ? $s->name_bn : $s->name, 'count' => $this->market->visible($viewer, $s->slug)->count()])
             ->filter(fn ($s) => $s['count'] > 0)->values();
@@ -71,7 +85,7 @@ class MarketController extends Controller
 
         // Popularity: how many orders it has had that were not cancelled.
         $sold = $sort === 'popular'
-            ? \App\Models\MarketOrder::whereIn('listing_id', $rows->pluck('listing.id')->all())->where('status', '!=', 'cancelled')->selectRaw('listing_id, count(*) as n')->groupBy('listing_id')->pluck('n', 'listing_id')
+            ? MarketOrder::whereIn('listing_id', $rows->pluck('listing.id')->all())->where('status', '!=', 'cancelled')->selectRaw('listing_id, count(*) as n')->groupBy('listing_id')->pluck('n', 'listing_id')
             : collect();
 
         $ranks = $sort === 'near' ? $this->reports->ranks() : [];
@@ -99,14 +113,19 @@ class MarketController extends Controller
             'image' => $chosen->hero_path ? route('market.hero', ['slug' => $chosen->slug, 'v' => substr(md5($chosen->hero_path), 0, 8)]) : null,
         ] : null;
 
+        $plain = $category === null && $q === '' && $from === null && ! $premium && $minStars === null && $request->query('stall') === null && $request->query('all') === null && $page === 1;
+
         return Inertia::render('market/index', [
+            'category' => $category ? $this->categoryNode($category, $inShop) : null,
+            'tree' => is_string($sector) && $chosen ? $this->categoryTree($chosen, $inShop) : [],
+            'storefront' => $plain && $chosen ? $this->storefront($chosen, $inShop, $ranges, $total, $hero) : null,
             'hero' => $hero,
             'sectors' => $sectors,
             'ranges' => $ranges,
             'hasPremium' => $all->contains(fn ($r) => $r['premium']),
             'items' => $this->withStars($rows->forPage($page, self::PER_PAGE)->map(fn ($r) => $this->card($r) + ['sellers' => (int) ($sellers[$r['listing']->catalog_product_id] ?? 1)])->values()),
             'total' => $total, 'page' => $page, 'perPage' => self::PER_PAGE,
-            'filters' => ['sector' => is_string($sector) ? $sector : null, 'premium' => $premium, 'q' => $q, 'from' => $from, 'to' => $to, 'sort' => $sort, 'stars' => $minStars],
+            'filters' => ['category' => $category?->slug, 'sector' => is_string($sector) ? $sector : null, 'premium' => $premium, 'q' => $q, 'from' => $from, 'to' => $to, 'sort' => $sort, 'stars' => $minStars, 'all' => $request->query('all') !== null],
         ]);
     }
 
@@ -140,10 +159,10 @@ class MarketController extends Controller
             'rating' => app(Reviews::class)->summary($listing),
             'offers' => $this->offersFor($listing, $viewer),
             'can_ask' => $viewer !== null && $viewer->id !== $listing->seller_id,
-            'wishlisted' => $viewer !== null && app(\App\Services\Market\Wishlist::class)->has($viewer, $listing),
+            'wishlisted' => $viewer !== null && app(Wishlist::class)->has($viewer, $listing),
             'districts' => config('bd.districts'),
             'listing' => $this->card(['listing' => $listing] + $p + ['premium' => $this->market->isPremium($listing, $p['price'])]) + [
-                'description' => $listing->description, 'preorder_days' => $listing->preorder_days, 'return_days' => $listing->return_days ?? app(\App\Services\Market\MarketCases::class)->returnDays(), 'return_note' => $listing->return_note, 'seo_title' => $listing->seo_title, 'seo_description' => $listing->seo_description, 'delivery_charge' => (float) $listing->delivery_charge, 'min_qty' => $p['min_qty'],
+                'description' => $listing->description, 'preorder_days' => $listing->preorder_days, 'return_days' => $listing->return_days ?? app(MarketCases::class)->returnDays(), 'return_note' => $listing->return_note, 'seo_title' => $listing->seo_title, 'seo_description' => $listing->seo_description, 'delivery_charge' => (float) $listing->delivery_charge, 'min_qty' => $p['min_qty'],
                 'in_stock' => $listing->variants()->exists() ? app(ListingVariants::class)->anyAvailable($listing) : ($listing->stock === null || (float) $listing->stock > 0),
                 'grid' => app(ListingVariants::class)->forBuyer($listing, $viewer),
                 'details' => ['weight' => $listing->item_weight !== null ? (float) $listing->item_weight : null, 'expires_on' => $listing->expires_on?->toDateString(), 'warranty_months' => $listing->warranty_months],
@@ -308,7 +327,196 @@ class MarketController extends Controller
     /** Asked once per seller for a request, not once per card. */
     private function trustedSeller(User $seller): bool
     {
-        return app(\App\Services\Market\SellerTrust::class)->trusted($seller);
+        return app(SellerTrust::class)->trusted($seller);
+    }
+
+    /** The category named in the address, inside the shop being looked at (or the first of that name anywhere). */
+    private function categoryFor(?string $sector, mixed $slug): ?Category
+    {
+        if (! is_string($slug) || $slug === '') {
+            return null;
+        }
+
+        return Category::where('slug', $slug)->where('is_active', true)
+            ->when($sector, fn ($q) => $q->whereHas('sector', fn ($s) => $s->where('slug', $sector)))->first();
+    }
+
+    /** How many of the visible products sit at or below each category of one shop. @return array<int, int> */
+    private function countsBelow(Sector $sector, $rows): array
+    {
+        $own = $rows->groupBy(fn ($r) => $r['listing']->category_id)->map->count();
+        $nodes = Category::where('sector_id', $sector->id)->where('is_active', true)->get(['id', 'parent_id']);
+        $counts = [];
+
+        foreach ($nodes as $n) {
+            $counts[$n->id] = (int) ($own[$n->id] ?? 0);
+        }
+        // Walk each node's own count up through its parents.
+        $parent = $nodes->pluck('parent_id', 'id');
+        foreach ($own as $id => $n) {
+            for ($up = $parent[$id] ?? null; $up !== null; $up = $parent[$up] ?? null) {
+                $counts[$up] = ($counts[$up] ?? 0) + $n;
+            }
+        }
+
+        return $counts;
+    }
+
+    /** One picture for a category: the first product photograph found at or below it. */
+    private function picture(Category $c, $rows): ?string
+    {
+        $ids = $c->selfAndDescendantIds();
+        $hit = $rows->first(fn ($r) => $r['listing']->photo_path !== null && in_array($r['listing']->category_id, $ids, true));
+
+        return $hit ? $this->photoUrl($hit['listing']) : null;
+    }
+
+    private function photoUrl(Listing $l): string
+    {
+        return route('market.photo', ['listing' => $l->id, 'v' => substr(md5($l->photo_path.$l->updated_at), 0, 8)]);
+    }
+
+    /** The node being looked at: its name, the trail from the top, and the nodes just below it with counts and a picture each. */
+    private function categoryNode(Category $c, $rows): array
+    {
+        $counts = $this->countsBelow($c->sector, $rows);
+        $name = fn (Category $x) => app()->getLocale() === 'bn' && $x->name_bn ? $x->name_bn : $x->name;
+
+        return [
+            'slug' => $c->slug, 'name' => $name($c),
+            'trail' => collect($c->trail())->map(fn (Category $x) => ['slug' => $x->slug, 'name' => $name($x)])->all(),
+            'children' => $c->children->map(fn (Category $k) => ['slug' => $k->slug, 'name' => $name($k), 'count' => $counts[$k->id] ?? 0, 'image' => $this->picture($k, $rows)])->filter(fn ($k) => $k['count'] > 0)->values()->all(),
+        ];
+    }
+
+    /** A shop's whole tree, as nested nodes with counts, for the side list. Nodes with nothing under them are left out. */
+    private function categoryTree(Sector $sector, $rows): array
+    {
+        $counts = $this->countsBelow($sector, $rows);
+        $all = Category::where('sector_id', $sector->id)->where('is_active', true)->orderBy('sort')->orderBy('name')->get()->groupBy('parent_id');
+        $name = fn (Category $x) => app()->getLocale() === 'bn' && $x->name_bn ? $x->name_bn : $x->name;
+        $grow = function ($parent) use (&$grow, $all, $counts, $name) {
+            return ($all[$parent] ?? collect())->filter(fn (Category $n) => ($counts[$n->id] ?? 0) > 0)
+                ->map(fn (Category $n) => ['slug' => $n->slug, 'name' => $name($n), 'count' => $counts[$n->id], 'children' => $grow($n->id)])->values()->all();
+        };
+
+        return $grow(null);
+    }
+
+    /**
+     * A shop's front page, as the admin built it: the active sections in their order, each with the products or words it needs, already in the
+     * viewer's language. A product shows once on the page (a shelf skips what an earlier shelf already showed). No sections means no front page.
+     */
+    private function storefront(Sector $sector, $rows, array $ranges, int $total, ?array $hero): ?array
+    {
+        $blocks = StorefrontBlock::where('sector_id', $sector->id)->where('is_active', true)->orderBy('sort')->orderBy('id')->get();
+
+        if ($blocks->isEmpty()) {
+            return null;
+        }
+
+        $counts = $this->countsBelow($sector, $rows);
+        $bn = app()->getLocale() === 'bn';
+        $name = fn (Category $x) => $bn && $x->name_bn ? $x->name_bn : $x->name;
+        $sold = MarketOrder::whereIn('listing_id', $rows->pluck('listing.id')->all())->where('status', '!=', 'cancelled')->selectRaw('listing_id, count(*) as n')->groupBy('listing_id')->pluck('n', 'listing_id');
+        $top = Category::where('sector_id', $sector->id)->whereNull('parent_id')->where('is_active', true)->orderBy('sort')->get()
+            ->map(fn (Category $c) => ['slug' => $c->slug, 'name' => $name($c), 'count' => $counts[$c->id] ?? 0, 'image' => $this->picture($c, $rows)])->filter(fn ($c) => $c['count'] > 0)->values()->all();
+
+        $used = [];
+        $pool = function (?string $source) use ($rows, $sold, $sector) {
+            if ($source === 'best') {
+                return $rows->sortByDesc(fn ($r) => [$sold[$r['listing']->id] ?? 0, $r['listing']->approved_at])->values();
+            }
+            if ($source === 'premium' || $source === 'top') {
+                return $rows->sortByDesc('price')->values();
+            }
+            if (is_string($source) && str_starts_with($source, 'category:')) {
+                $cat = Category::where('sector_id', $sector->id)->where('slug', substr($source, 9))->first();
+                $ids = $cat ? $cat->selfAndDescendantIds() : [];
+
+                return $rows->filter(fn ($r) => in_array($r['listing']->category_id, $ids, true))->sortByDesc(fn ($r) => $r['listing']->approved_at)->values();
+            }
+            if (is_numeric($source)) {
+                return $rows->filter(fn ($r) => $r['listing']->id === (int) $source)->values();
+            }
+
+            return $rows->sortByDesc(fn ($r) => $r['listing']->approved_at)->values();
+        };
+        $take = function ($set, int $limit) use (&$used) {
+            $out = $set->filter(fn ($r) => ! in_array($r['listing']->id, $used, true))->take($limit)->values();
+            foreach ($out as $r) {
+                $used[] = $r['listing']->id;
+            }
+
+            return $this->withStars($out->map(fn ($r) => $this->card($r))->values());
+        };
+        $image = fn (StorefrontBlock $b) => $b->image_path ? route('market.storefront-image', ['block' => $b->id, 'v' => substr(md5($b->image_path.$b->updated_at), 0, 8)]) : null;
+
+        $out = [];
+
+        foreach ($blocks as $b) {
+            $row = ['id' => $b->id, 'kind' => $b->kind, 'title' => $b->say('title'), 'text' => $b->say('text'), 'button' => $b->say('button')];
+
+            switch ($b->kind) {
+                case 'hero':
+                    $row['title'] = $row['title'] ?? ($hero ? ($bn && $hero['name_bn'] ? $hero['name_bn'] : $hero['name']) : $sector->name);
+                    $row['text'] = $row['text'] ?? ($hero ? ($bn && $hero['tagline_bn'] ? $hero['tagline_bn'] : $hero['tagline']) : null);
+                    $row['image'] = $image($b) ?? ($hero['image'] ?? null);
+                    $row['count'] = $total;
+                    break;
+                case 'categories':
+                    $row['categories'] = array_slice($top, 0, max(1, $b->item_limit));
+                    if ($row['categories'] === []) {
+                        continue 2;
+                    }
+                    break;
+                case 'products':
+                case 'premium':
+                    $row['source'] = $b->source;
+                    $row['products'] = $take($pool($b->source ?? ($b->kind === 'premium' ? 'premium' : 'fresh')), max(1, $b->item_limit));
+                    if ($row['products']->isEmpty()) {
+                        continue 2;
+                    }
+                    $row['products'] = $row['products']->all();
+                    break;
+                case 'banner':
+                    $item = $take($pool($b->source ?? 'top'), 1)->first();
+                    if (! $item) {
+                        continue 2;
+                    }
+                    $row['product'] = $item;
+                    $row['image'] = $image($b) ?? $item['photo'];
+                    break;
+                case 'budget':
+                    $row['ranges'] = $ranges;
+                    if ($ranges === []) {
+                        continue 2;
+                    }
+                    break;
+                case 'service':
+                case 'faq':
+                    $row['items'] = $b->itemList();
+                    if ($row['items'] === []) {
+                        continue 2;
+                    }
+                    break;
+                case 'cta':
+                    $row['count'] = $total;
+                    break;
+            }
+
+            $out[] = $row;
+        }
+
+        return ['sector' => $sector->slug, 'count' => $total, 'blocks' => $out];
+    }
+
+    /** One section's own picture (the admin uploaded it), served from private storage. */
+    public function storefrontImage(StorefrontBlock $block): StreamedResponse
+    {
+        abort_unless($block->image_path && Storage::exists($block->image_path) && $block->is_active && ($block->sector_id === null || $block->sector?->is_active), 404);
+
+        return Storage::response($block->image_path, null, ['Cache-Control' => 'public, max-age=31536000, immutable', 'X-Content-Type-Options' => 'nosniff']);
     }
 
     /** What the list and the page show of a listing. The seller's price and our commission are never in it. */
@@ -319,7 +527,8 @@ class MarketController extends Controller
 
         return [
             'id' => $l->id, 'title' => $l->title, 'price' => $r['price'], 'premium' => $r['premium'] ?? false, 'near' => $r['near'] ?? false,
-            'unit' => $l->sector->unit, 'sector' => $l->sector->slug, 'sector_name' => $l->sector->name,
+            'category' => $l->category?->name, 'category' => $l->category?->name, 'unit' => $l->sector->unit, 'sector' => $l->sector->slug, 'sector_name' => $l->sector->name,
+            'blurb' => Str::limit(trim(strip_tags((string) $l->description)), 150), 'warranty' => $l->warranty_months, 'cod' => (bool) $l->cod_allowed,
             'photo' => $l->photo_path !== null ? route('market.photo', ['listing' => $l->id, 'v' => substr(md5($l->photo_path.$l->updated_at), 0, 8)]) : null, 'seller' => $this->market->sellerName($l),
             // A seller with a clean record (or whom we marked) wears the badge; it says nothing about who they are.
             'trusted' => $l->seller ? $this->trustedSeller($l->seller) : false,

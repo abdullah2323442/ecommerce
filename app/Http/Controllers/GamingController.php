@@ -10,8 +10,10 @@ use App\Services\Stock\StockException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /** Game top-up (spec ch 18): open to everyone, no account needed; online payment only. */
 class GamingController extends Controller
@@ -20,7 +22,24 @@ class GamingController extends Controller
 
     public function index(): Response
     {
-        return Inertia::render('gaming/index', ['games' => Game::where('is_active', true)->orderBy('sort')->orderBy('name')->get()->map(fn (Game $g) => ['name' => $g->name, 'slug' => $g->slug, 'packages' => $g->packages()->where('is_active', true)->count()])->filter(fn ($g) => $g['packages'] > 0)->values()]);
+        $games = Game::where('is_active', true)->orderBy('sort')->orderBy('name')->with(['packages' => fn ($q) => $q->where('is_active', true)->orderBy('sort')->orderBy('price')])->get()
+            ->filter(fn (Game $g) => $g->packages->isNotEmpty())
+            ->map(fn (Game $g) => [
+                'name' => $g->name, 'slug' => $g->slug, 'packages' => $g->packages->count(),
+                'cover' => $g->photo_path ? route('gaming.cover', ['game' => $g->slug, 'v' => substr(md5($g->photo_path), 0, 8)]) : null,
+                'packs' => $g->packages->map(fn (GamePackage $p) => ['id' => $p->id, 'name' => $p->name, 'price' => (float) $p->price])->values(),
+                'from' => (float) $g->packages->min('price'),
+            ])->values();
+
+        return Inertia::render('gaming/index', ['games' => $games, 'front' => app(\App\Services\Storefront\PageFronts::class)->gaming($games->all())]);
+    }
+
+    /** A game's cover picture, shown to everyone while the game is on sale. */
+    public function cover(Game $game): StreamedResponse
+    {
+        abort_unless($game->is_active && $game->photo_path && Storage::exists($game->photo_path), 404);
+
+        return Storage::response($game->photo_path, null, ['Cache-Control' => 'public, max-age=31536000, immutable', 'X-Content-Type-Options' => 'nosniff']);
     }
 
     public function show(Request $request, Game $game): Response
@@ -28,7 +47,8 @@ class GamingController extends Controller
         abort_unless($game->is_active, 404);
 
         return Inertia::render('gaming/show', [
-            'game' => ['name' => $game->name, 'slug' => $game->slug, 'id_label' => $game->id_label, 'needs_zone' => $game->needs_zone, 'zone_label' => $game->zone_label],
+            'game' => ['name' => $game->name, 'slug' => $game->slug, 'id_label' => $game->id_label, 'needs_zone' => $game->needs_zone, 'zone_label' => $game->zone_label, 'cover' => $game->photo_path ? route('gaming.cover', ['game' => $game->slug, 'v' => substr(md5($game->photo_path), 0, 8)]) : null],
+            'preselect' => (int) $request->query('pack', 0),
             'packages' => $game->packages()->where('is_active', true)->get()->map(fn (GamePackage $p) => ['id' => $p->id, 'name' => $p->name, 'price' => (float) $p->price])->values(),
             'me' => $request->user() ? ['phone' => $request->user()->phone] : null,
         ]);

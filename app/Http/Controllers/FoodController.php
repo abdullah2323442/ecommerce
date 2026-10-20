@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FoodFavorite;
+use App\Models\FoodItem;
 use App\Models\FoodOrder;
 use App\Models\Restaurant;
-use App\Models\FoodFavorite;
 use App\Services\Food\CustomFood;
 use App\Services\Food\FoodOrders;
 use App\Services\Food\Restaurants;
@@ -32,9 +33,29 @@ class FoodController extends Controller
             $request->session()->put('food_area', $area);
         }
 
+        // How the meal will be had: brought to the door (the buyer's area decides who delivers) or eaten at the restaurant.
+        $mode = $request->query('mode') === 'dine' ? 'dine' : 'delivery';
+        $all = Restaurant::where('status', 'active')->get();
+        $list = $mode === 'dine'
+            ? $all->filter(fn (Restaurant $r) => (bool) $r->eat_there)->sortBy(fn (Restaurant $r) => [$this->restaurants->isOpenNow($r) ? 0 : 1, $r->name])->values()
+            : ($area === '' ? $all->sortBy(fn (Restaurant $r) => [$this->restaurants->isOpenNow($r) ? 0 : 1, $r->name])->values() : $this->restaurants->near($area));
+
+        // Dishes with a photograph, from restaurants that are on, for the big promotion banners.
+        $featured = FoodItem::query()->with('restaurant:id,name,status')->where('available', true)->whereNotNull('photo_path')
+            ->whereHas('restaurant', fn ($q) => $q->where('status', 'active'))->orderByDesc('id')->limit(6)->get()
+            ->map(fn (FoodItem $i) => ['id' => $i->id, 'restaurant' => $i->restaurant_id, 'restaurant_name' => $i->restaurant->name, 'name' => $i->name, 'category' => $i->category, 'price' => (float) $i->price, 'photo' => route('food.item-photo', $i)])->values();
+
+        // A chosen kind of food narrows the page to it: its dishes, and the restaurants that serve it.
+        $category = trim((string) $request->query('category', ''));
+        $category = $category !== '' && FoodItem::where('available', true)->where('category', $category)->exists() ? $category : null;
+        $cards = $list->when($category !== null, fn ($l) => $l->filter(fn (Restaurant $r) => FoodItem::where('restaurant_id', $r->id)->where('available', true)->where('category', $category)->exists()))->map(fn (Restaurant $r) => $this->card($r))->values();
+
         return Inertia::render('food/index', [
+            'front' => app(\App\Services\Storefront\PageFronts::class)->food($cards->all(), $category),
             'area' => $area,
-            'restaurants' => $area === '' ? [] : $this->restaurants->near($area)->map(fn (Restaurant $r) => $this->card($r))->values(),
+            'mode' => $mode,
+            'restaurants' => $list->map(fn (Restaurant $r) => $this->card($r))->values(),
+            'featured' => $featured,
             'areas' => Restaurant::where('status', 'active')->get('areas')->pluck('areas')->flatten()->unique()->sort()->values(),
         ]);
     }
@@ -47,7 +68,7 @@ class FoodController extends Controller
 
         return Inertia::render('food/show', [
             'restaurant' => $this->card($restaurant) + ['eat_there' => (bool) $restaurant->eat_there, 'address' => $restaurant->address, 'manual_charge' => $restaurant->charge_mode === 'manual', 'advance_over' => $restaurant->advance_over !== null ? (float) $restaurant->advance_over : null, 'advance_percent' => $restaurant->advance_percent],
-            'items' => $this->restaurants->menu($restaurant)->map(fn ($i) => ['id' => $i->id, 'name' => $i->name, 'description' => $i->description, 'price' => (float) $i->price, 'photo' => $i->photo_path !== null ? route('food.item-photo', $i) : null, 'ready_made' => $i->ready_made, 'cook_minutes' => $i->cook_minutes])->values(),
+            'items' => $this->restaurants->menu($restaurant)->map(fn ($i) => ['id' => $i->id, 'name' => $i->name, 'description' => $i->description, 'category' => $i->category, 'price' => (float) $i->price, 'photo' => $i->photo_path !== null ? route('food.item-photo', $i) : null, 'ready_made' => $i->ready_made, 'cook_minutes' => $i->cook_minutes])->values(),
             'area' => $area, 'serves' => $area !== '' && $this->restaurants->serves($restaurant, $area),
             'charge' => $area !== '' ? $this->orders->charge($restaurant, $area)[0] : null,
             // Build your own (spec ch 17): the bases, the ingredients at this restaurant's own prices, what does not go together, the limit.
@@ -124,7 +145,7 @@ class FoodController extends Controller
         return Storage::response($order->complaint_photo, null, ['Cache-Control' => 'private, max-age=3600']);
     }
 
-    public function itemPhoto(\App\Models\FoodItem $item): StreamedResponse
+    public function itemPhoto(FoodItem $item): StreamedResponse
     {
         abort_unless($item->photo_path !== null && Storage::exists($item->photo_path) && $item->restaurant->status === 'active', 404);
 

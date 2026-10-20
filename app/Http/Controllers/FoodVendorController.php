@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Enums\AccountType;
+use App\Models\FoodBase;
 use App\Models\FoodItem;
 use App\Models\FoodOrder;
-use App\Models\Restaurant;
-use App\Models\FoodBase;
 use App\Models\Ingredient;
+use App\Models\IngredientRequest;
 use App\Models\IngredientRule;
+use App\Models\Restaurant;
 use App\Models\RestaurantIngredient;
 use App\Services\Food\CustomFood;
 use App\Services\Food\FoodOrders;
@@ -68,7 +69,7 @@ class FoodVendorController extends Controller
             'bases' => FoodBase::where('restaurant_id', $r->id)->orderBy('kind')->get()->map(fn (FoodBase $b) => ['id' => $b->id, 'kind' => $b->kind, 'name' => $b->name, 'price' => (float) $b->price, 'cook_minutes' => $b->cook_minutes, 'available' => $b->available, 'sold_out_today' => $b->available && ! $b->isOrderable()])->values(),
             'rules' => IngredientRule::where('restaurant_id', $r->id)->get()->map(fn ($x) => ['id' => $x->id, 'a' => $names[$x->ingredient_a_id] ?? '', 'b' => $names[$x->ingredient_b_id] ?? ''])->values(),
             'ticked' => $have->map(fn ($ri) => ['id' => $ri->ingredient_id, 'name' => $names[$ri->ingredient_id] ?? ''])->values(),
-            'requests' => \App\Models\IngredientRequest::where('restaurant_id', $r->id)->latest('id')->limit(15)->get(['id', 'name', 'status', 'note']),
+            'requests' => IngredientRequest::where('restaurant_id', $r->id)->latest('id')->limit(15)->get(['id', 'name', 'status', 'note']),
         ]);
     }
 
@@ -340,7 +341,7 @@ class FoodVendorController extends Controller
     private function itemRow(FoodItem $i): array
     {
         return [
-            'id' => $i->id, 'name' => $i->name, 'description' => $i->description, 'price' => (float) $i->price, 'cook_minutes' => $i->cook_minutes, 'ready_made' => $i->ready_made, 'available' => $i->available,
+            'id' => $i->id, 'name' => $i->name, 'description' => $i->description, 'category' => $i->category, 'price' => (float) $i->price, 'cook_minutes' => $i->cook_minutes, 'ready_made' => $i->ready_made, 'available' => $i->available,
             'sold_out_today' => ! $i->isOrderable() && $i->available, 'has_photo' => $i->photo_path !== null,
         ];
     }
@@ -358,7 +359,7 @@ class FoodVendorController extends Controller
 
     private function itemData(Request $request): array
     {
-        return $request->validate(['name' => ['required', 'string', 'min:2', 'max:120'], 'description' => ['nullable', 'string', 'max:300'], 'price' => ['required', 'numeric', 'gt:0', 'max:100000'], 'cook_minutes' => ['nullable', 'integer', 'min:0', 'max:240'], 'ready_made' => ['nullable', 'boolean'], 'photo' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120']]);
+        return $request->validate(['name' => ['required', 'string', 'min:2', 'max:120'], 'description' => ['nullable', 'string', 'max:300'], 'category' => ['nullable', 'string', 'max:40'], 'price' => ['required', 'numeric', 'gt:0', 'max:100000'], 'cook_minutes' => ['nullable', 'integer', 'min:0', 'max:240'], 'ready_made' => ['nullable', 'boolean'], 'photo' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120']]);
     }
 
     private function attempt(callable $do, string $done): RedirectResponse

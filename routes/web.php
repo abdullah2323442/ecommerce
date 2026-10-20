@@ -4,13 +4,22 @@ use App\Http\Controllers\Admin\ApplicationController;
 use App\Http\Controllers\Admin\ApprovalController;
 use App\Http\Controllers\Admin\BehaviorController;
 use App\Http\Controllers\Admin\BinController;
+use App\Http\Controllers\Admin\CatalogController as AdminCatalogController;
 use App\Http\Controllers\Admin\ControlledController;
 use App\Http\Controllers\Admin\CounterController;
+use App\Http\Controllers\Admin\CourierBookingController;
 use App\Http\Controllers\Admin\CourierController;
+use App\Http\Controllers\Admin\CraftsmanController as AdminCraftsmanController;
+use App\Http\Controllers\Admin\CustomChatController;
 use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\CustomOrderController as AdminCustomOrderController;
 use App\Http\Controllers\Admin\DayClosingController;
+use App\Http\Controllers\Admin\DeliveryController as AdminDeliveryController;
 use App\Http\Controllers\Admin\ExpiryController;
+use App\Http\Controllers\Admin\FoodController as AdminFoodController;
+use App\Http\Controllers\Admin\GamingController as AdminGamingController;
 use App\Http\Controllers\Admin\HelpController as AdminHelpController;
+use App\Http\Controllers\Admin\IntegrationController as AdminIntegrationController;
 use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\MarketController as AdminMarketController;
 use App\Http\Controllers\Admin\MedicineController as AdminMedicineController;
@@ -20,74 +29,76 @@ use App\Http\Controllers\Admin\MpoController;
 use App\Http\Controllers\Admin\OfferController;
 use App\Http\Controllers\Admin\OfflineCounterController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\PaymentController as AdminPaymentController;
 use App\Http\Controllers\Admin\PreorderController as AdminPreorderController;
 use App\Http\Controllers\Admin\PrescriptionController;
 use App\Http\Controllers\Admin\ProductRequestController as AdminProductRequestController;
 use App\Http\Controllers\Admin\QuestionController as AdminQuestionController;
+use App\Http\Controllers\Admin\QuoteController as AdminQuoteController;
 use App\Http\Controllers\Admin\ReturnController;
+use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
 use App\Http\Controllers\Admin\SalesReportController;
 use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\Admin\SiteController as AdminSiteController;
 use App\Http\Controllers\Admin\StaffController;
 use App\Http\Controllers\Admin\StockController;
 use App\Http\Controllers\Admin\StockCountController;
 use App\Http\Controllers\Admin\StockReportController;
 use App\Http\Controllers\Admin\StockSourceController;
+use App\Http\Controllers\Admin\StorefrontController as AdminStorefrontController;
+use App\Http\Controllers\Admin\TestimonialController as AdminTestimonialController;
 use App\Http\Controllers\Admin\TierController;
+use App\Http\Controllers\Admin\TokenController as AdminTokenController;
+use App\Http\Controllers\Admin\TwoFactorResetController;
+use App\Http\Controllers\Admin\VatReportController;
 use App\Http\Controllers\Admin\WeightController;
+use App\Http\Controllers\Auth\SocialLoginController;
+use App\Http\Controllers\BrandImageController;
 use App\Http\Controllers\BusinessApplicationController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\CourierWebhookController;
+use App\Http\Controllers\CraftsmanController;
+use App\Http\Controllers\CustomOrderController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FoodController;
+use App\Http\Controllers\FoodVendorController;
 use App\Http\Controllers\FormController;
+use App\Http\Controllers\GamingController;
 use App\Http\Controllers\HelpController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InboxController;
 use App\Http\Controllers\InfoController;
 use App\Http\Controllers\LocaleController;
+use App\Http\Controllers\LocationController;
+use App\Http\Controllers\MarketCartController;
 use App\Http\Controllers\MarketController;
-use App\Http\Controllers\WishlistController;
-use App\Http\Controllers\CustomOrderController;
-use App\Http\Controllers\CraftsmanController;
-use App\Http\Controllers\Admin\CraftsmanController as AdminCraftsmanController;
-use App\Http\Controllers\Admin\CustomChatController;
-use App\Http\Controllers\Admin\FoodController as AdminFoodController;
-use App\Http\Controllers\FoodController;
-use App\Http\Controllers\GamingController;
-use App\Http\Controllers\Admin\GamingController as AdminGamingController;
-use App\Http\Controllers\FoodVendorController;
-use App\Http\Controllers\MeasurementProfileController;
-use App\Http\Controllers\Admin\CustomOrderController as AdminCustomOrderController;
-use App\Http\Controllers\QuoteController;
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\Admin\PaymentController as AdminPaymentController;
-use App\Http\Controllers\Admin\CourierBookingController;
-use App\Http\Controllers\CourierWebhookController;
-use App\Http\Controllers\BrandImageController;
-use App\Http\Controllers\Admin\SiteController as AdminSiteController;
-use App\Http\Controllers\Admin\IntegrationController as AdminIntegrationController;
-use App\Http\Controllers\ReceiptController;
-use App\Http\Controllers\SitemapController;
-use App\Http\Controllers\Admin\VatReportController;
-use App\Http\Controllers\Admin\DeliveryController as AdminDeliveryController;
-use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
-use App\Http\Controllers\Admin\CatalogController as AdminCatalogController;
 use App\Http\Controllers\MarketOfferController;
-use App\Http\Controllers\WalletController;
-use App\Http\Controllers\Admin\TokenController as AdminTokenController;
-use App\Http\Controllers\Admin\QuoteController as AdminQuoteController;
 use App\Http\Controllers\MarketOrderController;
+use App\Http\Controllers\MeasurementProfileController;
 use App\Http\Controllers\MedicineSearchController;
 use App\Http\Controllers\MemoController;
 use App\Http\Controllers\MpoOfferController;
 use App\Http\Controllers\MpoPortalController;
+use App\Http\Controllers\OrderHistoryController;
 use App\Http\Controllers\PaikariController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PreorderController;
 use App\Http\Controllers\ProductRequestController;
 use App\Http\Controllers\PublicOrderController;
+use App\Http\Controllers\PwaController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\QuoteController;
+use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\SellController;
+use App\Http\Controllers\SitemapController;
+use App\Http\Controllers\SiteSearchController;
+use App\Http\Controllers\SupportController;
+use App\Http\Controllers\WalletController;
 use App\Http\Controllers\WholesaleController;
+use App\Http\Controllers\WishlistController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 // Public home page (spec ch 13). Real data only; no mention of any restricted section.
@@ -100,7 +111,7 @@ Route::get('sitemap-pages.xml', [SitemapController::class, 'pages'])->name('site
 Route::get('sitemap-medicines-{page}.xml', [SitemapController::class, 'medicines'])->whereNumber('page')->name('sitemap.medicines');
 
 // Medicine database: open to everyone (spec ch 11). MRP only; never any stock information.
-Route::get('search', [\App\Http\Controllers\SiteSearchController::class, 'index'])->middleware('throttle:60,1,site-search')->name('search');
+Route::get('search', [SiteSearchController::class, 'index'])->middleware('throttle:60,1,site-search')->name('search');
 Route::get('medicines', [MedicineSearchController::class, 'index'])
     ->middleware('throttle:90,1,medicine-search')
     ->name('medicines.index');
@@ -127,7 +138,7 @@ Route::get('market/photo/{listing}', [MarketController::class, 'photo'])->whereN
 Route::get('market/{listing}', [MarketController::class, 'show'])->whereNumber('listing')->name('market.show');
 Route::post('market/{listing}/report', [MarketController::class, 'report'])->whereNumber('listing')->middleware(['auth', 'throttle:10,1,market-report'])->name('market.report');
 // Coming back from Google or Facebook. Public on purpose: the person may or may not be signed in yet.
-Route::get('auth/{provider}/callback', [\App\Http\Controllers\Auth\SocialLoginController::class, 'callback'])->whereIn('provider', ['google', 'facebook'])->middleware('throttle:30,1,social-callback')->name('social.callback');
+Route::get('auth/{provider}/callback', [SocialLoginController::class, 'callback'])->whereIn('provider', ['google', 'facebook'])->middleware('throttle:30,1,social-callback')->name('social.callback');
 Route::post('webhooks/courier/{provider}', [CourierWebhookController::class, 'receive'])->whereIn('provider', ['steadfast'])->middleware('throttle:120,1,courier-webhook')->name('courier.webhook');
 // Paying for an order online: start from the order's private page; the gateway's return and its own message only start a check.
 Route::post('orders/{token}/pay', [PaymentController::class, 'start'])->where('token', '[A-Za-z0-9]{40}')->middleware('throttle:10,1,order-pay')->name('orders.pay');
@@ -135,29 +146,30 @@ Route::post('market/orders/{token}/pay', [PaymentController::class, 'startMarket
 Route::match(['get', 'post'], 'webhooks/payments/{provider}/result/{result}', [PaymentController::class, 'result'])->whereIn('provider', ['sslcommerz'])->whereIn('result', ['success', 'fail', 'cancel'])->middleware('throttle:60,1,payment-return')->name('payments.result');
 Route::post('webhooks/payments/{provider}/ipn', [PaymentController::class, 'ipn'])->whereIn('provider', ['sslcommerz'])->middleware('throttle:120,1,payment-ipn')->name('payments.ipn');
 // The installable app: manifest, icons, service worker and the no-line page.
-Route::get('manifest.webmanifest', [\App\Http\Controllers\PwaController::class, 'manifest'])->name('pwa.manifest');
-Route::get('pwa/icon/{name}.png', [\App\Http\Controllers\PwaController::class, 'icon'])->whereIn('name', ['192', '512', 'maskable-512', 'apple-180'])->name('pwa.icon');
-Route::get('sw.js', [\App\Http\Controllers\PwaController::class, 'worker'])->name('pwa.worker');
-Route::get('offline', [\App\Http\Controllers\PwaController::class, 'offline'])->name('pwa.offline');
-Route::get('sector-hero/{slug}', [\App\Http\Controllers\MarketController::class, 'hero'])->where('slug', '[a-z0-9_]+')->name('market.hero');
+Route::get('manifest.webmanifest', [PwaController::class, 'manifest'])->name('pwa.manifest');
+Route::get('pwa/icon/{name}.png', [PwaController::class, 'icon'])->whereIn('name', ['192', '512', 'maskable-512', 'apple-180'])->name('pwa.icon');
+Route::get('sw.js', [PwaController::class, 'worker'])->name('pwa.worker');
+Route::get('offline', [PwaController::class, 'offline'])->name('pwa.offline');
+Route::get('sector-hero/{slug}', [MarketController::class, 'hero'])->where('slug', '[a-z0-9_]+')->name('market.hero');
+Route::get('storefront-image/{block}', [MarketController::class, 'storefrontImage'])->whereNumber('block')->name('market.storefront-image');
 Route::get('site-image/{name}', [BrandImageController::class, 'block'])->where('name', '[A-Za-z0-9_.-]+')->name('site.block-image');
 Route::get('brand/{which}', [BrandImageController::class, 'show'])->whereIn('which', ['logo', 'favicon'])->name('brand.image');
 Route::get('shop/{seller}', [MarketController::class, 'shop'])->whereNumber('seller')->name('shop.show');
 // A friend's referral link (spec ch 24): the code is kept for sign-up, then the visitor lands on the register page.
-Route::get('r/{code}', function (\Illuminate\Http\Request $request, string $code) {
+Route::get('r/{code}', function (Request $request, string $code) {
     if (preg_match('/^[A-Za-z0-9]{6,10}$/', $code)) {
         $request->session()->put('referral_code', strtoupper($code));
     }
 
     return redirect('/register');
 })->name('referral.link');
-Route::get('history', [\App\Http\Controllers\OrderHistoryController::class, 'index'])->middleware('auth')->name('history');
-Route::get('market-cart', [\App\Http\Controllers\MarketCartController::class, 'show'])->name('market.cart');
-Route::post('market-cart', [\App\Http\Controllers\MarketCartController::class, 'add'])->middleware('throttle:60,1,market-cart')->name('market.cart.add');
-Route::post('market-cart/checkout', [\App\Http\Controllers\MarketCartController::class, 'checkout'])->middleware('throttle:10,1,market-checkout')->name('market.cart.checkout');
-Route::put('market-cart/{key}', [\App\Http\Controllers\MarketCartController::class, 'update'])->where('key', '[0-9]+:[0-9]+')->name('market.cart.update');
-Route::delete('market-cart/{key}', [\App\Http\Controllers\MarketCartController::class, 'remove'])->where('key', '[0-9]+:[0-9]+')->name('market.cart.remove');
-Route::get('market/packages/{token}', [\App\Http\Controllers\MarketCartController::class, 'packages'])->where('token', '[A-Za-z0-9]{40}')->name('market.packages');
+Route::get('history', [OrderHistoryController::class, 'index'])->middleware('auth')->name('history');
+Route::get('market-cart', [MarketCartController::class, 'show'])->name('market.cart');
+Route::post('market-cart', [MarketCartController::class, 'add'])->middleware('throttle:60,1,market-cart')->name('market.cart.add');
+Route::post('market-cart/checkout', [MarketCartController::class, 'checkout'])->middleware('throttle:10,1,market-checkout')->name('market.cart.checkout');
+Route::put('market-cart/{key}', [MarketCartController::class, 'update'])->where('key', '[0-9]+:[0-9]+')->name('market.cart.update');
+Route::delete('market-cart/{key}', [MarketCartController::class, 'remove'])->where('key', '[0-9]+:[0-9]+')->name('market.cart.remove');
+Route::get('market/packages/{token}', [MarketCartController::class, 'packages'])->where('token', '[A-Za-z0-9]{40}')->name('market.packages');
 Route::get('wishlist', [WishlistController::class, 'index'])->middleware('auth')->name('wishlist');
 Route::post('market/{listing}/wishlist', [WishlistController::class, 'toggle'])->whereNumber('listing')->middleware(['auth', 'throttle:60,1,wishlist'])->name('wishlist.toggle');
 Route::post('shop/{seller}/follow', [MarketController::class, 'follow'])->whereNumber('seller')->middleware(['auth', 'throttle:20,1,shop-follow'])->name('shop.follow');
@@ -199,11 +211,11 @@ Route::middleware('auth')->prefix('custom')->name('custom.')->group(function () 
 Route::get('market-orders', [MarketOrderController::class, 'index'])->middleware('auth')->name('market.orders');
 
 // Support tickets (spec ch 29): anyone writes to the shop, name and phone needed; the private link follows the answer.
-Route::get('support/new', [\App\Http\Controllers\SupportController::class, 'create'])->name('support.create');
-Route::post('support', [\App\Http\Controllers\SupportController::class, 'store'])->middleware('throttle:5,60,support-new')->name('support.store');
-Route::get('support/t/{token}', [\App\Http\Controllers\SupportController::class, 'show'])->where('token', '[A-Za-z0-9]{40}')->name('support.show');
-Route::post('support/t/{token}/reply', [\App\Http\Controllers\SupportController::class, 'reply'])->where('token', '[A-Za-z0-9]{40}')->middleware('throttle:20,60,support-reply')->name('support.reply');
-Route::get('support', [\App\Http\Controllers\SupportController::class, 'index'])->middleware('auth')->name('support.index');
+Route::get('support/new', [SupportController::class, 'create'])->name('support.create');
+Route::post('support', [SupportController::class, 'store'])->middleware('throttle:5,60,support-new')->name('support.store');
+Route::get('support/t/{token}', [SupportController::class, 'show'])->where('token', '[A-Za-z0-9]{40}')->name('support.show');
+Route::post('support/t/{token}/reply', [SupportController::class, 'reply'])->where('token', '[A-Za-z0-9]{40}')->middleware('throttle:20,60,support-reply')->name('support.reply');
+Route::get('support', [SupportController::class, 'index'])->middleware('auth')->name('support.index');
 
 // The Help board (spec ch 19): anyone reads, signed-in people post, comment and report. Every post is approved first.
 Route::get('help', [HelpController::class, 'index'])->name('help.index');
@@ -230,7 +242,7 @@ Route::post('cart', [CartController::class, 'add'])->middleware('throttle:60,1,c
 Route::put('cart/{key}', [CartController::class, 'update'])->where('key', '[0-9]+:(box|strip|piece)')->name('cart.update');
 Route::delete('cart/{key}', [CartController::class, 'remove'])->where('key', '[0-9]+:(box|strip|piece)')->name('cart.remove');
 Route::get('checkout', [CheckoutController::class, 'show'])->name('checkout.show');
-Route::get('location/lookup', [\App\Http\Controllers\LocationController::class, 'lookup'])->middleware('throttle:20,1,location')->name('location.lookup');
+Route::get('location/lookup', [LocationController::class, 'lookup'])->middleware('throttle:20,1,location')->name('location.lookup');
 Route::get('checkout/quote', [CheckoutController::class, 'quote'])->middleware('throttle:120,1,checkout-quote')->name('checkout.quote');
 Route::post('checkout', [CheckoutController::class, 'place'])->middleware('throttle:6,1,checkout')->name('checkout.place');
 Route::get('orders/{token}', [PublicOrderController::class, 'show'])->where('token', '[A-Za-z0-9]{40}')->name('orders.show');
@@ -367,6 +379,7 @@ Route::delete('food/favorites/{favorite}', [FoodController::class, 'forgetFavori
 
 // Game top-up (spec ch 18): open to everyone; online payment only.
 Route::get('gaming', [GamingController::class, 'index'])->name('gaming.index');
+Route::get('gaming/{game:slug}/cover', [GamingController::class, 'cover'])->name('gaming.cover');
 Route::get('gaming/orders/{token}', [GamingController::class, 'order'])->where('token', '[A-Za-z0-9]{40}')->name('gaming.order');
 Route::post('gaming/orders/{token}/claim', [GamingController::class, 'claim'])->where('token', '[A-Za-z0-9]{40}')->middleware('throttle:10,1,gaming-claim')->name('gaming.claim');
 Route::post('gaming/orders/{token}/cancel', [GamingController::class, 'cancel'])->where('token', '[A-Za-z0-9]{40}')->middleware('throttle:10,1,gaming-cancel')->name('gaming.cancel');
@@ -436,7 +449,7 @@ Route::middleware('auth')->group(function () {
 // Admin panel (spec ch 25). Section gate keeps everyone else out silently; the policy
 // gate then limits customer, tier and pricing controls to the admin account.
 Route::middleware(['auth', 'section:admin_panel', 'two-factor.required'])->prefix('admin')->name('admin.')->group(function () {
-    Route::post('users/{user}/two-factor/reset', [\App\Http\Controllers\Admin\TwoFactorResetController::class, 'reset'])->whereNumber('user')->name('users.two-factor.reset');
+    Route::post('users/{user}/two-factor/reset', [TwoFactorResetController::class, 'reset'])->whereNumber('user')->name('users.two-factor.reset');
     Route::get('customers', [CustomerController::class, 'index'])->name('customers.index');
     Route::get('customers/{user}', [CustomerController::class, 'show'])->name('customers.show');
     Route::patch('customers/{user}/tier', [CustomerController::class, 'updateTier'])->name('customers.tier');
@@ -558,6 +571,8 @@ Route::middleware(['auth', 'section:admin_panel', 'two-factor.required'])->prefi
     Route::get('gaming', [AdminGamingController::class, 'index'])->name('gaming.index');
     Route::post('gaming/games', [AdminGamingController::class, 'storeGame'])->name('gaming.games.store');
     Route::put('gaming/games/{game}', [AdminGamingController::class, 'updateGame'])->whereNumber('game')->name('gaming.games.update');
+    Route::post('gaming/games/{game}/cover', [AdminGamingController::class, 'cover'])->whereNumber('game')->middleware('throttle:30,1,game-cover')->name('gaming.games.cover');
+    Route::delete('gaming/games/{game}/cover', [AdminGamingController::class, 'removeCover'])->whereNumber('game')->name('gaming.games.cover.remove');
     Route::post('gaming/games/{game}/packages', [AdminGamingController::class, 'storePackage'])->whereNumber('game')->name('gaming.packages.store');
     Route::put('gaming/packages/{package}', [AdminGamingController::class, 'updatePackage'])->whereNumber('package')->name('gaming.packages.update');
     Route::post('gaming/orders/{order}/{action}', [AdminGamingController::class, 'act'])->whereNumber('order')->name('gaming.orders.act');
@@ -592,6 +607,17 @@ Route::middleware(['auth', 'section:admin_panel', 'two-factor.required'])->prefi
     Route::post('craftsmen', [AdminCraftsmanController::class, 'store'])->name('craftsmen.store');
     Route::post('craftsmen/{user}/pay', [AdminCraftsmanController::class, 'pay'])->name('craftsmen.pay');
     Route::post('custom/{order}/{step}', [AdminCustomOrderController::class, 'step'])->name('custom.step');
+    // Shop fronts: the sections of each shop's front page, built and worded by the owner.
+    Route::get('storefront', [AdminStorefrontController::class, 'index'])->name('storefront.index');
+    Route::post('storefront/{sector}/defaults', [AdminStorefrontController::class, 'seed'])->whereNumber('sector')->name('storefront.seed');
+    Route::post('storefront/{sector}/blocks', [AdminStorefrontController::class, 'store'])->whereNumber('sector')->name('storefront.store');
+    Route::post('storefront/pages/{page}/defaults', [AdminStorefrontController::class, 'seedPage'])->whereIn('page', ['medicines', 'food', 'gaming'])->name('storefront.seed-page');
+    Route::post('storefront/pages/{page}/blocks', [AdminStorefrontController::class, 'storePage'])->whereIn('page', ['medicines', 'food', 'gaming'])->name('storefront.store-page');
+    Route::put('storefront/blocks/{block}', [AdminStorefrontController::class, 'update'])->whereNumber('block')->name('storefront.update');
+    Route::post('storefront/blocks/{block}/move', [AdminStorefrontController::class, 'move'])->whereNumber('block')->name('storefront.move');
+    Route::delete('storefront/blocks/{block}', [AdminStorefrontController::class, 'destroy'])->whereNumber('block')->name('storefront.destroy');
+    Route::post('storefront/blocks/{block}/image', [AdminStorefrontController::class, 'image'])->whereNumber('block')->middleware('throttle:30,1,storefront-image')->name('storefront.image');
+    Route::delete('storefront/blocks/{block}/image', [AdminStorefrontController::class, 'removeImage'])->whereNumber('block')->name('storefront.image.remove');
     Route::get('site', [AdminSiteController::class, 'index'])->name('site.index');
     Route::get('site/builder', [AdminSiteController::class, 'builder'])->name('site.builder');
     Route::put('site/blocks', [AdminSiteController::class, 'saveBlocks'])->name('site.blocks');
@@ -606,12 +632,12 @@ Route::middleware(['auth', 'section:admin_panel', 'two-factor.required'])->prefi
     Route::get('orders/{invoice}/courier-places', [CourierBookingController::class, 'places'])->whereNumber('invoice')->middleware('throttle:60,1,courier-places')->name('orders.courier-places');
     Route::post('orders/{invoice}/courier-status', [CourierBookingController::class, 'refresh'])->whereNumber('invoice')->middleware('throttle:30,1,courier-status')->name('orders.courier-status');
     Route::get('payments', [AdminPaymentController::class, 'index'])->name('payments.index');
-    Route::get('support', [\App\Http\Controllers\Admin\SupportController::class, 'index'])->name('support.index');
-    Route::get('support/{ticket}', [\App\Http\Controllers\Admin\SupportController::class, 'show'])->whereNumber('ticket')->name('support.show');
-    Route::post('support/{ticket}/reply', [\App\Http\Controllers\Admin\SupportController::class, 'reply'])->whereNumber('ticket')->middleware('throttle:60,1,support-staff-reply')->name('support.reply');
-    Route::post('support/{ticket}/assign', [\App\Http\Controllers\Admin\SupportController::class, 'assign'])->whereNumber('ticket')->name('support.assign');
-    Route::post('support/{ticket}/close', [\App\Http\Controllers\Admin\SupportController::class, 'close'])->whereNumber('ticket')->name('support.close');
-    Route::post('support/{ticket}/reopen', [\App\Http\Controllers\Admin\SupportController::class, 'reopen'])->whereNumber('ticket')->name('support.reopen');
+    Route::get('support', [App\Http\Controllers\Admin\SupportController::class, 'index'])->name('support.index');
+    Route::get('support/{ticket}', [App\Http\Controllers\Admin\SupportController::class, 'show'])->whereNumber('ticket')->name('support.show');
+    Route::post('support/{ticket}/reply', [App\Http\Controllers\Admin\SupportController::class, 'reply'])->whereNumber('ticket')->middleware('throttle:60,1,support-staff-reply')->name('support.reply');
+    Route::post('support/{ticket}/assign', [App\Http\Controllers\Admin\SupportController::class, 'assign'])->whereNumber('ticket')->name('support.assign');
+    Route::post('support/{ticket}/close', [App\Http\Controllers\Admin\SupportController::class, 'close'])->whereNumber('ticket')->name('support.close');
+    Route::post('support/{ticket}/reopen', [App\Http\Controllers\Admin\SupportController::class, 'reopen'])->whereNumber('ticket')->name('support.reopen');
     Route::post('payments/payout/{seller}', [AdminPaymentController::class, 'paidOut'])->whereNumber('seller')->name('payments.payout');
     Route::post('payments/{payment}/refunded', [AdminPaymentController::class, 'refunded'])->whereNumber('payment')->name('payments.refunded');
     Route::get('deliveries', [AdminDeliveryController::class, 'index'])->name('deliveries.index');
@@ -623,6 +649,10 @@ Route::middleware(['auth', 'section:admin_panel', 'two-factor.required'])->prefi
     Route::get('delivery-ratings', [AdminDeliveryController::class, 'ratings'])->name('deliveries.ratings');
     Route::get('reviews', [AdminReviewController::class, 'index'])->name('reviews.index');
     Route::put('reviews/{review}/hide', [AdminReviewController::class, 'hide'])->whereNumber('review')->name('reviews.hide');
+    Route::get('testimonials', [AdminTestimonialController::class, 'index'])->name('testimonials.index');
+    Route::post('testimonials', [AdminTestimonialController::class, 'store'])->middleware('throttle:30,1,testimonial')->name('testimonials.store');
+    Route::put('testimonials/{testimonial}', [AdminTestimonialController::class, 'update'])->whereNumber('testimonial')->name('testimonials.update');
+    Route::delete('testimonials/{testimonial}', [AdminTestimonialController::class, 'destroy'])->whereNumber('testimonial')->name('testimonials.destroy');
     Route::get('catalog', [AdminCatalogController::class, 'index'])->name('catalog.index');
     Route::post('catalog', [AdminCatalogController::class, 'store'])->name('catalog.store');
     Route::post('catalog/{product}/approve', [AdminCatalogController::class, 'approve'])->whereNumber('product')->name('catalog.approve');

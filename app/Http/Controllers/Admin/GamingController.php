@@ -11,6 +11,7 @@ use App\Services\Gaming\GameTopUp;
 use App\Services\Stock\StockException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -34,6 +35,7 @@ class GamingController extends Controller
         return Inertia::render('admin/gaming', [
             'month' => $month, 'canEdit' => $request->user()->can('manage-accounts'),
             'games' => Game::orderBy('sort')->orderBy('name')->with('packages')->get()->map(fn (Game $g) => ['id' => $g->id, 'name' => $g->name, 'id_label' => $g->id_label, 'needs_zone' => $g->needs_zone, 'zone_label' => $g->zone_label, 'is_active' => $g->is_active,
+                'cover' => $g->photo_path ? route('gaming.cover', ['game' => $g->slug, 'v' => substr(md5($g->photo_path), 0, 8)]) : null,
                 'packages' => $g->packages->map(fn (GamePackage $p) => ['id' => $p->id, 'name' => $p->name, 'price' => (float) $p->price, 'is_active' => $p->is_active])->values()]),
             'toCheck' => $lists['to_check']->map($row)->values(), 'toTopUp' => $lists['to_top_up']->map($row)->values(), 'failed' => $lists['failed']->map($row)->values(), 'done' => $lists['done']->map($row)->values(),
             'sales' => $this->gaming->sales($month), 'pay' => $this->gaming->payNumbers(), 'lateMinutes' => $this->gaming->lateMinutes(),
@@ -52,6 +54,33 @@ class GamingController extends Controller
         $this->authorize('manage-accounts');
 
         return $this->attempt(fn () => $this->gaming->saveGame($this->gameData($request), $game), 'Saved.');
+    }
+
+    /** The game's cover picture, which the owner chooses (the artwork must be theirs to use). */
+    public function cover(Request $request, Game $game): RedirectResponse
+    {
+        $this->authorize('manage-accounts');
+        $request->validate(['cover' => ['required', 'file', 'mimes:png,jpg,jpeg,webp', 'max:4096']]);
+
+        if ($game->photo_path) {
+            Storage::delete($game->photo_path);
+        }
+
+        $game->update(['photo_path' => $request->file('cover')->store('games')]);
+
+        return back()->with('status', __('Cover saved.'));
+    }
+
+    public function removeCover(Game $game): RedirectResponse
+    {
+        $this->authorize('manage-accounts');
+
+        if ($game->photo_path) {
+            Storage::delete($game->photo_path);
+            $game->update(['photo_path' => null]);
+        }
+
+        return back()->with('status', __('Cover removed.'));
     }
 
     public function storePackage(Request $request, Game $game): RedirectResponse

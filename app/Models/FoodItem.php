@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /** One dish on a restaurant's menu. */
 class FoodItem extends Model
 {
-    protected $fillable = ['restaurant_id', 'name', 'description', 'price', 'photo_path', 'cook_minutes', 'ready_made', 'available', 'sold_out_on', 'sort'];
+    protected $fillable = ['restaurant_id', 'name', 'description', 'category', 'price', 'photo_path', 'cook_minutes', 'ready_made', 'available', 'sold_out_on', 'sort'];
 
     protected function casts(): array
     {

@@ -16,6 +16,7 @@ use App\Support\MedicinePresenter;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -38,13 +39,24 @@ class MedicineSearchController extends Controller
             $this->behavior->record('search', null, $q, ['found' => $results->total()]);
         }
 
-        // With nothing typed the page lists every medicine, A to Z, a page at a time.
-        $browse = $q === '' ? Medicine::active()->with('company')->orderBy('brand_name')->orderBy('strength')->orderBy('id')->paginate(self::PER_PAGE)->through(fn (Medicine $m) => MedicinePresenter::one($m)) : null;
+        // With nothing typed the page lists every medicine, A to Z, a page at a time, or only the brands that begin with one chosen letter.
+        $letter = strtoupper(substr(preg_replace('/[^A-Za-z]/', '', (string) $request->query('letter', '')), 0, 1));
+        $browse = $q === '' ? Medicine::active()->with('company')
+            ->when($letter !== '', fn ($query) => $query->where('brand_name', 'like', $letter.'%'))
+            ->orderBy('brand_name')->orderBy('strength')->orderBy('id')->paginate(self::PER_PAGE)->withQueryString()->through(fn (Medicine $m) => MedicinePresenter::one($m)) : null;
+
+        // The index's front page: the newest brands, the forms to browse by, and how many there are.
+        $front = $q === '' && $letter === '' && (int) $request->query('page', 1) <= 1;
 
         return Inertia::render('medicines/index', [
             'query' => $q,
             'results' => $results,
             'browse' => $browse,
+            'letter' => $letter,
+            'fresh' => $front ? MedicinePresenter::many(Medicine::active()->with('company')->latest('id')->limit(10)->get()) : [],
+            'front' => app(\App\Services\Storefront\PageFronts::class)->medicines($front),
+            'forms' => collect(FormController::forms())->take(10)->map(fn ($f, $slug) => ['slug' => $slug, 'name' => $f['name'], 'count' => $f['count']])->values()->all(),
+            'counts' => Cache::remember('medicine.counts', 600, fn () => ['brands' => Medicine::active()->count(), 'generics' => Medicine::active()->whereNotNull('generic_name')->distinct()->count('generic_name')]),
         ]);
     }
 
