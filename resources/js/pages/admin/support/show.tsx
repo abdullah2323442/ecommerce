@@ -52,7 +52,7 @@ export default function SupportShow({ ticket, messages }: Props) {
                 <div className="space-y-1">
                     <p className="text-sm text-muted-foreground">
                         {ticket.number} · {t(STATUS[ticket.status])}
-                        {ticket.late && <span className="ms-2 rounded bg-red-100 px-1.5 text-xs font-semibold text-red-900">{t('Late')}</span>}
+                        {ticket.late && <span className="ms-2 rounded bg-danger/15 px-1.5 text-xs font-semibold text-danger">{t('Late')}</span>}
                     </p>
                     <h1 className="text-2xl font-bold">{ticket.subject}</h1>
                     <p className="text-sm">

@@ -48,7 +48,7 @@ export default function Business({ categories, application, defaults }: Props) {
                     <p className="text-[var(--pt-muted)]">{t('Tell us about your business and send your licence. We check it and reply on this page.')}</p>
                 </header>
 
-                {status?.status && <p className="rounded-md border border-emerald-600/30 bg-emerald-600/10 px-3 py-2 text-sm text-emerald-800">{status.status}</p>}
+                {status?.status && <p className="rounded-md border border-success/30 bg-success/10 px-3 py-2 text-sm text-success">{status.status}</p>}
 
                 {application && (
                     <div role="status" className="space-y-1 rounded-2xl border bg-[var(--pt-surface)] p-4">

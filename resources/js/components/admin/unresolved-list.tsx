@@ -39,7 +39,7 @@ export default function UnresolvedList({ items, hide = [] }: { items: Unresolved
 
     if (shown.length === 0) {
         return (
-            <p className="flex items-center gap-2 rounded-md border border-emerald-600/30 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
+            <p className="flex items-center gap-2 rounded-md border border-success/30 bg-success/10 px-4 py-3 text-sm text-success">
                 <Check aria-hidden className="size-4" />
                 {t('Nothing is left open. You can close.')}
             </p>
@@ -56,7 +56,7 @@ export default function UnresolvedList({ items, hide = [] }: { items: Unresolved
                     <li key={`${i.key}-${n}`}>
                         <Link href={i.href} className="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 hover:bg-muted/40">
                             <span>{text(i)}</span>
-                            {i.key === 'drafts' && (i.minutes ?? 0) >= 60 && <span className="text-xs text-amber-700">{t('Oldest open for {m} minutes', { m: num(i.minutes ?? 0) })}</span>}
+                            {i.key === 'drafts' && (i.minutes ?? 0) >= 60 && <span className="text-xs text-warning">{t('Oldest open for {m} minutes', { m: num(i.minutes ?? 0) })}</span>}
                         </Link>
                     </li>
                 ))}

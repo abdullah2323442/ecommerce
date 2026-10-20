@@ -83,7 +83,7 @@ function ReviewForm({ token }: { token: string }) {
     const [files, setFiles] = useState<File[]>([]);
 
     return (
-        <section className="space-y-3 rounded-2xl border bg-[var(--pt-surface)] p-4">
+        <section className="space-y-3 rounded-[1.5rem] border bg-[var(--pt-surface)] p-4">
             <h2 className="font-display text-xl font-bold">{t('How was it?')}</h2>
             <div role="radiogroup" aria-label={t('Stars')} className="flex gap-1">
                 {[1, 2, 3, 4, 5].map((n) => (
@@ -136,29 +136,29 @@ export default function MarketOrder({ token, order, cases, pay, digital }: Props
                 <p className="text-sm text-[var(--pt-muted)]">
                     {order.number} · {dateTime(order.placed_at)} · {t('Sold by')} {order.seller}
                 </p>
-                {flash && <p role="status" className="rounded-md border border-emerald-600/30 bg-emerald-600/10 px-3 py-2 text-sm text-emerald-900">{flash}</p>}
+                {flash && <p role="status" className="rounded-md border border-success/30 bg-success/10 px-3 py-2 text-sm text-success">{flash}</p>}
                 <InputError message={errors.order} />
 
                 {order.status === 'cancelled' ? (
-                    <p className="rounded-2xl border border-dashed p-4 text-sm">{t('This order was cancelled.')} {order.cancel_reason}</p>
+                    <p className="rounded-[1.5rem] border border-dashed p-4 text-sm">{t('This order was cancelled.')} {order.cancel_reason}</p>
                 ) : order.status === 'returned' ? (
-                    <p className="rounded-2xl border border-dashed p-4 text-sm">{t('This order was sent back to the seller.')}</p>
+                    <p className="rounded-[1.5rem] border border-dashed p-4 text-sm">{t('This order was sent back to the seller.')}</p>
                 ) : order.status === 'not_received' ? (
-                    <p className="rounded-2xl border border-amber-500/40 bg-amber-500/10 p-4 text-sm">{t('You said this did not arrive. We are looking into it.')}</p>
+                    <p className="rounded-[1.5rem] border border-warning/40 bg-warning/10 p-4 text-sm">{t('You said this did not arrive. We are looking into it.')}</p>
                 ) : (
                     <ol className="grid grid-cols-4 gap-2 text-center text-xs">
                         {steps.map((s, i) => (
-                            <li key={s.key} className={`rounded-xl border px-1 py-2 ${i <= at ? 'border-[var(--pt-ink)] bg-[var(--pt-ink)] text-[var(--pt-surface)]' : 'border-[var(--pt-line)] text-[var(--pt-muted)]'}`}>
+                            <li key={s.key} className={`rounded-[1.25rem] border px-1 py-2 ${i <= at ? 'border-[var(--pt-ink)] bg-[var(--pt-ink)] text-[var(--pt-surface)]' : 'border-[var(--pt-line)] text-[var(--pt-muted)]'}`}>
                                 {s.label}
                             </li>
                         ))}
                     </ol>
                 )}
 
-                {order.preorder && ['placed', 'accepted'].includes(order.status) && <p className="rounded-md bg-amber-500/10 px-3 py-1.5 text-sm">{order.preorder_days ? t('This is a pre-order. The seller will have it ready within {n} days, and we tell you.', { n: num(order.preorder_days) }) : t('This is a pre-order. The seller sends it when they have it again, and we tell you.')}</p>}
+                {order.preorder && ['placed', 'accepted'].includes(order.status) && <p className="rounded-md bg-warning/10 px-3 py-1.5 text-sm">{order.preorder_days ? t('This is a pre-order. The seller will have it ready within {n} days, and we tell you.', { n: num(order.preorder_days) }) : t('This is a pre-order. The seller sends it when they have it again, and we tell you.')}</p>}
                 {order.tracking && <p className="text-sm">{t('Tracking')}: {order.tracking}</p>}
 
-                <dl className="tabular space-y-1 rounded-2xl border border-[var(--pt-line)] bg-[var(--pt-surface)] p-4 text-sm">
+                <dl className="tabular space-y-1 rounded-[1.5rem] border border-[var(--pt-line)] bg-[var(--pt-surface)] p-4 text-sm">
                     <div className="flex justify-between">
                         <dt>
                             {num(order.quantity)} {unitLabel(order.unit)} × {money(order.unit_price)}
@@ -193,7 +193,7 @@ export default function MarketOrder({ token, order, cases, pay, digital }: Props
                 )}
 
                 {digital && (
-                    <section className="space-y-2 rounded-2xl border bg-[var(--pt-surface)] p-4">
+                    <section className="space-y-2 rounded-[1.5rem] border bg-[var(--pt-surface)] p-4">
                         <h2 className="font-display text-lg font-bold">{t('Your download')}</h2>
                         {digital.name && <p className="text-sm font-medium">{digital.name}</p>}
                         {!digital.paid && <p className="text-sm text-[var(--pt-muted)]">{t('You can download it as soon as you have paid. You get {n} downloads in {d} days.', { n: num(digital.max), d: num(digital.days) })}</p>}
@@ -211,9 +211,9 @@ export default function MarketOrder({ token, order, cases, pay, digital }: Props
                     </section>
                 )}
                 {(pay.online || pay.refund_due) && (
-                    <section className="space-y-2 rounded-2xl border bg-[var(--pt-surface)] p-4">
+                    <section className="space-y-2 rounded-[1.5rem] border bg-[var(--pt-surface)] p-4">
                         <h2 className="font-display text-lg font-bold">{t('Payment')}</h2>
-                        {pay.paid_online > 0 && <p className="tabular text-sm font-semibold text-emerald-800">{t('Paid online')}: {money(pay.paid_online)}</p>}
+                        {pay.paid_online > 0 && <p className="tabular text-sm font-semibold text-success">{t('Paid online')}: {money(pay.paid_online)}</p>}
                         {pay.practice && <p className="text-sm text-[var(--pt-muted)]">{t('A practice payment was made. No real money was taken.')}</p>}
                         {pay.refund_due && <p className="text-sm font-semibold">{t('Your payment will be returned to you. We will tell you.')}</p>}
                         {pay.can && (
@@ -237,7 +237,7 @@ export default function MarketOrder({ token, order, cases, pay, digital }: Props
                     </Button>
                 )}
                 {order.can_answer && (
-                    <div className="flex flex-wrap items-center gap-3 rounded-2xl border p-4">
+                    <div className="flex flex-wrap items-center gap-3 rounded-[1.5rem] border p-4">
                         <p className="flex-1 text-sm font-semibold">{t('Did it arrive?')}</p>
                         <Button onClick={() => post('received')}>{t('Yes, I got it')}</Button>
                         <Button variant="outline" onClick={() => post('not-received')}>
@@ -249,14 +249,14 @@ export default function MarketOrder({ token, order, cases, pay, digital }: Props
                 {cases.length > 0 && (
                     <ul className="space-y-2">
                         {cases.map((c) => (
-                            <li key={c.id} className="space-y-1 rounded-2xl border bg-[var(--pt-surface)] p-4 text-sm">
+                            <li key={c.id} className="space-y-1 rounded-[1.5rem] border bg-[var(--pt-surface)] p-4 text-sm">
                                 <div className="flex flex-wrap items-baseline justify-between gap-2">
                                     <p className="font-semibold">{c.kind === 'return' ? t('Return') : t('Complaint')}</p>
                                     <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-semibold">{caseState(c.status)}</span>
                                 </div>
                                 <p>{c.reason}</p>
                                 {c.seller_note && <p className="text-[var(--pt-muted)]">{t('The seller')}: {c.seller_note}</p>}
-                                {c.our_note && <p className="rounded-md bg-amber-50 p-2">{c.our_note}</p>}
+                                {c.our_note && <p className="rounded-md bg-warning/10 p-2">{c.our_note}</p>}
                                 {c.can_escalate && (
                                     <Button size="sm" variant="outline" onClick={() => post(`cases/${c.id}/escalate`)}>
                                         {t('Ask us to look into it')}
@@ -268,7 +268,7 @@ export default function MarketOrder({ token, order, cases, pay, digital }: Props
                 )}
 
                 {(order.can_complain || order.can_return) && (
-                    <div className="space-y-3 rounded-2xl border p-4">
+                    <div className="space-y-3 rounded-[1.5rem] border p-4">
                         <div className="flex flex-wrap items-center gap-2">
                             {order.can_complain && (
                                 <Button size="sm" variant={kind === 'complaint' ? 'default' : 'outline'} onClick={() => setKind('complaint')}>

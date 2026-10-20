@@ -141,7 +141,7 @@ export default function Controlled({ entries, filters, medicines }: Props) {
                                     </span>
                                     <span>{e.doctor_name}</span>
                                     <span className="text-muted-foreground">{e.staff}</span>
-                                    {e.cancelled && <span className="rounded bg-red-500/15 px-1.5 text-xs font-semibold">{t('Memo cancelled')}</span>}
+                                    {e.cancelled && <span className="rounded bg-danger/15 px-1.5 text-xs font-semibold">{t('Memo cancelled')}</span>}
                                     {!e.cancelled && (
                                         <Button size="sm" variant="ghost" onClick={() => setEditing(editing === e.id ? null : e.id)}>
                                             {t('Change')}

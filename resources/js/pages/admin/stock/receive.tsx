@@ -236,7 +236,7 @@ export default function StockReceive({ sources, today, draft }: { sources: Sourc
                                 <Input id="scan" autoComplete="off" value={scanCode} onChange={(e) => setScanCode(e.target.value)} placeholder={t('Point the scanner here')} className="mt-1 max-w-sm" />
                             </form>
                             {unknownCode && (
-                                <div role="alert" className="mt-3 space-y-2 rounded-md border border-amber-500/40 bg-amber-500/10 p-3 text-sm">
+                                <div role="alert" className="mt-3 space-y-2 rounded-md border border-warning/40 bg-warning/10 p-3 text-sm">
                                     <p className="font-medium">{t('Barcode {code} is new. Which medicine is it?', { code: unknownCode })}</p>
                                     <MedicinePicker picked={linkPick} onPick={setLinkPick} />
                                     <Button type="button" size="sm" disabled={!linkPick} onClick={linkUnknown}>

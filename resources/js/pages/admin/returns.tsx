@@ -154,7 +154,7 @@ function Finder({ policy }: { policy: Props['policy'] }) {
                                 <span className="font-medium">{r.number}</span>
                                 <span className="text-muted-foreground text-sm">{r.customer ?? t('Retail')}</span>
                                 <span className="text-muted-foreground text-sm">{r.when && dateTime(r.when)}</span>
-                                {r.reprinted && <span className="rounded bg-amber-500/20 px-1.5 text-xs font-semibold">{t('Reprint')}</span>}
+                                {r.reprinted && <span className="rounded bg-warning/20 px-1.5 text-xs font-semibold">{t('Reprint')}</span>}
                             </button>
                         </li>
                     ))}
@@ -273,7 +273,7 @@ function Pending({ r, canApprove }: { r: Card; canApprove: boolean }) {
                 <div className="min-w-48 flex-1">
                     <p className="font-medium">
                         {r.customer ?? t('Retail')} {r.memo && <span className="text-muted-foreground text-sm font-normal">· {r.memo}</span>}
-                        {r.without_invoice && <span className="ml-2 rounded bg-red-500/15 px-1.5 text-xs font-semibold">{t('No memo')}</span>}
+                        {r.without_invoice && <span className="ml-2 rounded bg-danger/15 px-1.5 text-xs font-semibold">{t('No memo')}</span>}
                     </p>
                     <p className="text-muted-foreground text-sm">
                         {t(reasonLabel(r.reason_code))}: {r.reason}
@@ -454,7 +454,7 @@ export default function Returns({ queue, recent, canApprove, policy, analysis, s
                 {canApprove && <WithoutMemo />}
 
                 {staleCredit.length > 0 && (
-                    <section className="space-y-1 rounded-md border border-amber-500/50 bg-amber-500/5 p-3 text-sm">
+                    <section className="space-y-1 rounded-md border border-warning/50 bg-warning/5 p-3 text-sm">
                         <h2 className="font-medium">{t('Credit not used for a long time')}</h2>
                         {staleCredit.map((c) => (
                             <p key={c.id}>
@@ -506,7 +506,7 @@ export default function Returns({ queue, recent, canApprove, policy, analysis, s
                                     <span className="min-w-40 flex-1">
                                         {r.customer ?? t('Retail')} {r.memo && `· ${r.memo}`}
                                     </span>
-                                    <span className={r.status === 'approved' ? 'font-semibold text-emerald-700' : 'text-muted-foreground'}>
+                                    <span className={r.status === 'approved' ? 'font-semibold text-success' : 'text-muted-foreground'}>
                                         {t(r.status === 'approved' ? 'Approved' : 'Declined')}
                                     </span>
                                     <span className="tabular">{money(r.credit_amount || r.cash_amount || r.amount)}</span>

@@ -52,7 +52,7 @@ export function PersonBox({ person, index, profiles, fields, units, onChange, on
     const set = (patch: Partial<Person>) => onChange({ ...person, ...patch });
 
     return (
-        <fieldset className="space-y-3 rounded-2xl border bg-[var(--pt-surface)] p-4">
+        <fieldset className="space-y-3 rounded-[1.5rem] border bg-[var(--pt-surface)] p-4">
             <legend className="px-1 text-sm font-semibold">{t('Person {n}', { n: num(index + 1) })}</legend>
             <div className="grid gap-3 sm:grid-cols-3">
                 <label className="text-sm font-medium">
@@ -87,7 +87,7 @@ export function PersonBox({ person, index, profiles, fields, units, onChange, on
                     </p>
                     <p className="text-xs text-[var(--pt-muted)]">{t('Measured on {date}', { date: date(saved.measured_on) })}</p>
                     {saved.stale && (
-                        <div role="status" className="flex flex-wrap items-center gap-2 rounded-md bg-amber-50 p-2 text-amber-900">
+                        <div role="status" className="flex flex-wrap items-center gap-2 rounded-md bg-warning/10 p-2 text-warning">
                             <span className="flex-1">{t('These measurements are {n} months old. Are they still right?', { n: num(saved.months) })}</span>
                             <Button type="button" size="sm" variant="outline" onClick={() => router.put(`/custom/profiles/${saved.id}/still-correct`, {}, { preserveScroll: true, preserveState: true })}>
                                 {t('Yes, still right')}
@@ -175,7 +175,7 @@ export default function CustomNew({ kind, materials, profiles, fields, woodOptio
                         <h2 className="font-display text-xl font-bold">{kind === 'wood' ? t('Which wood?') : t('Which fabric?')}</h2>
                         <div className="grid gap-2 sm:grid-cols-3">
                             {materials.map((m) => (
-                                <label key={m.id} className={`cursor-pointer rounded-xl border p-3 text-sm ${material === String(m.id) ? 'border-[var(--pt-ink)] bg-[var(--pt-sage)]' : ''}`}>
+                                <label key={m.id} className={`cursor-pointer rounded-[1.25rem] border p-3 text-sm ${material === String(m.id) ? 'border-[var(--pt-ink)] bg-[var(--pt-sage)]' : ''}`}>
                                     <input type="radio" className="sr-only" checked={material === String(m.id)} onChange={() => setMaterial(String(m.id))} />
                                     <span className="font-semibold">{m.name}</span>
                                     <span className="tabular block text-[var(--pt-muted)]">{kind === 'wood' ? t('{amount} for each cubic foot', { amount: money(m.rate) }) : t('{amount} for each metre', { amount: money(m.rate) })}</span>
@@ -270,7 +270,7 @@ export default function CustomNew({ kind, materials, profiles, fields, woodOptio
                     </label>
                 </section>
 
-                <p className="rounded-2xl border border-amber-500/40 bg-amber-500/10 px-4 py-3 text-sm">{t('Returns do not apply to made-to-order work. Check the measurements carefully before you confirm. Delivery is by arrangement.')}</p>
+                <p className="rounded-[1.5rem] border border-warning/40 bg-warning/10 px-4 py-3 text-sm">{t('Returns do not apply to made-to-order work. Check the measurements carefully before you confirm. Delivery is by arrangement.')}</p>
                 <Button type="submit" className="h-12 w-full text-base">
                     {t('Send for a price')}
                 </Button>

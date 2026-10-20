@@ -76,7 +76,7 @@ export default function MedicineEdit({ medicine, fields, history, units, steps }
                     </div>
 
                     {asksToConfirm && (
-                        <div role="alert" className="space-y-2 rounded-md border border-amber-500/40 bg-amber-500/10 p-3 text-sm">
+                        <div role="alert" className="space-y-2 rounded-md border border-warning/40 bg-warning/10 p-3 text-sm">
                             <p className="font-medium">{errors.strips_per_box}</p>
                             <p>{t('Stock already counted in the old pack size, and old memos, will not be changed. Everything from now on uses the new size.')}</p>
                             <label className="flex items-center gap-2">
@@ -87,7 +87,7 @@ export default function MedicineEdit({ medicine, fields, history, units, steps }
                     )}
 
                     {errors.price_warning && (
-                        <div role="alert" className="space-y-2 rounded-md border border-amber-500/40 bg-amber-500/10 p-3 text-sm">
+                        <div role="alert" className="space-y-2 rounded-md border border-warning/40 bg-warning/10 p-3 text-sm">
                             <p className="font-medium">{errors.price_warning}</p>
                             <label className="flex items-center gap-2">
                                 <input type="checkbox" checked={form.data.confirm_price} onChange={(e) => form.setData('confirm_price', e.target.checked)} />

@@ -21,9 +21,9 @@ export default function FoodOrders({ orders }: { orders: Row[] }) {
             <div className="mx-auto max-w-3xl space-y-4">
                 <h1 className="font-display text-3xl font-extrabold">{t('Your food orders')}</h1>
                 {orders.length === 0 ? (
-                    <p className="rounded-2xl border border-dashed p-10 text-center text-[var(--pt-muted)]">{t('Nothing ordered yet.')}</p>
+                    <p className="rounded-[1.5rem] border border-dashed p-10 text-center text-[var(--pt-muted)]">{t('Nothing ordered yet.')}</p>
                 ) : (
-                    <ul className="divide-y rounded-2xl border bg-[var(--pt-surface)]">
+                    <ul className="divide-y rounded-[1.5rem] border bg-[var(--pt-surface)]">
                         {orders.map((o) => (
                             <li key={o.token}>
                                 <Link href={`/food/orders/${o.token}`} className="flex flex-wrap items-center gap-x-6 gap-y-1 px-4 py-3 hover:bg-[var(--pt-sage)]">

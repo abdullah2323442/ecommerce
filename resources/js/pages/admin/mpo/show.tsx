@@ -30,7 +30,7 @@ export default function MpoShow({ mpo, companies, listings }: Props) {
                 <Flash />
                 <header>
                     <h1 className="font-display text-2xl font-extrabold">
-                        {mpo.name} {mpo.closed && <span className="rounded bg-red-500/15 px-1.5 text-sm font-semibold">{t('Closed')}</span>}
+                        {mpo.name} {mpo.closed && <span className="rounded bg-danger/15 px-1.5 text-sm font-semibold">{t('Closed')}</span>}
                     </h1>
                     <p className="text-muted-foreground text-sm">
                         {t('Buyers see')} “{t('Anonymous')} {num(mpo.number)}” · {mpo.email} · {mpo.since && dateTime(mpo.since)}
@@ -52,7 +52,7 @@ export default function MpoShow({ mpo, companies, listings }: Props) {
                     ))}
                 </dl>
 
-                {mpo.failed > 0 && <p className="text-sm font-semibold text-red-600">{t('Orders not delivered in time: {n}', { n: num(mpo.failed) })}</p>}
+                {mpo.failed > 0 && <p className="text-sm font-semibold text-danger">{t('Orders not delivered in time: {n}', { n: num(mpo.failed) })}</p>}
 
                 <section className="space-y-3 rounded-lg border bg-card p-4">
                     <div className="grid gap-3 sm:grid-cols-2">

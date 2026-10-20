@@ -63,31 +63,31 @@ export default function GamingOrder({ order, pay, methods }: { order: Order; pay
                         {order.number} · {dateTime(order.at)}
                     </p>
                 </div>
-                {flash && <p role="status" className="rounded-md border border-emerald-600/30 bg-emerald-600/10 px-3 py-2 text-sm text-emerald-900">{flash}</p>}
+                {flash && <p role="status" className="rounded-md border border-success/30 bg-success/10 px-3 py-2 text-sm text-success">{flash}</p>}
                 <a href={`/receipt/game/${order.token}`} target="_blank" rel="noreferrer" className="inline-block text-sm font-semibold underline underline-offset-4">
                     {t('Print the receipt')}
                 </a>
                 <InputError message={errors.order ?? errors.ref ?? errors.method} />
 
                 {order.status === 'cancelled' ? (
-                    <p className="rounded-2xl border border-dashed p-4 text-sm">
+                    <p className="rounded-[1.5rem] border border-dashed p-4 text-sm">
                         {t('This order was cancelled.')} {order.refund === 'due' ? t('Your money will be refunded.') : order.refund === 'done' ? t('Your money was refunded.') : ''}
                     </p>
                 ) : order.status === 'failed' ? (
-                    <p role="alert" className="rounded-2xl border border-red-300 bg-red-50 p-4 text-sm text-red-900">
+                    <p role="alert" className="rounded-[1.5rem] border border-danger/40 bg-danger/10 p-4 text-sm text-danger">
                         {t('The top-up did not go through.')} {order.fail_reason} {order.refund === 'done' ? t('Your money was refunded.') : t('Your money will be refunded.')}
                     </p>
                 ) : (
                     <ol className="grid grid-cols-4 gap-2 text-center text-xs">
                         {steps.map((s, i) => (
-                            <li key={s} className={`rounded-xl border px-1 py-2 ${i <= at ? 'border-[var(--pt-ink)] bg-[var(--pt-ink)] text-[var(--pt-surface)]' : 'border-[var(--pt-line)] text-[var(--pt-muted)]'}`}>
+                            <li key={s} className={`rounded-[1.25rem] border px-1 py-2 ${i <= at ? 'border-[var(--pt-ink)] bg-[var(--pt-ink)] text-[var(--pt-surface)]' : 'border-[var(--pt-line)] text-[var(--pt-muted)]'}`}>
                                 {label(s)}
                             </li>
                         ))}
                     </ol>
                 )}
 
-                <dl className="tabular space-y-1 rounded-2xl border bg-[var(--pt-surface)] p-4 text-sm">
+                <dl className="tabular space-y-1 rounded-[1.5rem] border bg-[var(--pt-surface)] p-4 text-sm">
                     <div className="flex justify-between">
                         <dt>{t('Player ID')}</dt>
                         <dd className="font-semibold">
@@ -107,9 +107,9 @@ export default function GamingOrder({ order, pay, methods }: { order: Order; pay
                 </dl>
 
                 {order.status === 'placed' && (
-                    <section className="space-y-3 rounded-2xl border border-[var(--pt-ink)] p-4">
+                    <section className="space-y-3 rounded-[1.5rem] border border-[var(--pt-ink)] p-4">
                         <h2 className="font-display text-xl font-bold">{t('Pay {amount}', { amount: money(order.price) })}</h2>
-                        {order.pay_note && <p role="alert" className="rounded-md bg-amber-50 p-2 text-sm text-amber-900">{t('Your last payment was not accepted')}: {order.pay_note}</p>}
+                        {order.pay_note && <p role="alert" className="rounded-md bg-warning/10 p-2 text-sm text-warning">{t('Your last payment was not accepted')}: {order.pay_note}</p>}
                         {Object.keys(pay).length === 0 ? (
                             <p className="text-sm text-[var(--pt-muted)]">{t('Online payment is not open yet. Please try again soon.')}</p>
                         ) : (
@@ -147,12 +147,12 @@ export default function GamingOrder({ order, pay, methods }: { order: Order; pay
                     </section>
                 )}
 
-                {order.status === 'claimed' && <p className="rounded-2xl border p-4 text-sm">{t('We are checking your payment. Then the diamonds go to your ID.')}</p>}
-                {order.status === 'paid' && !order.late && <p className="rounded-2xl border p-4 text-sm">{t('Paid. Your top-up is being done.')}</p>}
-                {order.status === 'topped_up' && <p role="status" className="rounded-2xl border border-emerald-600/30 bg-emerald-600/10 p-4 text-sm font-semibold text-emerald-900">{t('Done. The diamonds are in your account.')}</p>}
+                {order.status === 'claimed' && <p className="rounded-[1.5rem] border p-4 text-sm">{t('We are checking your payment. Then the diamonds go to your ID.')}</p>}
+                {order.status === 'paid' && !order.late && <p className="rounded-[1.5rem] border p-4 text-sm">{t('Paid. Your top-up is being done.')}</p>}
+                {order.status === 'topped_up' && <p role="status" className="rounded-[1.5rem] border border-success/30 bg-success/10 p-4 text-sm font-semibold text-success">{t('Done. The diamonds are in your account.')}</p>}
 
                 {order.late && (
-                    <p role="alert" className="rounded-2xl border border-amber-500/40 bg-amber-500/10 p-4 text-sm">
+                    <p role="alert" className="rounded-[1.5rem] border border-warning/40 bg-warning/10 p-4 text-sm">
                         {t('This is taking more than {n} minutes. You can wait a little longer, or cancel it and get your money back.', { n: num(order.late_minutes) })}
                     </p>
                 )}

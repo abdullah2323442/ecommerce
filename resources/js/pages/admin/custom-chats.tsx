@@ -80,7 +80,7 @@ export default function CustomChats({
                 )}
 
                 {repeat.length > 0 && (
-                    <p role="alert" className="rounded-md border border-red-300 bg-red-50 p-3 text-sm text-red-900">
+                    <p role="alert" className="rounded-md border border-danger/40 bg-danger/10 p-3 text-sm text-danger">
                         {t('Tried to send a number or link again and again')}: {repeat.map((r) => `${r.name ?? r.user_id} (${num(r.n)})`).join(', ')}
                     </p>
                 )}
@@ -98,8 +98,8 @@ export default function CustomChats({
                                             {c.number} · {c.buyer}
                                         </span>
                                         <span className="flex-1 truncate text-muted-foreground">{c.last}</span>
-                                        {c.slow && <span className="rounded bg-red-100 px-1.5 py-0.5 text-xs font-semibold text-red-900">{t('Not answered in time')}</span>}
-                                        {c.blocked > 0 && <span className="rounded bg-amber-100 px-1.5 py-0.5 text-xs font-semibold text-amber-900">{t('Blocked: {n}', { n: num(c.blocked) })}</span>}
+                                        {c.slow && <span className="rounded bg-danger/15 px-1.5 py-0.5 text-xs font-semibold text-danger">{t('Not answered in time')}</span>}
+                                        {c.blocked > 0 && <span className="rounded bg-warning/15 px-1.5 py-0.5 text-xs font-semibold text-warning">{t('Blocked: {n}', { n: num(c.blocked) })}</span>}
                                         <span className="text-xs text-muted-foreground">{dateTime(c.last_at)}</span>
                                     </Link>
                                 </li>

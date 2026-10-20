@@ -14,7 +14,7 @@ export default function AppearanceTabs() {
     ];
 
     return (
-        <div role="group" aria-label={t('Appearance')} className="inline-flex gap-1 rounded-lg bg-neutral-100 p-1 dark:bg-neutral-800">
+        <div role="group" aria-label={t('Appearance')} className="inline-flex gap-1 rounded-lg bg-sunken p-1">
             {tabs.map(({ value, Icon, label }) => (
                 <button
                     key={value}
@@ -22,7 +22,7 @@ export default function AppearanceTabs() {
                     aria-pressed={appearance === value}
                     onClick={() => updateAppearance(value)}
                     className={`flex min-h-10 items-center rounded-md px-3.5 text-sm transition-colors ${
-                        appearance === value ? 'bg-white shadow-xs dark:bg-neutral-700 dark:text-neutral-100' : 'text-neutral-500 hover:bg-neutral-200/60 hover:text-black dark:text-neutral-400 dark:hover:bg-neutral-700/60'
+                        appearance === value ? 'bg-raised text-ink shadow-xs' : 'text-ink-muted hover:bg-line/60 hover:text-ink'
                     }`}
                 >
                     <Icon className="-ml-1 size-4" />

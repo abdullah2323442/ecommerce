@@ -26,7 +26,7 @@ function OrderBox({ o, districts }: { o: Offer; districts: string[] }) {
 
     return (
         <form
-            className="mt-3 grid gap-2 rounded-xl border bg-background p-3 sm:grid-cols-2"
+            className="mt-3 grid gap-2 rounded-[1.25rem] border bg-background p-3 sm:grid-cols-2"
             onSubmit={(e) => {
                 e.preventDefault();
                 router.post(`/market-offers/${o.id}/order`, f);
@@ -63,13 +63,13 @@ export default function MarketOffers({ offers, districts }: { offers: Offer[]; d
             <Head title={t('Your price offers')} />
             <div className="mx-auto max-w-3xl space-y-4">
                 <h1 className="font-display text-3xl font-extrabold">{t('Your price offers')}</h1>
-                {flash && <p role="status" className="rounded-md border border-emerald-600/30 bg-emerald-600/10 px-3 py-2 text-sm text-emerald-900">{flash}</p>}
+                {flash && <p role="status" className="rounded-md border border-success/30 bg-success/10 px-3 py-2 text-sm text-success">{flash}</p>}
                 {offers.length === 0 ? (
-                    <p className="rounded-2xl border border-dashed p-10 text-center text-[var(--pt-muted)]">{t('You have made no offer yet.')}</p>
+                    <p className="rounded-[1.5rem] border border-dashed p-10 text-center text-[var(--pt-muted)]">{t('You have made no offer yet.')}</p>
                 ) : (
                     <ul className="space-y-3">
                         {offers.map((o) => (
-                            <li key={o.id} className="rounded-2xl border bg-[var(--pt-surface)] p-4 text-sm">
+                            <li key={o.id} className="rounded-[1.5rem] border bg-[var(--pt-surface)] p-4 text-sm">
                                 <div className="flex flex-wrap items-baseline justify-between gap-2">
                                     <Link href={`/market/${o.listing_id}`} className="font-semibold hover:underline">
                                         {o.listing}

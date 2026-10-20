@@ -105,7 +105,7 @@ function ListingForm({ sectors, row, onDone, shop }: { sectors: Props['sectors']
     };
 
     return (
-        <form onSubmit={send} className="grid gap-3 rounded-2xl border bg-[var(--pt-surface)] p-4 sm:grid-cols-2">
+        <form onSubmit={send} className="grid gap-3 rounded-[1.5rem] border bg-[var(--pt-surface)] p-4 sm:grid-cols-2">
             <div>
                 <label htmlFor={`s-sector-${row?.id ?? 'new'}`} className="text-sm font-medium">
                     {t('Kind of business')}
@@ -284,7 +284,7 @@ function ListingForm({ sectors, row, onDone, shop }: { sectors: Props['sectors']
                 </label>
             )}
             {errors.price_warning && (
-                <div role="alert" className="space-y-2 rounded-md border border-amber-500/40 bg-amber-500/10 p-3 text-sm sm:col-span-2">
+                <div role="alert" className="space-y-2 rounded-md border border-warning/40 bg-warning/10 p-3 text-sm sm:col-span-2">
                     <p className="font-medium">{errors.price_warning}</p>
                     <label className="flex items-center gap-2">
                         <input type="checkbox" checked={f.confirm_price} onChange={(e) => setF({ ...f, confirm_price: e.target.checked })} />
@@ -331,7 +331,7 @@ function GridEditor({ row }: { row: Row }) {
     }
 
     return (
-        <div className="space-y-3 rounded-xl border p-3 text-sm">
+        <div className="space-y-3 rounded-[1.25rem] border p-3 text-sm">
             <p className="text-[var(--pt-muted)]">{t('Write the colours and the sizes with commas. Put how many you have in each cell. Leave the price empty to use the product price. An empty list removes the grid.')}</p>
             <div className="grid gap-2 sm:grid-cols-2">
                 <label className="font-medium">
@@ -385,7 +385,7 @@ function GridEditor({ row }: { row: Row }) {
                         <label key={c} className="flex items-center gap-2">
                             <span className="w-24">{c}</span>
                             <input type="file" accept="image/*" className="text-sm" onChange={(e) => e.target.files?.[0] && router.post(`/wholesale/sell/${row.id}/color-photo`, { color: c, photo: e.target.files[0] }, { forceFormData: true, preserveScroll: true })} />
-                            {row.variants.find((v) => v.color === c)?.has_photo && <span className="text-xs text-emerald-700">{t('Has a photo')}</span>}
+                            {row.variants.find((v) => v.color === c)?.has_photo && <span className="text-xs text-success">{t('Has a photo')}</span>}
                         </label>
                     ))}
                 </div>
@@ -411,7 +411,7 @@ function DigitalFile({ row }: { row: Row }) {
     }
 
     return (
-        <div className="w-full space-y-2 rounded-xl border p-3 text-sm">
+        <div className="w-full space-y-2 rounded-[1.25rem] border p-3 text-sm">
             <p className="text-[var(--pt-muted)]">{t('For an e-book, music, a picture or any file. The buyer pays online first, then downloads it. There is no delivery and no cash on delivery.')}</p>
             {row.digital && (
                 <p className="flex flex-wrap items-center gap-3">
@@ -461,7 +461,7 @@ function MorePhotos({ row }: { row: Row }) {
     }
 
     return (
-        <div className="w-full space-y-2 rounded-xl border p-3 text-sm">
+        <div className="w-full space-y-2 rounded-[1.25rem] border p-3 text-sm">
             <p className="text-[var(--pt-muted)]">{t('Up to five more photos. Buyers can tap a photo to look closer.')}</p>
             <div className="flex flex-wrap gap-3">
                 {row.photos.map((p) => (
@@ -493,7 +493,7 @@ function ShopAddress({ shop }: { shop: Props['shop'] }) {
     const [address, setAddress] = useState(shop.address ?? '');
 
     return (
-        <section className="space-y-2 rounded-2xl border bg-[var(--pt-surface)] p-4 text-sm">
+        <section className="space-y-2 rounded-[1.5rem] border bg-[var(--pt-surface)] p-4 text-sm">
             <div>
                 <h2 className="font-semibold">{t('Where buyers can collect')}</h2>
                 <p className="text-[var(--pt-muted)]">{shop.name_shown ? t('Write your shop address. Then you can let buyers collect a product from you, with no delivery charge.') : t('Buyers can collect from you only when we show your own name. Ask us.')}</p>
@@ -515,7 +515,7 @@ function TokenForm({ token }: { token: Props['token'] }) {
     const set = (k: keyof typeof f) => (e: React.ChangeEvent<HTMLInputElement>) => setF({ ...f, [k]: k === 'active' ? e.target.checked : e.target.value });
 
     return (
-        <section className="space-y-3 rounded-2xl border bg-[var(--pt-surface)] p-4 text-sm">
+        <section className="space-y-3 rounded-[1.5rem] border bg-[var(--pt-surface)] p-4 text-sm">
             <div>
                 <h2 className="font-semibold">{t('Your Aqua Token')}</h2>
                 <p className="text-[var(--pt-muted)]">{t('One token for all your buyers, only on your own products. The amount comes off what the buyer pays and off what you are paid.')}</p>
@@ -569,7 +569,7 @@ export default function Sell({ listings, sectors, paused, trust, token, asked, s
                     <div className="flex gap-4">
                         <Link href="/wholesale/sell/orders" className="text-sm font-semibold underline underline-offset-4">
                             {t('Orders for your products')}
-                            {sellerOrders ? <span className="tabular ml-1 rounded-full bg-amber-500 px-1.5 text-xs text-white">{num(sellerOrders)}</span> : null}
+                            {sellerOrders ? <span className="tabular ml-1 rounded-full bg-warning px-1.5 text-xs text-white">{num(sellerOrders)}</span> : null}
                         </Link>
                         <Link href="/wholesale/sell/offers" className="text-sm font-semibold underline underline-offset-4">
                             {t('Price offers')}
@@ -588,15 +588,15 @@ export default function Sell({ listings, sectors, paused, trust, token, asked, s
                         </Link>
                     </div>
                 </div>
-                {flash && <p role="status" className="rounded-md border border-emerald-600/30 bg-emerald-600/10 px-3 py-2 text-sm text-emerald-900">{flash}</p>}
+                {flash && <p role="status" className="rounded-md border border-success/30 bg-success/10 px-3 py-2 text-sm text-success">{flash}</p>}
 
                 {!trust.trusted && trust.limit !== null && (
-                    <p className="rounded-2xl border border-amber-500/40 bg-amber-500/10 px-4 py-3 text-sm">
+                    <p className="rounded-[1.5rem] border border-warning/40 bg-warning/10 px-4 py-3 text-sm">
                         {t('You are new here, so products can be up to {limit} for now. After {m} finished orders with no complaint the limit goes. You have {n}.', { limit: money(trust.limit), m: num(trust.needed), n: num(trust.clean) })}
                     </p>
                 )}
 
-                <section className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border bg-[var(--pt-surface)] p-4 text-sm">
+                <section className="flex flex-wrap items-center justify-between gap-3 rounded-[1.5rem] border bg-[var(--pt-surface)] p-4 text-sm">
                     <div>
                         <h2 className="font-semibold">{t('Holiday mode')}</h2>
                         <p className="text-[var(--pt-muted)]">{paused ? t('New orders are off. Orders already made carry on.') : t('Going away? Turn off new orders. Orders already made carry on.')}</p>
@@ -610,7 +610,7 @@ export default function Sell({ listings, sectors, paused, trust, token, asked, s
                 <ShopAddress shop={shop} />
 
                 {asked.length > 0 && (
-                    <section className="space-y-1 rounded-2xl border bg-[var(--pt-surface)] p-4 text-sm">
+                    <section className="space-y-1 rounded-[1.5rem] border bg-[var(--pt-surface)] p-4 text-sm">
                         <h2 className="font-semibold">{t('Products you asked us to add')}</h2>
                         <ul>
                             {asked.map((a) => (
@@ -623,7 +623,7 @@ export default function Sell({ listings, sectors, paused, trust, token, asked, s
                 )}
 
                 {sectors.length === 0 ? (
-                    <p className="rounded-2xl border border-dashed p-8 text-center text-sm text-[var(--pt-muted)]">{t('Your account has no kind of business to sell in yet. Ask us.')}</p>
+                    <p className="rounded-[1.5rem] border border-dashed p-8 text-center text-sm text-[var(--pt-muted)]">{t('Your account has no kind of business to sell in yet. Ask us.')}</p>
                 ) : (
                     <section className="space-y-2">
                         <h2 className="font-display text-xl font-bold">{t('Add a listing')}</h2>
@@ -641,7 +641,7 @@ export default function Sell({ listings, sectors, paused, trust, token, asked, s
                     ) : (
                         <ul className="space-y-3">
                             {listings.map((l) => (
-                                <li key={l.id} className="space-y-2 rounded-2xl border bg-[var(--pt-surface)] p-4">
+                                <li key={l.id} className="space-y-2 rounded-[1.5rem] border bg-[var(--pt-surface)] p-4">
                                     <div className="flex flex-wrap items-baseline justify-between gap-2">
                                         <p className="font-semibold">{l.title}</p>
                                         <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-semibold">{state(l.status)}</span>
@@ -654,7 +654,7 @@ export default function Sell({ listings, sectors, paused, trust, token, asked, s
                                     </p>
                                     {l.commission && <p className="text-xs text-[var(--pt-muted)]">{l.commission.kind === 'percent' ? t('Our commission is {n}% on top of your price.', { n: num(l.commission.value) }) : t('Our commission is {n} taka on top of your price.', { n: num(l.commission.value) })}</p>}
                                     {l.status === 'rejected' && l.review_note && <p className="text-sm">{l.review_note}</p>}
-                                    {l.status === 'pending' && !l.has_photo && <p className="text-xs text-amber-800">{t('A photo helps buyers and gets it read sooner.')}</p>}
+                                    {l.status === 'pending' && !l.has_photo && <p className="text-xs text-warning">{t('A photo helps buyers and gets it read sooner.')}</p>}
                                     {editing === l.id ? (
                                         <ListingForm sectors={sectors} shop={shop} row={l} onDone={() => setEditing(null)} />
                                     ) : (

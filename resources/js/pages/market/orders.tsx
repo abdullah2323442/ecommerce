@@ -17,9 +17,9 @@ export default function MarketOrders({ orders }: { orders: { token: string; numb
                     </Link>
                 </div>
                 {orders.length === 0 ? (
-                    <p className="rounded-2xl border border-dashed p-10 text-center text-[var(--pt-muted)]">{t('No orders yet.')}</p>
+                    <p className="rounded-[1.5rem] border border-dashed p-10 text-center text-[var(--pt-muted)]">{t('No orders yet.')}</p>
                 ) : (
-                    <ul className="divide-y rounded-2xl border bg-[var(--pt-surface)]">
+                    <ul className="divide-y rounded-[1.5rem] border bg-[var(--pt-surface)]">
                         {orders.map((o) => (
                             <li key={o.token}>
                                 <Link href={`/market/orders/${o.token}`} className="flex flex-wrap items-center gap-x-6 gap-y-1 px-4 py-3 hover:bg-[var(--pt-sage)]">

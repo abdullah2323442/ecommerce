@@ -57,7 +57,7 @@ function Card({ o }: { o: Order }) {
                     {t('I have arrived')}
                 </Button>
             ) : (
-                <p className="text-xs font-semibold text-emerald-700">{t('The buyer knows you are at the door')}</p>
+                <p className="text-xs font-semibold text-success">{t('The buyer knows you are at the door')}</p>
             )}
 
             <div className="grid gap-2 sm:grid-cols-3">

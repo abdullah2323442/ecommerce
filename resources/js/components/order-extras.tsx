@@ -78,7 +78,7 @@ export function VoiceRecorder({ file, onChange }: { file: File | null; onChange:
                     </label>
                 </div>
             )}
-            {error && <p role="alert" className="text-sm text-red-700">{error}</p>}
+            {error && <p role="alert" className="text-sm text-danger">{error}</p>}
         </div>
     );
 }
@@ -97,21 +97,21 @@ export default function OrderExtras({ value, onChange, errors = {} }: { value: E
                     {t('Needed by (time)')}
                 </label>
                 <Input id="wanted-time" type="time" className="mt-1 w-40" value={value.wanted_time} onChange={(e) => onChange({ ...value, wanted_time: e.target.value })} />
-                {errors.wanted_time && <p role="alert" className="mt-1 text-sm text-red-700">{errors.wanted_time}</p>}
+                {errors.wanted_time && <p role="alert" className="mt-1 text-sm text-danger">{errors.wanted_time}</p>}
             </div>
             <div>
                 <p className="text-sm font-medium">{t('Voice note')}</p>
                 <div className="mt-1">
                     <VoiceRecorder file={value.voice} onChange={(voice) => onChange({ ...value, voice })} />
                 </div>
-                {errors.voice && <p role="alert" className="mt-1 text-sm text-red-700">{errors.voice}</p>}
+                {errors.voice && <p role="alert" className="mt-1 text-sm text-danger">{errors.voice}</p>}
             </div>
             <div>
                 <label htmlFor="order-photo" className="text-sm font-medium">
                     {t('Photo')}
                 </label>
                 <input id="order-photo" type="file" accept="image/*" className="mt-1 block text-sm" onChange={(e) => onChange({ ...value, photo: e.target.files?.[0] ?? null })} />
-                {errors.photo && <p role="alert" className="mt-1 text-sm text-red-700">{errors.photo}</p>}
+                {errors.photo && <p role="alert" className="mt-1 text-sm text-danger">{errors.photo}</p>}
             </div>
         </div>
     );

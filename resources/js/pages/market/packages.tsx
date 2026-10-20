@@ -31,14 +31,14 @@ export default function Packages({ packages, total }: { packages: Pack[]; total:
             <div className="mx-auto max-w-3xl space-y-6">
                 <h1 className="font-display text-3xl font-extrabold">{t('Your packages')}</h1>
                 {flash && (
-                    <p role="status" className="rounded-md border border-emerald-600/30 bg-emerald-600/10 px-3 py-2 text-sm text-emerald-900">
+                    <p role="status" className="rounded-md border border-success/30 bg-success/10 px-3 py-2 text-sm text-success">
                         {flash}
                     </p>
                 )}
                 <p className="text-sm text-[var(--pt-muted)]">{t('Each package comes from its own seller and is tracked on its own. Keep this page link to come back to all of them.')}</p>
                 <ul className="space-y-3">
                     {packages.map((p) => (
-                        <li key={p.token} className="rounded-2xl border bg-[var(--pt-surface)] p-4">
+                        <li key={p.token} className="rounded-[1.5rem] border bg-[var(--pt-surface)] p-4">
                             <Link href={`/market/orders/${p.token}`} className="flex flex-wrap items-center gap-x-6 gap-y-1 hover:underline">
                                 <span className="min-w-40 flex-1">
                                     <span className="block text-xs text-[var(--pt-muted)]">

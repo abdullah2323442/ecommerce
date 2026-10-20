@@ -45,7 +45,7 @@ export default function Inbox({ messages, home }: Props) {
                                         <span className={`block ${m.read ? '' : 'font-semibold'}`}>{text}</span>
                                         <span className="text-xs text-[var(--pt-muted)]">{dateTime(m.when)}</span>
                                     </span>
-                                    {m.importance === 'urgent' && <span className="rounded bg-red-500/15 px-1.5 py-0.5 text-xs font-semibold text-red-700">{t('Important')}</span>}
+                                    {m.importance === 'urgent' && <span className="rounded bg-danger/15 px-1.5 py-0.5 text-xs font-semibold text-danger">{t('Important')}</span>}
                                 </>
                             );
 

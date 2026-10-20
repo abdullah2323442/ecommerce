@@ -64,7 +64,7 @@ export default function Mismatches({ reports }: { reports: Report[] }) {
                                     </p>
                                 </div>
                                 {r.note && <p className="text-sm">{r.note}</p>}
-                                {r.clash && <p className="rounded-md bg-amber-100 px-3 py-2 text-sm text-amber-900">{t('Two reports on this medicine give different numbers. Check before you fix.')}</p>}
+                                {r.clash && <p className="rounded-md bg-warning/15 px-3 py-2 text-sm text-warning">{t('Two reports on this medicine give different numbers. Check before you fix.')}</p>}
                                 <div className="flex gap-2">
                                     <Button size="sm" onClick={() => act(r.id, 'fix')}>
                                         {t('Set stock to {n}', { n: num(r.found) })}

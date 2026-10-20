@@ -83,7 +83,7 @@ function Card({ p, days }: { p: Row; days: number[] }) {
     const open = p.status === 'requested' || p.status === 'accepted';
 
     return (
-        <li className={`space-y-3 px-4 py-4 ${p.late ? 'bg-red-500/5' : ''}`}>
+        <li className={`space-y-3 px-4 py-4 ${p.late ? 'bg-danger/5' : ''}`}>
             <div className="flex flex-wrap items-baseline justify-between gap-2">
                 <div>
                     <p className="font-semibold">
@@ -91,7 +91,7 @@ function Card({ p, days }: { p: Row; days: number[] }) {
                     </p>
                     <p className="text-muted-foreground text-xs">{p.created_at && dateTime(p.created_at)}</p>
                 </div>
-                <p className={`text-sm font-semibold ${p.late ? 'text-red-600' : ''}`}>
+                <p className={`text-sm font-semibold ${p.late ? 'text-danger' : ''}`}>
                     {t(preorderState(p.status, p.late))}
                     {p.due_on && p.status === 'accepted' && ` · ${date(p.due_on)}`}
                     {p.extended > 0 && ` · ${t('time changed {n} times', { n: num(p.extended) })}`}
@@ -317,7 +317,7 @@ export default function Preorders({ waiting, accepted, closed, buying, on, days 
                 </header>
 
                 {late > 0 && (
-                    <p role="alert" className="rounded-md border border-red-500/50 bg-red-500/10 px-3 py-2 text-sm font-semibold">
+                    <p role="alert" className="rounded-md border border-danger/50 bg-danger/10 px-3 py-2 text-sm font-semibold">
                         {t('{n} pre-orders are past their time.', { n: num(late) })}
                     </p>
                 )}

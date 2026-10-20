@@ -1,8 +1,11 @@
+import SectionHero from '@/components/home/section-hero';
+import { Breadcrumb, type CategoryNode, SubTiles, TreeNav, type TreeNode } from '@/components/market/category-nav';
+import { FashionGrid, FashionTop, TechGrid } from '@/components/market/layouts';
+import Storefront, { type StoreFront } from '@/components/market/tech-storefront';
 import { Button } from '@/components/ui/button';
 import PublicLayout from '@/layouts/public-layout';
 import { useI18n } from '@/lib/i18n';
 import { Head, Link, router } from '@inertiajs/react';
-import { useState } from 'react';
 
 interface Item {
     id: number;
@@ -18,6 +21,10 @@ interface Item {
     trusted?: boolean;
     sellers?: number;
     stars?: { average: number; count: number } | null;
+    blurb?: string;
+    warranty?: number | null;
+    cod?: boolean;
+    category?: string | null;
 }
 
 interface Hero {
@@ -30,6 +37,9 @@ interface Hero {
 }
 
 interface Props {
+    category: CategoryNode | null;
+    tree: TreeNode[];
+    storefront: StoreFront | null;
     hero: Hero | null;
     sectors: { slug: string; name: string; count: number }[];
     ranges: { from: number; to: number | null }[];
@@ -38,155 +48,221 @@ interface Props {
     total: number;
     page: number;
     perPage: number;
-    filters: { sector: string | null; premium: boolean; q: string; from: number | null; to: number | null; sort: string; stars: number | null };
+    filters: {
+        category: string | null;
+        sector: string | null;
+        premium: boolean;
+        all: boolean;
+        q: string;
+        from: number | null;
+        to: number | null;
+        sort: string;
+        stars: number | null;
+    };
 }
 
 export const unitLabel = (u: string) => u.charAt(0).toUpperCase() + u.slice(1);
 
-export default function MarketIndex({ hero, sectors, ranges, hasPremium, items, total, page, perPage, filters }: Props) {
+export default function MarketIndex({ category, tree, storefront, hero, sectors, ranges, hasPremium, items, total, page, perPage, filters }: Props) {
     const { t, num, money, isBn } = useI18n();
-    const [q, setQ] = useState(filters.q);
     const go = (next: Record<string, string | number | boolean | null>) => {
         const merged: Record<string, string | number | boolean | null> = { ...filters, page: 1, ...next };
-        router.get('/market', Object.fromEntries(Object.entries(merged).filter(([k, v]) => v !== null && v !== '' && v !== false && !(k === 'sort' && v === 'near') && !(k === 'page' && v === 1))), { preserveState: true, replace: true });
+        router.get(
+            '/market',
+            Object.fromEntries(
+                Object.entries(merged).filter(
+                    ([k, v]) => v !== null && v !== '' && v !== false && !(k === 'sort' && v === 'near') && !(k === 'page' && v === 1),
+                ),
+            ),
+            { preserveState: true, replace: true },
+        );
     };
-    const chip = (on: boolean) => `rounded-full border px-3 py-1 text-sm ${on ? 'border-[var(--pt-ink)] bg-[var(--pt-ink)] text-[var(--pt-surface)]' : 'border-[var(--pt-line)]'}`;
-    const range = (r: { from: number; to: number | null }) => (r.to === null ? t('{a} and above', { a: money(r.from) }) : r.from === 0 ? t('Under {b}', { b: money(r.to) }) : `${money(r.from)} – ${money(r.to)}`);
+    const chip = (on: boolean) =>
+        `rounded-full border px-4 py-1.5 text-sm transition-colors duration-300 ${on ? 'border-[var(--pt-ink)] bg-[var(--pt-ink)] text-[var(--pt-paper)]' : 'border-[var(--pt-line)] hover:border-[var(--pt-ink)]'}`;
+    const range = (r: { from: number; to: number | null }) =>
+        r.to === null
+            ? t('{a} and above', { a: money(r.from) })
+            : r.from === 0
+              ? t('Under {b}', { b: money(r.to) })
+              : `${money(r.from)} to ${money(r.to)}`;
+
+    const layout = filters.sector === 'electronics' ? 'tech' : filters.sector === 'clothing' ? 'fashion' : 'default';
+    const heroTitle = hero ? (isBn && hero.name_bn ? hero.name_bn : hero.name) : t('Market');
+    const heroLine = hero ? ((isBn && hero.tagline_bn ? hero.tagline_bn : hero.tagline) ?? undefined) : undefined;
 
     return (
         <PublicLayout>
             <Head title={t('Market')} />
             <div className="mx-auto max-w-5xl space-y-6">
-                {hero && (
-                    <section aria-label={isBn && hero.name_bn ? hero.name_bn : hero.name} className="relative isolate -mx-4 flex min-h-[15rem] items-end overflow-hidden rounded-3xl bg-[var(--pt-deep)] text-white sm:mx-0 sm:min-h-[22rem]">
-                        {hero.image && <img src={hero.image} alt="" fetchPriority="high" decoding="async" className="absolute inset-0 -z-20 size-full object-cover" />}
-                        <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-r from-black/65 via-black/30 to-transparent" />
-                        <div className="max-w-xl px-6 py-8 sm:px-12 sm:py-12">
-                            <h2 style={{ fontFamily: "'Cormorant Garamond', 'Hind Siliguri', Georgia, serif" }} className="text-4xl leading-none font-medium tracking-tight sm:text-6xl">
-                                {isBn && hero.name_bn ? hero.name_bn : hero.name}
-                            </h2>
-                            {(isBn && hero.tagline_bn ? hero.tagline_bn : hero.tagline) && <p className="mt-3 max-w-md text-[15px] leading-relaxed text-white/85 sm:text-lg">{isBn && hero.tagline_bn ? hero.tagline_bn : hero.tagline}</p>}
+                {storefront && <Storefront data={storefront} />}
+                {layout === 'fashion' && !category && !storefront && (
+                    <FashionTop
+                        title={heroTitle}
+                        line={heroLine ?? t('Made to wear, well.')}
+                        photos={[hero?.image ?? null, ...items.map((i) => i.photo)].filter(Boolean).slice(0, 2)}
+                    />
+                )}
+                {layout === 'default' && !category && !storefront && (
+                    <SectionHero
+                        {...(hero ? { src: hero.image } : { image: '/images/home/bazaar' })}
+                        title={hero ? heroTitle : t('Market')}
+                        line={hero ? (heroLine ?? undefined) : t('Choose what you are looking for. Prices are the same for everyone.')}
+                    >
+                        <Link
+                            href="/market-cart"
+                            className={`art-btn inline-flex h-12 items-center rounded-full px-6 ${hero ? 'border border-[var(--art-gold-2)]' : 'bg-[var(--art-gold-2)] font-medium text-[var(--art-night)]'}`}
+                        >
+                            {t('Your market cart')}
+                        </Link>
+                    </SectionHero>
+                )}
+
+                {hero && !storefront && (category || layout === 'tech') && (
+                    <header className="space-y-4">
+                        <Breadcrumb sector={hero.slug} sectorName={heroTitle} category={category} />
+                        <h1
+                            style={{ fontFamily: "'Changa One', 'Noto Serif Bengali', Georgia, serif" }}
+                            className="text-4xl leading-none tracking-tight sm:text-6xl"
+                        >
+                            {category?.name ?? heroTitle}
+                        </h1>
+                        {category && (
+                            <div className="lg:hidden">
+                                <SubTiles sector={hero.slug} nodes={category.children} />
+                            </div>
+                        )}
+                    </header>
+                )}
+
+                <div
+                    id="all-products"
+                    hidden={!!storefront}
+                    className={tree.length > 0 ? 'grid scroll-mt-24 gap-8 lg:grid-cols-[14rem_minmax(0,1fr)]' : 'space-y-6'}
+                >
+                    {tree.length > 0 && filters.sector && (
+                        <aside className="hidden lg:block">
+                            <div className="sticky top-32">
+                                <TreeNav sector={filters.sector} tree={tree} current={category} />
+                            </div>
+                        </aside>
+                    )}
+                    <div className="min-w-0 space-y-6">
+                        <div className="space-y-3 border-b border-[var(--pt-line)] pb-5">
+                            <div role="group" aria-label={t('Your budget')} className="flex flex-wrap items-center gap-2">
+                                <button
+                                    type="button"
+                                    aria-pressed={filters.from === null && !filters.premium}
+                                    className={chip(filters.from === null && !filters.premium)}
+                                    onClick={() => go({ from: null, to: null, premium: false })}
+                                >
+                                    {t('Any')}
+                                </button>
+                                {ranges.map((r) => (
+                                    <button
+                                        key={r.from}
+                                        type="button"
+                                        aria-pressed={filters.from === r.from && !filters.premium}
+                                        className={chip(filters.from === r.from && !filters.premium)}
+                                        onClick={() => go({ from: r.from, to: r.to, premium: false })}
+                                    >
+                                        {range(r)}
+                                    </button>
+                                ))}
+                                {hasPremium && (
+                                    <button
+                                        type="button"
+                                        aria-pressed={filters.premium}
+                                        className={chip(filters.premium)}
+                                        onClick={() => go({ premium: !filters.premium, from: null, to: null })}
+                                    >
+                                        {t('Premium')}
+                                    </button>
+                                )}
+                            </div>
+                            <div role="group" aria-label={t('Sort')} className="flex flex-wrap items-center gap-2 text-sm">
+                                <span className="tabular me-2 text-[var(--pt-muted)]">{t('{n} products', { n: num(total) })}</span>
+                                {(
+                                    [
+                                        ['near', 'Nearest and newest'],
+                                        ['new', 'Newest'],
+                                        ['low', 'Price, low to high'],
+                                        ['high', 'Price, high to low'],
+                                        ['popular', 'Most ordered'],
+                                    ] as const
+                                ).map(([k, label]) => (
+                                    <button
+                                        key={k}
+                                        type="button"
+                                        aria-pressed={filters.sort === k}
+                                        className={chip(filters.sort === k)}
+                                        onClick={() => go({ sort: k })}
+                                    >
+                                        {t(label)}
+                                    </button>
+                                ))}
+                            </div>
                         </div>
-                    </section>
-                )}
 
-                <div>
-                    <Link href="/market-cart" className="float-right text-sm font-semibold underline underline-offset-4">
-                        {t('Your market cart')}
-                    </Link>
-                    <h1 className="font-display text-4xl font-extrabold tracking-tight">{t('Market')}</h1>
-                    <p className="mt-1 max-w-prose text-[var(--pt-muted)]">{t('Choose what you are looking for. Prices are the same for everyone.')}</p>
-                </div>
+                        {items.length === 0 ? (
+                            <p className="rounded-[1.75rem] border border-dashed border-[var(--pt-ink)] p-10 text-center text-[var(--pt-muted)]">
+                                {t('Nothing here yet.')}
+                            </p>
+                        ) : layout === 'tech' ? (
+                            <TechGrid items={items} />
+                        ) : layout === 'fashion' ? (
+                            <FashionGrid items={items} />
+                        ) : (
+                            <ul className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 lg:grid-cols-4">
+                                {items.map((i) => (
+                                    <li key={i.id} className="art-lift">
+                                        <Link href={route('market.show', i.id)} className="block">
+                                            <div className="art-zoom aspect-[4/5] rounded-t-full rounded-b-[1.25rem] bg-[var(--pt-line)]">
+                                                {i.photo && (
+                                                    <img src={i.photo} alt="" loading="lazy" decoding="async" className="size-full object-cover" />
+                                                )}
+                                            </div>
+                                            <p className="mt-3 line-clamp-2 leading-snug">{i.title}</p>
+                                            <p
+                                                style={{ fontFamily: "'Changa One', 'Noto Serif Bengali', Georgia, serif" }}
+                                                className="tabular mt-1 text-xl"
+                                            >
+                                                {money(i.price)} <span className="text-xs text-[var(--pt-muted)]">/ {unitLabel(i.unit)}</span>
+                                            </p>
+                                            <p className="mt-1 flex flex-wrap items-center gap-x-2 text-xs text-[var(--pt-muted)]">
+                                                <span>{i.seller}</span>
+                                                {i.stars && (
+                                                    <span className="tabular font-semibold text-[var(--pt-ink)]">
+                                                        {num(i.stars.average)} / 5 ({num(i.stars.count)})
+                                                    </span>
+                                                )}
+                                                {i.trusted && <span className="font-semibold text-[var(--pt-ink)]">{t('Trusted seller')}</span>}
+                                                {(i.sellers ?? 1) > 1 && <span>{t('{n} sellers', { n: num(i.sellers ?? 1) })}</span>}
+                                                {i.near && <span>{t('Near you')}</span>}
+                                                {i.premium && <span className="font-semibold text-[var(--pt-ink)]">{t('Premium')}</span>}
+                                            </p>
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
 
-                {sectors.length > 0 && (
-                    <nav aria-label={t('Kinds of products')} className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                        {sectors.map((s) => (
-                            <button
-                                key={s.slug}
-                                type="button"
-                                aria-pressed={filters.sector === s.slug}
-                                onClick={() => go({ sector: filters.sector === s.slug ? null : s.slug })}
-                                className={`rounded-2xl border p-4 text-left transition ${filters.sector === s.slug ? 'border-[var(--pt-ink)] bg-[var(--pt-ink)] text-[var(--pt-surface)]' : 'border-[var(--pt-line)] bg-[var(--pt-surface)] hover:border-[var(--pt-ink)]'}`}
-                            >
-                                <span className="block font-display text-xl font-bold">{s.name}</span>
-                                <span className="text-sm opacity-70">{t('{n} products', { n: num(s.count) })}</span>
-                            </button>
-                        ))}
-                    </nav>
-                )}
-
-                <section aria-label={t('Your budget')} className="space-y-2">
-                    <p className="text-sm font-medium">{t('What is your budget?')}</p>
-                    <div className="flex flex-wrap gap-2">
-                        <button type="button" className={chip(filters.from === null && !filters.premium)} onClick={() => go({ from: null, to: null, premium: false })}>
-                            {t('Any')}
-                        </button>
-                        {ranges.map((r) => (
-                            <button key={r.from} type="button" className={chip(filters.from === r.from && !filters.premium)} onClick={() => go({ from: r.from, to: r.to, premium: false })}>
-                                {range(r)}
-                            </button>
-                        ))}
-                        {hasPremium && (
-                            <button type="button" className={chip(filters.premium)} onClick={() => go({ premium: !filters.premium, from: null, to: null })}>
-                                {t('Premium')}
-                            </button>
+                        {total > perPage && (
+                            <div className="flex justify-between">
+                                <Button variant="outline" className="h-11 px-6" disabled={page <= 1} onClick={() => go({ page: page - 1 })}>
+                                    {t('Previous')}
+                                </Button>
+                                <Button
+                                    variant="outline"
+                                    className="h-11 px-6"
+                                    disabled={page * perPage >= total}
+                                    onClick={() => go({ page: page + 1 })}
+                                >
+                                    {t('Next')}
+                                </Button>
+                            </div>
                         )}
                     </div>
-                </section>
-
-                <form
-                    role="search"
-                    className="flex flex-wrap gap-2"
-                    onSubmit={(e) => {
-                        e.preventDefault();
-                        go({ q });
-                    }}
-                >
-                    <label htmlFor="mk-q" className="sr-only">
-                        {t('Search')}
-                    </label>
-                    <input id="mk-q" value={q} onChange={(e) => setQ(e.target.value)} placeholder={t('Search')} className="h-11 min-w-48 flex-1 rounded-lg border border-[var(--pt-line)] bg-[var(--pt-surface)] px-3" />
-                    <label htmlFor="mk-sort" className="sr-only">
-                        {t('Sort')}
-                    </label>
-                    <select id="mk-sort" value={filters.sort} onChange={(e) => go({ sort: e.target.value })} className="h-11 rounded-lg border border-[var(--pt-line)] bg-[var(--pt-surface)] px-3 text-sm">
-                        <option value="near">{t('Nearest and newest')}</option>
-                        <option value="new">{t('Newest')}</option>
-                        <option value="low">{t('Price, low to high')}</option>
-                        <option value="high">{t('Price, high to low')}</option>
-                        <option value="popular">{t('Most ordered')}</option>
-                    </select>
-                    <label htmlFor="mk-stars" className="sr-only">
-                        {t('Rating')}
-                    </label>
-                    <select id="mk-stars" value={filters.stars ?? ''} onChange={(e) => go({ stars: e.target.value === '' ? null : Number(e.target.value) })} className="h-11 rounded-lg border border-[var(--pt-line)] bg-[var(--pt-surface)] px-3 text-sm">
-                        <option value="">{t('Any rating')}</option>
-                        <option value="4">{t('4 stars and up')}</option>
-                        <option value="3">{t('3 stars and up')}</option>
-                    </select>
-                    <Button type="submit" variant="secondary">
-                        {t('Search')}
-                    </Button>
-                </form>
-
-                {items.length === 0 ? (
-                    <p className="rounded-2xl border border-dashed p-10 text-center text-[var(--pt-muted)]">{t('Nothing here yet.')}</p>
-                ) : (
-                    <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-                        {items.map((i) => (
-                            <li key={i.id}>
-                                <Link href={`/market/${i.id}`} className="block overflow-hidden rounded-2xl border border-[var(--pt-line)] bg-[var(--pt-surface)] hover:border-[var(--pt-ink)]">
-                                    {i.photo ? <img src={i.photo} alt="" loading="lazy" className="aspect-square w-full object-cover" /> : <div aria-hidden className="aspect-square w-full bg-[var(--pt-sage)]" />}
-                                    <div className="space-y-0.5 p-3">
-                                        <p className="line-clamp-2 font-semibold">{i.title}</p>
-                                        <p className="tabular font-display text-lg font-bold">
-                                            {money(i.price)} <span className="text-xs font-normal text-[var(--pt-muted)]">/ {unitLabel(i.unit)}</span>
-                                        </p>
-                                        <p className="text-xs text-[var(--pt-muted)]">
-                                            {i.seller}
-                                            {i.trusted && <span className="ms-2 rounded bg-emerald-600/10 px-1.5 text-xs font-semibold text-emerald-800">{t('Trusted seller')}</span>}
-                                            {i.stars && <span className="tabular ms-2 font-semibold text-[var(--pt-ink)]">★ {num(i.stars.average)} ({num(i.stars.count)})</span>}
-                                            {(i.sellers ?? 1) > 1 && <span className="ms-2 text-xs font-semibold text-emerald-800">{t('{n} sellers', { n: num(i.sellers ?? 1) })}</span>}
-                                            {i.near && ` · ${t('Near you')}`}
-                                            {i.premium && ` · ${t('Premium')}`}
-                                        </p>
-                                    </div>
-                                </Link>
-                            </li>
-                        ))}
-                    </ul>
-                )}
-
-                {total > perPage && (
-                    <div className="flex justify-between">
-                        <Button variant="outline" disabled={page <= 1} onClick={() => go({ page: page - 1 })}>
-                            {t('Previous')}
-                        </Button>
-                        <Button variant="outline" disabled={page * perPage >= total} onClick={() => go({ page: page + 1 })}>
-                            {t('Next')}
-                        </Button>
-                    </div>
-                )}
+                </div>
             </div>
         </PublicLayout>
     );

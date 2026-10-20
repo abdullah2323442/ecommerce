@@ -80,12 +80,12 @@ export default function StockShow({ medicine, unitMrp, onHand, lots, movements, 
                 <Flash />
 
                 {mrpMark && (
-                    <p className="rounded-md bg-amber-100 px-3 py-2 text-sm text-amber-900">
+                    <p className="rounded-md bg-warning/15 px-3 py-2 text-sm text-warning">
                         {t('The printed price changed on {d}. It was {p}. Old boxes may still carry the old price.', { d: date(mrpMark.at), p: money(mrpMark.was) })}
                     </p>
                 )}
                 {lotsLeft >= manyLots && (
-                    <p className="rounded-md bg-amber-100 px-3 py-2 text-sm text-amber-900">{t('This medicine is spread over {n} lots. Sell the old small ones first.', { n: num(lotsLeft) })}</p>
+                    <p className="rounded-md bg-warning/15 px-3 py-2 text-sm text-warning">{t('This medicine is spread over {n} lots. Sell the old small ones first.', { n: num(lotsLeft) })}</p>
                 )}
 
                 <dl className="grid gap-3 sm:grid-cols-3">
@@ -132,7 +132,7 @@ export default function StockShow({ medicine, unitMrp, onHand, lots, movements, 
                                         <td className="px-4 py-2.5">{l.source}</td>
                                         <td className="tabular px-4 py-2.5 text-right">
                                             {num(l.units_remaining)} / {num(l.units_received)}
-                                            {l.small_old && <span className="block text-xs text-amber-700">{t('Small and old')}</span>}
+                                            {l.small_old && <span className="block text-xs text-warning">{t('Small and old')}</span>}
                                             {l.units_bonus > 0 && <span className="block text-xs text-muted-foreground">{t('bonus {n}', { n: num(l.units_bonus) })}</span>}
                                         </td>
                                         <td className="tabular px-4 py-2.5 text-right">{money(l.unit_cost)}</td>

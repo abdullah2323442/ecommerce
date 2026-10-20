@@ -30,7 +30,7 @@ function Row({ c, canPay }: { c: Craftsman; canPay: boolean }) {
             <div className="flex flex-wrap items-baseline justify-between gap-2">
                 <p className="font-medium">
                     {c.name} {c.phone && <span className="text-xs text-muted-foreground">{c.phone}</span>}
-                    {c.closed && <span className="ms-2 rounded bg-red-100 px-1.5 py-0.5 text-xs font-semibold text-red-900">{t('Closed')}</span>}
+                    {c.closed && <span className="ms-2 rounded bg-danger/15 px-1.5 py-0.5 text-xs font-semibold text-danger">{t('Closed')}</span>}
                 </p>
                 <p className="tabular text-xs">
                     {t('Active jobs')}: <strong>{num(c.active_jobs)}</strong> · {t('Late jobs')}: {num(c.ledger.delays)}
@@ -45,7 +45,7 @@ function Row({ c, canPay }: { c: Craftsman; canPay: boolean }) {
                         ['Owed', c.ledger.owed],
                     ] as const
                 ).map(([label, v]) => (
-                    <div key={label} className={label === 'Owed' && v > 0 ? 'rounded-md bg-amber-50 p-1' : ''}>
+                    <div key={label} className={label === 'Owed' && v > 0 ? 'rounded-md bg-warning/10 p-1' : ''}>
                         <dt className="text-xs text-muted-foreground">{t(label)}</dt>
                         <dd className="font-semibold">{money(v)}</dd>
                     </div>

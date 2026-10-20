@@ -26,14 +26,14 @@ export default function Prescriptions({ unseen, items }: { unseen: number; items
             <div className="mx-auto w-full max-w-4xl space-y-4 p-4">
                 <div className="flex items-baseline justify-between gap-3">
                     <h1 className="font-display text-2xl font-extrabold">{t('Prescriptions')}</h1>
-                    <p className={`text-sm font-semibold ${unseen > 0 ? 'text-amber-700' : 'text-muted-foreground'}`}>{t('{n} not seen yet', { n: num(unseen) })}</p>
+                    <p className={`text-sm font-semibold ${unseen > 0 ? 'text-warning' : 'text-muted-foreground'}`}>{t('{n} not seen yet', { n: num(unseen) })}</p>
                 </div>
                 {items.length === 0 ? (
                     <p className="rounded-md border border-dashed p-6 text-center text-sm text-muted-foreground">{t('No prescriptions yet.')}</p>
                 ) : (
                     <ul className="divide-y rounded-md border">
                         {items.map((p) => (
-                            <li key={p.id} className={`flex flex-wrap items-center gap-3 px-4 py-3 ${p.late ? 'bg-amber-500/10' : ''}`}>
+                            <li key={p.id} className={`flex flex-wrap items-center gap-3 px-4 py-3 ${p.late ? 'bg-warning/10' : ''}`}>
                                 <div className="min-w-48 flex-1">
                                     <p className="font-medium">{p.shop}</p>
                                     <p className="text-sm text-muted-foreground">{[p.phone, p.note].filter(Boolean).join(' · ')}</p>

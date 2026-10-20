@@ -60,9 +60,9 @@ export default function Preorders({ items, notices, home }: Props) {
                                     <span className="min-w-40 flex-1 font-medium">
                                         {p.name} <span className="text-sm font-normal text-[var(--pt-muted)]">· {num(p.quantity)} {unit(p.unit)}</span>
                                     </span>
-                                    {p.due_on && p.open && <span className={`text-sm ${p.late ? 'font-semibold text-red-700' : 'text-[var(--pt-muted)]'}`}>{date(p.due_on)}</span>}
+                                    {p.due_on && p.open && <span className={`text-sm ${p.late ? 'font-semibold text-danger' : 'text-[var(--pt-muted)]'}`}>{date(p.due_on)}</span>}
                                     {p.advance > 0 && <span className="tabular text-sm text-[var(--pt-muted)]">{money(p.advance)}</span>}
-                                    <span className={`text-sm font-semibold ${p.late ? 'text-red-700' : ''}`}>{t(preorderState(p.status, p.late))}</span>
+                                    <span className={`text-sm font-semibold ${p.late ? 'text-danger' : ''}`}>{t(preorderState(p.status, p.late))}</span>
                                 </Link>
                             </li>
                         ))}

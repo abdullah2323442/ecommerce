@@ -1,3 +1,4 @@
+import SectionHero from '@/components/home/section-hero';
 import PublicLayout from '@/layouts/public-layout';
 import { useI18n } from '@/lib/i18n';
 import { Head, Link } from '@inertiajs/react';
@@ -23,22 +24,36 @@ export default function CustomIndex({ orders, profileCount }: { orders: Order[];
     return (
         <PublicLayout>
             <Head title={t('Made to order')} />
-            <div className="mx-auto max-w-3xl space-y-8">
-                <div>
-                    <h1 className="font-display text-3xl font-extrabold">{t('Made to order')}</h1>
-                    <p className="mt-2 text-[var(--pt-muted)]">{t('Furniture and clothes made to your own measurements. Tell us what you need and we send a price.')}</p>
+            <div className="mx-auto max-w-5xl space-y-8">
+                <SectionHero image="/images/home/custom" title={t('Made to order')} line={t('Furniture and clothes made to your own measurements. Tell us what you need and we send a price.')} />
+
+                <div className="grid gap-3 sm:grid-cols-2">
+                    {[
+                        { href: '/custom/new/wood', img: '/sector-hero/wood', title: t('Wood'), line: t('A bed, a wardrobe, a table. Pick the wood, give the size.') },
+                        { href: '/custom/new/clothing', img: '/sector-hero/clothing', title: t('Clothing'), line: t('One outfit, or five for a wedding. Saved measurements fill in by themselves.') },
+                    ].map((c) => (
+                        <Link key={c.href} href={c.href} className="relative isolate flex min-h-[18rem] flex-col justify-end overflow-hidden bg-[var(--pt-ink)] p-6 text-white">
+                            <img src={c.img} alt="" loading="lazy" decoding="async" className="absolute inset-0 -z-20 size-full object-cover" />
+                            <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-t from-black/75 via-black/15 to-transparent" />
+                            <p style={{ fontFamily: "'Cormorant Garamond', 'Hind Siliguri', Georgia, serif" }} className="text-4xl leading-none font-medium">{c.title}</p>
+                            <p className="mt-2 max-w-sm text-sm text-white/85">{c.line}</p>
+                            <p className="mt-3 text-sm underline underline-offset-4">{t('Start an order')}</p>
+                        </Link>
+                    ))}
                 </div>
 
-                <div className="grid gap-4 sm:grid-cols-2">
-                    <Link href="/custom/new/wood" className="rounded-2xl border border-[var(--pt-line)] bg-[var(--pt-surface)] p-6 hover:border-[var(--pt-ink)]">
-                        <p className="font-display text-2xl font-bold">{t('Wood')}</p>
-                        <p className="mt-1 text-sm text-[var(--pt-muted)]">{t('A bed, a wardrobe, a table. Pick the wood, give the size.')}</p>
-                    </Link>
-                    <Link href="/custom/new/clothing" className="rounded-2xl border border-[var(--pt-line)] bg-[var(--pt-surface)] p-6 hover:border-[var(--pt-ink)]">
-                        <p className="font-display text-2xl font-bold">{t('Clothing')}</p>
-                        <p className="mt-1 text-sm text-[var(--pt-muted)]">{t('One outfit, or five for a wedding. Saved measurements fill in by themselves.')}</p>
-                    </Link>
-                </div>
+                <ol aria-label={t('How it works')} className="grid gap-6 border-t border-[var(--pt-ink)] pt-5 sm:grid-cols-3">
+                    {[
+                        [t('Tell us what you need'), t('Describe it and give your measurements.')],
+                        [t('We send a price'), t('Check it, then confirm when you are happy.')],
+                        [t('We make it'), t('Follow the work and collect it when it is ready.')],
+                    ].map(([title, line], i) => (
+                        <li key={title}>
+                            <p style={{ fontFamily: "'Cormorant Garamond', 'Hind Siliguri', Georgia, serif" }} className="text-2xl font-medium">{i + 1}. {title}</p>
+                            <p className="mt-1 text-sm text-[var(--pt-muted)]">{line}</p>
+                        </li>
+                    ))}
+                </ol>
 
                 <p className="text-sm">
                     <Link href="/custom/profiles" className="font-semibold underline underline-offset-4">
@@ -47,17 +62,17 @@ export default function CustomIndex({ orders, profileCount }: { orders: Order[];
                     <span className="tabular text-[var(--pt-muted)]">({num(profileCount)})</span>
                 </p>
 
-                <p className="rounded-2xl border border-amber-500/40 bg-amber-500/10 px-4 py-3 text-sm">{t('Returns do not apply to made-to-order work. Check the measurements carefully before you confirm.')}</p>
+                <p className="border border-[var(--pt-line)] p-4 text-sm">{t('Returns do not apply to made-to-order work. Check the measurements carefully before you confirm.')}</p>
 
                 <section className="space-y-2">
-                    <h2 className="font-display text-xl font-bold">{t('Your jobs')}</h2>
+                    <h2 style={{ fontFamily: "'Cormorant Garamond', 'Hind Siliguri', Georgia, serif" }} className="border-t border-[var(--pt-ink)] pt-4 text-3xl font-medium">{t('Your jobs')}</h2>
                     {orders.length === 0 ? (
-                        <p className="rounded-2xl border border-dashed p-8 text-center text-[var(--pt-muted)]">{t('Nothing ordered yet.')}</p>
+                        <p className="border border-dashed border-[var(--pt-ink)] p-8 text-center text-[var(--pt-muted)]">{t('Nothing ordered yet.')}</p>
                     ) : (
-                        <ul className="divide-y rounded-2xl border bg-[var(--pt-surface)]">
+                        <ul className="divide-y divide-[var(--pt-line)] border-y border-[var(--pt-line)]">
                             {orders.map((o) => (
                                 <li key={o.token}>
-                                    <Link href={`/custom/${o.token}`} className="flex flex-wrap items-center gap-x-6 gap-y-1 px-4 py-3 hover:bg-[var(--pt-sage)]">
+                                    <Link href={`/custom/${o.token}`} className="flex flex-wrap items-center gap-x-6 gap-y-1 px-4 py-3 hover:bg-[var(--pt-surface)]">
                                         <span className="min-w-32 flex-1 font-medium">
                                             {o.number} · {o.kind === 'wood' ? t('Wood') : t('Clothing')}
                                         </span>

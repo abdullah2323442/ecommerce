@@ -41,7 +41,7 @@ function Row({ item, defaults, locked }: { item: ControlledItem; defaults: Defau
                 </p>
                 {item.details && !open && (
                     <span className="flex items-center gap-2 text-sm">
-                        <span className="text-emerald-700">{t('In the register')}</span>
+                        <span className="text-success">{t('In the register')}</span>
                         {!locked && (
                             <Button size="sm" variant="ghost" onClick={() => setOpen(true)}>
                                 {t('Change')}
@@ -91,7 +91,7 @@ export default function ControlledDetails({ items, defaults, final = false }: { 
     if (items.length === 0) return null;
 
     return (
-        <section aria-labelledby="ctl-h" className="space-y-2 rounded-md border border-amber-500/40 bg-amber-500/5 p-3 print:hidden">
+        <section aria-labelledby="ctl-h" className="space-y-2 rounded-md border border-warning/40 bg-warning/5 p-3 print:hidden">
             <div>
                 <h2 id="ctl-h" className="font-display text-lg font-bold">
                     {t('Controlled medicine')}

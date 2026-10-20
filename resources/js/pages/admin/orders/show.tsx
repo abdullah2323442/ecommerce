@@ -60,7 +60,7 @@ function LineRow({ orderId, line, open, approvals }: { orderId: number; line: Li
                 <p className="font-medium">
                     {line.name} <span className="text-sm font-normal text-muted-foreground">{line.strength}</span>
                 </p>
-                {line.cold && <p className="text-xs font-semibold text-sky-700">{t('Keep refrigerated. Pack with ice.')}</p>}
+                {line.cold && <p className="text-xs font-semibold text-info">{t('Keep refrigerated. Pack with ice.')}</p>}
                 <p className="text-xs text-muted-foreground">
                     {line.offer && <strong className="mr-1 rounded bg-[var(--pt-deep,#0e0d0c)] px-1.5 py-0.5 text-[10px] tracking-wide text-[#e8c97a]">{t('OFFER')}</strong>}
                     {line.company} · {t(line.unit === 'box' ? 'Box' : line.unit === 'strip' ? 'Strip' : 'Piece')}
@@ -137,7 +137,7 @@ function CourierPlaces({ orderId, onPick }: { orderId: number; onPick: (p: { cit
     useEffect(() => load(null, true), [orderId]);
 
     if (problem) {
-        return <p className="text-sm text-amber-800">{problem}</p>;
+        return <p className="text-sm text-warning">{problem}</p>;
     }
 
     return (
@@ -206,13 +206,13 @@ export default function OrderShow({ order, approvals, controlled, controlledDefa
                 <Flash />
                 <InputError message={errors.order} />
                 {other && (
-                    <p role="status" className="rounded-md border border-amber-500/50 bg-amber-500/10 px-3 py-2 text-sm font-semibold">
+                    <p role="status" className="rounded-md border border-warning/50 bg-warning/10 px-3 py-2 text-sm font-semibold">
                         {t('{name} is working on this order.', { name: other })}
                     </p>
                 )}
                 <ControlledDetails items={controlled} defaults={controlledDefaults} />
                 {order.cancel_requested && (
-                    <div role="alert" className="flex flex-wrap items-center gap-2 rounded-md border border-red-500/50 bg-red-500/10 px-3 py-2 text-sm">
+                    <div role="alert" className="flex flex-wrap items-center gap-2 rounded-md border border-danger/50 bg-danger/10 px-3 py-2 text-sm">
                         <strong className="flex-1">{t('This shop wants to cancel.')}</strong>
                         <Button size="sm" variant="destructive" onClick={() => router.post(`/admin/orders/${order.id}/cancel-decision`, { approve: true })}>
                             {t('Cancel the order')}
@@ -223,7 +223,7 @@ export default function OrderShow({ order, approvals, controlled, controlledDefa
                     </div>
                 )}
                 {order.flagged && (
-                    <p role="alert" className="rounded-md border border-amber-500/50 bg-amber-500/10 px-3 py-2 text-sm font-semibold">
+                    <p role="alert" className="rounded-md border border-warning/50 bg-warning/10 px-3 py-2 text-sm font-semibold">
                         {t('This shop has cancelled {n} checked orders lately.', { n: num(order.late_cancellations) })}
                     </p>
                 )}
@@ -251,7 +251,7 @@ export default function OrderShow({ order, approvals, controlled, controlledDefa
                 </header>
 
                 {order.not_received && (
-                    <div role="alert" className="flex flex-wrap items-center gap-2 rounded-md border border-red-500/50 bg-red-500/10 px-3 py-2 text-sm">
+                    <div role="alert" className="flex flex-wrap items-center gap-2 rounded-md border border-danger/50 bg-danger/10 px-3 py-2 text-sm">
                         <strong className="flex-1">{t('The buyer says this did not arrive.')}</strong>
                         <Button size="sm" variant="outline" onClick={() => router.post(`/admin/orders/${order.id}/not-received`, { arrived: true }, { preserveScroll: true })}>
                             {t('It did arrive')}
@@ -263,10 +263,10 @@ export default function OrderShow({ order, approvals, controlled, controlledDefa
                 )}
 
                 {order.status === 'cancelled' && order.delivery_refund > 0 && (
-                    <p className="rounded-md border border-amber-500/40 bg-amber-500/5 px-3 py-2 text-sm">{t('Cancelled before sending: half of the delivery charge goes back ({n}). The other half stays for the handling.', { n: money(order.delivery_refund) })}</p>
+                    <p className="rounded-md border border-warning/40 bg-warning/5 px-3 py-2 text-sm">{t('Cancelled before sending: half of the delivery charge goes back ({n}). The other half stays for the handling.', { n: money(order.delivery_refund) })}</p>
                 )}
                 {order.advance_needed && (
-                    <section className="space-y-2 rounded-md border border-amber-500/40 bg-amber-500/5 p-3">
+                    <section className="space-y-2 rounded-md border border-warning/40 bg-warning/5 p-3">
                         <h2 className="font-medium">{t('Delivery charge first')}</h2>
                         {order.advance_at ? (
                             <p className="text-sm">{t('The delivery charge was received {when}.', { when: dateTime(order.advance_at) })}</p>
@@ -415,7 +415,7 @@ export default function OrderShow({ order, approvals, controlled, controlledDefa
                         <Button variant="outline" disabled={charge === ''} onClick={() => router.put(`/admin/orders/${order.id}/delivery`, { charge }, { preserveScroll: true })}>
                             {t('Save')}
                         </Button>
-                        {overFree && <p className="text-sm font-semibold text-amber-700">{t('This order is past the free-delivery amount.')}</p>}
+                        {overFree && <p className="text-sm font-semibold text-warning">{t('This order is past the free-delivery amount.')}</p>}
                     </div>
                 )}
 

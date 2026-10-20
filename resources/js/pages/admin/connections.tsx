@@ -59,7 +59,7 @@ function Card({ p }: { p: Provider }) {
         <li className="space-y-3 rounded-lg border p-4">
             <div className="flex flex-wrap items-center justify-between gap-2">
                 <h3 className="font-semibold">{p.name}</h3>
-                <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${p.enabled ? 'bg-emerald-100 text-emerald-900' : 'bg-muted'}`}>
+                <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${p.enabled ? 'bg-success/15 text-success' : 'bg-muted'}`}>
                     {p.enabled ? (p.mode === 'live' ? t('On, live') : t('On, testing')) : p.ready ? t('Off') : t('Not built into the site yet')}
                 </span>
             </div>
@@ -131,7 +131,7 @@ function Card({ p }: { p: Provider }) {
                         {t('Try it')}
                     </Button>
                     {p.tested_at && (
-                        <span className={p.test_ok ? 'text-emerald-700' : 'text-red-700'}>
+                        <span className={p.test_ok ? 'text-success' : 'text-danger'}>
                             {p.test_ok ? t('Worked') : t('Did not work')} · {dateTime(p.tested_at)} {p.test_note && `· ${label(p.test_note)}`}
                         </span>
                     )}

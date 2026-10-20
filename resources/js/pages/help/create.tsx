@@ -21,7 +21,7 @@ export default function HelpCreate({ categories, refusal }: { categories: string
                 <h1 className="font-display text-3xl font-extrabold">{t('Post something')}</h1>
                 <HelpNotice />
                 <p className="text-sm text-[var(--pt-muted)]">{t('We read every post before it is shown. Photos are not allowed.')}</p>
-                {refusal && <p role="alert" className="rounded-2xl border border-amber-500/40 bg-amber-500/10 px-4 py-3 text-sm">{refusal}</p>}
+                {refusal && <p role="alert" className="rounded-[1.5rem] border border-warning/40 bg-warning/10 px-4 py-3 text-sm">{refusal}</p>}
                 <InputError message={errors.post} />
 
                 <form

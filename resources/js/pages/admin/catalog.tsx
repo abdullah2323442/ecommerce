@@ -70,7 +70,7 @@ export default function Catalog({ waiting, products, sectors }: { waiting: Row[]
                 {waiting.length > 0 && (
                     <section className="space-y-2">
                         <h2 className="font-medium">{t('Sellers asked for these')}</h2>
-                        <ul className="divide-y rounded-md border border-amber-500/50 bg-card">
+                        <ul className="divide-y rounded-md border border-warning/50 bg-card">
                             {waiting.map((r) => (
                                 <Request key={r.id} r={r} />
                             ))}

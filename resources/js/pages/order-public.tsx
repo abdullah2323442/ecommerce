@@ -159,7 +159,7 @@ function PayBox({ token, pay }: { token: string; pay: PayInfo }) {
         <section className="space-y-2 rounded-2xl border bg-[var(--pt-surface)] p-4">
             <h2 className="font-display text-lg font-bold">{t('Payment')}</h2>
             <InputError message={errors.order} />
-            {pay.paid_online > 0 && <p className="tabular text-sm font-semibold text-emerald-800">{t('Paid online')}: {money(pay.paid_online)}</p>}
+            {pay.paid_online > 0 && <p className="tabular text-sm font-semibold text-success">{t('Paid online')}: {money(pay.paid_online)}</p>}
             {pay.practice && <p className="text-sm text-[var(--pt-muted)]">{t('A practice payment was made. No real money was taken.')}</p>}
             {pay.refund_due && <p className="text-sm font-semibold">{t('Your payment will be returned to you. We will tell you.')}</p>}
             {checking && <p className="text-sm text-[var(--pt-muted)]">{t(pay.why ?? '')}</p>}
@@ -201,7 +201,7 @@ export default function OrderPublic({ token, districts, order, pay }: Props) {
         <PublicLayout>
             <Head title={order.number ?? t('Your order')} />
             <div className="mx-auto max-w-3xl space-y-6">
-                {status && <p className="rounded-md border border-emerald-600/30 bg-emerald-600/10 px-3 py-2 text-sm text-emerald-800">{status}</p>}
+                {status && <p className="rounded-md border border-success/30 bg-success/10 px-3 py-2 text-sm text-success">{status}</p>}
                 <InputError message={errors.order} />
                 <header className="space-y-1">
                     <h1 className="font-display text-3xl font-extrabold">{order.number ?? t('Your order')}</h1>
@@ -209,7 +209,7 @@ export default function OrderPublic({ token, districts, order, pay }: Props) {
                 </header>
 
                 {order.status === 'cancelled' ? (
-                    <p role="status" className="rounded-2xl border border-red-500/40 bg-red-500/10 px-4 py-3 font-semibold">
+                    <p role="status" className="rounded-2xl border border-danger/40 bg-danger/10 px-4 py-3 font-semibold">
                         {t('This order was cancelled.')}
                     </p>
                 ) : (
@@ -243,7 +243,7 @@ export default function OrderPublic({ token, districts, order, pay }: Props) {
                                     )}
                                 </span>
                             )}
-                            {order.status !== 'cancelled' && <span className={`text-sm font-semibold ${l.check === 'unavailable' ? 'text-red-700' : l.check === 'partial' ? 'text-amber-700' : ''}`}>{checkLabel(l)}</span>}
+                            {order.status !== 'cancelled' && <span className={`text-sm font-semibold ${l.check === 'unavailable' ? 'text-danger' : l.check === 'partial' ? 'text-warning' : ''}`}>{checkLabel(l)}</span>}
                             <span className="tabular w-24 text-right font-semibold">{l.check === 'unavailable' ? '—' : money(l.total)}</span>
                         </li>
                     ))}
@@ -282,7 +282,7 @@ export default function OrderPublic({ token, districts, order, pay }: Props) {
                 )}
 
                 {order.own_delivery && order.code && (
-                    <section role="status" className={`space-y-1 rounded-2xl border p-4 ${order.arrived ? 'border-emerald-600/40 bg-emerald-600/10' : 'border-[var(--pt-line)] bg-[var(--pt-surface)]'}`}>
+                    <section role="status" className={`space-y-1 rounded-2xl border p-4 ${order.arrived ? 'border-success/40 bg-success/10' : 'border-[var(--pt-line)] bg-[var(--pt-surface)]'}`}>
                         {order.arrived && <p className="font-semibold">{t('Our delivery person is at your door.')}</p>}
                         <p className="text-sm">{t('Tell this code to our delivery person when you get your order. Do not tell it to anyone else.')}</p>
                         <p className="tabular font-display text-4xl font-extrabold tracking-[0.3em]">{order.code}</p>
@@ -302,7 +302,7 @@ export default function OrderPublic({ token, districts, order, pay }: Props) {
                     <p className="rounded-xl border p-3 text-sm">{t('Half of the delivery charge you paid goes back to you ({n}). The other half stays for the handling.', { n: money(order.delivery_refund) })}</p>
                 )}
                 {order.advance_needed && order.status !== 'cancelled' && (
-                    <p role="note" className="rounded-xl border border-amber-500/40 bg-amber-500/10 p-3 text-sm">
+                    <p role="note" className="rounded-xl border border-warning/40 bg-warning/10 p-3 text-sm">
                         {t('This order is big, so the delivery charge is paid first. Please send the delivery charge and call us. We send the goods once it is received.')}
                     </p>
                 )}

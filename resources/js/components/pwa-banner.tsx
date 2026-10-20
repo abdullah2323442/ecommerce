@@ -13,7 +13,7 @@ export default function PwaBanner() {
     if (!updateReady) return null;
 
     return (
-        <div role="status" className="fixed inset-x-3 bottom-3 z-50 mx-auto flex max-w-md items-center gap-3 rounded-xl border bg-background p-3 text-sm shadow-lg">
+        <div role="status" className="fixed inset-x-3 bottom-[calc(7rem+env(safe-area-inset-bottom))] z-50 md:bottom-3 mx-auto flex max-w-md items-center gap-3 rounded-xl border bg-background p-3 text-sm shadow-lg">
             <p className="flex-1">{t('A new version is ready.')}</p>
             <Button size="sm" onClick={applyUpdate}>
                 {t('Update now')}

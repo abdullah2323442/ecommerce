@@ -65,7 +65,7 @@ function Change({ now, before }: { now: number; before: number }) {
 
     return (
         <span
-            className={`text-xs font-semibold ${pct >= 0 ? 'text-emerald-700' : 'text-red-700'}`}
+            className={`text-xs font-semibold ${pct >= 0 ? 'text-success' : 'text-danger'}`}
         >{`${pct >= 0 ? '▲' : '▼'} ${num(Math.abs(Math.round(pct)))}%`}</span>
     );
 }
@@ -214,8 +214,8 @@ export default function MonthlyReport(p: Props) {
                                         <td className="py-1.5 text-right">{num(r.on_hand)}</td>
                                         <td className="py-1.5 text-right font-semibold">{r.order > 0 ? num(r.order) : ''}</td>
                                         <td className="py-1.5 pl-3 text-xs font-semibold">
-                                            {r.advice === 'more' && <span className="text-amber-700">{t('Take more')}</span>}
-                                            {r.advice === 'less' && <span className="text-sky-700">{t('Take less, it is sitting')}</span>}
+                                            {r.advice === 'more' && <span className="text-warning">{t('Take more')}</span>}
+                                            {r.advice === 'less' && <span className="text-info">{t('Take less, it is sitting')}</span>}
                                         </td>
                                     </tr>
                                 ))}

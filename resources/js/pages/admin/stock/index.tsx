@@ -59,7 +59,7 @@ export default function StockIndex({ rows, query, stockValue, masterSync, openMi
                         <Button asChild variant="outline">
                             <Link href="/admin/stock/mismatches">
                                 {t('Mismatch reports')}
-                                {openMismatches > 0 && <span className="tabular ml-1 rounded-full bg-amber-500 px-1.5 text-xs text-white">{num(openMismatches)}</span>}
+                                {openMismatches > 0 && <span className="tabular ml-1 rounded-full bg-warning px-1.5 text-xs text-white">{num(openMismatches)}</span>}
                             </Link>
                         </Button>
                         <Button asChild variant="outline">
@@ -142,7 +142,7 @@ export default function StockIndex({ rows, query, stockValue, masterSync, openMi
                                             </Link>
                                             <p className="text-xs text-muted-foreground">{[r.company, r.form && t(r.form)].filter(Boolean).join(' · ')}</p>
                                             {r.fragmented && (
-                                                <p className="text-xs text-amber-700">{r.small_old > 0 ? t('{n} lots, {s} small and old', { n: num(r.lots), s: num(r.small_old) }) : t('{n} lots', { n: num(r.lots) })}</p>
+                                                <p className="text-xs text-warning">{r.small_old > 0 ? t('{n} lots, {s} small and old', { n: num(r.lots), s: num(r.small_old) }) : t('{n} lots', { n: num(r.lots) })}</p>
                                             )}
                                         </td>
                                         <td className="tabular px-4 py-2.5 text-right">

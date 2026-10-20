@@ -67,7 +67,7 @@ export default function Behavior({ days, searches, medicines, funnel }: Props) {
                                 {searches.map((s) => (
                                     <li key={s.term} className="flex items-center gap-3 px-3 py-1.5">
                                         <span className="flex-1">{s.term}</span>
-                                        {s.found === 0 && <span className="rounded bg-red-500/15 px-1.5 text-xs font-semibold">{t('Found nothing')}</span>}
+                                        {s.found === 0 && <span className="rounded bg-danger/15 px-1.5 text-xs font-semibold">{t('Found nothing')}</span>}
                                         <span className="tabular text-muted-foreground w-10 text-right">{num(s.times)}</span>
                                     </li>
                                 ))}
@@ -90,7 +90,7 @@ export default function Behavior({ days, searches, medicines, funnel }: Props) {
                                         <span className="tabular text-muted-foreground w-24 text-right">
                                             {num(m.views)} {t('looks')}
                                         </span>
-                                        <span className={`tabular w-24 text-right ${m.carts === 0 && m.views >= 3 ? 'font-semibold text-red-600' : ''}`}>
+                                        <span className={`tabular w-24 text-right ${m.carts === 0 && m.views >= 3 ? 'font-semibold text-danger' : ''}`}>
                                             {num(m.carts)} {t('carts')}
                                         </span>
                                     </li>

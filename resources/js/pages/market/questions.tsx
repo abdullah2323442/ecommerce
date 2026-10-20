@@ -20,13 +20,13 @@ function Card({ q }: { q: Row }) {
     const errors = usePage().props.errors as Record<string, string>;
 
     return (
-        <li className="space-y-2 rounded-2xl border bg-[var(--pt-surface)] p-4 text-sm">
+        <li className="space-y-2 rounded-[1.5rem] border bg-[var(--pt-surface)] p-4 text-sm">
             <div className="flex flex-wrap items-baseline justify-between gap-2">
                 <p className="font-semibold">{q.listing}</p>
                 <span className="text-xs text-[var(--pt-muted)]">{dateTime(q.at)}</span>
             </div>
             <p>{q.question}</p>
-            {q.late && !q.answer && <p className="text-xs font-semibold text-red-700">{t('This went to us because it was left too long.')}</p>}
+            {q.late && !q.answer && <p className="text-xs font-semibold text-danger">{t('This went to us because it was left too long.')}</p>}
             <textarea aria-label={t('Answer')} rows={2} maxLength={1500} value={text} onChange={(e) => setText(e.target.value)} className="w-full rounded-md border bg-background p-2 text-sm" placeholder={t('Write the answer')} />
             <InputError message={errors.answer} />
             <Button size="sm" disabled={text.trim().length < 2} onClick={() => router.put(`/wholesale/sell/questions/${q.id}`, { answer: text }, { preserveScroll: true })}>
@@ -51,7 +51,7 @@ export default function SellerQuestions({ waiting, answered, hours }: { waiting:
                     <h1 className="font-display text-3xl font-extrabold">{t('Questions from buyers')}</h1>
                     <p className="text-sm text-[var(--pt-muted)]">{t('Answer within {n} hours. After that the question goes to us, and it counts against you.', { n: num(hours) })}</p>
                 </div>
-                {flash && <p role="status" className="rounded-md border border-emerald-600/30 bg-emerald-600/10 px-3 py-2 text-sm text-emerald-900">{flash}</p>}
+                {flash && <p role="status" className="rounded-md border border-success/30 bg-success/10 px-3 py-2 text-sm text-success">{flash}</p>}
 
                 <section className="space-y-2">
                     <h2 className="font-display text-xl font-bold">{t('Waiting for your answer')}</h2>

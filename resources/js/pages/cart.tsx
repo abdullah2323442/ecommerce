@@ -39,7 +39,7 @@ export default function Cart({ lines, subtotal, freeOver }: Props) {
             <Head title={t('Your cart')} />
             <div className="mx-auto max-w-3xl space-y-6">
                 <h1 className="font-display text-3xl font-extrabold">{t('Your cart')}</h1>
-                {status && <p className="rounded-md border border-emerald-600/30 bg-emerald-600/10 px-3 py-2 text-sm text-emerald-800">{status}</p>}
+                {status && <p className="rounded-md border border-success/30 bg-success/10 px-3 py-2 text-sm text-success">{status}</p>}
                 <InputError message={errors.cart} />
 
                 {lines.length === 0 ? (
@@ -70,7 +70,7 @@ export default function Cart({ lines, subtotal, freeOver }: Props) {
                                         <p className="text-sm text-[var(--pt-muted)]">
                                             {l.company} · {t(unitName(l.unit))} · {money(l.unit_price)}
                                         </p>
-                                        {l.step.percent > 0 && <p className="text-sm font-medium text-emerald-800">{t('You are getting {p}% off', { p: l.step.percent })}</p>}
+                                        {l.step.percent > 0 && <p className="text-sm font-medium text-success">{t('You are getting {p}% off', { p: l.step.percent })}</p>}
                                         {l.step.next && (
                                             <p className="text-sm text-[var(--pt-muted)]">{t('Take {n} more for {p}% off each', { n: l.step.next.needs, p: l.step.next.percent })}</p>
                                         )}

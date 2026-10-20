@@ -38,8 +38,8 @@ function List({ rows, refund }: { rows: Row[]; refund?: boolean }) {
                     )}
                     <span className="tabular w-24 text-end font-semibold">{money(p.amount)}</span>
                     <span className="text-muted-foreground">{p.method ?? '—'}</span>
-                    {!p.live && <span className="rounded bg-amber-100 px-1.5 text-xs font-semibold text-amber-900">{t('Practice')}</span>}
-                    {p.risky && <span className="rounded bg-red-100 px-1.5 text-xs font-semibold text-red-900">{t('Looks risky')}</span>}
+                    {!p.live && <span className="rounded bg-warning/15 px-1.5 text-xs font-semibold text-warning">{t('Practice')}</span>}
+                    {p.risky && <span className="rounded bg-danger/15 px-1.5 text-xs font-semibold text-danger">{t('Looks risky')}</span>}
                     <span className="text-xs text-muted-foreground">{dateTime(p.at)}</span>
                     <span className="text-xs font-semibold">{t(p.status === 'paid' ? 'Paid' : p.status === 'refunded' ? 'Refunded' : p.status === 'refund_due' ? 'Refund due' : p.status === 'cancelled' ? 'Cancelled' : 'Failed')}</span>
                     {refund && (
@@ -75,12 +75,12 @@ export default function Payments({ refunds, recent, failed, today, enabled, payo
                         {t('Received today')}: <strong>{money(today)}</strong>
                     </p>
                 </div>
-                {!enabled && <p className="rounded-md border border-amber-500/40 bg-amber-500/10 p-3 text-sm">{t('Online payment is not switched on. Set it up in Connections.')}</p>}
+                {!enabled && <p className="rounded-md border border-warning/40 bg-warning/10 p-3 text-sm">{t('Online payment is not switched on. Set it up in Connections.')}</p>}
                 <InputError message={errors.payment} />
 
                 {refunds.length > 0 && (
                     <section className="space-y-2">
-                        <h2 className="font-medium text-red-800">{t('To refund')}</h2>
+                        <h2 className="font-medium text-danger">{t('To refund')}</h2>
                         <p className="text-sm text-muted-foreground">{t('These orders were cancelled after they were paid. Refund them in the payment company\'s panel, then press the button.')}</p>
                         <List rows={refunds} refund />
                     </section>

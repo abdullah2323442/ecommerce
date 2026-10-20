@@ -94,37 +94,37 @@ export default function FoodOrder({ order }: { order: Order }) {
                         {order.number} · {dateTime(order.placed_at)}
                     </p>
                 </div>
-                {flash && <p role="status" className="rounded-md border border-emerald-600/30 bg-emerald-600/10 px-3 py-2 text-sm text-emerald-900">{flash}</p>}
+                {flash && <p role="status" className="rounded-md border border-success/30 bg-success/10 px-3 py-2 text-sm text-success">{flash}</p>}
                 <a href={`/receipt/food/${order.token}`} target="_blank" rel="noreferrer" className="inline-block text-sm font-semibold underline underline-offset-4">
                     {t('Print the receipt')}
                 </a>
                 <InputError message={errors.order ?? errors.text ?? errors.photo} />
 
                 {order.status === 'cancelled' ? (
-                    <p className="rounded-2xl border border-dashed p-4 text-sm">
+                    <p className="rounded-[1.5rem] border border-dashed p-4 text-sm">
                         {t('This order was cancelled.')} {order.cancel_reason} {order.refund > 0 ? t('Your advance of {amount} is refunded.', { amount: money(order.refund) }) : order.advance_paid > 0 ? t('The advance is not refunded.') : ''}
                     </p>
                 ) : (
                     <ol className={`grid gap-2 text-center text-xs ${steps.length === 5 ? 'grid-cols-5' : 'grid-cols-4'}`}>
                         {steps.map((s, i) => (
-                            <li key={s} className={`rounded-xl border px-1 py-2 ${i <= at ? 'border-[var(--pt-ink)] bg-[var(--pt-ink)] text-[var(--pt-surface)]' : 'border-[var(--pt-line)] text-[var(--pt-muted)]'}`}>
+                            <li key={s} className={`rounded-[1.25rem] border px-1 py-2 ${i <= at ? 'border-[var(--pt-ink)] bg-[var(--pt-ink)] text-[var(--pt-surface)]' : 'border-[var(--pt-line)] text-[var(--pt-muted)]'}`}>
                                 {label(s)}
                             </li>
                         ))}
                     </ol>
                 )}
 
-                {order.custom && order.status === 'pending' && <p className="rounded-md bg-sky-50 p-3 text-sm text-sky-900">{t('Custom food takes a little longer to make. The restaurant will tell you how long.')}</p>}
+                {order.custom && order.status === 'pending' && <p className="rounded-md bg-info/10 p-3 text-sm text-info">{t('Custom food takes a little longer to make. The restaurant will tell you how long.')}</p>}
 
                 {order.status === 'confirmed' && order.ready_at && (
-                    <section className="space-y-1 rounded-2xl border bg-[var(--pt-surface)] p-4 text-center">
+                    <section className="space-y-1 rounded-[1.5rem] border bg-[var(--pt-surface)] p-4 text-center">
                         <p className="text-sm text-[var(--pt-muted)]">{t('Cooking. It will be ready in about')}</p>
                         <Timer readyAt={order.ready_at} />
                     </section>
                 )}
 
                 {order.ask_cancel && (
-                    <section role="alert" className="space-y-2 rounded-2xl border border-amber-500/40 bg-amber-500/10 p-4">
+                    <section role="alert" className="space-y-2 rounded-[1.5rem] border border-warning/40 bg-warning/10 p-4">
                         <p className="font-semibold">{t('Your order has not been approved yet. Do you want to cancel it?')}</p>
                         <div className="flex flex-wrap gap-2">
                             <Button variant="outline" onClick={() => post('cancel', { reason: t('The restaurant did not confirm') })}>
@@ -135,9 +135,9 @@ export default function FoodOrder({ order }: { order: Order }) {
                     </section>
                 )}
 
-                {order.advance_due > 0 && order.status === 'pending' && <p className="rounded-md bg-amber-50 p-3 text-sm text-amber-900">{t('The restaurant needs an advance of {amount} before it starts cooking.', { amount: money(order.advance_due) })}</p>}
+                {order.advance_due > 0 && order.status === 'pending' && <p className="rounded-md bg-warning/10 p-3 text-sm text-warning">{t('The restaurant needs an advance of {amount} before it starts cooking.', { amount: money(order.advance_due) })}</p>}
 
-                <dl className="tabular space-y-1 rounded-2xl border bg-[var(--pt-surface)] p-4 text-sm">
+                <dl className="tabular space-y-1 rounded-[1.5rem] border bg-[var(--pt-surface)] p-4 text-sm">
                     {order.lines.map((l, i) => (
                         <div key={i}>
                             <div className="flex justify-between">
@@ -200,13 +200,13 @@ export default function FoodOrder({ order }: { order: Order }) {
                 )}
 
                 {order.complaint && (
-                    <p className="rounded-2xl border p-4 text-sm">
+                    <p className="rounded-[1.5rem] border p-4 text-sm">
                         <strong>{t('Your complaint')}:</strong> {order.complaint}
                         <span className="block text-[var(--pt-muted)]">{order.complaint_reply ?? t('The restaurant and we have it. We will look at it.')}</span>
                     </p>
                 )}
                 {order.can_complain && (
-                    <section className="space-y-2 rounded-2xl border p-4">
+                    <section className="space-y-2 rounded-[1.5rem] border p-4">
                         <p className="font-semibold">{t('Something wrong with the food?')}</p>
                         <div className="flex flex-wrap items-center gap-2">
                             <Input aria-label={t('What is wrong?')} className="h-9 min-w-56 flex-1" placeholder={t('What is wrong?')} value={text} onChange={(e) => setText(e.target.value)} />

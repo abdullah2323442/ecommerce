@@ -46,7 +46,7 @@ function Card({ r, check }: { r: Row; check?: boolean }) {
             {r.seller_note && <p className="text-sm">{r.seller_note}</p>}
             {r.stopped && (
                 <div className="flex flex-wrap items-center gap-2 text-xs">
-                    <span className="rounded bg-red-100 px-1.5 py-0.5 font-semibold text-red-900">{t('Selling is switched off')}</span>
+                    <span className="rounded bg-danger/15 px-1.5 py-0.5 font-semibold text-danger">{t('Selling is switched off')}</span>
                     <Button size="sm" variant="outline" onClick={() => router.put(`/admin/market/sellers/${r.seller_id}/selling`, {}, { preserveScroll: true })}>
                         {t('Switch selling on')}
                     </Button>

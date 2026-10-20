@@ -58,7 +58,7 @@ export default function MpoIndex({ groups, companies, waiting }: Props) {
                                         <span>
                                             {num(m.products)} {t('products')} · {num(m.live)} {t('on the market')}
                                         </span>
-                                        {m.closed && <span className="rounded bg-red-500/15 px-1.5 text-xs font-semibold">{t('Closed')}</span>}
+                                        {m.closed && <span className="rounded bg-danger/15 px-1.5 text-xs font-semibold">{t('Closed')}</span>}
                                     </li>
                                 ))}
                             </ul>

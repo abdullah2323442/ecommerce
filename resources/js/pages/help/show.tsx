@@ -41,16 +41,16 @@ export default function HelpShow({ post, comments, canComment }: Props) {
                     {t('Back to the Help board')}
                 </Link>
 
-                {flash && <p role="status" className="rounded-md border border-emerald-600/30 bg-emerald-600/10 px-3 py-2 text-sm text-emerald-900">{flash}</p>}
+                {flash && <p role="status" className="rounded-md border border-success/30 bg-success/10 px-3 py-2 text-sm text-success">{flash}</p>}
                 <InputError message={errors.post} />
 
                 {post.mine && post.status !== 'open' && (
-                    <p role="status" className="rounded-2xl border px-4 py-3 text-sm">
+                    <p role="status" className="rounded-[1.5rem] border px-4 py-3 text-sm">
                         {post.status === 'pending' ? t('We are reading this post. It will be shown once we approve it.') : post.status === 'rejected' ? t('We did not publish this post. {note}', { note: post.review_note ?? '' }) : t('This post is closed.')}
                     </p>
                 )}
                 {post.mine && post.asked && (
-                    <div role="alert" className="flex flex-wrap items-center gap-3 rounded-2xl border border-[var(--pt-amber)]/50 bg-[var(--pt-amber)]/10 px-4 py-3 text-sm">
+                    <div role="alert" className="flex flex-wrap items-center gap-3 rounded-[1.5rem] border border-[var(--pt-amber)]/50 bg-[var(--pt-amber)]/10 px-4 py-3 text-sm">
                         <p className="flex-1 font-semibold">{t('Is this still needed? If you do not answer, it will close.')}</p>
                         <Button size="sm" onClick={() => router.post(`/help/${post.id}/confirm`, {}, { preserveScroll: true })}>
                             {t('Yes, still needed')}
@@ -67,7 +67,7 @@ export default function HelpShow({ post, comments, canComment }: Props) {
                     </p>
                     <h1 className="font-display text-3xl font-extrabold">{post.title}</h1>
                     <p className="whitespace-pre-line">{post.body}</p>
-                    <div className="rounded-2xl border bg-[var(--pt-surface)] p-4 text-sm">
+                    <div className="rounded-[1.5rem] border bg-[var(--pt-surface)] p-4 text-sm">
                         <p className="font-semibold">{t('How to reach them')}</p>
                         {post.contact ? <p className="mt-1">{post.contact}</p> : <p className="mt-1 text-[var(--pt-muted)]">{t('Log in to see how to reach them.')}</p>}
                     </div>
@@ -89,7 +89,7 @@ export default function HelpShow({ post, comments, canComment }: Props) {
                         {comments.length === 0 ? (
                             <p className="text-sm text-[var(--pt-muted)]">{t('No comments yet.')}</p>
                         ) : (
-                            <ul className="divide-y rounded-2xl border bg-[var(--pt-surface)]">
+                            <ul className="divide-y rounded-[1.5rem] border bg-[var(--pt-surface)]">
                                 {comments.map((c) => (
                                     <li key={c.id} className="space-y-2 px-4 py-3">
                                         {c.text && <p className="whitespace-pre-line">{c.text}</p>}

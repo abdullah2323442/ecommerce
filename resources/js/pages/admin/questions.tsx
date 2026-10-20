@@ -108,7 +108,7 @@ export default function Questions({ waiting, answered, fromSellers }: { waiting:
                         <h2 id="late-h" className="font-medium">
                             {t('A seller left these too long')}
                         </h2>
-                        <ul className="divide-y rounded-md border border-amber-500/50 bg-card">
+                        <ul className="divide-y rounded-md border border-warning/50 bg-card">
                             {fromSellers.map((q) => (
                                 <SellerCard key={q.id} q={q} />
                             ))}

@@ -221,7 +221,7 @@ export default function OfflineCounter() {
                         </p>
                     </div>
                     <div className="flex flex-wrap items-center gap-2 text-sm">
-                        <span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 font-semibold ${online ? 'bg-emerald-100 text-emerald-900' : 'bg-amber-100 text-amber-900'}`}>
+                        <span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 font-semibold ${online ? 'bg-success/15 text-success' : 'bg-warning/15 text-warning'}`}>
                             {online ? <Wifi aria-hidden className="size-4" /> : <WifiOff aria-hidden className="size-4" />}
                             {online ? t('Online') : t('Offline. Will send later.')}
                         </span>
@@ -232,8 +232,8 @@ export default function OfflineCounter() {
                     </div>
                 </header>
 
-                {note && <p role="status" className="rounded-md border border-emerald-600/30 bg-emerald-600/10 px-3 py-2 text-sm text-emerald-900">{note}</p>}
-                {error && <p role="alert" className="rounded-md border border-red-500/40 bg-red-500/10 px-3 py-2 text-sm text-red-900">{error}</p>}
+                {note && <p role="status" className="rounded-md border border-success/30 bg-success/10 px-3 py-2 text-sm text-success">{note}</p>}
+                {error && <p role="alert" className="rounded-md border border-danger/40 bg-danger/10 px-3 py-2 text-sm text-danger">{error}</p>}
 
                 {!copy ? (
                     <p className="rounded-md border border-dashed p-8 text-center text-sm text-muted-foreground">{t('There is no copy of the prices on this device yet. Connect to the internet and open this page again.')}</p>
@@ -260,7 +260,7 @@ export default function OfflineCounter() {
                                                 <p className="text-xs text-muted-foreground">{[m.c, m.f && t(m.f)].filter(Boolean).join(' · ')}</p>
                                             </div>
                                             {m.ctl ? (
-                                                <p className="text-xs font-semibold text-amber-800">{t('Controlled: sell it on the normal counter')}</p>
+                                                <p className="text-xs font-semibold text-warning">{t('Controlled: sell it on the normal counter')}</p>
                                             ) : (
                                                 <div className="flex flex-wrap gap-2">
                                                     {unitsOf(m).map((u) => (
@@ -363,11 +363,11 @@ export default function OfflineCounter() {
                                         <p className="text-xs text-muted-foreground">
                                             {dateTime(s.at)} · {t('{n} items', { n: num(s.lines.length) })}
                                         </p>
-                                        {s.status === 'refused' && <p className="text-xs font-semibold text-red-800">{why(s)}</p>}
-                                        {s.flags && (s.flags.out_of_stock.length > 0 || s.flags.loss.length > 0 || s.flags.discount_reduced) && <p className="text-xs text-amber-800">{t('Sent. The owner has been told to look at it.')}</p>}
+                                        {s.status === 'refused' && <p className="text-xs font-semibold text-danger">{why(s)}</p>}
+                                        {s.flags && (s.flags.out_of_stock.length > 0 || s.flags.loss.length > 0 || s.flags.discount_reduced) && <p className="text-xs text-warning">{t('Sent. The owner has been told to look at it.')}</p>}
                                     </div>
                                     <span className="tabular font-semibold">{money(s.total)}</span>
-                                    <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${s.status === 'pending' ? 'bg-amber-100 text-amber-900' : s.status === 'synced' ? 'bg-emerald-100 text-emerald-900' : 'bg-red-100 text-red-900'}`}>
+                                    <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${s.status === 'pending' ? 'bg-warning/15 text-warning' : s.status === 'synced' ? 'bg-success/15 text-success' : 'bg-danger/15 text-danger'}`}>
                                         {s.status === 'pending' ? t('Waiting') : s.status === 'synced' ? t('Sent') : t('Needs a look')}
                                     </span>
                                     <Button type="button" variant="ghost" size="icon" aria-label={t('Print')} onClick={() => setPrinting(s.ref)}>

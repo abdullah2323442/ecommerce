@@ -47,7 +47,7 @@ export default function Messages({ kinds, channels, available }: Props) {
                             {kinds.map((k) => (
                                 <tr key={k.key}>
                                     <td className="px-3 py-2">{t(k.label)}</td>
-                                    <td className={`px-3 py-2 ${k.importance === 'urgent' ? 'font-semibold text-red-600' : 'text-muted-foreground'}`}>{t(k.importance === 'urgent' ? 'Urgent' : k.importance === 'low' ? 'Low' : 'Normal')}</td>
+                                    <td className={`px-3 py-2 ${k.importance === 'urgent' ? 'font-semibold text-danger' : 'text-muted-foreground'}`}>{t(k.importance === 'urgent' ? 'Urgent' : k.importance === 'low' ? 'Low' : 'Normal')}</td>
                                     {channels.map((c) => (
                                         <td key={c} className="px-3 py-2 text-center">
                                             <input

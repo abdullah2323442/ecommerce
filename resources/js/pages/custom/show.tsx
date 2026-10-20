@@ -80,17 +80,17 @@ export default function CustomShow({ order, chat, measure }: { order: Order; cha
                 <a href={`/receipt/custom/${order.token}`} target="_blank" rel="noreferrer" className="inline-block text-sm font-semibold underline underline-offset-4">
                     {t('Print the receipt')}
                 </a>
-                {flash && <p role="status" className="rounded-md border border-emerald-600/30 bg-emerald-600/10 px-3 py-2 text-sm text-emerald-900">{flash}</p>}
+                {flash && <p role="status" className="rounded-md border border-success/30 bg-success/10 px-3 py-2 text-sm text-success">{flash}</p>}
                 <InputError message={errors.order} />
 
                 {order.status === 'cancelled' && (
-                    <p className="rounded-2xl border border-dashed p-4 text-sm">
+                    <p className="rounded-[1.5rem] border border-dashed p-4 text-sm">
                         {t('This job was cancelled.')} {order.cancel_reason} {order.refund > 0 ? t('Your advance of {amount} is refunded.', { amount: money(order.refund) }) : t('The advance is not refunded.')}
                     </p>
                 )}
 
                 {order.price !== null && (
-                    <section className="space-y-2 rounded-2xl border bg-[var(--pt-surface)] p-4">
+                    <section className="space-y-2 rounded-[1.5rem] border bg-[var(--pt-surface)] p-4">
                         <h2 className="font-display text-xl font-bold">{t('Our price')}</h2>
                         <dl className="tabular space-y-1 text-sm">
                             {order.urgent_fee > 0 && (
@@ -122,7 +122,7 @@ export default function CustomShow({ order, chat, measure }: { order: Order; cha
                     </section>
                 )}
 
-                <section className="space-y-2 rounded-2xl border bg-[var(--pt-surface)] p-4 text-sm">
+                <section className="space-y-2 rounded-[1.5rem] border bg-[var(--pt-surface)] p-4 text-sm">
                     <h2 className="font-display text-xl font-bold">{t('What you asked for')}</h2>
                     {order.material && (
                         <p>
@@ -131,7 +131,7 @@ export default function CustomShow({ order, chat, measure }: { order: Order; cha
                     )}
                     {order.fabric_by === 'buyer' && <p>{t('You bring your own fabric.')}</p>}
                     {order.items.map((it, i) => (
-                        <div key={i} className="rounded-xl bg-muted/50 p-3">
+                        <div key={i} className="rounded-[1.25rem] bg-muted/50 p-3">
                             <p className="font-semibold">
                                 {it.label || (order.kind === 'wood' ? t('Size') : t('Person {n}', { n: num(i + 1) }))}
                                 {it.garment && ` · ${it.garment}`}
@@ -160,11 +160,11 @@ export default function CustomShow({ order, chat, measure }: { order: Order; cha
                     )}
                     {order.note && <p>{order.note}</p>}
                     {order.urgent && <p className="font-semibold">{t('Urgent')}</p>}
-                    {order.has_photo && <img src={`/custom/${order.token}/photo`} alt="" className="max-h-64 rounded-xl border object-cover" />}
+                    {order.has_photo && <img src={`/custom/${order.token}/photo`} alt="" className="max-h-64 rounded-[1.25rem] border object-cover" />}
                 </section>
 
                 {['making', 'trial'].includes(order.status) && (
-                    <section className="space-y-2 rounded-2xl border bg-[var(--pt-surface)] p-4">
+                    <section className="space-y-2 rounded-[1.5rem] border bg-[var(--pt-surface)] p-4">
                         <p className="font-display text-xl font-bold">{t('Your job is {n}% done', { n: num(order.progress) })}</p>
                         <div className="h-3 rounded-full bg-muted">
                             <div className="h-3 rounded-full bg-[var(--pt-ink)]" style={{ width: `${Math.min(100, order.progress)}%` }} />
@@ -175,7 +175,7 @@ export default function CustomShow({ order, chat, measure }: { order: Order; cha
                 )}
 
                 {order.can_confirm && (
-                    <section className="space-y-3 rounded-2xl border border-[var(--pt-ink)] p-4">
+                    <section className="space-y-3 rounded-[1.5rem] border border-[var(--pt-ink)] p-4">
                         <p className="font-semibold">{t('Check the measurements above. Once you confirm, they are your responsibility.')}</p>
                         <label className="flex items-start gap-2 text-sm">
                             <input type="checkbox" className="mt-1" checked={checked} onChange={(e) => setChecked(e.target.checked)} /> {t('I have checked the measurements and I agree to the price.')}
@@ -199,7 +199,7 @@ export default function CustomShow({ order, chat, measure }: { order: Order; cha
                 )}
 
                 {order.complaint && (
-                    <p className="rounded-2xl border p-4 text-sm">
+                    <p className="rounded-[1.5rem] border p-4 text-sm">
                         <strong>{t('Work not done right')}:</strong> {order.complaint}
                         <span className="block text-[var(--pt-muted)]">
                             {order.complaint_status === 'open' ? t('We are looking at it.') : order.complaint_status === 'fixed' ? t('We will put it right.') : order.complaint_status === 'refunded' ? t('We have refunded part of the price.') : t('This was made to the measurements you confirmed.')}

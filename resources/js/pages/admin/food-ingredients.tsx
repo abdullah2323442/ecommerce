@@ -105,7 +105,7 @@ export default function FoodIngredients({ ingredients, requests, top, groups }: 
                 {requests.length > 0 && (
                     <section className="space-y-1">
                         <h2 className="font-medium">{t('Restaurants ask for')}</h2>
-                        <ul className="divide-y rounded-md border border-amber-300 bg-card">{requests.map((r) => <Request key={r.id} r={r} />)}</ul>
+                        <ul className="divide-y rounded-md border border-warning/40 bg-card">{requests.map((r) => <Request key={r.id} r={r} />)}</ul>
                     </section>
                 )}
 

@@ -62,7 +62,7 @@ function Review({ a, tiers, categories }: { a: Row; tiers: Props['tiers']; categ
                     </p>
                     <p className="text-muted-foreground text-sm">{a.address}</p>
                 </div>
-                <p className={`text-sm font-medium ${a.waiting_days >= 3 ? 'text-red-600' : ''}`}>
+                <p className={`text-sm font-medium ${a.waiting_days >= 3 ? 'text-danger' : ''}`}>
                     {dateTime(a.sent_at)} · {t('waiting {n} days', { n: num(a.waiting_days) })}
                 </p>
             </div>
@@ -228,7 +228,7 @@ export default function Applications({ pending, done, tiers, categories }: Props
                             {done.map((a) => (
                                 <li key={a.id} className="flex flex-wrap items-baseline gap-x-4 px-3 py-2">
                                     <span className="min-w-40 font-medium">{a.business_name}</span>
-                                    <span className={a.status === 'approved' ? 'text-emerald-700' : 'text-red-700'}>{t(a.status === 'approved' ? 'Opened' : 'Declined')}</span>
+                                    <span className={a.status === 'approved' ? 'text-success' : 'text-danger'}>{t(a.status === 'approved' ? 'Opened' : 'Declined')}</span>
                                     {a.review_note && <span className="text-muted-foreground">{a.review_note}</span>}
                                     <span className="text-muted-foreground ml-auto text-xs">{dateTime(a.sent_at)}</span>
                                 </li>

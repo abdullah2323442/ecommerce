@@ -339,7 +339,7 @@ export default function Offers({ suggestions, running, asking, margin, products,
                 </header>
 
                 {asking.length > 0 && (
-                    <section aria-labelledby="ask-h" className="space-y-2 rounded-md border border-amber-500/50 bg-amber-500/5 p-4">
+                    <section aria-labelledby="ask-h" className="space-y-2 rounded-md border border-warning/50 bg-warning/5 p-4">
                         <h2 id="ask-h" className="font-medium">
                             {t('The month is over. Keep these offers on?')}
                         </h2>
@@ -366,7 +366,7 @@ export default function Offers({ suggestions, running, asking, margin, products,
                 )}
 
                 {low.length > 0 && (
-                    <div role="alert" className="space-y-1 rounded-md border border-amber-500/50 bg-amber-500/10 px-3 py-2 text-sm font-semibold">
+                    <div role="alert" className="space-y-1 rounded-md border border-warning/50 bg-warning/10 px-3 py-2 text-sm font-semibold">
                         {low.map((l) => (
                             <p key={l.id}>{t('Only {n} boxes left on the {name} offer.', { n: num(l.left), name: l.name })}</p>
                         ))}

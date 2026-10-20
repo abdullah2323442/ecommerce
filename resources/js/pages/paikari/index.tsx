@@ -203,7 +203,7 @@ export function Search({ url, saveable = true, companies = [] }: { url?: string;
                                                 <span>
                                                     {a.name} <span className="text-[var(--pt-muted)]">{a.strength}</span>
                                                     {a.company && <span className="text-[var(--pt-muted)]"> · {a.company}</span>}
-                                                    {a.offer && <span className="ms-1 rounded bg-amber-200 px-1.5 text-xs font-semibold">{t('OFFER')}</span>}
+                                                    {a.offer && <span className="ms-1 rounded bg-warning/15 px-1.5 text-xs font-semibold">{t('OFFER')}</span>}
                                                 </span>
                                                 <span className="flex items-center gap-2">
                                                     <span className="tabular">
@@ -532,7 +532,7 @@ export default function PaikariHome({ cart, orders, freeOver, shortList, notice,
         <PublicLayout>
             <Head title={t('Order')} />
             <div className="mx-auto max-w-3xl space-y-8">
-                {status?.status && <p className="rounded-md border border-emerald-600/30 bg-emerald-600/10 px-3 py-2 text-sm text-emerald-800">{status.status}</p>}
+                {status?.status && <p className="rounded-md border border-success/30 bg-success/10 px-3 py-2 text-sm text-success">{status.status}</p>}
                 <InputError message={!cart ? errors.order : undefined} />
                 <div className="flex items-baseline justify-between gap-3">
                     <h1 className="font-display text-3xl font-extrabold">{t('Order')}</h1>
@@ -559,7 +559,7 @@ export default function PaikariHome({ cart, orders, freeOver, shortList, notice,
                     </div>
                 </div>
                 {notice && (
-                    <p role="note" className="rounded-2xl border border-amber-500/40 bg-amber-500/10 px-4 py-3 text-sm">
+                    <p role="note" className="rounded-2xl border border-warning/40 bg-warning/10 px-4 py-3 text-sm">
                         {notice === 'holiday' ? t('We are closed today. You can still order. We will check it on the next working day.') : t('It is night. You can still order. We will check it in the morning.')}
                     </p>
                 )}

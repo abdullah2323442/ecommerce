@@ -39,19 +39,19 @@ export default function PreorderShow({ preorder: p, home }: Props) {
                 <Link href="/preorders" className="text-sm font-semibold underline underline-offset-4">
                     {t('Your pre-orders')}
                 </Link>
-                {status && <p className="rounded-md border border-emerald-600/30 bg-emerald-600/10 px-3 py-2 text-sm text-emerald-800">{status}</p>}
+                {status && <p className="rounded-md border border-success/30 bg-success/10 px-3 py-2 text-sm text-success">{status}</p>}
                 <InputError message={errors.preorder} />
 
                 <header className="space-y-1">
                     <h1 className="font-display text-3xl font-extrabold">{t('Pre-order')}</h1>
-                    <p className={`font-semibold ${p.late ? 'text-red-700' : ''}`}>
+                    <p className={`font-semibold ${p.late ? 'text-danger' : ''}`}>
                         {t(preorderState(p.status, p.late))}
                         {p.due_on && p.open && ` · ${t('Expected by')} ${date(p.due_on)}`}
                     </p>
                 </header>
 
                 {p.late && (
-                    <p role="alert" className="rounded-2xl border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm">
+                    <p role="alert" className="rounded-2xl border border-danger/40 bg-danger/10 px-4 py-3 text-sm">
                         {t('This is past the time we promised. You can cancel it, and any advance you paid comes back.')}
                     </p>
                 )}

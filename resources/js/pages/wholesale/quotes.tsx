@@ -39,7 +39,7 @@ export default function Quotes({ quotes }: { quotes: Quote[] }) {
                     </Link>
                 </div>
                 <p className="text-sm text-[var(--pt-muted)]">{t('Tell us what you want and how much. We answer with one price and the last day it holds.')}</p>
-                {flash && <p role="status" className="rounded-md border border-emerald-600/30 bg-emerald-600/10 px-3 py-2 text-sm text-emerald-900">{flash}</p>}
+                {flash && <p role="status" className="rounded-md border border-success/30 bg-success/10 px-3 py-2 text-sm text-success">{flash}</p>}
                 <InputError message={errors.quote} />
 
                 <form

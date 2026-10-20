@@ -144,7 +144,7 @@ export default function StockExpiry({ needsChecking, moneyAtRisk, nearExpiry, ex
                 <Flash />
 
                 {moneyAtRisk > 0 && (
-                    <p className="rounded-xl border border-amber-500/40 bg-amber-500/10 p-4 font-medium">{t('Goods worth {money} need checking.', { money: money(moneyAtRisk) })}</p>
+                    <p className="rounded-xl border border-warning/40 bg-warning/10 p-4 font-medium">{t('Goods worth {money} need checking.', { money: money(moneyAtRisk) })}</p>
                 )}
 
                 <div role="tablist" aria-label={t('Expiry')} className="flex flex-wrap gap-2">

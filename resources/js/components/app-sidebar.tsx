@@ -3,7 +3,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { LifeBuoy, ArchiveRestore, CreditCard, Palette, Plug, Bike, Banknote, Star, Library, Ticket, Gamepad2, Carrot, UtensilsCrossed, MessagesSquare, Hammer, Ruler, Tag, Copy, Store, HandHelping, MessageCircleQuestion, MessageSquareWarning, BarChart3, UserSquare, Scale, Truck, MailCheck, Eye, ListChecks, Hourglass, Settings2, NotebookPen, ClipboardCheck, ScrollText, UserCog, ShieldCheck, Undo2, BadgePercent, FileText, Inbox, LayoutGrid, Package, Percent, Pill, SearchX, ShoppingCart, Users, Wallet } from 'lucide-react';
+import { LayoutTemplate, LifeBuoy, ArchiveRestore, CreditCard, Palette, Plug, Bike, Banknote, Star, Library, Ticket, Gamepad2, Carrot, UtensilsCrossed, MessagesSquare, Hammer, Ruler, Tag, Copy, Store, HandHelping, MessageCircleQuestion, MessageSquareWarning, BarChart3, UserSquare, Scale, Truck, MailCheck, Eye, ListChecks, Hourglass, Settings2, NotebookPen, ClipboardCheck, ScrollText, UserCog, ShieldCheck, Undo2, BadgePercent, FileText, Inbox, LayoutGrid, Package, Percent, Pill, SearchX, ShoppingCart, Users, Wallet } from 'lucide-react';
 import BrandMark from './shell/brand-mark';
 
 /**
@@ -76,6 +76,8 @@ export function AppSidebar() {
     ];
     const g9: NavItem[] = [
         ...(auth.can.manageAccounts ? [{ title: 'Site design', url: '/admin/site', icon: Palette }] : []),
+        ...(auth.can.manageAccounts ? [{ title: 'Shop fronts', url: '/admin/storefront', icon: LayoutTemplate }] : []),
+        ...(auth.can.manageCustomers ? [{ title: 'Testimonials', url: '/admin/testimonials', icon: MessagesSquare }] : []),
         ...(auth.can.manageAccounts ? [{ title: 'Connections', url: '/admin/connections', icon: Plug }] : []),
         ...(auth.can.manageAccounts ? [{ title: 'Messages', url: '/admin/messages', icon: MailCheck }] : []),
         ...(auth.can.manageAccounts ? [{ title: 'Settings', url: '/admin/settings', icon: Settings2 }] : []),
@@ -84,7 +86,16 @@ export function AppSidebar() {
         ...(auth.can.manageAccounts ? [{ title: 'Deleted', url: '/admin/deleted', icon: ArchiveRestore }] : []),
     ];
     const groups: [string, NavItem[]][] = [['Overview', g1], ['Sales and orders', g2], ['Delivery', g3], ['Market', g4], ['Food, games and made to order', g5], ['Catalogue and stock', g6], ['People', g7], ['Reports', g8], ['Site and system', g9]];
-    const catalog: NavItem[] = [{ title: 'Medicines', url: '/medicines', icon: Pill }];
+    const catalog: NavItem[] = [
+        { title: 'Home page', url: '/', icon: Eye },
+        { title: 'Market', url: '/market', icon: Store },
+        { title: 'Medicines', url: '/medicines', icon: Pill },
+        { title: 'Companies', url: '/companies', icon: Library },
+        { title: 'Food', url: '/food', icon: UtensilsCrossed },
+        { title: 'Game top-ups', url: '/gaming', icon: Gamepad2 },
+        { title: 'Made to order', url: '/custom', icon: Hammer },
+        { title: 'Help posts', url: '/help', icon: LifeBuoy },
+    ];
 
     return (
         <Sidebar collapsible="icon" variant="inset">

@@ -226,14 +226,14 @@ export default function MpoHome({ companies, chosen, listings, orders, notices, 
                 </section>
 
                 {notices.map((n) => (
-                    <div key={n.id} role="status" className="flex items-center gap-3 rounded-md border border-amber-500/50 bg-amber-500/10 px-3 py-2 text-sm">
+                    <div key={n.id} role="status" className="flex items-center gap-3 rounded-md border border-warning/50 bg-warning/10 px-3 py-2 text-sm">
                         <p className="flex-1 font-semibold">{noticeText(n, t)}</p>
                         <Button size="sm" variant="ghost" onClick={() => router.post(`/notices/${n.id}/read`, {}, { preserveScroll: true })}>
                             {t('Close')}
                         </Button>
                     </div>
                 ))}
-                {failed > 0 && <p className="text-sm text-red-600">{t('Orders you did not deliver in time: {n}', { n: num(failed) })}</p>}
+                {failed > 0 && <p className="text-sm text-danger">{t('Orders you did not deliver in time: {n}', { n: num(failed) })}</p>}
 
                 <Submit chosen={chosen} />
 
@@ -252,7 +252,7 @@ export default function MpoHome({ companies, chosen, listings, orders, notices, 
                                             {num(l.bonus_buy)}+{num(l.bonus_free ?? 0)}
                                         </span>
                                     )}
-                                    <span className={`font-semibold ${l.status === 'rejected' ? 'text-red-600' : ''}`}>{state(l.status)}</span>
+                                    <span className={`font-semibold ${l.status === 'rejected' ? 'text-danger' : ''}`}>{state(l.status)}</span>
                                     {l.review_note && <span className="text-muted-foreground">{l.review_note}</span>}
                                     <Bids l={l} />
                                     {(l.status === 'submitted' || l.status === 'approved') && (

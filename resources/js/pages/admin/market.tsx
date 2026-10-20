@@ -108,15 +108,15 @@ function Card({ l, review }: { l: Listing; review?: boolean }) {
                 {`· ${t('Delivery')} ${money(l.delivery_charge)}`}
             </p>
             <div className="flex flex-wrap gap-2 text-xs">
-                {l.no_photo && <span className="rounded bg-amber-100 px-1.5 py-0.5 font-semibold text-amber-900">{t('No photo')}</span>}
-                {l.flag && <span className="rounded bg-red-100 px-1.5 py-0.5 font-semibold text-red-900">{t('Contains "{word}"', { word: l.flag })}</span>}
+                {l.no_photo && <span className="rounded bg-warning/15 px-1.5 py-0.5 font-semibold text-warning">{t('No photo')}</span>}
+                {l.flag && <span className="rounded bg-danger/15 px-1.5 py-0.5 font-semibold text-danger">{t('Contains "{word}"', { word: l.flag })}</span>}
                 {l.has_photo && (
                     <a href={`/market/photo/${l.id}`} target="_blank" rel="noreferrer" className="underline">
                         {t('Photo')}
                     </a>
                 )}
             </div>
-            {l.request && <p className="rounded-md bg-amber-50 p-2 text-sm">{t('The seller asks for less commission')}: {l.request}</p>}
+            {l.request && <p className="rounded-md bg-warning/10 p-2 text-sm">{t('The seller asks for less commission')}: {l.request}</p>}
             <CommissionBox l={l} review={review} />
             {!review && (
                 <label className="flex items-center gap-2 text-xs">
@@ -166,7 +166,7 @@ function SectorForm({ s }: { s?: Sector }) {
                 <label className="flex flex-wrap items-center gap-2 text-xs sm:col-span-4">
                     <span className="font-medium">{s.hero_path ? t('Replace the banner picture') : t('Banner picture (wide, about 16 by 9)')}</span>
                     <input type="file" accept="image/png,image/jpeg,image/webp" onChange={(e) => e.target.files?.[0] && router.post(`/admin/market/sectors/${s.id}/hero`, { image: e.target.files[0] }, { forceFormData: true, preserveScroll: true })} />
-                    {errors.image && <span className="text-red-600">{errors.image}</span>}
+                    {errors.image && <span className="text-danger">{errors.image}</span>}
                 </label>
             )}
             <div className="flex flex-wrap items-center gap-3 sm:col-span-3">

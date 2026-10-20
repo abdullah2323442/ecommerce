@@ -64,7 +64,7 @@ export default function Account({ account }: Props) {
                     </Link>
                 </nav>
 
-                <section className="relative overflow-hidden rounded-2xl border bg-card p-5">
+                <section className="relative overflow-hidden rounded-[1.5rem] border bg-card p-5">
                     <div aria-hidden className="pointer-events-none absolute -right-2 -bottom-2 flex w-44 items-end gap-1 opacity-90">
                         <Burger3D className="float-a w-1/3" flat />
                         <Controller3D className="float-b w-1/2" flat />

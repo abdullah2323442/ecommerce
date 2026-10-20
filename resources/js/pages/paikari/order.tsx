@@ -86,7 +86,7 @@ export default function Order({ order }: Props) {
                                 {order.status !== 'draft' && l.check && l.check !== 'pending' && l.quantity !== l.requested && ` → ${num(l.quantity)}`}
                             </p>
                             {order.status !== 'draft' && (
-                                <p className={`w-40 text-sm font-semibold ${l.check === 'unavailable' ? 'text-red-700' : l.check === 'partial' ? 'text-amber-700' : l.check === 'full' ? 'text-emerald-700' : 'text-[var(--pt-muted)]'}`}>{checkLabel(l)}</p>
+                                <p className={`w-40 text-sm font-semibold ${l.check === 'unavailable' ? 'text-danger' : l.check === 'partial' ? 'text-warning' : l.check === 'full' ? 'text-success' : 'text-[var(--pt-muted)]'}`}>{checkLabel(l)}</p>
                             )}
                             <p className="tabular w-24 text-right font-semibold">{money(l.total)}</p>
                         </li>
@@ -110,7 +110,7 @@ export default function Order({ order }: Props) {
                     </a>
                 )}
                 {order.status === 'final' && (
-                    <p className={`text-sm font-semibold ${order.paid_amount >= order.total ? 'text-emerald-700' : 'text-amber-700'}`}>
+                    <p className={`text-sm font-semibold ${order.paid_amount >= order.total ? 'text-success' : 'text-warning'}`}>
                         {order.paid_amount >= order.total ? t('Paid') : t('Due {amount}', { amount: money(order.total - order.paid_amount) })}
                     </p>
                 )}
@@ -124,7 +124,7 @@ export default function Order({ order }: Props) {
                 )}
                 {(order.status === 'placed' || order.status === 'verified') && (
                     order.cancel_requested ? (
-                        <p className="text-sm font-semibold text-amber-700">{t('Cancellation requested. Waiting for our staff.')}</p>
+                        <p className="text-sm font-semibold text-warning">{t('Cancellation requested. Waiting for our staff.')}</p>
                     ) : (
                     <Button variant="outline" onClick={() => confirm(t('Cancel this order?')) && router.post(`${base}/orders/${order.id}/cancel`)}>
                         {t('Cancel order')}

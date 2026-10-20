@@ -25,8 +25,8 @@ export default function ThemeToggle({ className = '' }: { className?: string }) 
             onClick={() => updateAppearance(dark ? 'light' : 'dark')}
             className={`relative inline-flex h-9 w-[4.25rem] shrink-0 items-center rounded-full border border-border bg-muted/60 p-1 transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none ${className}`}
         >
-            <Sun aria-hidden className="absolute left-2.5 size-4 text-amber-500" />
-            <Moon aria-hidden className="absolute right-2.5 size-4 text-indigo-400" />
+            <Sun aria-hidden className="absolute left-2.5 size-4 text-warning" />
+            <Moon aria-hidden className="absolute right-2.5 size-4 text-info" />
             <span aria-hidden className={`relative z-10 size-7 rounded-full bg-background shadow-sm ring-1 ring-border transition-transform duration-200 motion-reduce:transition-none ${dark ? 'translate-x-[1.9rem]' : 'translate-x-0'}`} />
         </button>
     );

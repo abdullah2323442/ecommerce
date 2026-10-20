@@ -41,8 +41,8 @@ function Row({ r }: { r: Restaurant }) {
             <div className="flex flex-wrap items-baseline justify-between gap-2">
                 <p className="font-medium">
                     {r.name} · {r.area} · {r.owner}
-                    {r.status === 'suspended' && <span className="ms-2 rounded bg-red-100 px-1.5 py-0.5 text-xs font-semibold text-red-900">{t('Suspended')}</span>}
-                    {r.status === 'active' && <span className={`ms-2 rounded px-1.5 py-0.5 text-xs font-semibold ${r.open ? 'bg-emerald-100 text-emerald-900' : 'bg-muted'}`}>{r.open ? t('Open now') : t('Closed now')}</span>}
+                    {r.status === 'suspended' && <span className="ms-2 rounded bg-danger/15 px-1.5 py-0.5 text-xs font-semibold text-danger">{t('Suspended')}</span>}
+                    {r.status === 'active' && <span className={`ms-2 rounded px-1.5 py-0.5 text-xs font-semibold ${r.open ? 'bg-success/15 text-success' : 'bg-muted'}`}>{r.open ? t('Open now') : t('Closed now')}</span>}
                 </p>
                 <p className="tabular text-xs text-muted-foreground">{t('{n} orders in hand', { n: num(r.active_orders) })}</p>
             </div>
@@ -154,7 +154,7 @@ export default function Food({ restaurants, orders, month }: { restaurants: Rest
                                 <span className="tabular ms-auto">{money(o.total)}</span>
                                 {o.commission > 0 && <span className="tabular text-xs text-muted-foreground">{t('Commission')} {money(o.commission)}</span>}
                                 {o.complaint && (
-                                    <span className="basis-full rounded bg-red-50 p-1 text-xs text-red-900">
+                                    <span className="basis-full rounded bg-danger/10 p-1 text-xs text-danger">
                                         {o.complaint}{' '}
                                         {o.has_complaint_photo && (
                                             <a className="underline" href={`/admin/food/orders/${o.id}/photo`} target="_blank" rel="noreferrer">

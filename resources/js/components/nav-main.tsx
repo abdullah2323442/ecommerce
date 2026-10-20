@@ -51,7 +51,7 @@ export function NavMain({ title, items = [] }: { title: string; items: NavItem[]
                 <button type="button" onClick={flip} aria-expanded={open} aria-controls={id} className="flex w-full items-center justify-between text-xs font-semibold tracking-wide hover:text-sidebar-foreground">
                     <span>{t(title)}</span>
                     <span className="flex items-center gap-1.5">
-                        {!open && pending > 0 && <span className="rounded-full bg-amber-500 px-1.5 text-[10px] font-bold text-black">{pending}</span>}
+                        {!open && pending > 0 && <span className="rounded-full bg-warning px-1.5 text-[10px] font-bold text-black">{pending}</span>}
                         <ChevronDown aria-hidden className={`size-3.5 transition-transform motion-reduce:transition-none ${open ? '' : '-rotate-90'}`} />
                     </span>
                 </button>
@@ -66,7 +66,7 @@ export function NavMain({ title, items = [] }: { title: string; items: NavItem[]
                                 <Link href={item.url} prefetch aria-current={active ? 'page' : undefined}>
                                     {item.icon && <item.icon />}
                                     <span>{t(item.title)}</span>
-                                    {item.badge ? <span className="ml-auto rounded-full bg-amber-500 px-1.5 text-xs font-bold text-black">{item.badge}</span> : null}
+                                    {item.badge ? <span className="ml-auto rounded-full bg-warning px-1.5 text-xs font-bold text-black">{item.badge}</span> : null}
                                 </Link>
                             </SidebarMenuButton>
                         </SidebarMenuItem>

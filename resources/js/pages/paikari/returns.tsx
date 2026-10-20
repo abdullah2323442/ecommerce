@@ -164,7 +164,7 @@ export default function Returns({ memos, filters, days, credit, mine }: Props) {
             <Head title={t('Returns')} />
             <div className="mx-auto max-w-3xl space-y-6">
                 {flash?.status && (
-                    <p className="rounded-md border border-emerald-600/30 bg-emerald-600/10 px-3 py-2 text-sm text-emerald-800">{flash.status}</p>
+                    <p className="rounded-md border border-success/30 bg-success/10 px-3 py-2 text-sm text-success">{flash.status}</p>
                 )}
                 <Link href={base} className="text-sm underline underline-offset-4">
                     {t('Back to orders')}

@@ -159,7 +159,7 @@ function Search({ invoice, popular, simple }: { invoice: Invoice; popular: Props
                 {t('Add medicine')}
             </h2>
             {unknown && (
-                <div role="alert" className="flex flex-wrap items-center justify-between gap-2 rounded-md border border-amber-500/40 bg-amber-500/10 p-3 text-sm">
+                <div role="alert" className="flex flex-wrap items-center justify-between gap-2 rounded-md border border-warning/40 bg-warning/10 p-3 text-sm">
                     <p>{t('Barcode {code} is new. Search the medicine below and pick it, and it is remembered.', { code: unknown })}</p>
                     <Button type="button" size="sm" variant="ghost" onClick={() => setUnknown(null)}>
                         {t('Cancel')}
@@ -232,7 +232,7 @@ function Search({ invoice, popular, simple }: { invoice: Invoice; popular: Props
             )}
             <p className="text-muted-foreground text-xs">{t('Shortcuts: / search · ↑ ↓ choose · Enter add · Esc clear')}</p>
             {results.some((m) => m.similar) && (
-                <p role="alert" className="rounded-md border border-amber-500/50 bg-amber-500/10 px-3 py-1.5 text-sm font-semibold">
+                <p role="alert" className="rounded-md border border-warning/50 bg-warning/10 px-3 py-1.5 text-sm font-semibold">
                     {t('Some of these names look alike. Check the strength before you add.')}
                 </p>
             )}
@@ -274,7 +274,7 @@ function HeldForLoss({ invoiceId, lineId }: { invoiceId: number; lineId: number 
     const [pct, setPct] = useState('');
 
     return (
-        <div role="note" className="mt-1 flex flex-wrap items-center gap-2 rounded-md bg-amber-100 px-2 py-1 text-xs text-amber-900">
+        <div role="note" className="mt-1 flex flex-wrap items-center gap-2 rounded-md bg-warning/15 px-2 py-1 text-xs text-warning">
             <span>{t('The invoice percent would sell this at a loss. It kept its price. Give it a lower percent of its own.')}</span>
             <Input
                 aria-label={t('Percent for this line')}
@@ -460,7 +460,7 @@ export default function CounterShow({ invoice, otherDrafts, limit, policy, appro
                 </header>
 
                 {invoice.corrects && (
-                    <p className="rounded-md border border-amber-500/50 bg-amber-500/10 p-2 text-sm">
+                    <p className="rounded-md border border-warning/50 bg-warning/10 p-2 text-sm">
                         {t('This memo corrects {n}.', { n: invoice.corrects })}
                     </p>
                 )}
@@ -549,7 +549,7 @@ export default function CounterShow({ invoice, otherDrafts, limit, policy, appro
                         </div>
                     )}
                     {asked && asked.status !== 'pending' && !isAdmin && (
-                        <p className={`text-sm font-semibold ${asked.status === 'approved' ? 'text-emerald-700' : 'text-amber-700'}`}>
+                        <p className={`text-sm font-semibold ${asked.status === 'approved' ? 'text-success' : 'text-warning'}`}>
                             {asked.status === 'approved'
                                 ? t('The admin said yes to {p}%.', { p: num(asked.value) })
                                 : asked.status === 'rejected'
@@ -633,7 +633,7 @@ export default function CounterShow({ invoice, otherDrafts, limit, policy, appro
                     <p className="text-sm">
                         <span
                             className={
-                                invoice.paid_amount >= invoice.totals.total ? 'font-semibold text-emerald-700' : 'font-semibold text-amber-700'
+                                invoice.paid_amount >= invoice.totals.total ? 'font-semibold text-success' : 'font-semibold text-warning'
                             }
                         >
                             {invoice.paid_amount >= invoice.totals.total

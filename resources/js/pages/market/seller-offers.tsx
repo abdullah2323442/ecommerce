@@ -24,7 +24,7 @@ function Card({ o }: { o: Offer }) {
     const answer = (a: string, extra: Record<string, string> = {}) => router.post(`/wholesale/sell/offers/${o.id}`, { answer: a, ...extra }, { preserveScroll: true });
 
     return (
-        <li className="space-y-2 rounded-2xl border bg-[var(--pt-surface)] p-4 text-sm">
+        <li className="space-y-2 rounded-[1.5rem] border bg-[var(--pt-surface)] p-4 text-sm">
             <div className="flex flex-wrap items-baseline justify-between gap-2">
                 <p className="font-semibold">{o.listing}</p>
                 {o.expires_at && <span className="text-xs text-[var(--pt-muted)]">{t('Answer before {when}', { when: dateTime(o.expires_at) })}</span>}
@@ -68,17 +68,17 @@ export default function SellerOffers({ offers, reasons, hours }: { offers: Offer
                     <h1 className="font-display text-3xl font-extrabold">{t('Price offers')}</h1>
                     <p className="text-sm text-[var(--pt-muted)]">{t('A buyer names a price. Agree, name another price, or say no. If nobody answers in {n} hours, the offer is cancelled and the buyer is told.', { n: num(hours) })}</p>
                 </div>
-                {flash && <p role="status" className="rounded-md border border-emerald-600/30 bg-emerald-600/10 px-3 py-2 text-sm text-emerald-900">{flash}</p>}
+                {flash && <p role="status" className="rounded-md border border-success/30 bg-success/10 px-3 py-2 text-sm text-success">{flash}</p>}
                 <InputError message={errors.offer} />
 
-                {offers.length === 0 ? <p className="rounded-2xl border border-dashed p-8 text-center text-sm text-[var(--pt-muted)]">{t('No offer is waiting.')}</p> : <ul className="space-y-3">{offers.map((o) => <Card key={o.id} o={o} />)}</ul>}
+                {offers.length === 0 ? <p className="rounded-[1.5rem] border border-dashed p-8 text-center text-sm text-[var(--pt-muted)]">{t('No offer is waiting.')}</p> : <ul className="space-y-3">{offers.map((o) => <Card key={o.id} o={o} />)}</ul>}
 
                 <section className="space-y-2">
                     <h2 className="font-display text-xl font-bold">{t('Why buyers leave without buying')}</h2>
                     {total === 0 ? (
                         <p className="text-sm text-[var(--pt-muted)]">{t('Nobody has told us yet.')}</p>
                     ) : (
-                        <ul className="divide-y rounded-2xl border bg-[var(--pt-surface)] text-sm">
+                        <ul className="divide-y rounded-[1.5rem] border bg-[var(--pt-surface)] text-sm">
                             {Object.entries(reasons).map(([r, n]) => (
                                 <li key={r} className="flex justify-between px-4 py-2">
                                     <span>{label(r)}</span>

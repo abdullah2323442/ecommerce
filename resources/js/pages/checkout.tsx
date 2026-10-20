@@ -98,7 +98,7 @@ export default function Checkout({ advance_over, lines, subtotal, districts, loc
             <div className="mx-auto max-w-3xl space-y-6">
                 <h1 className="font-display text-3xl font-extrabold">{t('Checkout')}</h1>
                 {notice && (
-                    <p role="note" className="rounded-2xl border border-amber-500/40 bg-amber-500/10 px-4 py-3 text-sm">
+                    <p role="note" className="rounded-2xl border border-warning/40 bg-warning/10 px-4 py-3 text-sm">
                         {notice === 'holiday' ? t('We are closed today. You can still order. We will check it on the next working day.') : t('It is night. You can still order. We will check it in the morning.')}
                     </p>
                 )}
@@ -265,16 +265,16 @@ export default function Checkout({ advance_over, lines, subtotal, districts, loc
                             <p className="text-sm text-[var(--pt-muted)]">{t('Something in your cart must stay cold. It goes by our own delivery, packed with ice.')}</p>
                         )}
                         {quote.source === 'blocked' && d.delivery_mode === 'delivery' && (
-                            <p role="alert" className="rounded-2xl border border-amber-500/40 bg-amber-500/10 px-4 py-3 text-sm">
+                            <p role="alert" className="rounded-2xl border border-warning/40 bg-warning/10 px-4 py-3 text-sm">
                                 {t('Something in your cart must stay cold, so it cannot go by courier to this address. Collect it from the shop, or send it to an address in our own delivery area.')}
                             </p>
                         )}
                         {quote.source === 'closed' && d.delivery_mode === 'delivery' && (
-                            <p role="alert" className="rounded-2xl border border-amber-500/40 bg-amber-500/10 px-4 py-3 text-sm">
+                            <p role="alert" className="rounded-2xl border border-warning/40 bg-warning/10 px-4 py-3 text-sm">
                                 {t('We do not deliver to this district. You can collect it from the shop.')}
                             </p>
                         )}
-                        {advance_over > 0 && subtotal >= advance_over && d.delivery_mode !== 'collect' && <p className="rounded-md bg-amber-500/10 px-3 py-2 text-sm">{t('This order is big, so the delivery charge is paid first. After you order we tell you how, and we send the goods once it is received.')}</p>}
+                        {advance_over > 0 && subtotal >= advance_over && d.delivery_mode !== 'collect' && <p className="rounded-md bg-warning/10 px-3 py-2 text-sm">{t('This order is big, so the delivery charge is paid first. After you order we tell you how, and we send the goods once it is received.')}</p>}
                         {quote.source === 'fixed' && <p className="text-sm text-[var(--pt-muted)]">{t('One of the products in your cart has its own delivery charge.')}</p>}
                         <p className="text-sm text-[var(--pt-muted)]">{t('You pay when it arrives.')}</p>
                     </section>

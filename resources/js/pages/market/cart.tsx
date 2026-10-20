@@ -46,19 +46,19 @@ export default function MarketCart({ cart, districts, defaults, signedIn }: Prop
             <div className="mx-auto max-w-3xl space-y-6">
                 <h1 className="font-display text-3xl font-extrabold">{t('Your market cart')}</h1>
                 {flash && (
-                    <p role="status" className="rounded-md border border-emerald-600/30 bg-emerald-600/10 px-3 py-2 text-sm text-emerald-900">
+                    <p role="status" className="rounded-md border border-success/30 bg-success/10 px-3 py-2 text-sm text-success">
                         {flash}
                     </p>
                 )}
                 {cart.packages.length === 0 ? (
-                    <p className="rounded-2xl border border-dashed p-10 text-center text-[var(--pt-muted)]">
+                    <p className="rounded-[1.5rem] border border-dashed p-10 text-center text-[var(--pt-muted)]">
                         {t('Nothing here yet.')} <Link href="/market" className="underline">{t('Look at the market')}</Link>
                     </p>
                 ) : (
                     <>
                         <p className="text-sm text-[var(--pt-muted)]">{t('One cart, one checkout. Each seller packs and sends their own package, with their own delivery charge.')}</p>
                         {cart.packages.map((p) => (
-                            <section key={p.n} className="space-y-2 rounded-2xl border bg-[var(--pt-surface)] p-4">
+                            <section key={p.n} className="space-y-2 rounded-[1.5rem] border bg-[var(--pt-surface)] p-4">
                                 <h2 className="font-display text-lg font-bold">
                                     {t('Package {n}', { n: num(p.n) })} · {p.seller}
                                 </h2>
@@ -106,7 +106,7 @@ export default function MarketCart({ cart, districts, defaults, signedIn }: Prop
                         </p>
 
                         <form
-                            className="grid gap-3 rounded-2xl border bg-[var(--pt-surface)] p-4 sm:grid-cols-2"
+                            className="grid gap-3 rounded-[1.5rem] border bg-[var(--pt-surface)] p-4 sm:grid-cols-2"
                             onSubmit={(e) => {
                                 e.preventDefault();
                                 form.post('/market-cart/checkout');
@@ -134,7 +134,7 @@ export default function MarketCart({ cart, districts, defaults, signedIn }: Prop
                                 </label>
                             )}
                             <p className="text-sm sm:col-span-2">{cart.cod ? t('You pay each seller when their package arrives.') : t('Something in your cart is paid online only, so cash on delivery is not offered. You pay for each package online after you send the orders.')}</p>
-                            {!cart.cod && !cart.online_open && <p className="rounded-md border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-sm sm:col-span-2">{t('Online payment is not open yet, so this cart cannot be ordered now.')}</p>}
+                            {!cart.cod && !cart.online_open && <p className="rounded-md border border-warning/40 bg-warning/10 px-3 py-2 text-sm sm:col-span-2">{t('Online payment is not open yet, so this cart cannot be ordered now.')}</p>}
                             <Button type="submit" disabled={form.processing || (!cart.cod && !cart.online_open)} className="sm:col-span-2">
                                 {t('Send the orders')}
                             </Button>

@@ -30,7 +30,7 @@ export default function Phone({ phone, verified, pending, linked }: Props) {
                 <div className="space-y-6">
                     <HeadingSmall title={t('Mobile number')} description={t('Verify your number. Orders you made before with this number then appear in your account.')} />
                     {flash && (
-                        <p role="status" className="rounded-md bg-emerald-600/10 p-3 text-sm">
+                        <p role="status" className="rounded-md bg-success/10 p-3 text-sm">
                             {flash}
                         </p>
                     )}

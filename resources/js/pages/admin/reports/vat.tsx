@@ -50,7 +50,7 @@ export default function Vat({ from, to, kind, kinds, enabled, rows, totals, memo
                     {t('VAT report')} · {date(from)} – {date(to)}
                 </h1>
 
-                {!enabled && <p role="status" className="rounded-md border border-amber-500/40 bg-amber-500/10 p-3 text-sm print:hidden">{t('VAT is switched off in Settings, so memos have recorded no VAT yet.')}</p>}
+                {!enabled && <p role="status" className="rounded-md border border-warning/40 bg-warning/10 p-3 text-sm print:hidden">{t('VAT is switched off in Settings, so memos have recorded no VAT yet.')}</p>}
 
                 <form
                     className="flex flex-wrap items-end gap-3 print:hidden"

@@ -414,7 +414,7 @@ export default function CustomerShow({ customer, tiers, manualRates, tierHistory
 
                 <Flash />
                 {customer.flagged && (
-                    <p role="alert" className="rounded-md border border-amber-500/50 bg-amber-500/10 px-3 py-2 text-sm font-semibold">
+                    <p role="alert" className="rounded-md border border-warning/50 bg-warning/10 px-3 py-2 text-sm font-semibold">
                         {t('Flagged: {n} orders cancelled after they were checked, in the last 90 days.', { n: customer.late_cancellations })}
                     </p>
                 )}

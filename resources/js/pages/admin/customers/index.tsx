@@ -52,7 +52,7 @@ export default function CustomersIndex({ customers, filters, types, upgrades }: 
 
                 <Flash />
             {upgrades.length > 0 && (
-                <section aria-labelledby="up-h" className="mb-4 space-y-2 rounded-md border border-amber-500/50 bg-amber-500/5 p-4">
+                <section aria-labelledby="up-h" className="mb-4 space-y-2 rounded-md border border-warning/50 bg-warning/5 p-4">
                     <h2 id="up-h" className="font-medium">
                         {t('Ready for a higher tier')}
                     </h2>

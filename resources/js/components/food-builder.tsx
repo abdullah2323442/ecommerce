@@ -88,7 +88,7 @@ export default function FoodBuilder({ restaurantId, menu, favorites, signedIn, o
                         {favorites.map((f) => (
                             <li key={f.id} className="flex flex-wrap items-center gap-2 text-sm">
                                 <span className="font-medium">{f.name}</span>
-                                {f.ok ? <span className="tabular text-[var(--pt-muted)]">{money(f.price ?? 0)}</span> : <span className="text-red-700">{f.problem}</span>}
+                                {f.ok ? <span className="tabular text-[var(--pt-muted)]">{money(f.price ?? 0)}</span> : <span className="text-danger">{f.problem}</span>}
                                 <Button size="sm" variant="outline" disabled={!f.ok || !open} onClick={() => onAdd({ base_id: f.base_id, ingredient_ids: f.ingredient_ids, quantity: 1, note: '' })}>
                                     {t('Add')}
                                 </Button>

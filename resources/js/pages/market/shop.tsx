@@ -39,14 +39,14 @@ export default function MarketShop({ shop, items }: { shop: Shop; items: Item[] 
                 <Link href="/market" className="text-sm underline underline-offset-4">
                     {t('Back to the market')}
                 </Link>
-                <header className="flex flex-wrap items-end justify-between gap-4 rounded-2xl border bg-[var(--pt-surface)] p-5">
+                <header className="flex flex-wrap items-end justify-between gap-4 rounded-[1.5rem] border bg-[var(--pt-surface)] p-5">
                     <div className="space-y-1">
                         <h1 className="font-display text-3xl font-extrabold">{shop.name}</h1>
                         <p className="tabular text-sm text-[var(--pt-muted)]">
                             {t(shop.rating)} · {here}
                             {shop.area && ` · ${shop.area}`} · {t('{n} follow', { n: num(shop.followers) })}
                         </p>
-                        {shop.paused && <p className="text-sm text-amber-800">{t('This shop is on holiday. New orders are off.')}</p>}
+                        {shop.paused && <p className="text-sm text-warning">{t('This shop is on holiday. New orders are off.')}</p>}
                     </div>
                     {shop.can_follow && (
                         <Button variant={shop.following ? 'outline' : 'default'} onClick={() => (shop.following ? router.delete(`/shop/${shop.id}/follow`, { preserveScroll: true }) : router.post(`/shop/${shop.id}/follow`, {}, { preserveScroll: true }))}>
@@ -54,16 +54,16 @@ export default function MarketShop({ shop, items }: { shop: Shop; items: Item[] 
                         </Button>
                     )}
                 </header>
-                {flash && <p role="status" className="rounded-md border border-emerald-600/30 bg-emerald-600/10 px-3 py-2 text-sm text-emerald-900">{flash}</p>}
+                {flash && <p role="status" className="rounded-md border border-success/30 bg-success/10 px-3 py-2 text-sm text-success">{flash}</p>}
 
                 {items.length === 0 ? (
-                    <p className="rounded-2xl border border-dashed p-10 text-center text-[var(--pt-muted)]">{t('No products to show now.')}</p>
+                    <p className="rounded-[1.5rem] border border-dashed p-10 text-center text-[var(--pt-muted)]">{t('No products to show now.')}</p>
                 ) : (
                     <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3">
                         {items.map((i) => (
                             <li key={i.id}>
                                 <Link href={`/market/${i.id}`} className="block space-y-2">
-                                    {i.photo ? <img src={i.photo} alt="" className="aspect-square w-full rounded-xl border border-[var(--pt-line)] object-cover" /> : <div aria-hidden className="aspect-square w-full rounded-xl bg-[var(--pt-sage)]" />}
+                                    {i.photo ? <img src={i.photo} alt="" className="aspect-square w-full rounded-[1.25rem] border border-[var(--pt-line)] object-cover" /> : <div aria-hidden className="aspect-square w-full rounded-[1.25rem] bg-[var(--pt-sage)]" />}
                                     <p className="text-sm font-semibold">{i.title}</p>
                                     <p className="tabular text-sm">
                                         {money(i.price)} <span className="text-[var(--pt-muted)]">/ {unitLabel(i.unit)}</span>

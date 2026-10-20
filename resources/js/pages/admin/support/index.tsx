@@ -78,7 +78,7 @@ export default function SupportIndex({ tickets, status, q, mine, counts }: Props
                                     <span className="text-muted-foreground">
                                         {x.name} · {x.phone}
                                     </span>
-                                    {x.late && <span className="rounded bg-red-100 px-1.5 text-xs font-semibold text-red-900">{t('Late')}</span>}
+                                    {x.late && <span className="rounded bg-danger/15 px-1.5 text-xs font-semibold text-danger">{t('Late')}</span>}
                                     {x.assignee && <span className="text-xs text-muted-foreground">{x.assignee}</span>}
                                     <span className="text-xs text-muted-foreground">{dateTime(x.at)}</span>
                                 </Link>

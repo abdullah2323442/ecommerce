@@ -128,14 +128,14 @@ export default function VendorCustom({ restaurant, groups, catalog, bases, rules
                         {restaurant.name}
                     </Link>
                 </div>
-                {flash && <p role="status" className="rounded-md border border-emerald-600/30 bg-emerald-600/10 px-3 py-2 text-sm text-emerald-900">{flash}</p>}
+                {flash && <p role="status" className="rounded-md border border-success/30 bg-success/10 px-3 py-2 text-sm text-success">{flash}</p>}
                 <InputError message={errors.vendor ?? errors.kind ?? errors.ingredient_id} />
 
                 <section className="space-y-2">
                     <h2 className="font-display text-xl font-bold">{t('Bases')}</h2>
                     <p className="text-sm text-[var(--pt-muted)]">{t('What a buyer builds on: a burger, a pizza, a sandwich, a roll.')}</p>
-                    {bases.length > 0 && <ul className="divide-y rounded-2xl border bg-[var(--pt-surface)]">{bases.map((b) => <BaseRow key={`${b.id}-${b.price}-${b.name}`} b={b} />)}</ul>}
-                    <div className="flex flex-wrap items-center gap-2 rounded-2xl border p-3 text-sm">
+                    {bases.length > 0 && <ul className="divide-y rounded-[1.5rem] border bg-[var(--pt-surface)]">{bases.map((b) => <BaseRow key={`${b.id}-${b.price}-${b.name}`} b={b} />)}</ul>}
+                    <div className="flex flex-wrap items-center gap-2 rounded-[1.5rem] border p-3 text-sm">
                         <select aria-label={t('Kind')} value={base.kind} onChange={(e) => setBase({ ...base, kind: e.target.value })} className="h-8 rounded-md border bg-background px-2 text-xs">
                             {Object.entries(KIND).map(([k, l]) => (
                                 <option key={k} value={k}>
@@ -167,13 +167,13 @@ export default function VendorCustom({ restaurant, groups, catalog, bases, rules
                         return rows.length === 0 ? null : (
                             <div key={g} className="space-y-1">
                                 <h3 className="text-sm font-semibold">{t(GROUP[g])}</h3>
-                                <ul className="divide-y rounded-2xl border bg-[var(--pt-surface)]">{rows.map((c) => <Row key={`${c.id}-${c.price}-${c.available}-${c.sold_out_today}`} c={c} />)}</ul>
+                                <ul className="divide-y rounded-[1.5rem] border bg-[var(--pt-surface)]">{rows.map((c) => <Row key={`${c.id}-${c.price}-${c.available}-${c.sold_out_today}`} c={c} />)}</ul>
                             </div>
                         );
                     })}
                 </section>
 
-                <section className="space-y-2 rounded-2xl border bg-[var(--pt-surface)] p-4">
+                <section className="space-y-2 rounded-[1.5rem] border bg-[var(--pt-surface)] p-4">
                     <h2 className="font-display text-xl font-bold">{t('Limit and time')}</h2>
                     <div className="flex flex-wrap items-end gap-3 text-sm">
                         <label>
@@ -191,7 +191,7 @@ export default function VendorCustom({ restaurant, groups, catalog, bases, rules
                 <section className="space-y-2">
                     <h2 className="font-display text-xl font-bold">{t('These do not go together')}</h2>
                     {rules.length > 0 && (
-                        <ul className="divide-y rounded-2xl border bg-[var(--pt-surface)] text-sm">
+                        <ul className="divide-y rounded-[1.5rem] border bg-[var(--pt-surface)] text-sm">
                             {rules.map((r) => (
                                 <li key={r.id} className="flex items-center justify-between px-3 py-2">
                                     <span>{t('{a} does not go with {b}.', { a: r.a, b: r.b })}</span>

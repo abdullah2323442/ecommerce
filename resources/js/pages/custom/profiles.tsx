@@ -42,7 +42,7 @@ function ProfileForm({ fields, units, profile, onDone }: { fields: Props['fields
     };
 
     return (
-        <form onSubmit={send} className="space-y-3 rounded-2xl border bg-[var(--pt-surface)] p-4">
+        <form onSubmit={send} className="space-y-3 rounded-[1.5rem] border bg-[var(--pt-surface)] p-4">
             <div className="grid gap-3 sm:grid-cols-3">
                 <label className="text-sm font-medium sm:col-span-1">
                     {t('Name')}
@@ -88,13 +88,13 @@ function Card({ p, fields, units }: { p: Profile; fields: Props['fields']; units
     const [editing, setEditing] = useState(false);
 
     return (
-        <li className="space-y-2 rounded-2xl border bg-[var(--pt-surface)] p-4">
+        <li className="space-y-2 rounded-[1.5rem] border bg-[var(--pt-surface)] p-4">
             <div className="flex flex-wrap items-baseline justify-between gap-2">
                 <p className="font-display text-xl font-bold">{p.name}</p>
                 <p className="text-xs text-[var(--pt-muted)]">{t('Measured on {date}', { date: date(p.measured_on) })}</p>
             </div>
             {p.stale && (
-                <div role="status" className="flex flex-wrap items-center gap-2 rounded-md bg-amber-50 p-2 text-sm text-amber-900">
+                <div role="status" className="flex flex-wrap items-center gap-2 rounded-md bg-warning/10 p-2 text-sm text-warning">
                     <span className="flex-1">{t('These measurements are {n} months old. Are they still right?', { n: num(p.months) })}</span>
                     <Button size="sm" variant="outline" onClick={() => router.put(`/custom/profiles/${p.id}/still-correct`, {}, { preserveScroll: true })}>
                         {t('Yes, still right')}
@@ -151,13 +151,13 @@ export default function Profiles({ profiles, fields, units, staleMonths }: Props
                     </Link>
                 </div>
                 <p className="text-sm text-[var(--pt-muted)]">{t('Save as many as you like, each under its own name. Next time you only pick the name. We ask again after {n} months.', { n: num(staleMonths) })}</p>
-                {flash && <p role="status" className="rounded-md border border-emerald-600/30 bg-emerald-600/10 px-3 py-2 text-sm text-emerald-900">{flash}</p>}
+                {flash && <p role="status" className="rounded-md border border-success/30 bg-success/10 px-3 py-2 text-sm text-success">{flash}</p>}
                 <section className="space-y-2">
                     <h2 className="font-display text-xl font-bold">{t('Add a person or a piece')}</h2>
                     <ProfileForm fields={fields} units={units} />
                 </section>
                 {profiles.length === 0 ? (
-                    <p className="rounded-2xl border border-dashed p-8 text-center text-[var(--pt-muted)]">{t('Nothing saved yet.')}</p>
+                    <p className="rounded-[1.5rem] border border-dashed p-8 text-center text-[var(--pt-muted)]">{t('Nothing saved yet.')}</p>
                 ) : (
                     <ul className="space-y-3">
                         {profiles.map((p) => (

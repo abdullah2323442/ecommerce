@@ -67,7 +67,7 @@ function StandingCard({ s, steps }: { s: Standing; steps: string[] }) {
         <li className="space-y-2 px-4 py-3">
             <div className="flex flex-wrap items-baseline justify-between gap-2">
                 <p className="font-medium">
-                    {s.seller} {s.watch && <span className="ms-2 rounded bg-red-100 px-1.5 py-0.5 text-xs font-semibold text-red-900">{t('Look at this seller')}</span>}
+                    {s.seller} {s.watch && <span className="ms-2 rounded bg-danger/15 px-1.5 py-0.5 text-xs font-semibold text-danger">{t('Look at this seller')}</span>}
                 </p>
                 <p className="tabular text-xs text-muted-foreground">
                     {t('Rank')}: {s.proven ? num(s.rank) : t('New')} · {t('Not received')}: {num(s.missing)} · {t('Questions left too long')}: {num(s.slow)}
@@ -78,8 +78,8 @@ function StandingCard({ s, steps }: { s: Standing; steps: string[] }) {
                 <Button size="sm" variant="outline" onClick={() => router.put(`${base}/trust`, { trusted: !s.trust.trusted }, { preserveScroll: true })}>
                     {s.trust.trusted ? t('Take trust back') : t('Trust now')}
                 </Button>
-                {s.suspended && <span className="rounded bg-red-100 px-1.5 py-0.5 font-semibold text-red-900">{t('Selling is switched off')}</span>}
-                {s.withheld && <span className="rounded bg-amber-100 px-1.5 py-0.5 font-semibold text-amber-900">{t('Payouts on hold')}</span>}
+                {s.suspended && <span className="rounded bg-danger/15 px-1.5 py-0.5 font-semibold text-danger">{t('Selling is switched off')}</span>}
+                {s.withheld && <span className="rounded bg-warning/15 px-1.5 py-0.5 font-semibold text-warning">{t('Payouts on hold')}</span>}
                 {(s.suspended || s.withheld) && (
                     <Button size="sm" variant="outline" onClick={() => router.put(`${base}/penalty/lift`, {}, { preserveScroll: true })}>
                         {t('Lift it')}

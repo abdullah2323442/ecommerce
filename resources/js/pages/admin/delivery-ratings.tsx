@@ -37,7 +37,7 @@ function Board({ title, rows }: { title: string; rows: Avg[] }) {
                         <li key={r.id} className="flex flex-wrap items-center justify-between gap-3 px-4 py-2">
                             <span className="font-medium">{r.name}</span>
                             <span className="tabular text-muted-foreground">{t('{n} ratings', { n: num(r.count) })}</span>
-                            <span className={`tabular font-bold ${r.average < 3 ? 'text-red-700' : ''}`}>★ {num(r.average)}</span>
+                            <span className={`tabular font-bold ${r.average < 3 ? 'text-danger' : ''}`}>★ {num(r.average)}</span>
                         </li>
                     ))}
                 </ul>
@@ -62,7 +62,7 @@ export default function DeliveryRatings({ people, staff, low }: { people: Avg[];
                 {low.length > 0 && (
                     <section className="space-y-2">
                         <h2 className="font-medium">{t('Low ratings')}</h2>
-                        <ul className="divide-y rounded-md border border-red-300 bg-card text-sm">
+                        <ul className="divide-y rounded-md border border-danger/40 bg-card text-sm">
                             {low.map((l) => (
                                 <li key={l.id} className="space-y-0.5 px-4 py-2">
                                     <p className="tabular">

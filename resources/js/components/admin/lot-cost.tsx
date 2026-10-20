@@ -49,7 +49,7 @@ export default function LotCost({ lotId, percent }: { lotId: number; percent: nu
             </label>
             <Input id={`lot-${lotId}-pct`} className="h-8" type="number" min="0" max="99.9" step="0.001" value={value} onChange={(e) => { setValue(e.target.value); setPreview(null); }} />
             {preview && (
-                <p className={`rounded-md px-2 py-1 text-xs ${preview.loss ? 'bg-amber-100 text-amber-900' : 'bg-muted'}`}>
+                <p className={`rounded-md px-2 py-1 text-xs ${preview.loss ? 'bg-warning/15 text-warning' : 'bg-muted'}`}>
                     {t('Cost per unit')}: {money(preview.unit_cost)}
                     {preview.loss && (
                         <span className="block">

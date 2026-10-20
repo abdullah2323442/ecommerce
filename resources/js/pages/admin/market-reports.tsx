@@ -56,7 +56,7 @@ function Card({ r, decide }: { r: Row; decide?: boolean }) {
             {decide && (
                 <>
                     {r.alike && r.alike.length > 0 && (
-                        <div className="rounded-md bg-amber-50 p-2 text-xs">
+                        <div className="rounded-md bg-warning/10 p-2 text-xs">
                             <p className="font-semibold">{t('Others that look the same')}</p>
                             <ul>
                                 {r.alike.map((a) => (

@@ -38,7 +38,7 @@ export default function SupportShow({ token, ticket, messages }: Props) {
                     <h1 className="font-display text-2xl font-extrabold">{ticket.subject}</h1>
                 </div>
                 {flash && (
-                    <p role="status" className="rounded-xl border border-emerald-600/30 bg-emerald-600/10 px-3 py-2 text-sm text-emerald-900">
+                    <p role="status" className="rounded-xl border border-success/30 bg-success/10 px-3 py-2 text-sm text-success">
                         {flash}
                     </p>
                 )}

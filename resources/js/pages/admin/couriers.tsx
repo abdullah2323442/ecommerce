@@ -130,7 +130,7 @@ export default function Couriers({ couriers, checked_on, stale, providers }: Pro
                 </header>
 
                 {couriers.length > 0 && (
-                    <div className={`flex flex-wrap items-center gap-3 rounded-md border px-3 py-2 text-sm ${stale ? 'border-red-500/50 bg-red-500/10' : ''}`}>
+                    <div className={`flex flex-wrap items-center gap-3 rounded-md border px-3 py-2 text-sm ${stale ? 'border-danger/50 bg-danger/10' : ''}`}>
                         <span className="flex-1">
                             {stale ? t('Are the courier rates still correct? Nobody has checked for three months.') : t('Rates last checked')} {checked_on && !stale && date(checked_on)}
                         </span>

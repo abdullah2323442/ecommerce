@@ -112,7 +112,7 @@ function CustomerPicker() {
                         <div className="min-w-40 flex-1">
                             <p className="font-medium">{c.name}</p>
                             <p className="text-muted-foreground text-sm">{[c.area, c.phone].filter(Boolean).join(' · ')}</p>
-                            {c.open_invoice && <p className="text-xs text-amber-700">{t('An order is already open for this customer.')}</p>}
+                            {c.open_invoice && <p className="text-xs text-warning">{t('An order is already open for this customer.')}</p>}
                         </div>
                         {c.open_invoice ? (
                             <Button asChild variant="outline" size="sm">
@@ -231,7 +231,7 @@ function Notes({ notes }: { notes: Note[] }) {
                                 <p className="font-medium">{n.customer}</p>
                                 <p className="text-muted-foreground text-sm">{n.note}</p>
                             </div>
-                            <span className={`tabular text-sm ${n.minutes > 60 ? 'font-semibold text-amber-700' : 'text-muted-foreground'}`}>
+                            <span className={`tabular text-sm ${n.minutes > 60 ? 'font-semibold text-warning' : 'text-muted-foreground'}`}>
                                 {t('{n} min open', { n: num(n.minutes) })}
                             </span>
                             <Button size="sm" onClick={() => router.post(`/admin/counter/notes/${n.id}/draft`)}>
@@ -300,17 +300,17 @@ export default function CounterIndex({ drafts, notes, byStaff }: { drafts: Draft
                                                 {t(d.kind === 'retail' ? 'Retail' : d.kind === 'paikari' ? 'Shop' : 'Wholesale')}
                                                 {d.staff && ` · ${d.staff}`}
                                             </p>
-                                            {d.same_customer > 1 && <p className="text-xs font-semibold text-amber-700">{t('This customer has {n} drafts open', { n: num(d.same_customer) })}</p>}
+                                            {d.same_customer > 1 && <p className="text-xs font-semibold text-warning">{t('This customer has {n} drafts open', { n: num(d.same_customer) })}</p>}
                                         </div>
                                         <p className="tabular text-sm">{t('{n} items', { n: num(d.lines) })}</p>
                                         <p
-                                            className={`tabular text-sm ${d.minutes_open > 60 ? 'font-semibold text-amber-700' : 'text-muted-foreground'}`}
+                                            className={`tabular text-sm ${d.minutes_open > 60 ? 'font-semibold text-warning' : 'text-muted-foreground'}`}
                                         >
                                             {t('{n} min open', { n: num(d.minutes_open) })}
                                         </p>
                                     </Link>
                                     {d.stale && (
-                                        <div role="note" className="flex flex-wrap items-center gap-3 bg-amber-50 px-4 py-2 text-sm text-amber-900">
+                                        <div role="note" className="flex flex-wrap items-center gap-3 bg-warning/10 px-4 py-2 text-sm text-warning">
                                             <p className="flex-1">{t('Nobody has touched this draft for a long time. Its goods are being held.')}</p>
                                             <Button size="sm" variant="outline" onClick={() => window.confirm(t('Put its goods back in stock and close this draft?')) && router.post(`/admin/counter/${d.id}/cancel`, {}, { preserveScroll: true })}>
                                                 {t('Return to stock')}

@@ -148,7 +148,7 @@ export default function Invoices({ rows, filters, owed, canSettle }: Props) {
                                 <span className="tabular w-24 text-right">{money(r.total)}</span>
                                 {r.due > 0 ? (
                                     <span className="flex items-center gap-2">
-                                        <span className="tabular text-xs font-semibold text-red-600">
+                                        <span className="tabular text-xs font-semibold text-danger">
                                             {t('Owes')} {money(r.due)}
                                         </span>
                                         {canSettle && <Settle row={r} />}

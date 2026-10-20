@@ -168,7 +168,7 @@ export default function SiteBuilder({ blocks: saved, types }: Props) {
                         {t('Start again')}
                     </Button>
                     <span className="ml-auto flex items-center gap-2">
-                        {flash && <span role="status" className="text-xs text-emerald-600 dark:text-emerald-300">{flash}</span>}
+                        {flash && <span role="status" className="text-xs text-success ">{flash}</span>}
                         {dirty && <span className="text-xs opacity-65">{t('Not saved')}</span>}
                         <Link href="/" target="_blank" className="text-xs underline underline-offset-4">
                             {t('Open the live page')}
@@ -339,7 +339,7 @@ function Settings({ block, fields, title, onChange, onRemove }: { block: HomeBlo
                             {t('Remove the picture')}
                         </Button>
                     )}
-                    {problem && <p role="alert" className="text-xs text-rose-500">{problem}</p>}
+                    {problem && <p role="alert" className="text-xs text-danger">{problem}</p>}
                 </div>
             );
         }

@@ -33,7 +33,7 @@ function List({ items, empty }: { items: Job[]; empty: string }) {
                     <Link href={`/craftsman/jobs/${j.id}`} className="flex flex-wrap items-center gap-x-6 gap-y-1 px-4 py-3 hover:bg-[var(--pt-sage)]">
                         <span className="min-w-32 flex-1 font-medium">
                             {j.number} · {j.kind === 'wood' ? t('Wood') : t('Clothing')}
-                            {j.urgent && <span className="ms-2 rounded bg-red-100 px-1.5 py-0.5 text-xs font-semibold text-red-900">{t('Urgent')}</span>}
+                            {j.urgent && <span className="ms-2 rounded bg-danger/15 px-1.5 py-0.5 text-xs font-semibold text-danger">{t('Urgent')}</span>}
                         </span>
                         {j.due_on && <span className="text-sm text-[var(--pt-muted)]">{t('Due on {date}.', { date: date(j.due_on) })}</span>}
                         {j.waiting && <span className="text-sm font-semibold">{t('Waiting for materials')}</span>}

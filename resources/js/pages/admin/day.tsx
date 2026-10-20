@@ -109,7 +109,7 @@ export default function Day({ day, methods, expectedCash, sales, due, closing, u
                     </div>
                     <InputError message={form.errors.counted_cash} />
                     {diff !== null && (
-                        <p className={`tabular text-sm font-semibold ${diff === 0 ? 'text-emerald-700' : 'text-amber-700'}`}>
+                        <p className={`tabular text-sm font-semibold ${diff === 0 ? 'text-success' : 'text-warning'}`}>
                             {diff === 0 ? t('The cash matches.') : diff > 0 ? t('{amount} more than expected', { amount: money(diff) }) : t('{amount} short', { amount: money(-diff) })}
                         </p>
                     )}

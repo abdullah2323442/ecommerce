@@ -24,7 +24,7 @@ export default function SiteNotice() {
                 </p>
             )}
             {siteNotice && (
-                <p role="status" className="border-b border-amber-500/40 bg-amber-500/15 px-4 py-2 text-center text-sm font-medium">
+                <p role="status" className="border-b border-warning/40 bg-warning/15 px-4 py-2 text-center text-sm font-medium">
                     {siteNotice}
                 </p>
             )}

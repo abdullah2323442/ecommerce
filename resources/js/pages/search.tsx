@@ -68,7 +68,7 @@ export default function SearchPage({ q, medicines, products, productTotal }: Pro
                     <ul className={GRID}>
                         {products.map((p) => (
                             <li key={p.id} className="flex">
-                                <Link href={`/market/${p.id}`} className="group flex w-full flex-col overflow-hidden rounded-2xl border border-[var(--pt-line)] bg-[var(--pt-surface)] transition duration-200 hover:-translate-y-0.5 hover:border-[var(--pt-amber)] hover:shadow-[0_12px_32px_-12px_rgba(20,18,15,0.28)] focus-visible:ring-2 focus-visible:ring-[var(--pt-amber)] motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+                                <Link href={`/market/${p.id}`} className="group flex w-full flex-col overflow-hidden rounded-[1.5rem] border border-[var(--pt-line)] bg-[var(--pt-surface)] transition duration-200 hover:-translate-y-0.5 hover:border-[var(--pt-amber)] hover:shadow-[0_12px_32px_-12px_rgba(20,18,15,0.28)] focus-visible:ring-2 focus-visible:ring-[var(--pt-amber)] motion-reduce:transition-none motion-reduce:hover:translate-y-0">
                                     <div className="aspect-[4/3] bg-gradient-to-b from-white to-[var(--pt-sage)]">{p.photo && <img src={p.photo} alt="" loading="lazy" decoding="async" className="size-full object-contain p-4" />}</div>
                                     <div className="flex flex-1 flex-col gap-1 p-3.5">
                                         <h3 className="line-clamp-2 text-[15px] leading-snug font-semibold">{p.title}</h3>

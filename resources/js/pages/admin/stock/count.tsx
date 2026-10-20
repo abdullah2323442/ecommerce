@@ -146,7 +146,7 @@ export default function StockCountShow({ count, lines, totalDifference }: Props)
                                 },
                             });
                         }}
-                        className="space-y-2 rounded-xl border border-amber-500/40 bg-amber-500/10 p-4"
+                        className="space-y-2 rounded-xl border border-warning/40 bg-warning/10 p-4"
                     >
                         <p className="font-medium">{t('Barcode {code} is new. Which medicine is it?', { code: unknown })}</p>
                         <p className="text-sm text-muted-foreground">{t('Pick the medicine above, then link it. It is remembered for good.')}</p>

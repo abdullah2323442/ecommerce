@@ -42,8 +42,8 @@ export default function Orders({ orders, missed }: { orders: Order[]; missed: Mi
                                         <p className="text-sm text-muted-foreground">{o.phone}</p>
                                     </div>
                                     <p className="tabular text-sm">{t('{n} items', { n: num(o.lines) })}</p>
-                                    <p className={`tabular text-sm ${o.minutes > 60 ? 'font-semibold text-amber-700' : 'text-muted-foreground'}`}>{t('{n} min open', { n: num(o.minutes) })}</p>
-                                    <p className="text-sm font-semibold">{o.cancel_requested ? <span className="text-red-700">{t('Wants to cancel')}</span> : t(o.status === 'placed' ? 'To check' : 'Checked')}</p>
+                                    <p className={`tabular text-sm ${o.minutes > 60 ? 'font-semibold text-warning' : 'text-muted-foreground'}`}>{t('{n} min open', { n: num(o.minutes) })}</p>
+                                    <p className="text-sm font-semibold">{o.cancel_requested ? <span className="text-danger">{t('Wants to cancel')}</span> : t(o.status === 'placed' ? 'To check' : 'Checked')}</p>
                                 </Link>
                             </li>
                         ))}

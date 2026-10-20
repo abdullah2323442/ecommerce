@@ -134,7 +134,7 @@ function CraftBlock({ r, makers }: { r: Row; makers: Maker[] }) {
                             </Button>
                         </>
                     )}
-                    {r.wages_total === null && <span className="text-red-700">{t('Set the wage first.')}</span>}
+                    {r.wages_total === null && <span className="text-danger">{t('Set the wage first.')}</span>}
                     {r.craftsman_id !== null && r.advance_paid > r.advance_given && (
                         <>
                             <Input aria-label={t('Advance to the craftsman')} className="h-8 w-24" inputMode="decimal" placeholder={t('Advance')} value={give} onChange={(e) => setGive(e.target.value)} />
@@ -153,7 +153,7 @@ function CraftBlock({ r, makers }: { r: Row; makers: Maker[] }) {
                         {r.delays > 0 && ` · ${t('Delays')}: ${num(r.delays)}`}
                     </p>
                     {r.waiting_note && (
-                        <p className="flex flex-wrap items-center gap-2 rounded bg-amber-50 p-1 text-amber-900">
+                        <p className="flex flex-wrap items-center gap-2 rounded bg-warning/10 p-1 text-warning">
                             {t('Waiting for materials')}: {r.waiting_note}
                             <Button size="sm" variant="outline" onClick={() => post('materials-arrived')}>
                                 {t('They arrived')}
@@ -227,7 +227,7 @@ function Job({ r, defaults, makers }: { r: Row; defaults: { advance: number; urg
             <div className="flex flex-wrap items-baseline justify-between gap-2">
                 <p className="font-medium">
                     {r.number} · {r.buyer} · {r.kind === 'wood' ? t('Wood') : t('Clothing')}
-                    {r.urgent && <span className="ms-2 rounded bg-red-100 px-1.5 py-0.5 text-xs font-semibold text-red-900">{t('Urgent')}</span>}
+                    {r.urgent && <span className="ms-2 rounded bg-danger/15 px-1.5 py-0.5 text-xs font-semibold text-danger">{t('Urgent')}</span>}
                 </p>
                 {r.price !== null && (
                     <p className="tabular font-semibold">
@@ -410,7 +410,7 @@ export default function CustomOrders({ asking, priced, confirmed, making, done, 
                 {complaints.length > 0 && (
                     <section className="space-y-2">
                         <h2 className="font-medium">{t('Work not done right')}</h2>
-                        <ul className="divide-y rounded-md border border-red-300 bg-card">{complaints.map((r) => <Complaint key={r.id} r={r} />)}</ul>
+                        <ul className="divide-y rounded-md border border-danger/40 bg-card">{complaints.map((r) => <Complaint key={r.id} r={r} />)}</ul>
                     </section>
                 )}
                 {section(t('Waiting for a price'), asking, t('Nothing waiting.'))}

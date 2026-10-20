@@ -134,7 +134,7 @@ function MemberRow({ m, roles }: { m: Member; roles: RoleRow[] }) {
         <li className={`flex flex-wrap items-center gap-3 px-4 py-3 ${m.closed ? 'opacity-60' : ''}`}>
             <div className="min-w-48 flex-1">
                 <p className="font-medium">
-                    {m.name} {m.closed && <span className="rounded bg-red-500/15 px-1.5 text-xs font-semibold">{t('Closed')}</span>}
+                    {m.name} {m.closed && <span className="rounded bg-danger/15 px-1.5 text-xs font-semibold">{t('Closed')}</span>}
                 </p>
                 <p className="text-muted-foreground text-sm">{[m.email, m.phone].filter(Boolean).join(' · ')}</p>
             </div>

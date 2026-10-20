@@ -1,12 +1,13 @@
+import { Bunting } from '@/components/art/craft';
 import InstallApp from '@/components/install-app';
+import MobileDock, { type DockLink } from '@/components/mobile-dock';
 import PwaBanner from '@/components/pwa-banner';
 import SiteNotice from '@/components/site-notice';
-import { Bunting } from '@/components/art/craft';
 import TextSize from '@/components/text-size';
 import { LanguageToggle, useI18n } from '@/lib/i18n';
 import { type SharedData } from '@/types';
 import { Head, Link, usePage } from '@inertiajs/react';
-import { Bell, Building2, Droplet, House, MessageCircle, Search, ShoppingBag, UserRound, type LucideIcon } from 'lucide-react';
+import { Bell, Droplet, Gamepad2, House, MessageCircle, Pill, Search, ShoppingBag, Store, UserRound, UtensilsCrossed } from 'lucide-react';
 import { type PropsWithChildren } from 'react';
 
 /**
@@ -21,26 +22,51 @@ interface Props {
     calm?: boolean;
 }
 
-export default function PublicLayout({ children, bleed = false, calm = false }: PropsWithChildren<Props>) {
+export default function PublicLayout({ children, bleed = false }: PropsWithChildren<Props>) {
     const { auth, brand, cartCount, canCart, site } = usePage<SharedData>().props;
     const { url } = usePage();
     const { t } = useI18n();
 
     const account = auth.user ? { href: route('dashboard'), label: t('Account') } : { href: route('login'), label: t('Log in') };
 
-    const tabs: { href: string; label: string; Icon: LucideIcon; active: boolean }[] = [
+    const here = (...starts: string[]) => starts.some((p) => url === p || url.startsWith(p + '/') || url.startsWith(p + '?'));
+    // The department links under the header on a desktop: every kind of shop, one click away. A shop is "on" when its own page is open.
+    const sector = new URLSearchParams(url.split('?')[1] ?? '').get('sector');
+    const onMarket = url.split('?')[0] === '/market';
+    const departmentLinks = [
+        { href: route('market.index'), label: t('Market'), on: onMarket && !sector },
+        { href: route('market.index', { sector: 'electronics' }), label: t('Electronics'), on: onMarket && sector === 'electronics' },
+        { href: route('market.index', { sector: 'clothing' }), label: t('Clothing'), on: onMarket && sector === 'clothing' },
+        { href: route('market.index', { sector: 'jewellery' }), label: t('Jewellery'), on: onMarket && sector === 'jewellery' },
+        { href: route('market.index', { sector: 'home' }), label: t('Home and living'), on: onMarket && sector === 'home' },
+        { href: route('market.index', { sector: 'beauty' }), label: t('Beauty and care'), on: onMarket && sector === 'beauty' },
+        { href: route('medicines.index'), label: t('Pharmacy'), on: here('/medicines', '/forms', '/companies') },
+        { href: route('food.index'), label: t('Food'), on: here('/food') },
+        { href: route('gaming.index'), label: t('Game top-up'), on: here('/gaming') },
+        { href: '/custom', label: t('Made to order'), on: here('/custom') },
+    ];
+
+    // The phone dock: the places a shopper of the whole shop goes, with the basket where there is one.
+    const dock: DockLink[] = [
         { href: '/', label: t('Home'), Icon: House, active: url === '/' || url.startsWith('/?') },
-        { href: '/search', label: t('Search'), Icon: Search, active: url.startsWith('/search') || url.startsWith('/medicines') || url.startsWith('/forms') },
-        { href: route('companies.index'), label: t('Companies'), Icon: Building2, active: url.startsWith('/companies') },
-        { ...account, Icon: UserRound, active: url.startsWith('/login') || url.startsWith('/dashboard') || url.startsWith('/account') },
+        { href: route('market.index'), label: t('Market'), Icon: Store, active: here('/market') },
+        { href: route('medicines.index'), label: t('Medicines'), Icon: Pill, active: here('/medicines', '/forms', '/companies') },
+        { href: route('food.index'), label: t('Food'), Icon: UtensilsCrossed, active: here('/food') },
+        { href: route('gaming.index'), label: t('Game top-up'), Icon: Gamepad2, active: here('/gaming') },
+        canCart
+            ? { href: route('market.cart'), label: t('Your market cart'), Icon: ShoppingBag, active: here('/market-cart'), badge: cartCount }
+            : { href: route('search'), label: t('Search'), Icon: Search, active: here('/search') },
+        { ...account, Icon: UserRound, active: here('/login', '/dashboard', '/account') },
     ];
 
     return (
-        <div className="public-theme relative isolate flex min-h-screen flex-col pb-[calc(6.5rem+env(safe-area-inset-bottom))] md:pb-0">
-            
+        <div className="public-theme relative isolate flex min-h-screen flex-col">
             <Head>
                 <link rel="preconnect" href="https://fonts.bunny.net" />
-                <link href="https://fonts.bunny.net/css?family=hind-siliguri:400,500,600,700|baloo-da-2:600,700,800&display=swap" rel="stylesheet" />
+                <link
+                    href="https://fonts.bunny.net/css?family=hind-siliguri:400,500,600,700|baloo-da-2:600,700,800|cormorant-garamond:500,600|noto-serif-bengali:500,700,800|changa-one:400&display=swap"
+                    rel="stylesheet"
+                />
             </Head>
 
             <a
@@ -67,9 +93,21 @@ export default function PublicLayout({ children, bleed = false, calm = false }: 
                         <span className="hidden sm:inline">{brand.name}</span>
                     </Link>
 
-                    <form action="/search" method="get" role="search" className="mx-auto hidden h-11 w-full max-w-md items-center gap-3 rounded-full border border-[var(--pt-line)] bg-[var(--pt-surface)] px-4 text-[var(--pt-muted)] transition-shadow focus-within:shadow-md hover:shadow-md md:flex">
+                    <form
+                        action="/search"
+                        method="get"
+                        role="search"
+                        className="mx-auto hidden h-11 w-full max-w-md items-center gap-3 rounded-full border border-[var(--pt-line)] bg-[var(--pt-surface)] px-4 text-[var(--pt-muted)] transition-shadow focus-within:shadow-md hover:shadow-md md:flex"
+                    >
                         <Search aria-hidden className="size-4" />
-                        <input name="q" type="search" aria-label={t('Search the shop')} placeholder={t('Search the shop')} autoComplete="off" className="h-full w-full bg-transparent text-[var(--pt-ink)] outline-none placeholder:text-[var(--pt-muted)]" />
+                        <input
+                            name="q"
+                            type="search"
+                            aria-label={t('Search the shop')}
+                            placeholder={t('Search the shop')}
+                            autoComplete="off"
+                            className="h-full w-full bg-transparent text-[var(--pt-ink)] outline-none placeholder:text-[var(--pt-muted)]"
+                        />
                     </form>
 
                     <div className="ml-auto flex items-center gap-2 md:ml-0">
@@ -83,7 +121,9 @@ export default function PublicLayout({ children, bleed = false, calm = false }: 
                             >
                                 <Bell aria-hidden className="size-5" />
                                 {auth.inbox > 0 && (
-                                    <span className="absolute -top-1 -right-1 flex min-w-5 items-center justify-center rounded-full bg-[var(--pt-amber)] px-1 text-xs font-bold text-black">{auth.inbox}</span>
+                                    <span className="absolute -top-1 -right-1 flex min-w-5 items-center justify-center rounded-full bg-[var(--pt-amber)] px-1 text-xs font-bold text-black">
+                                        {auth.inbox}
+                                    </span>
                                 )}
                             </Link>
                         )}
@@ -95,7 +135,9 @@ export default function PublicLayout({ children, bleed = false, calm = false }: 
                             >
                                 <ShoppingBag aria-hidden className="size-5" />
                                 {cartCount > 0 && (
-                                    <span className="absolute -top-1 -right-1 flex min-w-5 items-center justify-center rounded-full bg-[var(--pt-deep)] px-1 text-xs font-bold text-white">{cartCount}</span>
+                                    <span className="absolute -top-1 -right-1 flex min-w-5 items-center justify-center rounded-full bg-[var(--pt-deep)] px-1 text-xs font-bold text-white">
+                                        {cartCount}
+                                    </span>
                                 )}
                             </Link>
                         )}
@@ -107,14 +149,28 @@ export default function PublicLayout({ children, bleed = false, calm = false }: 
                         </Link>
                     </div>
                 </div>
+                <nav aria-label={t('Departments')} className="hidden border-t border-[var(--pt-line)]/60 md:block">
+                    <ul className="mx-auto flex w-full max-w-6xl items-center gap-1 overflow-x-auto px-4 py-1.5 text-sm">
+                        {departmentLinks.map(({ href, label, on }) => (
+                            <li key={href} className="shrink-0">
+                                <Link
+                                    href={href}
+                                    aria-current={on ? 'page' : undefined}
+                                    className={`inline-flex h-9 items-center rounded-full px-4 transition-colors duration-300 ${on ? 'bg-[var(--pt-ink)] text-[var(--pt-paper)]' : 'hover:bg-[var(--pt-line)]/60'}`}
+                                >
+                                    {label}
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
+                </nav>
             </header>
 
             <main id="main" className={bleed ? 'flex-1' : 'mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:py-12'}>
                 {children}
             </main>
 
-            <footer className="relative isolate mt-20 overflow-hidden bg-[var(--pt-deep)] text-white">
-                
+            <footer className="relative isolate mt-20 overflow-hidden bg-[var(--pt-deep)] pb-[calc(6.5rem+env(safe-area-inset-bottom))] text-white md:pb-0">
                 <Bunting className="-mt-9 sm:-mt-12" />
                 <div className="mx-auto grid w-full max-w-6xl gap-10 px-4 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
                     <div>
@@ -133,13 +189,19 @@ export default function PublicLayout({ children, bleed = false, calm = false }: 
                         </p>
                         {brand.tagline && <p className="mt-2 text-white/80">{brand.tagline}</p>}
                         <p className="mt-4 max-w-sm text-white/70">
-                            {site.footer.about ?? t('Medicine, food, gaming, made-to-measure and more. The pharmacy is open today. The rest of the market opens soon.')}
+                            {site.footer.about ??
+                                t('Medicine, food, gaming, made-to-measure and more. The pharmacy is open today. The rest of the market opens soon.')}
                         </p>
                         {Object.keys(site.social).length > 0 && (
                             <ul aria-label={t('Follow us')} className="mt-4 flex flex-wrap gap-3 text-sm text-white/80">
                                 {Object.entries(site.social).map(([k, url]) => (
                                     <li key={k}>
-                                        <a href={url} target="_blank" rel="noreferrer noopener" className="underline underline-offset-4 hover:text-white">
+                                        <a
+                                            href={url}
+                                            target="_blank"
+                                            rel="noreferrer noopener"
+                                            className="underline underline-offset-4 hover:text-white"
+                                        >
                                             {k === 'facebook' ? 'Facebook' : k === 'instagram' ? 'Instagram' : k === 'youtube' ? 'YouTube' : 'TikTok'}
                                         </a>
                                     </li>
@@ -220,7 +282,11 @@ export default function PublicLayout({ children, bleed = false, calm = false }: 
             {/* A chat button, only when the owner has set a WhatsApp number or a Messenger page. */}
             {(brand.whatsapp || brand.messenger) && (
                 <a
-                    href={brand.whatsapp ? `https://wa.me/${brand.whatsapp.replace(/\D/g, '')}` : `https://m.me/${encodeURIComponent(brand.messenger ?? '')}`}
+                    href={
+                        brand.whatsapp
+                            ? `https://wa.me/${brand.whatsapp.replace(/\D/g, '')}`
+                            : `https://m.me/${encodeURIComponent(brand.messenger ?? '')}`
+                    }
                     target="_blank"
                     rel="noreferrer noopener"
                     aria-label={t('Chat with us')}
@@ -230,25 +296,7 @@ export default function PublicLayout({ children, bleed = false, calm = false }: 
                 </a>
             )}
 
-            {/* Phone app bar: floating, rounded, the four places people go, under the thumb. */}
-            <nav aria-label={t('Main')} className="fixed inset-x-3 bottom-[calc(0.75rem+env(safe-area-inset-bottom))] z-40 md:hidden">
-                <ul className="mx-auto grid max-w-md grid-cols-4 rounded-[1.75rem] border border-white/60 bg-[var(--pt-surface)]/85 p-1.5 shadow-[0_18px_40px_-12px_rgba(14,13,12,.45)] backdrop-blur-xl dark:border-white/10">
-                    {tabs.map(({ href, label, Icon, active }) => (
-                        <li key={href}>
-                            <Link
-                                href={href}
-                                aria-current={active ? 'page' : undefined}
-                                className={`flex min-h-14 flex-col items-center justify-center gap-0.5 rounded-[1.35rem] text-xs font-semibold transition-colors outline-none focus-visible:ring-2 focus-visible:ring-[var(--pt-amber)] ${
-                                    active ? 'bg-[var(--pt-deep)] text-white' : 'text-[var(--pt-muted)]'
-                                }`}
-                            >
-                                <Icon aria-hidden className="size-5" strokeWidth={active ? 2.2 : 1.8} />
-                                {label}
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
-            </nav>
+            <MobileDock items={dock} label={t('Main')} more={{ label: t('More'), links: departmentLinks }} />
         </div>
     );
 }

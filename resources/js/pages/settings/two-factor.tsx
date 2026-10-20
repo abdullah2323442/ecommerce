@@ -51,10 +51,10 @@ export default function TwoFactor({ enabled, setup, codesLeft, recoveryCodes, re
             <SettingsLayout>
                 <div className="space-y-6">
                     <HeadingSmall title={t('Two-step sign-in')} description={t('After your password, you also write a 6-digit code from an app on your phone. A stolen password is then not enough.')} />
-                    {required && !enabled && <p role="alert" className="rounded-md border border-amber-500/40 bg-amber-500/10 p-3 text-sm">{t('The owner asks staff to use two-step sign-in. Turn it on to use the admin panel.')}</p>}
+                    {required && !enabled && <p role="alert" className="rounded-md border border-warning/40 bg-warning/10 p-3 text-sm">{t('The owner asks staff to use two-step sign-in. Turn it on to use the admin panel.')}</p>}
 
                     {recoveryCodes && (
-                        <section role="status" className="space-y-2 rounded-md border border-emerald-600/40 bg-emerald-600/10 p-4">
+                        <section role="status" className="space-y-2 rounded-md border border-success/40 bg-success/10 p-4">
                             <h3 className="font-semibold">{t('Your recovery codes')}</h3>
                             <p className="text-sm">{t('Keep these somewhere safe. Each works once if you lose your phone. They are shown only now.')}</p>
                             <ul className="grid grid-cols-2 gap-1 font-mono text-sm">
@@ -67,7 +67,7 @@ export default function TwoFactor({ enabled, setup, codesLeft, recoveryCodes, re
 
                     {enabled ? (
                         <div className="space-y-6">
-                            <p className="rounded-md bg-emerald-600/10 p-3 text-sm font-medium text-emerald-900">{t('Two-step sign-in is on.')}</p>
+                            <p className="rounded-md bg-success/10 p-3 text-sm font-medium text-success">{t('Two-step sign-in is on.')}</p>
                             <p className="text-sm">{t('{n} recovery codes left.', { n: num(codesLeft) })}</p>
                             <div className="grid max-w-sm gap-2">
                                 <Label htmlFor="pw">{t('Your password')}</Label>

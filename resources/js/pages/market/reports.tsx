@@ -71,7 +71,7 @@ export default function Reports({ products, months, rank, proven, businesses, bu
                     </nav>
                 )}
 
-                <section className="space-y-2 rounded-2xl border bg-[var(--pt-surface)] p-4">
+                <section className="space-y-2 rounded-[1.5rem] border bg-[var(--pt-surface)] p-4">
                     <div className="flex flex-wrap items-baseline justify-between gap-2">
                         <h2 className="font-display text-xl font-bold">{t('Your rank')}</h2>
                         <p className="tabular text-2xl font-extrabold">
@@ -91,7 +91,7 @@ export default function Reports({ products, months, rank, proven, businesses, bu
                 </section>
 
                 {low.length > 0 && (
-                    <section role="alert" className="space-y-1 rounded-2xl border border-amber-500/40 bg-amber-500/10 p-4 text-sm">
+                    <section role="alert" className="space-y-1 rounded-[1.5rem] border border-warning/40 bg-warning/10 p-4 text-sm">
                         <h2 className="font-semibold">{t('Running low')}</h2>
                         <ul className="tabular">
                             {low.map((p) => (
@@ -105,11 +105,11 @@ export default function Reports({ products, months, rank, proven, businesses, bu
 
                 {products.length > 1 && (
                     <section className="grid gap-3 sm:grid-cols-2">
-                        <div className="space-y-1 rounded-2xl border bg-[var(--pt-surface)] p-4 text-sm">
+                        <div className="space-y-1 rounded-[1.5rem] border bg-[var(--pt-surface)] p-4 text-sm">
                             <h2 className="font-semibold">{t('Sells the most')}</h2>
                             {topSold.length === 0 ? <p className="text-[var(--pt-muted)]">{t('Nothing sold yet.')}</p> : <ol className="tabular list-decimal ps-5">{topSold.map((p) => <li key={p.id}>{p.title} · {num(p.sold)}</li>)}</ol>}
                         </div>
-                        <div className="space-y-1 rounded-2xl border bg-[var(--pt-surface)] p-4 text-sm">
+                        <div className="space-y-1 rounded-[1.5rem] border bg-[var(--pt-surface)] p-4 text-sm">
                             <h2 className="font-semibold">{t('Sells the least')}</h2>
                             <ol className="tabular list-decimal ps-5">
                                 {slowest.map((p) => (
@@ -130,11 +130,11 @@ export default function Reports({ products, months, rank, proven, businesses, bu
                         </p>
                     )}
                     {products.length === 0 ? (
-                        <p className="rounded-2xl border border-dashed p-8 text-center text-[var(--pt-muted)]">{t('No published products yet.')}</p>
+                        <p className="rounded-[1.5rem] border border-dashed p-8 text-center text-[var(--pt-muted)]">{t('No published products yet.')}</p>
                     ) : (
                         <ul className="space-y-2">
                             {products.map((p) => (
-                                <li key={p.id} className="space-y-1 rounded-2xl border bg-[var(--pt-surface)] p-3 text-sm">
+                                <li key={p.id} className="space-y-1 rounded-[1.5rem] border bg-[var(--pt-surface)] p-3 text-sm">
                                     <div className="flex flex-wrap items-baseline justify-between gap-2">
                                         <p className="font-semibold">{p.title}</p>
                                         <p className="tabular font-semibold">{money(p.earned)}</p>
@@ -143,13 +143,13 @@ export default function Reports({ products, months, rank, proven, businesses, bu
                                         {t('Looked at by {n} people', { n: num(p.views) })} · {t('{n} orders', { n: num(p.orders) })} · {t('Sold')} {num(p.sold)}
                                     </p>
                                     {p.left !== null && (
-                                        <p className={`tabular text-xs ${p.low ? 'font-semibold text-amber-800' : 'text-[var(--pt-muted)]'}`}>
+                                        <p className={`tabular text-xs ${p.low ? 'font-semibold text-warning' : 'text-[var(--pt-muted)]'}`}>
                                             {t('{n} left', { n: num(p.left) })}
                                             {p.profit !== null && ` · ${t('You made {amount} after your own cost', { amount: money(p.profit) })}`}
                                         </p>
                                     )}
                                     {p.left === null && p.profit !== null && <p className="tabular text-xs text-[var(--pt-muted)]">{t('You made {amount} after your own cost', { amount: money(p.profit) })}</p>}
-                                    {p.hint && <p className="rounded-md bg-amber-50 p-2 text-amber-900">{p.hint === 'photo' ? t('People look at this but nobody orders. It has no picture. Add one.') : t('People look at this but nobody orders. Look at the price.')}</p>}
+                                    {p.hint && <p className="rounded-md bg-warning/10 p-2 text-warning">{p.hint === 'photo' ? t('People look at this but nobody orders. It has no picture. Add one.') : t('People look at this but nobody orders. Look at the price.')}</p>}
                                 </li>
                             ))}
                         </ul>
@@ -166,7 +166,7 @@ export default function Reports({ products, months, rank, proven, businesses, bu
                                     <span className="block h-3 rounded-full bg-[var(--pt-ink)]" style={{ width: `${(m.sales / best) * 100}%` }} />
                                 </span>
                                 <span className="tabular text-end">
-                                    {money(m.sales)} {m.change !== null && m.change > 0 && <strong className="text-emerald-700">▲ {num(m.change)}%</strong>}
+                                    {money(m.sales)} {m.change !== null && m.change > 0 && <strong className="text-success">▲ {num(m.change)}%</strong>}
                                     {m.change !== null && m.change < 0 && <span className="text-[var(--pt-muted)]">▼ {num(Math.abs(m.change))}%</span>}
                                     {m.commission > 0 && <span className="block text-xs text-[var(--pt-muted)]">{t('Commission owed: {amount}', { amount: money(m.commission) })}</span>}
                                 </span>

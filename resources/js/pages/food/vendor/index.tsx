@@ -70,6 +70,7 @@ interface Item {
     name: string;
     description: string | null;
     price: number;
+    category?: string | null;
     cook_minutes: number;
     ready_made: boolean;
     available: boolean;
@@ -109,7 +110,7 @@ function OrderCard({ o }: { o: Order }) {
     const needsAdvance = o.advance_due > o.advance_paid + 0.001;
 
     return (
-        <li className="space-y-3 rounded-2xl border bg-[var(--pt-surface)] p-4">
+        <li className="space-y-3 rounded-[1.5rem] border bg-[var(--pt-surface)] p-4">
             <div className="flex flex-wrap items-baseline justify-between gap-2">
                 <p className="font-display text-xl font-bold">
                     {o.number} · {o.mode === 'delivery' ? t('Home delivery') : t("I'll eat there")}
@@ -131,7 +132,7 @@ function OrderCard({ o }: { o: Order }) {
                     </li>
                 ))}
             </ul>
-            {o.note && <p className="rounded-md bg-amber-50 p-2 font-semibold">{o.note}</p>}
+            {o.note && <p className="rounded-md bg-warning/10 p-2 font-semibold">{o.note}</p>}
 
             <p className="text-sm">
                 {o.mode === 'delivery' ? (
@@ -199,7 +200,7 @@ function OrderCard({ o }: { o: Order }) {
             )}
 
             {o.complaint && (
-                <div className="space-y-2 rounded-md border border-red-300 p-3 text-sm">
+                <div className="space-y-2 rounded-md border border-danger/40 p-3 text-sm">
                     <p>
                         <strong>{t('Complaint')}:</strong> {o.complaint}
                     </p>
@@ -222,13 +223,14 @@ function OrderCard({ o }: { o: Order }) {
 
 function ItemRow({ i }: { i: Item }) {
     const { t, money } = useI18n();
-    const [f, setF] = useState({ name: i.name, price: String(i.price), cook_minutes: String(i.cook_minutes), description: i.description ?? '', ready_made: i.ready_made });
+    const [f, setF] = useState({ name: i.name, price: String(i.price), cook_minutes: String(i.cook_minutes), description: i.description ?? '', category: i.category ?? '', ready_made: i.ready_made });
     const [photo, setPhoto] = useState<File | null>(null);
 
     return (
         <li className="space-y-2 px-4 py-3 text-sm">
             <div className="flex flex-wrap items-center gap-2">
                 <Input aria-label={t('Name')} className="h-8 w-44" value={f.name} onChange={(e) => setF({ ...f, name: e.target.value })} />
+                <Input aria-label={t('Group on the menu')} placeholder={t('Group on the menu')} className="h-8 w-36" maxLength={40} value={f.category} onChange={(e) => setF({ ...f, category: e.target.value })} />
                 <Input aria-label={t('Price')} className="h-8 w-24" inputMode="decimal" value={f.price} onChange={(e) => setF({ ...f, price: e.target.value })} />
                 <Input aria-label={t('Minutes to cook')} className="h-8 w-20" inputMode="numeric" value={f.cook_minutes} onChange={(e) => setF({ ...f, cook_minutes: e.target.value })} />
                 <label className="flex items-center gap-1 text-xs">
@@ -260,7 +262,7 @@ export default function VendorHome({ restaurant: r, openNow, orders, together, r
     const errors = usePage().props.errors as Record<string, string>;
     const flash = (usePage().props.flash as { status?: string } | undefined)?.status;
     const [s, setS] = useState({ ...r, areas: r.areas.join(', '), advance_over: r.advance_over !== null ? String(r.advance_over) : '' });
-    const [fresh, setFresh] = useState({ name: '', price: '', cook_minutes: '15', description: '', ready_made: false });
+    const [fresh, setFresh] = useState({ name: '', price: '', cook_minutes: '15', description: '', category: '', ready_made: false });
     const [photo, setPhoto] = useState<File | null>(null);
 
     // New orders arrive while the page is open.
@@ -273,7 +275,7 @@ export default function VendorHome({ restaurant: r, openNow, orders, together, r
     const save = () =>
         router.post('/food/vendor/settings', { ...s, areas: s.areas.split(',').map((a) => a.trim()).filter(Boolean), eat_there: s.eat_there ? 1 : 0, advance_over: s.advance_over === '' ? null : s.advance_over }, { preserveScroll: true });
     const sum = (label: string, x: Sums) => (
-        <div className="rounded-xl border bg-[var(--pt-surface)] p-3">
+        <div className="rounded-[1.25rem] border bg-[var(--pt-surface)] p-3">
             <p className="text-xs text-[var(--pt-muted)]">{label}</p>
             <p className="tabular font-display text-xl font-bold">{money(x.sales)}</p>
             <p className="tabular text-xs text-[var(--pt-muted)]">
@@ -299,7 +301,7 @@ export default function VendorHome({ restaurant: r, openNow, orders, together, r
                         {r.is_open ? t('I am open') : t('I am closed')}
                     </label>
                 </div>
-                {flash && <p role="status" className="rounded-md border border-emerald-600/30 bg-emerald-600/10 px-3 py-2 text-sm text-emerald-900">{flash}</p>}
+                {flash && <p role="status" className="rounded-md border border-success/30 bg-success/10 px-3 py-2 text-sm text-success">{flash}</p>}
                 <InputError message={errors.vendor} />
 
                 <section className="grid gap-3 sm:grid-cols-2">
@@ -313,11 +315,11 @@ export default function VendorHome({ restaurant: r, openNow, orders, together, r
                 <section className="space-y-3">
                     <h2 className="font-display text-xl font-bold">{t('Orders now')}</h2>
                     {together.map((g) => (
-                        <p key={g.area} role="note" className="rounded-md bg-sky-50 p-2 text-sm text-sky-900">
+                        <p key={g.area} role="note" className="rounded-md bg-info/10 p-2 text-sm text-info">
                             {t('Going to the same area ({area}), one rider can take them together: {numbers}', { area: g.area, numbers: g.numbers.join(', ') })}
                         </p>
                     ))}
-                    {orders.length === 0 ? <p className="rounded-2xl border border-dashed p-8 text-center text-[var(--pt-muted)]">{t('No orders now.')}</p> : <ul className="space-y-3">{orders.map((o) => <OrderCard key={o.id} o={o} />)}</ul>}
+                    {orders.length === 0 ? <p className="rounded-[1.5rem] border border-dashed p-8 text-center text-[var(--pt-muted)]">{t('No orders now.')}</p> : <ul className="space-y-3">{orders.map((o) => <OrderCard key={o.id} o={o} />)}</ul>}
                 </section>
 
                 <section className="space-y-2">
@@ -327,19 +329,20 @@ export default function VendorHome({ restaurant: r, openNow, orders, together, r
                             {t('Custom food: bases and ingredients')}
                         </Link>
                     </div>
-                    <ul className="divide-y rounded-2xl border bg-[var(--pt-surface)]">{items.map((i) => <ItemRow key={`${i.id}-${i.name}-${i.price}`} i={i} />)}</ul>
-                    <div className="flex flex-wrap items-center gap-2 rounded-2xl border p-3 text-sm">
+                    <ul className="divide-y rounded-[1.5rem] border bg-[var(--pt-surface)]">{items.map((i) => <ItemRow key={`${i.id}-${i.name}-${i.price}`} i={i} />)}</ul>
+                    <div className="flex flex-wrap items-center gap-2 rounded-[1.5rem] border p-3 text-sm">
                         <Input aria-label={t('Name')} className="h-8 w-44" placeholder={t('New dish')} value={fresh.name} onChange={(e) => setFresh({ ...fresh, name: e.target.value })} />
+                        <Input aria-label={t('Group on the menu')} className="h-8 w-36" placeholder={t('Group on the menu')} maxLength={40} value={fresh.category} onChange={(e) => setFresh({ ...fresh, category: e.target.value })} />
                         <Input aria-label={t('Price')} className="h-8 w-24" inputMode="decimal" placeholder={t('Price')} value={fresh.price} onChange={(e) => setFresh({ ...fresh, price: e.target.value })} />
                         <Input aria-label={t('Minutes to cook')} className="h-8 w-20" inputMode="numeric" value={fresh.cook_minutes} onChange={(e) => setFresh({ ...fresh, cook_minutes: e.target.value })} />
                         <input type="file" accept="image/*" aria-label={t('Photo')} className="max-w-40 text-xs" onChange={(e) => setPhoto(e.target.files?.[0] ?? null)} />
-                        <Button size="sm" disabled={fresh.name.trim().length < 2 || Number(fresh.price) <= 0} onClick={() => router.post('/food/vendor/items', { ...fresh, ready_made: fresh.ready_made ? 1 : 0, photo }, { forceFormData: true, preserveScroll: true, onSuccess: () => (setFresh({ name: '', price: '', cook_minutes: '15', description: '', ready_made: false }), setPhoto(null)) })}>
+                        <Button size="sm" disabled={fresh.name.trim().length < 2 || Number(fresh.price) <= 0} onClick={() => router.post('/food/vendor/items', { ...fresh, ready_made: fresh.ready_made ? 1 : 0, photo }, { forceFormData: true, preserveScroll: true, onSuccess: () => (setFresh({ name: '', price: '', cook_minutes: '15', description: '', category: '', ready_made: false }), setPhoto(null)) })}>
                             {t('Add')}
                         </Button>
                     </div>
                 </section>
 
-                <section className="space-y-3 rounded-2xl border bg-[var(--pt-surface)] p-4">
+                <section className="space-y-3 rounded-[1.5rem] border bg-[var(--pt-surface)] p-4">
                     <h2 className="font-display text-xl font-bold">{t('Your restaurant')}</h2>
                     <div className="grid gap-3 sm:grid-cols-2">
                         <label className="text-sm">

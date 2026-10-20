@@ -27,7 +27,7 @@ export default function ConnectedAccounts({ linked, available, hasPassword, allo
             <SettingsLayout>
                 <div className="space-y-6">
                     <HeadingSmall title={t('Connected accounts')} description={t('Sign in with a Google or Facebook account you already have.')} />
-                    {flash && <p role="status" className="rounded-md bg-emerald-600/10 p-3 text-sm">{flash}</p>}
+                    {flash && <p role="status" className="rounded-md bg-success/10 p-3 text-sm">{flash}</p>}
                     <InputError message={errors.social} />
 
                     {!allowed ? (
@@ -59,7 +59,7 @@ export default function ConnectedAccounts({ linked, available, hasPassword, allo
                     )}
 
                     {!hasPassword && (
-                        <p className="rounded-md border border-amber-500/40 bg-amber-500/10 p-3 text-sm">
+                        <p className="rounded-md border border-warning/40 bg-warning/10 p-3 text-sm">
                             {t('You have no password yet.')}{' '}
                             <Link href="/settings/password" className="font-semibold underline underline-offset-4">
                                 {t('Choose one')}

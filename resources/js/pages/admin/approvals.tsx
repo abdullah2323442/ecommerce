@@ -63,7 +63,7 @@ export default function Approvals({ pending, recent, minutes }: { pending: Card[
                         {pending.map((c) => (
                             <li
                                 key={c.id}
-                                className="flex flex-wrap items-center gap-3 rounded-md border border-amber-500/50 bg-amber-500/5 px-4 py-3"
+                                className="flex flex-wrap items-center gap-3 rounded-md border border-warning/50 bg-warning/5 px-4 py-3"
                             >
                                 <div className="min-w-48 flex-1">
                                     <p className="font-semibold">{what(c)}</p>
@@ -98,7 +98,7 @@ export default function Approvals({ pending, recent, minutes }: { pending: Card[
                                     <span className="min-w-48 flex-1">
                                         {what(c)} · {c.staff}
                                     </span>
-                                    <span className={c.status === 'approved' ? 'font-semibold text-emerald-700' : 'text-muted-foreground'}>
+                                    <span className={c.status === 'approved' ? 'font-semibold text-success' : 'text-muted-foreground'}>
                                         {state(c.status)}
                                         {c.status === 'approved' && !c.applied && ` · ${t('not applied, the invoice had moved on')}`}
                                     </span>

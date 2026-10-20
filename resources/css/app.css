@@ -428,3 +428,155 @@
 
 /* The public site is still: no looping or entrance motion. Loading spinners and skeletons are kept, since they say something is happening. */
 .hero-settle, .home-reveal, .shop-shutter, .shop-shutter *, .float-a, .float-b, .float-c, .aurora-a, .aurora-b, .tilt-a, .tilt-b { animation: none !important; }
+
+/* The home page's ornament palette: one gold on warm night, used only by the vector art. */
+.art, :root {
+    --art-night: oklch(0.17 0.01 60);
+    --art-night-2: oklch(0.23 0.015 60);
+    --art-gold-1: oklch(0.9 0.09 90);
+    --art-gold-2: oklch(0.76 0.12 85);
+    --art-gold-3: oklch(0.5 0.09 75);
+}
+
+/* The home page's ornament comes alive, gently: the rosette's rings turn against each other, the opening rises into place once, the arch drifts. */
+@keyframes art-spin { to { transform: rotate(360deg); } }
+@keyframes art-rise { from { opacity: 0; transform: translateY(1.2rem); } to { opacity: 1; transform: none; } }
+@keyframes art-float { from { translate: 0 0; } to { translate: 0 -0.6rem; } }
+.art-spin { transform-box: view-box; transform-origin: center; animation: art-spin 90s linear infinite; }
+.art-spin-rev { transform-box: view-box; transform-origin: center; animation: art-spin 70s linear infinite reverse; }
+.art-rise { animation: art-rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: var(--d, 0s); }
+.art-float { animation: art-rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both, art-float 7s ease-in-out 1s infinite alternate; animation-delay: var(--d, 0s), 1s; }
+@media (prefers-reduced-motion: reduce) { .art-spin, .art-spin-rev, .art-rise, .art-float { animation: none; } }
+.art-d1 { --d: 0.12s; }
+.art-d2 { --d: 0.24s; }
+.art-d3 { --d: 0.2s; }
+
+/* A slow ticker of the shop names. The track holds the list twice, so sliding it half its width loops without a seam. */
+@keyframes art-marquee { to { transform: translateX(-50%); } }
+.art-marquee { animation: art-marquee 45s linear infinite; }
+.art-marquee-wrap:hover .art-marquee { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) { .art-marquee { animation: none; } }
+
+/* Home page motion: everything is quiet and none of it hides content. Sections rise as they scroll into view (browsers without scroll-driven
+   animation just show them), pictures ease in on hover, arrows nudge, and a swapped slide fades up. All of it stops for reduced motion. */
+@keyframes art-reveal { from { opacity: 0; transform: translateY(1.75rem); } to { opacity: 1; transform: none; } }
+@supports (animation-timeline: view()) {
+    .reveal { animation: art-reveal linear both; animation-timeline: view(); animation-range: entry 0% entry 40%; }
+}
+.art-zoom { overflow: hidden; }
+.art-zoom > img { transition: transform 1.4s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.art-zoom:hover > img, .art-zoom:focus-visible > img { transform: scale(1.06); }
+.art-btn svg { transition: transform 0.3s ease; }
+.art-btn:hover svg, .art-btn:focus-visible svg { transform: translate(2px, -2px); }
+.art-lift { transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.art-lift:hover { transform: translateY(-0.35rem); }
+.art-swap { animation: art-rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+@media (prefers-reduced-motion: reduce) {
+    .reveal, .art-swap { animation: none; }
+    .art-zoom > img, .art-btn svg, .art-lift { transition: none; }
+    .art-zoom:hover > img { transform: none; }
+    .art-lift:hover { transform: none; }
+}
+
+/* The product strip drifts rightward: the track starts half a width to the left and slides back to zero, so the picture keeps coming in from the left. */
+@keyframes art-drift { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+.art-drift { animation: art-drift 70s linear infinite; }
+.art-drift-wrap:hover .art-drift, .art-drift-wrap:focus-within .art-drift { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+    .art-drift { animation: none; }
+    .art-drift-wrap { overflow-x: auto; }
+}
+
+/* The phone dock swells with a small overshoot, like a spring; for reduced motion it just changes size. */
+.dock-item { transition: width 0.22s cubic-bezier(0.3, 1.5, 0.5, 1), height 0.22s cubic-bezier(0.3, 1.5, 0.5, 1); }
+@media (prefers-reduced-motion: reduce) { .dock-item { transition: none; } }
+
+/* Full-width bands (the home page's drifting strip) are wider than the content column; clip the sliver of overflow a scrollbar would add. */
+.public-theme { overflow-x: clip; }
+
+/* The rickshaw's wheels turn slowly in the "how it works" scene. */
+.art-wheel { transform-box: fill-box; transform-origin: center; animation: art-spin 16s linear infinite; }
+@media (prefers-reduced-motion: reduce) { .art-wheel { animation: none; } }
+
+/* The public pages share one look with the home page: Changa One for display type, softer corners, pill buttons. Admin screens are untouched. */
+.public-theme .font-display { font-family: 'Changa One', 'Noto Serif Bengali', Georgia, serif; font-weight: 400; font-synthesis: none; letter-spacing: -0.01em; }
+.public-theme main a.inline-flex.rounded-md, .public-theme main button.inline-flex.rounded-md { border-radius: 9999px; }
+.public-theme main input:not([type='checkbox']):not([type='radio']):not([type='file']):not([type='range']).rounded-md { border-radius: 1rem; }
+
+/* Game top-up: its own night-blue stage, in the manner of a game store. Everything else on the site keeps the warm house palette. */
+.game {
+    --g-bg: oklch(0.15 0.045 268);
+    --g-panel: oklch(0.2 0.05 268);
+    --g-panel-2: oklch(0.26 0.055 268);
+    --g-line: oklch(0.36 0.06 268);
+    --g-text: oklch(0.96 0.01 268);
+    --g-muted: oklch(0.75 0.03 268);
+    --g-cyan: oklch(0.83 0.13 205);
+    --g-violet: oklch(0.68 0.19 295);
+    background: radial-gradient(60rem 30rem at 12% -10%, oklch(0.32 0.14 295 / 0.55), transparent 60%), radial-gradient(50rem 28rem at 100% 0%, oklch(0.4 0.1 215 / 0.4), transparent 60%), var(--g-bg);
+    color: var(--g-text);
+}
+
+/* Electronics: a cool navy and orange spec shop. Clothing: black, white and one red. Each category page has its own palette; the rest keep the warm house one. */
+.tech {
+    --t-navy: var(--pt-deep);
+    --t-orange: var(--pt-amber);
+    --t-gold-ink: var(--pt-teal);
+    --t-bg: var(--pt-sage);
+    --t-line: var(--pt-line);
+    --t-ink: var(--pt-ink);
+    --t-muted: var(--pt-muted);
+}
+.fashion {
+    --f-ink: oklch(0.16 0 0);
+    --f-muted: oklch(0.48 0 0);
+    --f-line: oklch(0.9 0 0);
+    --f-bg: oklch(0.96 0 0);
+    --f-red: oklch(0.53 0.22 27);
+}
+
+/* The medicine index: a clean reference, deep teal and slate on white, in the manner of a drug index. */
+.med {
+    --m-teal: oklch(0.42 0.085 200);
+    --m-teal-d: oklch(0.3 0.06 205);
+    --m-teal-l: oklch(0.95 0.03 195);
+    --m-ink: oklch(0.25 0.03 230);
+    --m-muted: oklch(0.5 0.025 230);
+    --m-line: oklch(0.9 0.012 220);
+}
+
+/* Food: a loud red, white and black, like a fast-food chain's own site. */
+.kfc {
+    --k-red: oklch(0.52 0.23 27);
+    --k-red-d: oklch(0.38 0.17 27);
+    --k-ink: oklch(0.17 0.01 27);
+    --k-muted: oklch(0.48 0.02 27);
+    --k-line: oklch(0.91 0.01 27);
+    --k-bg: oklch(0.97 0.008 27);
+}
+
+/* The shared storefront parts (service strip, questions, steps) read their rule colour and surface from the page's own theme. */
+.med {
+    --rule: var(--m-line);
+    --surface: #fff;
+}
+.kfc {
+    --rule: var(--k-line);
+    --surface: #fff;
+}
+.game {
+    --rule: var(--g-line);
+    --surface: var(--g-panel);
+}
+.tech {
+    --rule: var(--t-line);
+    --surface: #fff;
+}
+
+/* The game pages are dark: their messages use the dark-mode status colours so they stay readable on navy. */
+.game {
+    --danger: #ff8a80;
+    --success: #6fd39a;
+    --warning: #f3c969;
+    --info: #5eead4;
+}

@@ -70,9 +70,9 @@ export default function CraftsmanJob({ job, others, chat }: { job: Job; others: 
                     <h1 className="font-display text-3xl font-extrabold">
                         {job.number} · {job.kind === 'wood' ? t('Wood') : t('Clothing')}
                     </h1>
-                    {job.urgent && <span className="rounded bg-red-100 px-2 py-1 text-sm font-semibold text-red-900">{t('Urgent')}</span>}
+                    {job.urgent && <span className="rounded bg-danger/15 px-2 py-1 text-sm font-semibold text-danger">{t('Urgent')}</span>}
                 </div>
-                {flash && <p role="status" className="rounded-md border border-emerald-600/30 bg-emerald-600/10 px-3 py-2 text-sm text-emerald-900">{flash}</p>}
+                {flash && <p role="status" className="rounded-md border border-success/30 bg-success/10 px-3 py-2 text-sm text-success">{flash}</p>}
                 <InputError message={errors.job} />
 
                 <section className="space-y-2 rounded-2xl border bg-[var(--pt-surface)] p-4 text-sm">
@@ -148,7 +148,7 @@ export default function CraftsmanJob({ job, others, chat }: { job: Job; others: 
                             )}
                             {t('Your wage so far')}: <strong className="tabular">{money(job.my_wage)}</strong>
                         </p>
-                        {job.waiting && <p className="rounded-md bg-amber-50 p-2 text-sm text-amber-900">{t('Waiting for materials')}: {job.waiting}</p>}
+                        {job.waiting && <p className="rounded-md bg-warning/10 p-2 text-sm text-warning">{t('Waiting for materials')}: {job.waiting}</p>}
 
                         {job.is_main && working && (
                             <div className="space-y-2 rounded-xl border p-3">

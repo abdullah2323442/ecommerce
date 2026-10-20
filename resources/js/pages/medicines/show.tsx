@@ -36,7 +36,7 @@ function PreorderBox({ medicine, days }: { medicine: MedicineSummary; days: numb
     if (!canCart || units.length === 0) return null;
 
     return (
-        <div className="mt-6 max-w-sm space-y-2 rounded-2xl border border-dashed border-[var(--pt-line)] p-4">
+        <div className="mt-6 max-w-sm space-y-2 rounded-[1.5rem] border border-dashed border-[var(--pt-line)] p-4">
             <p className="font-semibold">{t('Not on the shelf? Pre-order it.')}</p>
             <p className="text-sm text-[var(--pt-muted)]">{t('You will get it within {n} days of our answer.', { n: days })}</p>
             {auth.user ? (
@@ -54,7 +54,7 @@ function PreorderBox({ medicine, days }: { medicine: MedicineSummary; days: numb
                     <Button variant="outline" className="h-11 w-full" disabled={Number(qty) < 1} onClick={() => router.post('/preorders', { medicine_id: medicine.id, unit, quantity: Math.max(1, Math.round(Number(qty))) })}>
                         {t('Pre-order')}
                     </Button>
-                    {errors.preorder && <p className="text-sm text-red-700">{errors.preorder}</p>}
+                    {errors.preorder && <p className="text-sm text-danger">{errors.preorder}</p>}
                 </>
             ) : (
                 <Link href="/login" className="inline-block text-sm font-semibold underline underline-offset-4">
@@ -106,7 +106,7 @@ function AddToCart({ medicine }: { medicine: MedicineSummary }) {
             >
                 {t('Add to cart')}
             </Button>
-            {errors.cart && <p className="text-sm text-red-700">{errors.cart}</p>}
+            {errors.cart && <p className="text-sm text-danger">{errors.cart}</p>}
         </div>
     );
 }
@@ -152,7 +152,7 @@ function QuestionsBox({ medicineId, questions, waiting, signedIn }: { medicineId
                         {t('Ask a question about this medicine')}
                     </label>
                     <textarea id="ask" rows={2} maxLength={500} value={text} onChange={(e) => setText(e.target.value)} className="w-full rounded-lg border border-[var(--pt-line)] bg-[var(--pt-surface)] p-3" />
-                    {errors.question && <p role="alert" className="text-sm text-red-700">{errors.question}</p>}
+                    {errors.question && <p role="alert" className="text-sm text-danger">{errors.question}</p>}
                     <Button type="submit" disabled={text.trim().length < 8}>
                         {t('Send question')}
                     </Button>
@@ -241,7 +241,7 @@ export default function MedicineShow({ medicine, alternatives, preorderDays, mpo
                     {preorderDays ? <PreorderBox medicine={medicine} days={preorderDays} /> : null}
                     <MpoOffers offers={mpoOffers} signedIn={authUser !== null} />
                     {flash && (
-                        <p role="status" className="mt-2 max-w-sm text-sm text-emerald-800">
+                        <p role="status" className="mt-2 max-w-sm text-sm text-success">
                             {flash}{' '}
                             <Link href="/cart" className="font-semibold underline underline-offset-4">
                                 {t('Your cart')}
