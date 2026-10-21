@@ -1,23 +1,25 @@
 {
   "n": 215,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
   "checks": [
     {
       "ok": true,
-      "text": "The page says an offer ends with the month or when stock is gone"
+      "text": "The offer products that were running have ended with the month"
+    },
+    {
+      "ok": true,
+      "text": "And so have the shop-tier offers"
     }
   ],
   "shots": [
     {
       "file": "f215_1.jpg",
-      "caption": "The Offers page explains when offers end",
+      "caption": "Offers, 35 days later: the running offers have ended by themselves",
       "role": "admin",
       "url": "/admin/offers"
     }
   ],
-  "notes": [
-    "Waiting for a month end to see it happen was not possible."
-  ],
-  "did": "Looked for offers ending themselves at month end."
+  "notes": [],
+  "did": "Opened the owner's Offers page when the clock was 35 days later, after the month the offers were meant for had ended (they were set to end on 31 October)."
 }

@@ -1,0 +1,17 @@
+import { Sessions, startBrowser, BASE } from './lib.mjs';
+const b = await startBrowser(); const s = new Sessions(b);
+const a = await s.page('admin');
+await a.goto(BASE + '/admin/orders/263', { waitUntil: 'networkidle' });
+const sel = a.locator('select').filter({ hasText: 'Shared 50-50' }).first();
+console.log(await sel.locator('option').allInnerTexts());
+await a.getByPlaceholder('Tracking note').or(a.locator('input[type=text]').first()).first().fill('T-1001').catch(()=>{});
+await a.locator('main input[type=number]').first().fill('20');
+await sel.selectOption({ label: 'Shared 50-50' });
+await a.getByRole('button', { name: 'Mark as sent' }).click(); await a.waitForTimeout(2200);
+console.log((await a.innerText('main')).slice(0, 700).replace(/\n+/g,' | '));
+console.log(await a.evaluate(() => [...document.querySelectorAll('main button,main input,main select')].filter(x=>x.offsetWidth).map(x=>x.tagName+':'+(x.innerText||x.placeholder||x.value||x.type).slice(0,30)).join(' ; ')));
+const d = await s.page('admin'); await d.goto(BASE + '/admin/deliveries', { waitUntil: 'networkidle' });
+console.log('---DELIVERIES'); console.log((await d.innerText('main')).slice(0, 600).replace(/\n+/g,' | '));
+const p = await s.page('paikari'); await p.goto(BASE + '/paikari/orders/263', { waitUntil: 'networkidle' });
+console.log('---SHOP'); console.log((await p.innerText('main')).slice(0, 600).replace(/\n+/g,' | '));
+await s.close(); await b.close();

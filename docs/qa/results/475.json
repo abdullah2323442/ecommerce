@@ -1,18 +1,31 @@
 {
   "n": 475,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
-  "checks": [],
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner can write an extra delivery charge"
+    },
+    {
+      "ok": true,
+      "text": "The page explains it is added and shown on the memo"
+    }
+  ],
   "shots": [
     {
       "file": "f475_1.jpg",
-      "caption": "My deliveries",
+      "caption": "The order is checked: the \"Send it\" box",
       "role": "admin",
-      "url": "/admin/deliveries"
+      "url": "/admin/orders/264"
+    },
+    {
+      "file": "f475_2.jpg",
+      "caption": "An extra charge of 20 typed in",
+      "role": "admin",
+      "url": "/admin/orders/264"
     }
   ],
-  "notes": [
-    "Needs an order in delivery. Not carried through."
-  ],
-  "did": "Looked at the order screen for adding an extra delivery charge."
+  "notes": [],
+  "did": "A paikari shop asked for a box of Napa to be delivered. The owner confirmed the line, set the delivery charge to 50, finished checking, then wrote an extra delivery charge of 20 and marked it as sent."
 }

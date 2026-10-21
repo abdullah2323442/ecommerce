@@ -1,23 +1,27 @@
 {
   "n": 117,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
   "checks": [
     {
       "ok": true,
-      "text": "Each draft shows how many minutes it has been open"
+      "text": "Each draft shows how long it has been open"
+    },
+    {
+      "ok": true,
+      "text": "An old draft is singled out and the owner is asked what to do with it"
     }
   ],
   "shots": [
     {
       "file": "f117_1.jpg",
-      "caption": "Each draft shows how long it has been open",
+      "caption": "Old drafts at the counter",
       "role": "admin",
       "url": "/admin/counter"
     }
   ],
   "notes": [
-    "The colour change as a draft gets old was not shown, because it needs a draft to age for hours."
+    "The age text on an old draft is drawn as: rgb(138, 90, 0)|tabular text-sm font-semibold text-warning"
   ],
-  "did": "Looked at the time shown on each open draft."
+  "did": "Opened the counter 35 days later and looked at how long the old open drafts say they have been open, and how they look next to a new one."
 }

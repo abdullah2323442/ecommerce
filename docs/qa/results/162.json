@@ -1,18 +1,21 @@
 {
   "n": 162,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
-  "checks": [],
+  "checks": [
+    {
+      "ok": true,
+      "text": "The shop is flagged automatically after too many late cancellations, and the owner is told how many"
+    }
+  ],
   "shots": [
     {
       "file": "f162_1.jpg",
-      "caption": "The customer list",
+      "caption": "The shop customer page after repeated late cancellations",
       "role": "admin",
-      "url": "/admin/customers"
+      "url": "/admin/customers/4"
     }
   ],
-  "notes": [
-    "A shop being flagged after repeated late cancellations was not reproduced."
-  ],
-  "did": "Looked for a flag on shops that keep cancelling late."
+  "notes": [],
+  "did": "The shop cancelled orders after they were checked, again and again (each time the owner agreed). The owner then opened the shop customer page."
 }

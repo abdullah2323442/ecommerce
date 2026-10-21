@@ -1,18 +1,31 @@
 {
   "n": 454,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
-  "checks": [],
+  "checks": [
+    {
+      "ok": true,
+      "text": "The card shows the product name"
+    },
+    {
+      "ok": true,
+      "text": "And its price"
+    },
+    {
+      "ok": true,
+      "text": "And a View button that opens the product"
+    }
+  ],
   "shots": [
     {
       "file": "f454_1.jpg",
-      "caption": "The Help board",
+      "caption": "The product card in a comment",
       "role": "guest",
-      "url": "/help"
+      "url": "/help/1"
     }
   ],
   "notes": [
-    "Needs an approved post with a product card. Not carried through."
+    "This medicine has no picture in the database, so the card shows a grey tile where the photo goes."
   ],
-  "did": "Looked for the product card's photo, name, price and View button."
+  "did": "Opened the help post as a visitor and looked at the product card inside the comment."
 }

@@ -1,18 +1,27 @@
 {
   "n": 484,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
-  "checks": [],
+  "checks": [
+    {
+      "ok": true,
+      "text": "The list has a group for Mirpur"
+    },
+    {
+      "ok": true,
+      "text": "And a group for Gulshan, so the rider can plan the trip by area"
+    }
+  ],
   "shots": [
     {
       "file": "f484_1.jpg",
-      "caption": "My deliveries",
-      "role": "admin",
+      "caption": "The rider's list, grouped by area",
+      "role": "rider",
       "url": "/admin/deliveries"
     }
   ],
   "notes": [
-    "Needs several deliveries. Not carried through."
+    "The rider's buttons: Toggle Sidebar |  | বাংলা | EN | Delivered | Delivered | Delivered | I have arrived | Delivered | Delivered | Delivered | Delivered | Delivered | Delivered | Delivered | Delivered | I have arrived | Delivered | I have arrived | Delivered | I have arrived | Delivered | I have arrived | Delivered | I have arrived | Delivered | I have arrived | Delivered | I have arrived | Delivered | I have arrived | Delivered | I have arrived | Delivered | I have arrived | Delivered | I have arrived | Delivered | I have arrived | Delivered | I have arrived | Delivered"
   ],
-  "did": "Looked for deliveries grouped by area."
+  "did": "The owner opened a delivery account, two shoppers ordered (one in Mirpur, one in Gulshan), the owner checked both orders and gave them to the rider. The rider opened \"My deliveries\"."
 }

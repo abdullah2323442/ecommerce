@@ -1,18 +1,37 @@
 {
   "n": 407,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
-  "checks": [],
+  "checks": [
+    {
+      "ok": true,
+      "text": "The measurements show as their own card"
+    },
+    {
+      "ok": true,
+      "text": "The offer shows in the chat as a card with its price"
+    }
+  ],
   "shots": [
     {
       "file": "f407_1.jpg",
-      "caption": "Chats",
+      "caption": "The owner's view of the chat: the measurements arrive as a card, apart from the text messages",
       "role": "admin",
-      "url": "/admin/chats"
+      "url": "/admin/chats/2"
+    },
+    {
+      "file": "f407_2.jpg",
+      "caption": "An offer typed: price, days, advance, note",
+      "role": "admin",
+      "url": "/admin/chats/2"
+    },
+    {
+      "file": "f407_3.jpg",
+      "caption": "The offer is in the chat as its own card",
+      "role": "admin",
+      "url": "/admin/chats/2"
     }
   ],
-  "notes": [
-    "Needs a chat on a job. Not carried through."
-  ],
-  "did": "Looked for measurements and offers as cards in chat."
+  "notes": [],
+  "did": "As the owner, opened the same job chat and looked at how the buyer's measurements appear."
 }

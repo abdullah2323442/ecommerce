@@ -1,18 +1,35 @@
 {
   "n": 488,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
-  "checks": [],
+  "checks": [
+    {
+      "ok": true,
+      "text": "The code is no longer asked for: the sale is complete"
+    },
+    {
+      "ok": true,
+      "text": "The order shows as delivered"
+    },
+    {
+      "ok": true,
+      "text": "The owner order is finished: a complete sale, not a draft"
+    }
+  ],
   "shots": [
     {
       "file": "f488_1.jpg",
-      "caption": "My deliveries",
+      "caption": "The buyer order after the code was accepted",
+      "role": "visitor",
+      "url": "/orders/2jCaUBTLBZdErJc21spiTT55A57qkAUr7L7H5o6w"
+    },
+    {
+      "file": "f488_2.jpg",
+      "caption": "The owner order after delivery",
       "role": "admin",
-      "url": "/admin/deliveries"
+      "url": "/admin/orders/293"
     }
   ],
-  "notes": [
-    "Needs a delivery. Not carried through."
-  ],
-  "did": "Looked for the code turning a draft sale into a complete sale."
+  "notes": [],
+  "did": "After the rider confirmed with the code, opened the buyer order and then the owner order."
 }

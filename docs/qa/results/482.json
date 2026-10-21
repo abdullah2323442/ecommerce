@@ -1,18 +1,21 @@
 {
   "n": 482,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
-  "checks": [],
+  "checks": [
+    {
+      "ok": true,
+      "text": "The buyer gets a reminder that the job has been ready for some days"
+    }
+  ],
   "shots": [
     {
       "file": "f482_1.jpg",
-      "caption": "My deliveries",
-      "role": "admin",
-      "url": "/admin/deliveries"
+      "caption": "The buyer is reminded to collect",
+      "role": "visitor",
+      "url": "/inbox"
     }
   ],
-  "notes": [
-    "Needs three days to pass. Not carried through."
-  ],
-  "did": "Looked for a pickup reminder after three days."
+  "notes": [],
+  "did": "A made-to-order job was ready for collection and nobody came. Later the buyer's messages were opened."
 }

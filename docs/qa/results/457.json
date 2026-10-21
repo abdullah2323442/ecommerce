@@ -1,18 +1,25 @@
 {
   "n": 457,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
-  "checks": [],
+  "checks": [
+    {
+      "ok": true,
+      "text": "After 30 days the poster is asked \"Is this still needed?\" and told it will close if not answered"
+    },
+    {
+      "ok": true,
+      "text": "And can answer yes to keep it open"
+    }
+  ],
   "shots": [
     {
       "file": "f457_1.jpg",
-      "caption": "The shopper's own posts",
+      "caption": "The poster is asked if the post is still needed",
       "role": "visitor",
       "url": "/help/mine"
     }
   ],
-  "notes": [
-    "Needs a post that is 30 days old. Not carried through."
-  ],
-  "did": "Looked for the \"still needed?\" question after 30 days."
+  "notes": [],
+  "did": "A help post stayed up with nobody answering. Thirty-five days later the nightly sweep ran, and the poster page was opened."
 }

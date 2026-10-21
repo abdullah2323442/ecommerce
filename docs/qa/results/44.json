@@ -1,23 +1,43 @@
 {
   "n": 44,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
   "checks": [
     {
       "ok": true,
-      "text": "The craftsman's screen shows no profit, margin or commission"
+      "text": "The craftsman sees the jobs given to them"
+    },
+    {
+      "ok": true,
+      "text": "And what they earned"
+    },
+    {
+      "ok": true,
+      "text": "No buyer price and no profit appear on the list"
+    },
+    {
+      "ok": true,
+      "text": "No buyer price and no profit appear on the job either"
+    },
+    {
+      "ok": true,
+      "text": "Only their own wage is shown"
     }
   ],
   "shots": [
     {
       "file": "f44_1.jpg",
-      "caption": "The craftsman's screen",
+      "caption": "The craftsman's jobs",
       "role": "craftsman",
       "url": "/craftsman"
+    },
+    {
+      "file": "f44_2.jpg",
+      "caption": "One job: measurements, photos, progress and their own wage",
+      "role": "craftsman",
+      "url": "/craftsman/jobs/2"
     }
   ],
-  "notes": [
-    "There was no job assigned in the test data, so the job list itself was empty. Prices on a real job were not shown."
-  ],
-  "did": "Signed in as a craftsman and looked at everything on their screen for prices or profit."
+  "notes": [],
+  "did": "Signed in as the craftsman and looked at the list of jobs and at one job for any price or profit."
 }

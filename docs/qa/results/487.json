@@ -1,18 +1,47 @@
 {
   "n": 487,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
-  "checks": [],
+  "checks": [
+    {
+      "ok": true,
+      "text": "The right code finishes the delivery"
+    },
+    {
+      "ok": true,
+      "text": "The delivered order is off the rider list"
+    },
+    {
+      "ok": true,
+      "text": "A photo of the parcel can finish a delivery when the buyer has no code"
+    }
+  ],
   "shots": [
     {
       "file": "f487_1.jpg",
-      "caption": "My deliveries",
-      "role": "admin",
+      "caption": "The buyer code and the money taken, typed by the rider",
+      "role": "rider",
+      "url": "/admin/deliveries"
+    },
+    {
+      "file": "f487_2.jpg",
+      "caption": "After confirming with the code",
+      "role": "rider",
+      "url": "/admin/deliveries"
+    },
+    {
+      "file": "f487_3.jpg",
+      "caption": "The rider list: the finished delivery is gone",
+      "role": "rider",
+      "url": "/admin/deliveries"
+    },
+    {
+      "file": "f487_4.jpg",
+      "caption": "Finished with a photo of the parcel instead of the code",
+      "role": "rider",
       "url": "/admin/deliveries"
     }
   ],
-  "notes": [
-    "Needs a delivery. Not carried through."
-  ],
-  "did": "Looked for confirming delivery by code or photo."
+  "notes": [],
+  "did": "The buyer told the rider the code. The rider typed it with the money taken and pressed \"Delivered\" on the Gulshan order. For the Mirpur order the rider attached a photo of the parcel instead."
 }

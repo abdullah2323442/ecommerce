@@ -1,18 +1,21 @@
 {
   "n": 422,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
-  "checks": [],
+  "checks": [
+    {
+      "ok": true,
+      "text": "The shopper is told the order has not been approved and is asked if they want to cancel it"
+    }
+  ],
   "shots": [
     {
       "file": "f422_1.jpg",
-      "caption": "Restaurants",
-      "role": "admin",
-      "url": "/admin/food"
+      "caption": "The shopper is asked about the order nobody confirmed",
+      "role": "visitor",
+      "url": "/inbox"
     }
   ],
-  "notes": [
-    "Needs time to pass on a live order. Not carried through."
-  ],
-  "did": "Looked for a notice when an order is not confirmed."
+  "notes": [],
+  "did": "A shopper's food order was never confirmed. Later the shopper's messages were opened."
 }

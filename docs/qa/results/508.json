@@ -1,18 +1,29 @@
 {
   "n": 508,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
-  "checks": [],
+  "checks": [
+    {
+      "ok": true,
+      "text": "The page warns that pre-orders are past their promised time"
+    },
+    {
+      "ok": true,
+      "text": "Each late pre-order is marked"
+    },
+    {
+      "ok": true,
+      "text": "The owner can give a new time or cancel what did not come"
+    }
+  ],
   "shots": [
     {
       "file": "f508_1.jpg",
-      "caption": "Pre-orders",
+      "caption": "Pre-orders past their time",
       "role": "admin",
       "url": "/admin/preorders"
     }
   ],
-  "notes": [
-    "Needs time to pass. Not carried through."
-  ],
-  "did": "Looked for a pre-order turning red when its promised time passes."
+  "notes": [],
+  "did": "Opened the owner's Pre-orders page 35 days later, when the promised days for the accepted pre-orders had gone by."
 }

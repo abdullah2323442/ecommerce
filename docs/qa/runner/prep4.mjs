@@ -1,0 +1,13 @@
+import { Sessions, startBrowser, BASE } from './lib.mjs';
+const b = await startBrowser(); const s = new Sessions(b);
+const a = await s.page('admin');
+await a.goto(BASE + '/admin/help', { waitUntil: 'networkidle' });
+await a.getByRole('button', { name: 'Publish' }).first().click(); await a.waitForTimeout(1800);
+const w = await s.page('wholesale');
+await w.goto(BASE + '/help', { waitUntil: 'networkidle' });
+const link = await w.locator('main a[href^="/help/"]').evaluateAll(x => x.map(y => y.getAttribute('href')).filter(h => /\/help\/\d+$/.test(h)));
+console.log(link);
+await w.goto(BASE + link[0], { waitUntil: 'networkidle' });
+console.log((await w.innerText('main')).slice(0, 700).replace(/\n+/g,' | '));
+console.log(await w.evaluate(() => [...document.querySelectorAll('main input,main textarea,main button,main select')].filter(x=>x.offsetWidth).map(x=>x.tagName+'['+x.type+']:'+(x.placeholder||x.innerText||'').slice(0,40)).join(' ; ')));
+await s.close(); await b.close();

@@ -1,18 +1,31 @@
 {
   "n": 302,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
-  "checks": [],
+  "checks": [
+    {
+      "ok": true,
+      "text": "The unanswered offer is no longer waiting for the seller"
+    },
+    {
+      "ok": true,
+      "text": "The buyer is told the offer ran out"
+    }
+  ],
   "shots": [
     {
       "file": "f302_1.jpg",
-      "caption": "Requests",
-      "role": "admin",
-      "url": "/admin/requests"
+      "caption": "The seller: the offer is gone",
+      "role": "wholesale",
+      "url": "/wholesale/sell/offers"
+    },
+    {
+      "file": "f302_2.jpg",
+      "caption": "The buyer is told",
+      "role": "visitor",
+      "url": "/inbox"
     }
   ],
-  "notes": [
-    "Waiting 24 hours to watch an offer lapse was not possible."
-  ],
-  "did": "Looked for price offers lapsing after 24 hours."
+  "notes": [],
+  "did": "The buyer named a price for the seller's phone case, and nobody answered. Thirty-five days later the seller's Price offers page and the buyer's messages were opened."
 }

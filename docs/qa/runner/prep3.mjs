@@ -1,0 +1,12 @@
+import { Sessions, startBrowser, BASE } from './lib.mjs';
+const b = await startBrowser(); const s = new Sessions(b);
+const v = await s.page('visitor');
+await v.goto(BASE + '/market/78', { waitUntil: 'networkidle' });
+await v.getByRole('button', { name: 'Not buying? Tell us why' }).click(); await v.waitForTimeout(500);
+await v.getByLabel('The price is too high').check();
+await v.getByLabel(/Name your price/).fill('1100');
+await v.getByRole('button', { name: 'Send', exact: true }).last().click(); await v.waitForTimeout(2000);
+const w = await s.page('wholesale');
+await w.goto(BASE + '/wholesale/sell/offers', { waitUntil: 'networkidle' });
+console.log((await w.innerText('main')).slice(0, 700).replace(/\n+/g,' | '));
+await s.close(); await b.close();

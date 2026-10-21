@@ -1,18 +1,21 @@
 {
   "n": 404,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
-  "checks": [],
+  "checks": [
+    {
+      "ok": true,
+      "text": "The buyer sees the offer the owner sent from the chat, with its price"
+    }
+  ],
   "shots": [
     {
       "file": "f404_1.jpg",
-      "caption": "Chats",
-      "role": "admin",
-      "url": "/admin/chats"
+      "caption": "The buyer sees the offer in the chat",
+      "role": "visitor",
+      "url": "/custom/Lw6cFD00taRQezAUb5HrKWEK4nxqoB7iWet0Qs3x"
     }
   ],
-  "notes": [
-    "Needs a chat on a job. Not carried through."
-  ],
-  "did": "Looked for the \"Send offer\" button in chat."
+  "notes": [],
+  "did": "As the buyer, looked in the job chat for the owner's offer."
 }

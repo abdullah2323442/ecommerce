@@ -1,18 +1,38 @@
 {
   "n": 485,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
-  "checks": [],
+  "checks": [
+    {
+      "ok": true,
+      "text": "The delivery is marked \"arrived\" and the rider is told the buyer knows"
+    },
+    {
+      "ok": true,
+      "text": "The buyer is told the delivery person has arrived: \"Our delivery person is at your door.\""
+    },
+    {
+      "ok": true,
+      "text": "And is shown a six-digit code to tell the rider"
+    }
+  ],
   "shots": [
     {
       "file": "f485_1.jpg",
-      "caption": "My deliveries",
-      "role": "admin",
+      "caption": "The rider has arrived",
+      "role": "rider",
       "url": "/admin/deliveries"
+    },
+    {
+      "file": "f485_2.jpg",
+      "caption": "The buyer order page: the rider is at the door, and the code to tell them",
+      "role": "visitor",
+      "url": "/orders/2jCaUBTLBZdErJc21spiTT55A57qkAUr7L7H5o6w"
     }
   ],
   "notes": [
-    "Needs a delivery. Not carried through."
+    "Orders in this run: [{\"id\":292,\"token\":\"I4U5UlgUU14s3Yw2OPU90Whlqp7HbubvZOa6lnOQ\",\"area\":\"Mirpur\"},{\"id\":293,\"token\":\"2jCaUBTLBZdErJc21spiTT55A57qkAUr7L7H5o6w\",\"area\":\"Gulshan\"}]",
+    "Around the code: Our delivery person is at your door. Tell this code to our delivery person when you get your order. Do not tell it to anyone else. 515468 On the way Sent 21 Oct 2026, 19:37 I received it I did not receive it Add a note, voice note or photo Get help with this order Keep thi"
   ],
-  "did": "Looked for the \"Arrived\" mark."
+  "did": "As the rider, pressed \"I have arrived\" on the Gulshan delivery. Then, as the buyer, opened the order page."
 }

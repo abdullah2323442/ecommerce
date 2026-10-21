@@ -1,18 +1,25 @@
 {
   "n": 478,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
-  "checks": [],
+  "checks": [
+    {
+      "ok": true,
+      "text": "The order records the courier charge arrangement and the number of cartons"
+    },
+    {
+      "ok": true,
+      "text": "And the tracking note"
+    }
+  ],
   "shots": [
     {
       "file": "f478_1.jpg",
-      "caption": "Weights",
+      "caption": "The order is sent: the courier charge and the cartons are recorded",
       "role": "admin",
-      "url": "/admin/weights"
+      "url": "/admin/orders/264"
     }
   ],
-  "notes": [
-    "Not carried through."
-  ],
-  "did": "Looked for charges by weight and by carton."
+  "notes": [],
+  "did": "Wrote what the courier charged (100) and 2 cartons, a tracking note, and pressed \"Mark as sent\"."
 }

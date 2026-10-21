@@ -1,18 +1,39 @@
 {
   "n": 414,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
-  "checks": [],
+  "checks": [
+    {
+      "ok": true,
+      "text": "The 2 cubic feet of wood used came off the stock (10 became 8)"
+    }
+  ],
   "shots": [
     {
       "file": "f414_1.jpg",
-      "caption": "Made to order",
+      "caption": "Teak in stock before the work starts: 10",
+      "role": "admin",
+      "url": "/admin/custom"
+    },
+    {
+      "file": "f414_2.jpg",
+      "caption": "Job given and advance taken",
+      "role": "admin",
+      "url": "/admin/custom"
+    },
+    {
+      "file": "f414_3.jpg",
+      "caption": "The work has started",
+      "role": "admin",
+      "url": "/admin/custom"
+    },
+    {
+      "file": "f414_4.jpg",
+      "caption": "Teak in stock after: 8",
       "role": "admin",
       "url": "/admin/custom"
     }
   ],
-  "notes": [
-    "Needs a finished job. Not carried through."
-  ],
-  "did": "Looked for wood being taken from stock."
+  "notes": [],
+  "did": "Read the Teak stock (10 cubic feet), gave job 2 to the craftsman, took the advance, pressed Start the work, and read the Teak stock again."
 }

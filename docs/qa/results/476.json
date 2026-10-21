@@ -1,18 +1,25 @@
 {
   "n": 476,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
-  "checks": [],
+  "checks": [
+    {
+      "ok": true,
+      "text": "The shop sees the \"On the way\" step"
+    },
+    {
+      "ok": true,
+      "text": "With the tracking note"
+    }
+  ],
   "shots": [
     {
       "file": "f476_1.jpg",
-      "caption": "A product page",
-      "role": "guest",
-      "url": "/market/78"
+      "caption": "The shop sees \"On the way\" with the tracking note",
+      "role": "paikari",
+      "url": "/paikari/orders/264"
     }
   ],
-  "notes": [
-    "The \"On the way\" step was seen on a seller order earlier (see feature 345)."
-  ],
-  "did": "Looked at an order for the \"On the way\" step."
+  "notes": [],
+  "did": "As the shop, opened the order after the owner marked it as sent."
 }

@@ -1,18 +1,21 @@
 {
   "n": 236,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
-  "checks": [],
+  "checks": [
+    {
+      "ok": true,
+      "text": "An MPO whose goods sit unsold is asked to raise the percentage"
+    }
+  ],
   "shots": [
     {
       "file": "f236_1.jpg",
-      "caption": "The MPO page",
-      "role": "mpo",
+      "caption": "The MPO is asked to raise the percentage",
+      "role": "mpo2",
       "url": "/mpo"
     }
   ],
-  "notes": [
-    "Needs goods that sit unsold for a while. Not carried through."
-  ],
-  "did": "Looked for the notification asking an MPO to raise the percentage if goods are not selling."
+  "notes": [],
+  "did": "MPO Kabir's product was on the market without a sale. Later the MPO's page was opened."
 }

@@ -1,0 +1,18 @@
+import { Sessions, startBrowser, BASE, ACCOUNTS } from './lib.mjs'; ACCOUNTS.rider = 'faruk.rider@siamsaqua.test';
+const b = await startBrowser(); const s = new Sessions(b);
+const a = await s.page('admin');
+await a.goto(BASE + '/admin/staff', { waitUntil: 'networkidle' });
+await a.getByPlaceholder('Name', { exact: true }).last().fill('Rider Faruk');
+await a.getByPlaceholder('Email', { exact: true }).last().fill(ACCOUNTS.rider);
+await a.getByPlaceholder('Phone', { exact: true }).last().fill('01700000031');
+await a.locator('main input[type=password]').last().fill('DevPass-2026!');
+await a.locator('main select').last().selectOption({ label: 'Delivery person' });
+await a.getByRole('button', { name: 'Create account' }).click(); await a.waitForTimeout(2200);
+console.log((await a.innerText('main')).slice(0, 200).replace(/\n+/g,' | '));
+await a.goto(BASE + '/admin/orders/265', { waitUntil: 'networkidle' });
+const btn = a.getByRole('button', { name: 'Rider Faruk' }); console.log('rider buttons', await btn.count());
+await btn.click(); await a.waitForTimeout(1800);
+const r = await s.page('rider'); await r.goto(BASE + '/admin/deliveries', { waitUntil: 'networkidle' });
+console.log('---RIDER'); console.log((await r.innerText('main')).slice(0, 700).replace(/\n+/g,' | '));
+console.log(await r.evaluate(() => [...document.querySelectorAll('main button,main input')].filter(x=>x.offsetWidth).map(x=>x.tagName+':'+(x.innerText||x.placeholder||x.type)).join(' ; ')));
+await s.close(); await b.close();

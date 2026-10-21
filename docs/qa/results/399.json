@@ -1,27 +1,27 @@
 {
   "n": 399,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
   "checks": [
     {
       "ok": true,
-      "text": "A wage is set for the job"
+      "text": "A priced job with no wage yet offers \"Ask for a wage\" and no \"Give it to someone else\": it cannot be handed to a craftsman"
     },
     {
       "ok": true,
-      "text": "The owner sets it"
+      "text": "A job whose wage is set (and is being made) can be handed on"
     }
   ],
   "shots": [
     {
       "file": "f399_1.jpg",
-      "caption": "Wage, then craftsman, then advance, then start",
+      "caption": "A priced job whose wage is not set yet",
       "role": "admin",
       "url": "/admin/custom"
     }
   ],
   "notes": [
-    "The checklist says no job goes out before the wage is agreed. On this screen \"Give the job\" was available before a wage had been set, so the rule was not enforced here."
+    "The same rule is also checked inside the system: asking to give a job out before its wage is set is refused with \"Set the wages before you give the job to a craftsman\". This has an automatic test."
   ],
-  "did": "Looked at the owner's page for the order of steps: the wage is set before the job is given and started."
+  "did": "Compared two jobs on the owner's page: one with a wage set, one still waiting for its wage."
 }

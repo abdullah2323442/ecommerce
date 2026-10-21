@@ -1,18 +1,25 @@
 {
   "n": 477,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
-  "checks": [],
+  "checks": [
+    {
+      "ok": true,
+      "text": "The courier charge can be as quoted, shared 50-50, or a fixed amount (As quoted, Shared 50-50, A fixed amount)"
+    },
+    {
+      "ok": true,
+      "text": "Choosing 50-50 asks what the courier charged"
+    }
+  ],
   "shots": [
     {
       "file": "f477_1.jpg",
-      "caption": "Couriers",
+      "caption": "Shared 50-50 chosen: the courier's charge and the cartons are asked for",
       "role": "admin",
-      "url": "/admin/couriers"
+      "url": "/admin/orders/264"
     }
   ],
-  "notes": [
-    "Not carried through."
-  ],
-  "did": "Looked for the 50-50 courier split in wholesale."
+  "notes": [],
+  "did": "In the same \"Send it\" box, looked at the choices for who pays the courier and picked \"Shared 50-50\"."
 }

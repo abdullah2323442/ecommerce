@@ -1,23 +1,33 @@
 {
   "n": 161,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
   "checks": [
     {
       "ok": true,
-      "text": "The owner sets how long a buyer may cancel alone"
+      "text": "The goods nobody collected are back in stock (34 became 35)"
     }
   ],
   "shots": [
     {
       "file": "f161_1.jpg",
-      "caption": "The cancelling settings",
+      "caption": "A checked order waiting for the shop to collect it (stock 34)",
       "role": "admin",
-      "url": "/admin/settings"
+      "url": "/admin/orders/297"
+    },
+    {
+      "file": "f161_2.jpg",
+      "caption": "After pressing \"Not collected\"",
+      "role": "admin",
+      "url": "/admin/orders/297"
+    },
+    {
+      "file": "f161_3.jpg",
+      "caption": "The stock afterwards: 35",
+      "role": "admin",
+      "url": "/admin/stock"
     }
   ],
-  "notes": [
-    "Packing an order, not collecting it, and seeing the refund and stock return was not carried through."
-  ],
-  "did": "Looked at the settings that govern cancelling and packed orders that are not collected."
+  "notes": [],
+  "did": "Checked an order the shop was going to collect. Read the Napa stock, pressed \"Not collected\", and read the stock again."
 }

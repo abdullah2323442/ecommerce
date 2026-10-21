@@ -1,0 +1,11 @@
+import { Sessions, startBrowser, BASE } from './lib.mjs';
+const b = await startBrowser(); const s = new Sessions(b);
+const a = await s.page('admin');
+await a.goto(BASE + '/admin/orders/263', { waitUntil: 'networkidle' });
+await a.getByRole('button', { name: 'Full', exact: true }).click(); await a.waitForTimeout(1500);
+const num = a.locator('main input[type=number]'); console.log('numbers', await num.count());
+await num.last().fill('50'); await a.getByRole('button', { name: 'Save', exact: true }).click(); await a.waitForTimeout(1500);
+await a.getByRole('button', { name: 'Checking done' }).click(); await a.waitForTimeout(2200);
+console.log((await a.innerText('main')).slice(0, 700).replace(/\n+/g,' | '));
+console.log(await a.evaluate(() => [...document.querySelectorAll('main button,main input,main select')].filter(x=>x.offsetWidth).map(x=>x.tagName+':'+(x.innerText||x.placeholder||x.value||x.type).slice(0,30)).join(' ; ')));
+await s.close(); await b.close();

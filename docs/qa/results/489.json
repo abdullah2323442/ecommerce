@@ -1,18 +1,31 @@
 {
   "n": 489,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
-  "checks": [],
+  "checks": [
+    {
+      "ok": true,
+      "text": "The shop has a \"I received it\" button"
+    },
+    {
+      "ok": true,
+      "text": "The order is finished: it can no longer be sent again"
+    }
+  ],
   "shots": [
     {
       "file": "f489_1.jpg",
-      "caption": "A product page",
-      "role": "guest",
-      "url": "/market/78"
+      "caption": "After the shop taps \"I received it\"",
+      "role": "paikari",
+      "url": "/paikari/orders/264"
+    },
+    {
+      "file": "f489_2.jpg",
+      "caption": "The owner's order after the shop received it",
+      "role": "admin",
+      "url": "/admin/orders/264"
     }
   ],
-  "notes": [
-    "The checklist marks this as partly built. Not reproduced."
-  ],
-  "did": "Looked for a \"Received\" tap."
+  "notes": [],
+  "did": "As the shop, pressed \"I received it\", then looked at the order and at the memo."
 }

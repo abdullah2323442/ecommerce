@@ -1,18 +1,31 @@
 {
   "n": 403,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
-  "checks": [],
+  "checks": [
+    {
+      "ok": true,
+      "text": "The chat has a \"Send measurements\" button"
+    },
+    {
+      "ok": true,
+      "text": "The measurements land in the chat"
+    }
+  ],
   "shots": [
     {
       "file": "f403_1.jpg",
-      "caption": "Chats",
-      "role": "admin",
-      "url": "/admin/chats"
+      "caption": "The four measurements typed into the chat",
+      "role": "visitor",
+      "url": "/custom/Lw6cFD00taRQezAUb5HrKWEK4nxqoB7iWet0Qs3x"
+    },
+    {
+      "file": "f403_2.jpg",
+      "caption": "After sending",
+      "role": "visitor",
+      "url": "/custom/Lw6cFD00taRQezAUb5HrKWEK4nxqoB7iWet0Qs3x"
     }
   ],
-  "notes": [
-    "Needs a chat on a job. Not carried through."
-  ],
-  "did": "Looked for the \"Send measurements\" button in chat."
+  "notes": [],
+  "did": "As the buyer, pressed \"Send measurements\" in the job chat, filled four measurements and sent them."
 }

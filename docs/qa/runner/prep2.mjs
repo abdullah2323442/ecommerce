@@ -1,0 +1,14 @@
+import { Sessions, startBrowser, BASE } from './lib.mjs';
+const b = await startBrowser(); const s = new Sessions(b);
+const a = await s.page('admin');
+await a.goto(BASE + '/admin/quotes', { waitUntil: 'networkidle' });
+const ins = a.locator('main input[type=text], main input:not([type])');
+console.log('inputs', await ins.count());
+await a.getByPlaceholder('Total price').or(a.getByLabel('Total price')).first().fill('52000');
+await a.getByRole('button', { name: 'Send the price' }).click(); await a.waitForTimeout(2000);
+console.log((await a.innerText('main')).slice(150, 700).replace(/\n+/g,' | '));
+const v = await s.page('visitor');
+await v.goto(BASE + '/help', { waitUntil: 'networkidle' });
+console.log('---HELP'); console.log((await v.innerText('main')).slice(0, 500).replace(/\n+/g,' | '));
+console.log(await v.evaluate(() => [...document.querySelectorAll('main input,main textarea,main button,main a')].filter(x=>x.offsetWidth).slice(0,25).map(x=>x.tagName+':'+(x.placeholder||x.innerText||x.type).slice(0,30)).join(' ; ')));
+await s.close(); await b.close();

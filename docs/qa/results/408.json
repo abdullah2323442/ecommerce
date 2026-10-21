@@ -1,18 +1,31 @@
 {
   "n": 408,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
-  "checks": [],
+  "checks": [
+    {
+      "ok": true,
+      "text": "A buyer's message nobody answered is marked \"Not answered in time\""
+    },
+    {
+      "ok": true,
+      "text": "The flag shows inside the chat too"
+    }
+  ],
   "shots": [
     {
       "file": "f408_1.jpg",
-      "caption": "Chats",
+      "caption": "The chat list",
       "role": "admin",
       "url": "/admin/chats"
+    },
+    {
+      "file": "f408_2.jpg",
+      "caption": "The same flag inside the chat",
+      "role": "admin",
+      "url": "/admin/chats/2"
     }
   ],
-  "notes": [
-    "Needs time to pass. Not carried through."
-  ],
-  "did": "Looked for a notice when a craftsman does not reply."
+  "notes": [],
+  "did": "The buyer wrote in the job chat and nobody answered. Later the owner opened the chat."
 }

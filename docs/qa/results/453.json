@@ -1,18 +1,27 @@
 {
   "n": 453,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
-  "checks": [],
+  "checks": [
+    {
+      "ok": true,
+      "text": "The pasted medicine link is shown as a card with the medicine name and a View button"
+    }
+  ],
   "shots": [
     {
       "file": "f453_1.jpg",
-      "caption": "The Help board",
-      "role": "guest",
-      "url": "/help"
+      "caption": "A comment with a product link pasted in",
+      "role": "wholesale",
+      "url": "/help/1"
+    },
+    {
+      "file": "f453_2.jpg",
+      "caption": "After commenting: the link has become a product card",
+      "role": "wholesale",
+      "url": "/help/1"
     }
   ],
-  "notes": [
-    "Needs an approved post with a comment. Not carried through."
-  ],
-  "did": "Looked for a product card inside a comment."
+  "notes": [],
+  "did": "On the help post, wrote a comment with a link to one of the shop's products and pressed Comment."
 }

@@ -1,29 +1,51 @@
 {
   "n": 160,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
   "checks": [
     {
       "ok": true,
-      "text": "The order is cancelled"
+      "text": "Before it is checked the shop can cancel at once"
+    },
+    {
+      "ok": true,
+      "text": "After checking, the shop can only ask: \"Cancellation requested. Waiting for our staff.\""
+    },
+    {
+      "ok": true,
+      "text": "The owner is told the shop wants to cancel"
+    },
+    {
+      "ok": true,
+      "text": "And can keep the order or cancel it"
     }
   ],
   "shots": [
     {
       "file": "f160_1.jpg",
-      "caption": "An order just sent, with its Cancel order button",
+      "caption": "1. Cancelled before it was checked: it simply goes",
       "role": "paikari",
-      "url": "/paikari/orders/177"
+      "url": "/paikari"
     },
     {
       "file": "f160_2.jpg",
-      "caption": "After cancelling",
+      "caption": "2. Cancelled after it was checked: staff must agree",
       "role": "paikari",
-      "url": "/paikari"
+      "url": "/paikari/orders/296"
+    },
+    {
+      "file": "f160_3.jpg",
+      "caption": "The owner sees the request and decides",
+      "role": "admin",
+      "url": "/admin/orders/296"
+    },
+    {
+      "file": "f160_4.jpg",
+      "caption": "The owner agrees",
+      "role": "admin",
+      "url": "/admin/orders/296"
     }
   ],
-  "notes": [
-    "Only one of the three cancellation situations was shown (cancelled before it was checked). The others, after checking and after packing, need the owner to move the order along first."
-  ],
-  "did": "Sent an order and then pressed \"Cancel order\" while it was still waiting to be checked."
+  "notes": [],
+  "did": "Sent three orders and cancelled each at a different moment: before the owner checked it, after it was checked, and the owner pressed \"Not collected\" on one nobody came for."
 }

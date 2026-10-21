@@ -1,18 +1,29 @@
 {
   "n": 216,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
-  "checks": [],
+  "checks": [
+    {
+      "ok": true,
+      "text": "The system asks whether to keep the offers on"
+    },
+    {
+      "ok": true,
+      "text": "The owner can run them again for the new month"
+    },
+    {
+      "ok": true,
+      "text": "Or leave them off"
+    }
+  ],
   "shots": [
     {
       "file": "f216_1.jpg",
-      "caption": "Offers",
+      "caption": "The question after the month",
       "role": "admin",
       "url": "/admin/offers"
     }
   ],
-  "notes": [
-    "Needs a month to pass."
-  ],
-  "did": "Looked for a question after the month passes."
+  "notes": [],
+  "did": "On the same page, read what the system asks the owner once the month has passed."
 }
