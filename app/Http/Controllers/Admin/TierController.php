@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Company;
+use App\Models\CompanyRate;
+use App\Models\MedicineRate;
 use App\Models\Tier;
 use App\Services\Audit\ActivityLogger;
 use App\Services\Audit\Bin;
@@ -23,6 +26,12 @@ class TierController extends Controller
 
         return Inertia::render('admin/tiers/index', [
             'tiers' => Tier::query()->withCount('users')->orderBy('name')->get(['id', 'name', 'discount_percent', 'upgrade_target']),
+            // Selling rates by company and by medicine: they sit between a customer's own rate and the tier.
+            'companies' => Company::query()->orderBy('name')->get(['id', 'name']),
+            'companyRates' => CompanyRate::query()->join('companies', 'companies.id', '=', 'company_rates.company_id')->orderBy('companies.name')
+                ->get(['company_rates.company_id as id', 'companies.name', 'company_rates.discount_percent as percent']),
+            'medicineRates' => MedicineRate::query()->join('medicines', 'medicines.id', '=', 'medicine_rates.medicine_id')->orderBy('medicines.brand_name')
+                ->get(['medicine_rates.medicine_id as id', 'medicines.brand_name', 'medicines.strength', 'medicine_rates.discount_percent as percent', 'medicine_rates.fixed_price']),
         ]);
     }
 

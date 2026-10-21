@@ -92,7 +92,7 @@ export default function StockReceive({ sources, today, draft }: { sources: Sourc
     };
 
     /** A scanner types the code and presses Enter. A known code adds a line, or one more unit to the line already there. */
-    const scan = async (e: React.FormEvent) => {
+    const scan = async (e: { preventDefault: () => void }) => {
         e.preventDefault();
         const code = scanCode.trim();
         if (!code) return;
@@ -228,13 +228,28 @@ export default function StockReceive({ sources, today, draft }: { sources: Sourc
                         </div>
 
                         <div className="rounded-xl border bg-card p-4">
-                            <form onSubmit={scan}>
+                            {/* Not a <form>: this sits inside the purchase form, and a nested form made Enter save the whole purchase. */}
+                            <div>
                                 <label htmlFor="scan" className="flex items-center gap-2 text-sm font-medium">
                                     <ScanBarcode aria-hidden className="size-4" />
                                     {t('Scan a barcode')}
                                 </label>
-                                <Input id="scan" autoComplete="off" value={scanCode} onChange={(e) => setScanCode(e.target.value)} placeholder={t('Point the scanner here')} className="mt-1 max-w-sm" />
-                            </form>
+                                <Input
+                                    id="scan"
+                                    autoComplete="off"
+                                    value={scanCode}
+                                    onChange={(e) => setScanCode(e.target.value)}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter') {
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                            void scan(e);
+                                        }
+                                    }}
+                                    placeholder={t('Point the scanner here')}
+                                    className="mt-1 max-w-sm"
+                                />
+                            </div>
                             {unknownCode && (
                                 <div role="alert" className="mt-3 space-y-2 rounded-md border border-warning/40 bg-warning/10 p-3 text-sm">
                                     <p className="font-medium">{t('Barcode {code} is new. Which medicine is it?', { code: unknownCode })}</p>

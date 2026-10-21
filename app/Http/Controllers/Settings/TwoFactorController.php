@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
+use App\Models\Setting;
 use App\Services\Security\TwoFactor;
 use App\Services\Stock\StockException;
 use Illuminate\Http\RedirectResponse;
@@ -26,7 +27,7 @@ class TwoFactorController extends Controller
             'codesLeft' => $this->twoFactor->enabled($user) ? $this->twoFactor->recoveryCodesLeft($user) : 0,
             // Shown once, straight after turning it on or making new ones; never again.
             'recoveryCodes' => $request->session()->get('recovery_codes'),
-            'required' => (bool) \App\Models\Setting::read('security.require_2fa_staff', false),
+            'required' => (bool) Setting::read('security.require_2fa_staff', false),
         ]);
     }
 

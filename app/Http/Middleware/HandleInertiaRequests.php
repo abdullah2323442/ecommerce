@@ -9,9 +9,12 @@ use App\Models\Listing;
 use App\Models\MarketOrder;
 use App\Models\Notice;
 use App\Models\ProductQuestion;
+use App\Models\Setting;
 use App\Models\TradeApplication;
 use App\Services\Sales\ApprovalService;
 use App\Services\Sales\PreOrders;
+use App\Services\Security\SocialLogin;
+use App\Services\Site\Site;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -49,8 +52,8 @@ class HandleInertiaRequests extends Middleware
             // One brand source (config/brand.php), already in the viewer's language.
             'brand' => fn () => self::brand(),
             // The ways of signing in with an outside account that the owner switched on (the buttons on the sign-in page).
-            'socialProviders' => fn () => $request->user() ? [] : app(\App\Services\Security\SocialLogin::class)->enabled(),
-            'site' => fn () => app(\App\Services\Site\Site::class)->forViewer()['site'],
+            'socialProviders' => fn () => $request->user() ? [] : app(SocialLogin::class)->enabled(),
+            'site' => fn () => app(Site::class)->forViewer()['site'],
             'locale' => fn () => app()->getLocale(),
             // English is the source text, so only Bangla needs a dictionary sent to the browser.
             'translations' => fn () => app()->getLocale() === 'bn' ? self::dictionaryFor($request) : (object) [],
@@ -59,7 +62,7 @@ class HandleInertiaRequests extends Middleware
             // The public cart is for visitors and plain accounts; a shop or a bulk buyer orders from their own screen.
             'canCart' => fn () => $request->user() === null || $request->user()->account_type === AccountType::Public,
             // A notice the owner writes to announce an update or a closed day in advance (spec ch 28 note 11). Shown in the language the visitor reads.
-            'siteNotice' => fn () => (app()->getLocale() === 'bn' ? (string) \App\Models\Setting::read('notice.text_bn', '') : '') ?: ((string) \App\Models\Setting::read('notice.text', '') ?: null),
+            'siteNotice' => fn () => (app()->getLocale() === 'bn' ? (string) Setting::read('notice.text_bn', '') : '') ?: ((string) Setting::read('notice.text', '') ?: null),
             // A selling account's own business name, so its screens feel like its own (spec ch 14: white-label). Only that account ever gets it.
             'sellerBrand' => fn () => $request->user()?->account_type === AccountType::Wholesaler ? ($request->user()->business_name ?: null) : null,
             'cartCount' => fn () => $request->hasSession() ? count((array) $request->session()->get('cart', [])) : 0,
@@ -102,7 +105,7 @@ class HandleInertiaRequests extends Middleware
     /** @return array{name: string, logo: ?string, phone: ?string, email: ?string, address: ?string, whatsapp: ?string, messenger: ?string, drug_license: ?string} */
     public static function brand(): array
     {
-        return app(\App\Services\Site\Site::class)->forViewer()['brand'];
+        return app(Site::class)->forViewer()['brand'];
     }
 
     /**

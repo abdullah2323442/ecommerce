@@ -24,6 +24,7 @@ interface Customer {
     pay_cod: boolean;
     pay_advance: boolean;
     suspended_at: string | null;
+    suspended_until?: string | null;
     show_monthly_total: boolean;
     late_cancellations: number;
     flagged: boolean;
@@ -268,13 +269,13 @@ function RatesSection({ customer, rates }: { customer: Customer; rates: ManualRa
                     <div className="flex rounded-md border p-0.5" role="group" aria-label={t('Rate type')}>
                         {(['percent', 'price'] as const).map((m) => (
                             <button key={m} type="button" aria-pressed={mode === m} onClick={() => setMode(m)} className={`rounded px-3 text-sm ${mode === m ? 'bg-foreground text-background' : 'text-muted-foreground'}`}>
-                                {m === 'percent' ? t('Percent off') : t('Taka price')}
+                                {m === 'percent' ? t('Percent off') : t('Taka price per piece')}
                             </button>
                         ))}
                     </div>
                     <div>
                         <label htmlFor="rate-value" className="sr-only">
-                            {mode === 'percent' ? t('Percent off') : t('Price in taka')}
+                            {mode === 'percent' ? t('Percent off') : t('Price in taka for one piece')}
                         </label>
                         <Input
                             id="rate-value"
@@ -309,12 +310,13 @@ function RatesSection({ customer, rates }: { customer: Customer; rates: ManualRa
 
 function StatusSection({ customer }: { customer: Customer }) {
     const { t, dateTime } = useI18n();
-    const form = useForm({ reason: '' });
-    const suspended = customer.suspended_at !== null;
+    const form = useForm({ reason: '', days: '' });
+    // A suspension for a set number of days lifts itself when the time is up.
+    const suspended = customer.suspended_at !== null && (!customer.suspended_until || new Date(customer.suspended_until) > new Date());
 
     if (suspended) {
         return (
-            <Section title={t('Account status')} hint={t('Suspended since {date}.', { date: dateTime(customer.suspended_at!) })}>
+            <Section title={t('Account status')} hint={customer.suspended_until ? t('Suspended since {date}, until {until}.', { date: dateTime(customer.suspended_at!), until: dateTime(customer.suspended_until) }) : t('Suspended since {date}.', { date: dateTime(customer.suspended_at!) })}>
                 <Button variant="outline" onClick={() => router.delete(`/admin/customers/${customer.id}/suspend`, { preserveScroll: true })}>
                     {t('Reactivate account')}
                 </Button>
@@ -337,6 +339,13 @@ function StatusSection({ customer }: { customer: Customer }) {
                     </label>
                     <Input id="reason" placeholder={t('Reason (required)')} value={form.data.reason} onChange={(e) => form.setData('reason', e.target.value)} className="w-72" />
                     <InputError message={form.errors.reason} />
+                </div>
+                <div>
+                    <label htmlFor="suspend-days" className="sr-only">
+                        {t('For how many days')}
+                    </label>
+                    <Input id="suspend-days" type="number" min="1" max="365" placeholder={t('Days (empty: until you reopen it)')} value={form.data.days} onChange={(e) => form.setData('days', e.target.value)} className="w-56" />
+                    <InputError message={form.errors.days} />
                 </div>
                 <Button type="submit" variant="destructive" disabled={form.processing || form.data.reason.trim() === ''}>
                     {t('Suspend account')}

@@ -13,6 +13,7 @@ use App\Models\StockSource;
 use App\Models\Tier;
 use App\Models\User;
 use App\Services\Sales\Dispatching;
+use App\Services\Sales\InvoiceService;
 use App\Services\Stock\StockService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Inertia\Testing\AssertableInertia as Assert;
@@ -152,13 +153,13 @@ class DispatchTest extends TestCase
         $order = $this->checkedGuest();
         $charge = (float) $order->delivery_charge;
         $this->actingAs($this->staff)->post("/admin/orders/{$order->id}/delivery-advance");
-        app(\App\Services\Sales\InvoiceService::class)->cancel($order->fresh(), $this->staff, 'Out of stock');
+        app(InvoiceService::class)->cancel($order->fresh(), $this->staff, 'Out of stock');
 
         $this->assertEqualsWithDelta($charge / 2, (float) $order->fresh()->delivery_refund, 0.011);
         $this->get("/admin/orders/{$order->id}")->assertInertia(fn (Assert $p) => $p->where('order.delivery_refund', (int) ($charge / 2)));
 
         $unpaid = $this->checkedGuest();
-        app(\App\Services\Sales\InvoiceService::class)->cancel($unpaid->fresh(), $this->staff);
+        app(InvoiceService::class)->cancel($unpaid->fresh(), $this->staff);
         $this->assertSame(0.0, (float) $unpaid->fresh()->delivery_refund, 'nothing was paid, nothing goes back');
 
         $sent = $this->checkedGuest();

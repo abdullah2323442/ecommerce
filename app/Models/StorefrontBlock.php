@@ -32,6 +32,16 @@ class StorefrontBlock extends Model
         'restaurants' => ['label' => 'Restaurants', 'fields' => ['title', 'limit']],
         'games' => ['label' => 'Games', 'fields' => ['title', 'limit']],
         'packs' => ['label' => 'Top-up packs', 'fields' => ['title', 'text', 'source', 'limit']],
+        'departments' => ['label' => 'Shops as tiles', 'fields' => ['title', 'text', 'limit']],
+        'promos' => ['label' => 'Promo banners', 'fields' => ['items', 'media']],
+        'collections' => ['label' => 'Collections', 'fields' => ['title', 'text', 'items', 'media']],
+        'sellers' => ['label' => 'Trusted sellers', 'fields' => ['title', 'text', 'limit']],
+        'reviews' => ['label' => 'Buyer words', 'fields' => ['title', 'limit']],
+        'showcase' => ['label' => 'Colour collage banner', 'fields' => ['title', 'text', 'button', 'link', 'items', 'media', 'tone']],
+        'ticker' => ['label' => 'Moving line of promises', 'fields' => ['items']],
+        'numbers' => ['label' => 'Numbers band', 'fields' => ['title', 'items']],
+        'feature' => ['label' => 'Picture and story', 'fields' => ['title', 'text', 'button', 'link', 'image', 'items']],
+        'rail' => ['label' => 'Round-picture rail', 'fields' => ['title', 'text', 'items', 'media']],
     ];
 
     /** The stand-alone pages, and the kinds each may use. A shop (sector) uses SHOP_KINDS. */
@@ -39,6 +49,7 @@ class StorefrontBlock extends Model
         'medicines' => ['label' => 'Pharmacy', 'kinds' => ['hero', 'service', 'forms', 'fresh', 'companies', 'browse', 'faq']],
         'food' => ['label' => 'Food', 'kinds' => ['hero', 'cuisines', 'dishes', 'banner', 'steps', 'restaurants', 'service', 'faq']],
         'gaming' => ['label' => 'Game top-up', 'kinds' => ['hero', 'games', 'packs', 'steps', 'service', 'faq']],
+        'market' => ['label' => 'Marketplace', 'kinds' => ['hero', 'showcase', 'ticker', 'departments', 'products', 'promos', 'collections', 'feature', 'rail', 'numbers', 'premium', 'banner', 'budget', 'sellers', 'reviews', 'steps', 'service', 'faq', 'cta']],
     ];
 
     public const SHOP_KINDS = ['hero', 'categories', 'products', 'banner', 'budget', 'premium', 'service', 'faq', 'cta', 'steps'];
@@ -51,9 +62,12 @@ class StorefrontBlock extends Model
         return collect($keys)->mapWithKeys(fn ($k) => [$k => self::KINDS[$k]])->all();
     }
 
-    public const MAX_PER_SHOP = 24;
+    public const MAX_PER_SHOP = 40;
 
-    protected $fillable = ['sector_id', 'page', 'kind', 'sort', 'is_active', 'title', 'title_bn', 'text', 'text_bn', 'button', 'button_bn', 'source', 'item_limit', 'image_path', 'items'];
+    /** The colours an item may wear; the page draws each from its own theme. */
+    public const TONES = ['saffron', 'rose', 'jade', 'indigo', 'clay', 'plum'];
+
+    protected $fillable = ['sector_id', 'page', 'kind', 'sort', 'is_active', 'title', 'title_bn', 'text', 'text_bn', 'button', 'button_bn', 'link', 'source', 'item_limit', 'image_path', 'items'];
 
     protected function casts(): array
     {
@@ -73,14 +87,17 @@ class StorefrontBlock extends Model
         return $bn ?: ($this->{$field} ?: null);
     }
 
-    /** The list items in the viewer's language. */
+    /** The list items in the viewer's language, each with its link and picture when it has them. */
     public function itemList(): array
     {
         $bn = app()->getLocale() === 'bn';
 
-        return collect($this->items ?? [])->map(fn ($i) => [
+        return collect($this->items ?? [])->map(fn ($i, $n) => [
             'title' => $bn && ! empty($i['title_bn']) ? $i['title_bn'] : ($i['title'] ?? ''),
             'text' => $bn && ! empty($i['text_bn']) ? $i['text_bn'] : ($i['text'] ?? ''),
+            'link' => $i['link'] ?? null,
+            'tone' => $i['tone'] ?? null,
+            'image' => ! empty($i['image_path']) ? route('market.storefront-item-image', ['block' => $this->id, 'index' => $n, 'v' => substr(md5($i['image_path']), 0, 8)]) : null,
         ])->filter(fn ($i) => $i['title'] !== '')->values()->all();
     }
 
@@ -192,6 +209,80 @@ class StorefrontBlock extends Model
                     $item('What if I type the wrong ID?', 'ভুল আইডি দিলে কী হবে?', 'We show the player name before you pay, so you can catch a wrong ID first.', 'পরিশোধের আগে প্লেয়ারের নাম দেখানো হয়, তাই ভুল আইডি আগেই ধরা পড়ে।'),
                     $item('Can I pay cash on delivery?', 'ক্যাশ অন ডেলিভারিতে দেওয়া যাবে?', 'No. Top-ups are paid online.', 'না। টপ-আপের টাকা অনলাইনে দিতে হয়।'),
                 ]]],
+            ],
+            'market' => [
+                ['showcase', ['title' => 'Everything beautiful, from across Bangladesh', 'title_bn' => 'সারা বাংলাদেশের সব সুন্দর জিনিস, এক জায়গায়', 'text' => 'Furniture, electronics, clothing, jewellery and care, from sellers you can trust. One honest price for everyone.', 'text_bn' => 'আসবাব, ইলেকট্রনিক্স, পোশাক, গয়না আর যত্নের জিনিস, ভরসার বিক্রেতাদের কাছ থেকে। সবার জন্য একই সৎ দাম।', 'button' => 'Explore products', 'button_bn' => 'পণ্য দেখুন', 'link' => '/market?all=1', 'items' => [
+                    ['title' => 'Electronics', 'title_bn' => 'ইলেকট্রনিক্স', 'text' => 'Warranty shown', 'text_bn' => 'ওয়ারেন্টি দেখানো', 'link' => '/market?sector=electronics', 'tone' => 'indigo'],
+                    ['title' => 'Wood', 'title_bn' => 'কাঠ', 'text' => 'Teak and sheesham', 'text_bn' => 'সেগুন আর শিশু', 'link' => '/market?sector=wood', 'tone' => 'clay'],
+                    ['title' => 'Clothing', 'title_bn' => 'পোশাক', 'text' => 'Everyday cotton', 'text_bn' => 'রোজকার সুতি', 'link' => '/market?sector=clothing', 'tone' => 'rose'],
+                    ['title' => 'Jewellery', 'title_bn' => 'গয়না', 'text' => 'Gold and silver', 'text_bn' => 'সোনা আর রুপা', 'link' => '/market?sector=jewellery', 'tone' => 'saffron'],
+                    ['title' => 'Beauty', 'title_bn' => 'সৌন্দর্য', 'text' => 'Simple care', 'text_bn' => 'সহজ যত্ন', 'link' => '/market?sector=beauty', 'tone' => 'plum'],
+                    ['title' => 'Home', 'title_bn' => 'ঘর', 'text' => 'Warm corners', 'text_bn' => 'উষ্ণ কোণ', 'link' => '/market?sector=home', 'tone' => 'jade'],
+                ]]],
+                ['ticker', ['items' => [
+                    $item('One price for everyone', 'সবার জন্য এক দাম', '', ''),
+                    $item('Warranty shown before you order', 'অর্ডারের আগেই ওয়ারেন্টি', '', ''),
+                    $item('Delivery across Bangladesh', 'সারা বাংলাদেশে ডেলিভারি', '', ''),
+                    $item('Cash on delivery where offered', 'যেখানে সুযোগ আছে সেখানে ক্যাশ অন ডেলিভারি', '', ''),
+                    $item('Seven-day returns', 'সাত দিনে ফেরত', '', ''),
+                ]]],
+                ['departments', ['title' => 'Shop by department', 'title_bn' => 'বিভাগ অনুযায়ী কিনুন', 'text' => 'Every kind of shop, one click away.', 'text_bn' => 'সব ধরনের দোকান, এক ক্লিকেই।', 'item_limit' => 8]],
+                ['products', ['title' => 'Just arrived', 'title_bn' => 'সদ্য এসেছে', 'source' => 'fresh', 'item_limit' => 8]],
+                ['promos', ['items' => [
+                    ['title' => 'The gift edit', 'title_bn' => 'উপহারের সংগ্রহ', 'text' => 'Gold, silk and handmade pieces for the people you love.', 'text_bn' => 'প্রিয়জনের জন্য সোনা, রেশম আর হাতে তৈরি জিনিস।', 'link' => '/market?sector=jewellery'],
+                    ['title' => 'Tech, made simple', 'title_bn' => 'প্রযুক্তি, সহজ করে', 'text' => 'Phones, audio and laptops with the warranty shown.', 'text_bn' => 'ফোন, অডিও আর ল্যাপটপ, ওয়ারেন্টি দেখানো।', 'link' => '/market?sector=electronics'],
+                ]]],
+                ['collections', ['title' => 'Collections', 'title_bn' => 'সংগ্রহ', 'text' => 'Four ways into the bazaar.', 'text_bn' => 'বাজারে ঢোকার চারটি পথ।', 'items' => [
+                    ['title' => 'Made of wood', 'title_bn' => 'কাঠে গড়া', 'text' => 'Teak and sheesham, built to last.', 'text_bn' => 'সেগুন আর শিশু, টেকসই করে গড়া।', 'link' => '/market?sector=wood'],
+                    ['title' => 'Wear it well', 'title_bn' => 'ভালোভাবে পরুন', 'text' => 'Panjabis, shirts and everyday cotton.', 'text_bn' => 'পাঞ্জাবি, শার্ট আর রোজকার সুতি।', 'link' => '/market?sector=clothing'],
+                    ['title' => 'Home, lit warm', 'title_bn' => 'ঘর, উষ্ণ আলোয়', 'text' => 'Lamps, vases and quiet corners.', 'text_bn' => 'বাতি, ফুলদানি আর শান্ত কোণ।', 'link' => '/market?sector=home'],
+                    ['title' => 'Rituals of care', 'title_bn' => 'যত্নের রীতি', 'text' => 'Skin and body, kept simple.', 'text_bn' => 'ত্বক আর শরীর, সহজ যত্নে।', 'link' => '/market?sector=beauty'],
+                ]]],
+                ['products', ['title' => 'Most ordered', 'title_bn' => 'সবচেয়ে বেশি অর্ডার', 'source' => 'best', 'item_limit' => 8]],
+                ['feature', ['title' => 'Made by hand, kept for years', 'title_bn' => 'হাতে গড়া, বছরের পর বছর রাখার মতো', 'text' => 'Teak that is seasoned, cloth that is woven, brass that is cast. Our makers put their name to every piece, and you see who made it before you order.', 'text_bn' => 'সেগুন পোক্ত করা, কাপড় বোনা, পিতল ঢালাই। কারিগররা প্রতিটি জিনিসে নিজের নাম রাখেন, অর্ডারের আগেই দেখতে পাবেন কে বানিয়েছেন।', 'button' => 'Shop the wood shop', 'button_bn' => 'কাঠের দোকান দেখুন', 'link' => '/market?sector=wood', 'items' => [
+                    ['title' => 'Seasoned teak and sheesham', 'title_bn' => 'পোক্ত সেগুন ও শিশু', 'link' => '/market?sector=wood'],
+                    ['title' => 'Woven and block-printed cloth', 'title_bn' => 'বোনা ও ব্লক-প্রিন্ট কাপড়', 'link' => '/market?sector=clothing'],
+                    ['title' => 'Cast brass and hand-finished gold', 'title_bn' => 'ঢালাই পিতল ও হাতে সাজানো সোনা', 'link' => '/market?sector=jewellery'],
+                ]]],
+                ['rail', ['title' => 'Shop by occasion', 'title_bn' => 'উপলক্ষ অনুযায়ী কিনুন', 'text' => 'Start from the moment, not the shelf.', 'text_bn' => 'তাক নয়, উপলক্ষ দিয়ে শুরু করুন।', 'items' => [
+                    ['title' => 'Eid', 'title_bn' => 'ঈদ', 'text' => '', 'link' => '/market?sector=clothing'],
+                    ['title' => 'Weddings', 'title_bn' => 'বিয়ে', 'text' => '', 'link' => '/market?sector=jewellery'],
+                    ['title' => 'New home', 'title_bn' => 'নতুন ঘর', 'text' => '', 'link' => '/market?sector=home'],
+                    ['title' => 'Workday', 'title_bn' => 'কাজের দিন', 'text' => '', 'link' => '/market?sector=electronics'],
+                    ['title' => 'Self care', 'title_bn' => 'নিজের যত্ন', 'text' => '', 'link' => '/market?sector=beauty'],
+                    ['title' => 'Gifting', 'title_bn' => 'উপহার', 'text' => '', 'link' => '/market?all=1'],
+                ]]],
+                ['numbers', ['title' => 'The bazaar in numbers', 'title_bn' => 'সংখ্যায় বাজার', 'items' => [
+                    $item('64', '৬৪', 'districts we deliver to', 'জেলায় আমরা পৌঁছাই'),
+                    $item('7', '৭', 'days to return', 'দিনে ফেরত'),
+                    $item('1', '১', 'price for every buyer', 'দাম সব ক্রেতার জন্য'),
+                    $item('0', '০', 'hidden charges at the till', 'কাউন্টারে লুকানো খরচ'),
+                ]]],
+                ['products', ['title' => 'From the wood shop', 'title_bn' => 'কাঠের দোকান থেকে', 'source' => 'sector:wood', 'item_limit' => 4]],
+                ['products', ['title' => 'Wear it well', 'title_bn' => 'ভালোভাবে পরুন', 'source' => 'sector:clothing', 'item_limit' => 4]],
+                ['premium', ['title' => 'Premium picks', 'title_bn' => 'প্রিমিয়াম বাছাই', 'source' => 'premium', 'item_limit' => 4]],
+                ['products', ['title' => 'Tech worth owning', 'title_bn' => 'রাখার মতো প্রযুক্তি', 'source' => 'sector:electronics', 'item_limit' => 4]],
+                ['budget', ['title' => 'Shop by budget', 'title_bn' => 'বাজেট অনুযায়ী কিনুন', 'text' => 'Start from what you want to spend and see what fits.', 'text_bn' => 'কত খরচ করবেন তা দিয়ে শুরু করুন, কী মানায় দেখুন।']],
+                ['products', ['title' => 'Care and home', 'title_bn' => 'যত্ন ও ঘর', 'source' => 'sector:beauty', 'item_limit' => 4]],
+                ['sellers', ['title' => 'Sellers to trust', 'title_bn' => 'ভরসার বিক্রেতা', 'text' => 'Shops with a clean record and reviews you can read.', 'text_bn' => 'পরিষ্কার রেকর্ড আর পড়ার মতো রিভিউ আছে এমন দোকান।', 'item_limit' => 6]],
+                ['reviews', ['title' => 'What buyers say', 'title_bn' => 'ক্রেতারা যা বলেন', 'item_limit' => 3]],
+                ['steps', ['title' => 'How buying works', 'title_bn' => 'কেনাকাটা যেভাবে হয়', 'items' => [
+                    $item('Choose', 'বেছে নিন', 'Browse the shops. The price you see is the price you pay.', 'দোকান ঘুরে দেখুন। যে দাম দেখেন সেটাই দিতে হয়।'),
+                    $item('Order', 'অর্ডার করুন', 'Pay on delivery where the seller offers it, or pay online.', 'যেখানে বিক্রেতা দেন সেখানে ডেলিভারিতে দিন, অথবা অনলাইনে।'),
+                    $item('Receive', 'হাতে পান', 'Delivery across Bangladesh. Follow the order from your orders page.', 'সারা বাংলাদেশে ডেলিভারি। অর্ডার পাতা থেকে অর্ডারের খবর দেখুন।'),
+                ]]],
+                ['service', ['items' => [
+                    $item('One price for everyone', 'সবার জন্য এক দাম', 'No hidden extras at the till.', 'কাউন্টারে লুকানো খরচ নেই।'),
+                    $item('Warranty shown', 'ওয়ারেন্টি দেখানো', 'Every product says what is covered before you order.', 'অর্ডারের আগেই প্রতিটি পণ্যে কী কভার হয় তা লেখা থাকে।'),
+                    $item('Delivery across Bangladesh', 'সারা বাংলাদেশে ডেলিভারি', 'Dhaka and every district.', 'ঢাকা আর প্রতিটি জেলা।'),
+                    $item('Reviews you can read', 'পড়ার মতো রিভিউ', 'Real reviews from people who bought.', 'যারা কিনেছেন তাদের আসল রিভিউ।'),
+                ]]],
+                ['faq', ['title' => 'Before you buy', 'title_bn' => 'কেনার আগে', 'items' => [
+                    $item('Is the price the same for everyone?', 'দাম কি সবার জন্য এক?', 'Yes. The price shown on a product is the price for every buyer.', 'হ্যাঁ। পণ্যে দেখানো দাম সব ক্রেতার জন্য একই।'),
+                    $item('Can I pay on delivery?', 'ডেলিভারিতে টাকা দেওয়া যায়?', 'Where the seller offers it. Each product shows whether cash on delivery is available.', 'যেখানে বিক্রেতা দেন। প্রতিটি পণ্যে ক্যাশ অন ডেলিভারি আছে কি না লেখা থাকে।'),
+                    $item('What if something is not as described?', 'বর্ণনার সঙ্গে না মিললে?', 'Read the return policy on the product page, then ask for a return from your orders.', 'পণ্যের পাতায় ফেরত নীতি পড়ুন, তারপর আপনার অর্ডার থেকে ফেরত চান।'),
+                ]]],
+                ['cta', ['button' => 'Shop all {n} products', 'button_bn' => 'সব {n}টি পণ্য দেখুন']],
             ],
         };
 

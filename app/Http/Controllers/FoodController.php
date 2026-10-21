@@ -10,6 +10,7 @@ use App\Services\Food\CustomFood;
 use App\Services\Food\FoodOrders;
 use App\Services\Food\Restaurants;
 use App\Services\Stock\StockException;
+use App\Services\Storefront\PageFronts;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -51,7 +52,7 @@ class FoodController extends Controller
         $cards = $list->when($category !== null, fn ($l) => $l->filter(fn (Restaurant $r) => FoodItem::where('restaurant_id', $r->id)->where('available', true)->where('category', $category)->exists()))->map(fn (Restaurant $r) => $this->card($r))->values();
 
         return Inertia::render('food/index', [
-            'front' => app(\App\Services\Storefront\PageFronts::class)->food($cards->all(), $category),
+            'front' => app(PageFronts::class)->food($cards->all(), $category),
             'area' => $area,
             'mode' => $mode,
             'restaurants' => $list->map(fn (Restaurant $r) => $this->card($r))->values(),

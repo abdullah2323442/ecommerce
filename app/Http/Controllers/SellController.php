@@ -3,34 +3,35 @@
 namespace App\Http\Controllers;
 
 use App\Enums\AccountType;
+use App\Models\CatalogProduct;
 use App\Models\Listing;
-use App\Models\Sector;
+use App\Models\ListingPhoto;
+use App\Models\ListingQuestion;
 use App\Models\MarketCase;
 use App\Models\MarketOrder;
 use App\Models\MarketStatement;
+use App\Models\PriceOffer;
+use App\Models\Sector;
+use App\Services\Market\Catalog;
+use App\Services\Market\DigitalGoods;
+use App\Services\Market\ListingPhotos;
+use App\Services\Market\ListingQuestions;
+use App\Services\Market\ListingVariants;
 use App\Services\Market\MarketCases;
 use App\Services\Market\MarketOrders;
 use App\Services\Market\Marketplace;
 use App\Services\Market\Penalties;
+use App\Services\Market\PriceOffers;
 use App\Services\Market\SellerReports;
 use App\Services\Market\SellerTrust;
 use App\Services\Market\Statements;
-use App\Models\ListingQuestion;
-use App\Models\PriceOffer;
-use App\Services\Market\PriceOffers;
-use App\Services\Market\ListingQuestions;
-use App\Services\Market\ListingVariants;
-use App\Services\Market\Catalog;
-use App\Services\Market\ListingPhotos;
-use App\Models\ListingPhoto;
-use App\Models\CatalogProduct;
-use App\Services\Wallet\Tokens;
-use Illuminate\Support\Carbon;
 use App\Services\Stock\PriceWarningException;
 use App\Services\Stock\StockException;
+use App\Services\Wallet\Tokens;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -300,7 +301,7 @@ class SellController extends Controller
         $data = $request->validate(['file' => ['required', 'file'], 'max' => ['required', 'integer', 'min:1', 'max:20'], 'days' => ['required', 'integer', 'min:1', 'max:365']]);
 
         try {
-            app(\App\Services\Market\DigitalGoods::class)->attach($listing, $request->file('file'), (int) $data['max'], (int) $data['days']);
+            app(DigitalGoods::class)->attach($listing, $request->file('file'), (int) $data['max'], (int) $data['days']);
         } catch (StockException $e) {
             return back()->withErrors(['digital' => __($e->getMessage())]);
         }
@@ -311,7 +312,7 @@ class SellController extends Controller
     public function removeDigital(Request $request, Listing $listing): RedirectResponse
     {
         $this->mine($request, $listing);
-        app(\App\Services\Market\DigitalGoods::class)->remove($listing);
+        app(DigitalGoods::class)->remove($listing);
 
         return back()->with('status', __('The file is removed.'));
     }

@@ -11,6 +11,7 @@ use App\Models\Sector;
 use App\Models\User;
 use App\Services\Integrations\Integrations;
 use App\Services\Market\MarketOrders;
+use App\Services\Stock\StockException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
 use Inertia\Testing\AssertableInertia as Assert;
@@ -183,7 +184,7 @@ class CashOnDeliveryTest extends TestCase
     {
         try {
             app(MarketOrders::class)->accept($o, $this->seller);
-        } catch (\App\Services\Stock\StockException $e) {
+        } catch (StockException $e) {
             return $e->getMessage();
         }
 

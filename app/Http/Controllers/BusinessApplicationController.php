@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Enums\AccountType;
 use App\Models\TradeApplication;
 use App\Services\Media\ImageCompressor;
+use App\Support\Categories;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -28,7 +30,7 @@ class BusinessApplicationController extends Controller
         $latest = TradeApplication::where('user_id', $user->id)->latest('id')->first();
 
         return Inertia::render('business', [
-            'categories' => collect(\App\Support\Categories::all())->map(fn ($label, $key) => ['key' => $key, 'label' => $label])->values(),
+            'categories' => collect(Categories::all())->map(fn ($label, $key) => ['key' => $key, 'label' => $label])->values(),
             'application' => $latest ? [
                 'status' => $latest->status, 'business_name' => $latest->business_name, 'review_note' => $latest->status === 'rejected' ? $latest->review_note : null,
                 'sent_at' => $latest->created_at->toIso8601String(),
@@ -49,8 +51,8 @@ class BusinessApplicationController extends Controller
         $data = $request->validate([
             'business_name' => ['required', 'string', 'max:150'],
             'business_kind' => ['required', 'in:shop,trader,restaurant'],
-            'categories' => [\Illuminate\Validation\Rule::requiredIf(fn () => $request->input('business_kind') !== 'restaurant'), 'nullable', 'array'],
-            'categories.*' => ['in:'.implode(',', array_keys(\App\Support\Categories::all()))],
+            'categories' => [Rule::requiredIf(fn () => $request->input('business_kind') !== 'restaurant'), 'nullable', 'array'],
+            'categories.*' => ['in:'.implode(',', array_keys(Categories::all()))],
             'phone' => ['required', 'string', 'max:30'],
             'address' => ['required', 'string', 'max:300'],
             'license_number' => ['nullable', 'string', 'max:80'],

@@ -5,6 +5,9 @@ namespace App\Services\Integrations;
 use App\Models\Integration;
 use App\Models\User;
 use App\Services\Audit\ActivityLogger;
+use App\Services\Couriers\CourierBooking;
+use App\Services\Couriers\CourierException;
+use App\Services\Location\Locator;
 use App\Services\Messages\HttpSmsGateway;
 use App\Services\Stock\StockException;
 use Illuminate\Support\Facades\Cache;
@@ -144,8 +147,8 @@ class Integrations
     private function tryCourier(string $key): array
     {
         try {
-            app(\App\Services\Couriers\CourierBooking::class)->provider(substr($key, strlen('courier:')))->check();
-        } catch (\App\Services\Couriers\CourierException $e) {
+            app(CourierBooking::class)->provider(substr($key, strlen('courier:')))->check();
+        } catch (CourierException $e) {
             return ['ok' => false, 'note' => $e->getMessage()];
         }
 
@@ -195,7 +198,7 @@ class Integrations
         $result = match ($key) {
             'sms:http' => app(HttpSmsGateway::class)->probe($values, (string) ($args['to'] ?? '')),
             'courier:steadfast', 'courier:pathao' => $this->tryCourier($key),
-            'map:nominatim', 'map:google' => app(\App\Services\Location\Locator::class)->probe($key, $values),
+            'map:nominatim', 'map:google' => app(Locator::class)->probe($key, $values),
             default => throw new StockException(str_starts_with($key, 'social:') ? 'There is no test button for this one. Try signing in with it.' : (str_starts_with($key, 'payment:') ? 'There is no test button for this one. Switch on Testing and make a practice payment.' : 'This service is not built into the site yet.')),
         };
 

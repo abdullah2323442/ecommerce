@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\Wallet\Referrals;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -13,7 +14,7 @@ class Invoice extends Model
         // A completed sale to an account that was sent by a friend's referral earns the friend a token (spec ch 24).
         static::saved(function (Invoice $invoice) {
             if ($invoice->completed_at !== null && ($invoice->wasRecentlyCreated || $invoice->wasChanged('completed_at')) && $invoice->customer_id !== null) {
-                app(\App\Services\Wallet\Referrals::class)->qualify(User::find($invoice->customer_id));
+                app(Referrals::class)->qualify(User::find($invoice->customer_id));
             }
         });
     }

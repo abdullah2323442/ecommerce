@@ -3,7 +3,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { LayoutTemplate, LifeBuoy, ArchiveRestore, CreditCard, Palette, Plug, Bike, Banknote, Star, Library, Ticket, Gamepad2, Carrot, UtensilsCrossed, MessagesSquare, Hammer, Ruler, Tag, Copy, Store, HandHelping, MessageCircleQuestion, MessageSquareWarning, BarChart3, UserSquare, Scale, Truck, MailCheck, Eye, ListChecks, Hourglass, Settings2, NotebookPen, ClipboardCheck, ScrollText, UserCog, ShieldCheck, Undo2, BadgePercent, FileText, Inbox, LayoutGrid, Package, Percent, Pill, SearchX, ShoppingCart, Users, Wallet } from 'lucide-react';
+import { Ban, LayoutTemplate, LifeBuoy, ArchiveRestore, CreditCard, Palette, Plug, Bike, Banknote, Star, Library, Ticket, Gamepad2, Carrot, UtensilsCrossed, MessagesSquare, Hammer, Ruler, Tag, Copy, Store, HandHelping, MessageCircleQuestion, MessageSquareWarning, BarChart3, UserSquare, Scale, Truck, MailCheck, Eye, ListChecks, Hourglass, Settings2, NotebookPen, ClipboardCheck, ScrollText, UserCog, ShieldCheck, Undo2, BadgePercent, FileText, Inbox, LayoutGrid, Package, Percent, Pill, SearchX, ShoppingCart, Users, Wallet } from 'lucide-react';
 import BrandMark from './shell/brand-mark';
 
 /**
@@ -82,6 +82,7 @@ export function AppSidebar() {
         ...(auth.can.manageAccounts ? [{ title: 'Messages', url: '/admin/messages', icon: MailCheck }] : []),
         ...(auth.can.manageAccounts ? [{ title: 'Settings', url: '/admin/settings', icon: Settings2 }] : []),
         ...(auth.can.manageAccounts ? [{ title: 'Staff', url: '/admin/staff', icon: UserCog }] : []),
+        ...(auth.can.manageAccounts ? [{ title: 'Blocked addresses', url: '/admin/blocked-ips', icon: Ban }] : []),
         ...(auth.can.manageAccounts ? [{ title: 'Activity', url: '/admin/activity', icon: ScrollText }] : []),
         ...(auth.can.manageAccounts ? [{ title: 'Deleted', url: '/admin/deleted', icon: ArchiveRestore }] : []),
     ];

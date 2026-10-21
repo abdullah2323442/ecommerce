@@ -2,6 +2,7 @@
 
 namespace App\Services\Support;
 
+use App\Http\Middleware\SetLocale;
 use App\Models\Invoice;
 use App\Models\MarketOrder;
 use App\Models\SupportMessage;
@@ -9,6 +10,7 @@ use App\Models\SupportTicket;
 use App\Models\User;
 use App\Services\Audit\ActivityLogger;
 use App\Services\Messages\Messenger;
+use App\Services\Messages\SmsGateway;
 use App\Services\Security\PhoneVerifier;
 use App\Services\Stock\StockException;
 use Illuminate\Support\Facades\DB;
@@ -158,7 +160,7 @@ class Support
         }
 
         if (in_array('sms', $this->messages->channelsFor('support_replied'), true)) {
-            app(\App\Services\Messages\SmsGateway::class)->send($ticket->phone, $this->messages->text('support_replied', $data, \App\Http\Middleware\SetLocale::DEFAULT).' '.url('/support/t/'.$ticket->public_token));
+            app(SmsGateway::class)->send($ticket->phone, $this->messages->text('support_replied', $data, SetLocale::DEFAULT).' '.url('/support/t/'.$ticket->public_token));
         }
     }
 }

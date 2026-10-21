@@ -4,9 +4,11 @@ namespace Tests\Feature\Market;
 
 use App\Enums\AccountType;
 use App\Models\Listing;
+use App\Models\Notice;
 use App\Models\Sector;
 use App\Models\User;
 use App\Models\WishlistItem;
+use App\Services\Market\Wishlist;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -74,8 +76,8 @@ class WishlistTest extends TestCase
     public function test_a_real_price_drop_is_told_once_and_a_rise_then_a_fall_is_told_again(): void
     {
         $this->actingAs($this->buyer)->post("/market/{$this->chair->id}/wishlist");
-        $wl = app(\App\Services\Market\Wishlist::class);
-        $told = fn () => \App\Models\Notice::where('user_id', $this->buyer->id)->where('kind', 'wishlist_drop')->count();
+        $wl = app(Wishlist::class);
+        $told = fn () => Notice::where('user_id', $this->buyer->id)->where('kind', 'wishlist_drop')->count();
 
         $this->assertSame(0, $wl->dropAlerts(), 'nothing changed');
 
@@ -96,6 +98,6 @@ class WishlistTest extends TestCase
         $this->actingAs($this->buyer)->post("/market/{$this->chair->id}/wishlist");
         $this->chair->update(['public_price' => 500, 'status' => 'draft']);
 
-        $this->assertSame(0, app(\App\Services\Market\Wishlist::class)->dropAlerts());
+        $this->assertSame(0, app(Wishlist::class)->dropAlerts());
     }
 }

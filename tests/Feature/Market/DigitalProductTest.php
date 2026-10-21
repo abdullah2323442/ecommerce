@@ -11,6 +11,8 @@ use App\Models\Sector;
 use App\Models\User;
 use App\Services\Integrations\Integrations;
 use App\Services\Market\DigitalGoods;
+use App\Services\Market\MarketOrders;
+use App\Services\Stock\StockException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Http;
@@ -264,7 +266,7 @@ class DigitalProductTest extends TestCase
 
         $service->download($o->fresh()->load('listing'));
 
-        $this->expectException(\App\Services\Stock\StockException::class);
+        $this->expectException(StockException::class);
         $service->download($o->fresh()->load('listing'));
     }
 
@@ -279,7 +281,7 @@ class DigitalProductTest extends TestCase
     {
         $o = $this->bought();
 
-        $rows = app(\App\Services\Market\MarketOrders::class)->payouts();
+        $rows = app(MarketOrders::class)->payouts();
 
         $this->assertCount(1, $rows);
         $this->assertEqualsWithDelta((float) $o->total - (float) $o->commission, $rows[0]['amount'], 0.001);

@@ -160,7 +160,7 @@ class StorefrontTest extends TestCase
         $faq = StorefrontBlock::where('kind', 'faq')->first();
         $this->actingAs($this->admin)->put("/admin/storefront/blocks/{$faq->id}", ['items' => [['title' => 'Do you open on Friday?', 'text' => 'Yes, every day.']]])->assertSessionHasNoErrors();
 
-        $this->assertSame([['title' => 'Do you open on Friday?', 'text' => 'Yes, every day.']], collect($this->blocks())->firstWhere('kind', 'faq')['items']);
+        $this->assertSame([['title' => 'Do you open on Friday?', 'text' => 'Yes, every day.', 'link' => null, 'tone' => null, 'image' => null]], collect($this->blocks())->firstWhere('kind', 'faq')['items']);
     }
 
     public function test_a_banner_picture_is_uploaded_served_and_removed(): void

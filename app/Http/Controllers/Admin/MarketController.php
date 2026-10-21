@@ -13,17 +13,21 @@ use App\Models\Sector;
 use App\Models\SellerPenalty;
 use App\Models\User;
 use App\Services\Audit\ActivityLogger;
+use App\Services\Market\ListingQuestions;
+use App\Services\Market\ListingReports;
 use App\Services\Market\MarketCases;
 use App\Services\Market\MarketOrders;
-use App\Services\Market\ListingReports;
 use App\Services\Market\Marketplace;
 use App\Services\Market\Penalties;
 use App\Services\Market\SellerReports;
 use App\Services\Market\SellerTrust;
 use App\Services\Market\Statements;
+use App\Services\Media\ImageCompressor;
 use App\Services\Stock\StockException;
+use App\Support\Categories;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
@@ -52,7 +56,7 @@ class MarketController extends Controller
             'asking' => Listing::where('status', 'published')->whereNotNull('commission_request')->with(['sector', 'seller'])->latest('id')->get()->map($row),
             'published' => Listing::where('status', 'published')->with(['sector', 'seller'])->latest('approved_at')->limit(40)->get()->map($row),
             'sectors' => Sector::orderBy('sort')->orderBy('name')->get(),
-            'categories' => \App\Support\Categories::all(),
+            'categories' => Categories::all(),
         ]);
     }
 
@@ -144,7 +148,7 @@ class MarketController extends Controller
 
             return [
                 'seller_id' => $s->id, 'seller' => $s->business_name ?: $s->name, 'rank' => $rank['score'], 'proven' => $rank['proven'], 'trust' => $this->trust->status($s),
-                'missing' => $missing, 'slow' => $slow = app(\App\Services\Market\ListingQuestions::class)->slow($s), 'watch' => $missing >= $limit || $slow >= app(\App\Services\Market\ListingQuestions::class)->slowLimit(), 'next' => $this->penalties->next($s),
+                'missing' => $missing, 'slow' => $slow = app(ListingQuestions::class)->slow($s), 'watch' => $missing >= $limit || $slow >= app(ListingQuestions::class)->slowLimit(), 'next' => $this->penalties->next($s),
                 'suspended' => $s->penalty_suspended_at !== null, 'withheld' => $s->payout_withheld_at !== null,
                 'listings' => $s->listings()->where('status', 'published')->get(['id', 'title'])->map(fn ($l) => ['id' => $l->id, 'title' => $l->title])->values(),
                 'history' => $this->penalties->history($s)->map(fn ($p) => ['step' => $p->step, 'reason' => $p->reason, 'at' => $p->created_at->toIso8601String(), 'lifted' => $p->lifted_at !== null])->values(),
@@ -312,10 +316,10 @@ class MarketController extends Controller
         $request->validate(['image' => ['required', 'file', 'mimes:png,jpg,jpeg,webp', 'max:6144']]);
 
         $old = $sector->hero_path;
-        $sector->update(['hero_path' => app(\App\Services\Media\ImageCompressor::class)->store($request->file('image'), 'sectors', 2400)]);
+        $sector->update(['hero_path' => app(ImageCompressor::class)->store($request->file('image'), 'sectors', 2400)]);
 
-        if ($old && \Illuminate\Support\Facades\Storage::exists($old)) {
-            \Illuminate\Support\Facades\Storage::delete($old);
+        if ($old && Storage::exists($old)) {
+            Storage::delete($old);
         }
 
         $this->activity->record('sector.hero', null, ['sector' => $sector->slug], $request->user());

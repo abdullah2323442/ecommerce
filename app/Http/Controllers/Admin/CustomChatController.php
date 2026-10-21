@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CustomChatBlock;
 use App\Models\CustomChatMessage;
 use App\Models\CustomOrder;
+use App\Models\User;
 use App\Services\Custom\CustomChat;
 use App\Services\Stock\StockException;
 use Illuminate\Http\RedirectResponse;
@@ -41,7 +42,7 @@ class CustomChatController extends Controller
             })->filter()->values(),
             'found' => $q === '' ? [] : $this->chat->search($q)->map(fn (CustomChatMessage $m) => ['id' => $m->id, 'order_id' => $m->custom_order_id, 'number' => $m->order->number(), 'role' => $m->role, 'who' => $m->sender?->name, 'body' => $m->body, 'at' => $m->created_at->toIso8601String()])->values(),
             'blocks' => CustomChatBlock::latest('id')->limit(20)->get()->map(fn ($b) => ['order_id' => $b->custom_order_id, 'role' => $b->role, 'reason' => $b->reason, 'excerpt' => $b->excerpt, 'at' => $b->created_at->toIso8601String()]),
-            'repeat' => CustomChatBlock::select('user_id', DB::raw('count(*) as n'))->groupBy('user_id')->having('n', '>=', 3)->get()->map(fn ($r) => ['user_id' => $r->user_id, 'name' => optional(\App\Models\User::find($r->user_id))->name, 'n' => (int) $r->n]),
+            'repeat' => CustomChatBlock::select('user_id', DB::raw('count(*) as n'))->groupBy('user_id')->having('n', '>=', 3)->get()->map(fn ($r) => ['user_id' => $r->user_id, 'name' => optional(User::find($r->user_id))->name, 'n' => (int) $r->n]),
         ]);
     }
 

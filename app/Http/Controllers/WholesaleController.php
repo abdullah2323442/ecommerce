@@ -6,6 +6,7 @@ use App\Enums\AccountType;
 use App\Models\Invoice;
 use App\Services\Sales\TierUpgrade;
 use App\Services\Sales\TradeTerms;
+use App\Support\Categories;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -49,7 +50,7 @@ class WholesaleController extends Controller
             'terms' => [
                 'moq' => $this->terms->moq($user),
                 'payments' => $this->terms->payments($user),
-                'categories' => collect((array) $user->categories)->map(fn ($k) => \App\Support\Categories::label($k))->filter()->values(),
+                'categories' => collect((array) $user->categories)->map(fn ($k) => Categories::label($k))->filter()->values(),
             ],
             'business' => $user->business_name ?? $user->name,
         ]);

@@ -4,8 +4,6 @@ namespace App\Services\Market;
 
 use App\Enums\AccountType;
 use App\Models\Listing;
-use App\Services\Pricing\PriceWarning;
-use App\Services\Stock\PriceWarningException;
 use App\Models\ListingVariant;
 use App\Models\MarketOrder;
 use App\Models\Notice;
@@ -14,8 +12,11 @@ use App\Models\Setting;
 use App\Models\User;
 use App\Services\Media\ImageCompressor;
 use App\Services\Messages\Messenger;
+use App\Services\Pricing\PriceWarning;
+use App\Services\Stock\PriceWarningException;
 use App\Services\Stock\StockException;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 
@@ -381,7 +382,7 @@ class Marketplace
                 throw new StockException('Write the expiry date.');
             }
 
-            if (\Illuminate\Support\Carbon::parse($date)->isPast() && ! \Illuminate\Support\Carbon::parse($date)->isToday()) {
+            if (Carbon::parse($date)->isPast() && ! Carbon::parse($date)->isToday()) {
                 throw new StockException('This has already expired.');
             }
         }

@@ -6,6 +6,7 @@ use App\Models\CustomOrder;
 use App\Models\FoodOrder;
 use App\Models\GameOrder;
 use App\Models\MarketOrder;
+use App\Services\Market\MarketCases;
 use App\Services\Market\Marketplace;
 
 /**
@@ -60,7 +61,7 @@ class Receipts
             'lines' => [['name' => $name, 'qty' => (float) $o->quantity, 'unit' => $o->unit, 'price' => (float) $o->unit_price, 'total' => $goods]],
             'steps' => $steps, 'total' => (float) $o->total,
             'payment' => ['method' => __('Pay on delivery'), 'status' => $o->status === 'delivered' ? __('Paid') : ($o->status === 'cancelled' ? __('Cancelled') : __('To pay'))],
-            'notes' => [$o->listing?->return_note ?: ($o->listing?->sector?->return_rule ?: __('You can send it back within :n days of getting it.', ['n' => app(\App\Services\Market\MarketCases::class)->returnDays($o)]))],
+            'notes' => [$o->listing?->return_note ?: ($o->listing?->sector?->return_rule ?: __('You can send it back within :n days of getting it.', ['n' => app(MarketCases::class)->returnDays($o)]))],
         ];
     }
 

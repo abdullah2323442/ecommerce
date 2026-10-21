@@ -9,7 +9,9 @@ use App\Models\MarketOrder;
 use App\Models\PhoneVerification;
 use App\Models\Sector;
 use App\Models\User;
+use App\Services\Messages\ConfiguredSmsGateway;
 use App\Services\Messages\SmsGateway;
+use App\Services\Security\PhoneVerifier;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
@@ -40,7 +42,7 @@ class PhoneVerificationTest extends TestCase
             }
         };
         // A code someone is waiting for goes out at once, not through the queue.
-        $this->app->instance(\App\Services\Messages\ConfiguredSmsGateway::class, $fake);
+        $this->app->instance(ConfiguredSmsGateway::class, $fake);
         $this->app->instance(SmsGateway::class, $fake);
     }
 
@@ -224,7 +226,7 @@ class PhoneVerificationTest extends TestCase
         $this->ask();   // asked for, never confirmed
 
         $this->assertNull($shop->fresh()->customer_id);
-        $this->assertSame(0, app(\App\Services\Security\PhoneVerifier::class)->claimGuestOrders($this->me->fresh()));
+        $this->assertSame(0, app(PhoneVerifier::class)->claimGuestOrders($this->me->fresh()));
     }
 
     public function test_an_unsigned_in_visitor_cannot_use_it(): void

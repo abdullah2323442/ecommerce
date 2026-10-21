@@ -14,6 +14,7 @@ use App\Services\Sales\InvoiceService;
 use App\Services\Stock\StockException;
 use App\Services\Stock\StockService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
 
 /** Spec 6.2: staff can never sell at a loss, and that includes the one discount at the bottom of a retail sale. */
@@ -96,6 +97,47 @@ class EndDiscountLossTest extends TestCase
         $this->actingAs($this->admin)->put("/admin/counter/{$draft->id}/discount", ['percent' => 25])->assertSessionHasNoErrors();
 
         $this->assertSame('25.00', (string) $draft->fresh()->end_discount_percent);
+    }
+
+    public function test_a_loss_the_admin_makes_with_an_end_discount_shows_in_the_reports(): void
+    {
+        $draft = $this->sale($this->admin);
+        $this->actingAs($this->admin)->put("/admin/counter/{$draft->id}/discount", ['percent' => 30])->assertSessionHasNoErrors();
+        app(InvoiceService::class)->finalise($draft->fresh(), $this->admin);
+
+        $gross = app(\App\Services\Stock\ReportService::class)->gross(now());
+
+        $this->assertSame(210.0, $gross['revenue'], 'the box was paid 210, not the 300 on the line');
+        $this->assertSame(240.0, $gross['cost']);
+        $this->assertSame(-30.0, $gross['profit']);
+        $this->assertSame(30.0, $gross['loss_sales_value'], 'the loss the discount made is counted as a loss');
+    }
+
+    public function test_the_draft_warns_the_admin_before_a_sale_that_loses_money_is_finished(): void
+    {
+        $draft = $this->sale($this->admin);
+        $this->actingAs($this->admin)->put("/admin/counter/{$draft->id}/discount", ['percent' => 30]);
+
+        $this->actingAs($this->admin)->get("/admin/counter/{$draft->id}")
+            ->assertInertia(fn (Assert $page) => $page->where('invoice.below_cost', 30));
+
+        $this->actingAs($this->admin)->put("/admin/counter/{$draft->id}/discount", ['percent' => 10]);
+
+        $this->actingAs($this->admin)->get("/admin/counter/{$draft->id}")
+            ->assertInertia(fn (Assert $page) => $page->where('invoice.below_cost', 0));
+    }
+
+    public function test_a_profitable_end_discount_is_not_called_a_loss(): void
+    {
+        $draft = $this->sale($this->admin);
+        $this->actingAs($this->admin)->put("/admin/counter/{$draft->id}/discount", ['percent' => 10])->assertSessionHasNoErrors();
+        app(InvoiceService::class)->finalise($draft->fresh(), $this->admin);
+
+        $gross = app(\App\Services\Stock\ReportService::class)->gross(now());
+
+        $this->assertSame(270.0, $gross['revenue']);
+        $this->assertSame(30.0, $gross['profit']);
+        $this->assertSame(0.0, $gross['loss_sales_value']);
     }
 
     public function test_one_line_that_would_lose_is_enough_to_refuse_it(): void

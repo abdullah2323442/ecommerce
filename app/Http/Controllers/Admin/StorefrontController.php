@@ -32,7 +32,8 @@ class StorefrontController extends Controller
 
         $blocks = $query->get()->map(fn (StorefrontBlock $b) => [
             'id' => $b->id, 'kind' => $b->kind, 'is_active' => $b->is_active, 'title' => $b->title, 'title_bn' => $b->title_bn, 'text' => $b->text, 'text_bn' => $b->text_bn,
-            'button' => $b->button, 'button_bn' => $b->button_bn, 'source' => $b->source, 'item_limit' => $b->item_limit, 'items' => $b->items ?? [],
+            'button' => $b->button, 'button_bn' => $b->button_bn, 'link' => $b->link, 'source' => $b->source, 'item_limit' => $b->item_limit,
+            'items' => collect($b->items ?? [])->map(fn ($i, $n) => $i + ['image' => ! empty($i['image_path']) ? route('market.storefront-item-image', ['block' => $b->id, 'index' => $n, 'v' => substr(md5($i['image_path']), 0, 8)]) : null])->all(),
             'image' => $b->image_path ? route('market.storefront-image', ['block' => $b->id, 'v' => substr(md5($b->image_path.$b->updated_at), 0, 8)]) : null,
         ])->values();
 
@@ -107,6 +108,16 @@ class StorefrontController extends Controller
             'restaurants' => ['title' => 'Restaurants', 'item_limit' => 12],
             'games' => ['title' => 'Choose your game', 'item_limit' => 12],
             'packs' => ['title' => 'Best value packs', 'source' => 'value', 'item_limit' => 6],
+            'departments' => ['title' => 'Shop by department', 'item_limit' => 8],
+            'showcase' => ['title' => 'A new banner', 'button' => 'Explore products', 'items' => [['title' => 'A pick', 'link' => '/market', 'tone' => 'saffron']]],
+            'ticker' => ['items' => [['title' => 'A short promise']]],
+            'numbers' => ['title' => 'In numbers', 'items' => [['title' => '100', 'text' => 'What it counts']]],
+            'feature' => ['title' => 'A story', 'text' => 'Tell it in a few lines.', 'button' => 'Read more', 'link' => '/market', 'items' => [['title' => 'A point', 'link' => '/market']]],
+            'rail' => ['title' => 'Shop by occasion', 'items' => [['title' => 'An occasion', 'link' => '/market']]],
+            'promos' => ['items' => [['title' => 'A promotion', 'text' => 'What it offers.', 'link' => '/market']]],
+            'collections' => ['title' => 'Collections', 'items' => [['title' => 'A collection', 'text' => 'What is in it.', 'link' => '/market']]],
+            'sellers' => ['title' => 'Sellers to trust', 'item_limit' => 6],
+            'reviews' => ['title' => 'What buyers say', 'item_limit' => 3],
             default => ['button' => 'Explore products'],
         };
 
@@ -131,16 +142,24 @@ class StorefrontController extends Controller
             'title' => ['nullable', 'string', 'max:160'], 'title_bn' => ['nullable', 'string', 'max:160'],
             'text' => ['nullable', 'string', 'max:500'], 'text_bn' => ['nullable', 'string', 'max:500'],
             'button' => ['nullable', 'string', 'max:60'], 'button_bn' => ['nullable', 'string', 'max:60'],
+            'link' => ['nullable', 'string', 'max:200', 'regex:#^/(?!/)[^\s]*$#'],
             'source' => $sourceRule,
             'item_limit' => ['sometimes', 'integer', 'min:1', 'max:12'],
-            'items' => ['sometimes', 'array', 'max:8'],
+            'items' => ['sometimes', 'array', 'max:10'],
+            'items.*.tone' => ['nullable', Rule::in(StorefrontBlock::TONES)],
             'items.*.title' => ['required', 'string', 'max:160'], 'items.*.title_bn' => ['nullable', 'string', 'max:160'],
             'items.*.text' => ['nullable', 'string', 'max:500'], 'items.*.text_bn' => ['nullable', 'string', 'max:500'],
+            // A link stays on this site: it starts with one slash.
+            'items.*.link' => ['nullable', 'string', 'max:200', 'regex:#^/(?!/)[^\s]*$#'],
+            'items.*.image_path' => ['nullable', 'string', 'max:255'],
         ]);
 
         if (isset($data['items'])) {
+            // A picture can only be kept if it already belongs to this section: nobody can point an item at some other file.
+            $own = collect($block->items ?? [])->pluck('image_path')->filter()->all();
             $data['items'] = collect($data['items'])->map(fn ($i) => [
                 'title' => $i['title'], 'title_bn' => $i['title_bn'] ?? null, 'text' => $i['text'] ?? null, 'text_bn' => $i['text_bn'] ?? null,
+                'link' => $i['link'] ?? null, 'tone' => $i['tone'] ?? null, 'image_path' => in_array($i['image_path'] ?? null, $own, true) ? $i['image_path'] : null,
             ])->values()->all();
         }
 
@@ -200,6 +219,40 @@ class StorefrontController extends Controller
         return back()->with('status', __('Picture saved.'));
     }
 
+    /** A picture for one item of a promo or collection section (the item must already be saved). */
+    public function itemImage(Request $request, StorefrontBlock $block, int $index): RedirectResponse
+    {
+        $this->authorize('manage-accounts');
+        abort_unless(in_array('media', StorefrontBlock::KINDS[$block->kind]['fields'], true), 404);
+        $items = $block->items ?? [];
+        abort_unless(isset($items[$index]), 404);
+        $request->validate(['image' => ['required', 'file', 'mimes:png,jpg,jpeg,webp', 'max:4096']]);
+
+        if (! empty($items[$index]['image_path'])) {
+            Storage::delete($items[$index]['image_path']);
+        }
+
+        $items[$index]['image_path'] = $request->file('image')->store('storefront');
+        $block->update(['items' => $items]);
+
+        return back()->with('status', __('Picture saved.'));
+    }
+
+    public function removeItemImage(StorefrontBlock $block, int $index): RedirectResponse
+    {
+        $this->authorize('manage-accounts');
+        $items = $block->items ?? [];
+        abort_unless(isset($items[$index]), 404);
+
+        if (! empty($items[$index]['image_path'])) {
+            Storage::delete($items[$index]['image_path']);
+            $items[$index]['image_path'] = null;
+            $block->update(['items' => $items]);
+        }
+
+        return back()->with('status', __('Picture removed.'));
+    }
+
     public function removeImage(StorefrontBlock $block): RedirectResponse
     {
         $this->authorize('manage-accounts');
@@ -217,6 +270,7 @@ class StorefrontController extends Controller
         return match ($page) {
             'medicines' => route('medicines.index'),
             'food' => route('food.index'),
+            'market' => route('market.index'),
             default => route('gaming.index'),
         };
     }
@@ -243,6 +297,20 @@ class StorefrontController extends Controller
 
             foreach (Game::where('is_active', true)->orderBy('name')->get(['slug', 'name']) as $g) {
                 $out['game:'.$g->slug] = 'Game: '.$g->name;
+            }
+
+            return $out;
+        }
+
+        if ($page === 'market') {
+            $out = ['best' => 'Most ordered', 'fresh' => 'Newest', 'premium' => 'Highest priced', 'top' => 'The single highest priced'];
+
+            foreach (Sector::where('is_active', true)->orderBy('sort')->get(['slug', 'name']) as $s) {
+                $out['sector:'.$s->slug] = 'Shop: '.$s->name;
+            }
+
+            foreach (Listing::where('status', 'published')->whereNotNull('approved_at')->orderBy('title')->limit(200)->get(['id', 'title']) as $l) {
+                $out[(string) $l->id] = 'Product: '.$l->title;
             }
 
             return $out;

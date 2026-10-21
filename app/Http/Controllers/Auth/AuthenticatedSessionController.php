@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Enums\AccountType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,7 +40,20 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        return redirect()->intended($this->homeFor($request->user()));
+    }
+
+    /** Where each kind of person starts after signing in, unless they were sent here from a page they asked for. */
+    private function homeFor(User $user): string
+    {
+        return match ($user->account_type) {
+            AccountType::Paikari => '/paikari',
+            AccountType::Wholesaler => '/wholesale',
+            AccountType::Mpo => '/mpo',
+            AccountType::FoodVendor => '/food/vendor',
+            AccountType::Craftsman => '/craftsman',
+            default => route('dashboard', absolute: false),
+        };
     }
 
     /**

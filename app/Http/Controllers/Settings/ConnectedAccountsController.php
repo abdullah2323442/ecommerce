@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Settings;
 
+use App\Enums\AccountType;
 use App\Http\Controllers\Controller;
 use App\Services\Security\SocialLogin;
 use App\Services\Stock\StockException;
@@ -22,13 +23,13 @@ class ConnectedAccountsController extends Controller
         return Inertia::render('settings/connected-accounts', [
             'linked' => $this->social->linked($user), 'available' => $this->social->enabled(), 'hasPassword' => $user->has_password !== false,
             // Staff, the owner, shops and trade accounts keep their password: they cannot sign in this way.
-            'allowed' => $user->account_type === \App\Enums\AccountType::Public,
+            'allowed' => $user->account_type === AccountType::Public,
         ]);
     }
 
     public function connect(Request $request, string $provider): RedirectResponse
     {
-        if (! $this->social->isOn($provider) || $request->user()->account_type !== \App\Enums\AccountType::Public) {
+        if (! $this->social->isOn($provider) || $request->user()->account_type !== AccountType::Public) {
             return back()->withErrors(['social' => __('This way of signing in is not switched on.')]);
         }
 

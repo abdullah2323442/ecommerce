@@ -9,6 +9,8 @@ use App\Models\Payment;
 use App\Models\User;
 use App\Services\Audit\ActivityLogger;
 use App\Services\Integrations\Integrations;
+use App\Services\Market\DigitalGoods;
+use App\Services\Messages\Messenger;
 use App\Services\Sales\Deliveries;
 use App\Services\Stock\StockException;
 use Illuminate\Support\Facades\DB;
@@ -245,11 +247,11 @@ class Payments
         }
 
         $order->update(['paid_at' => now()]);
-        app(\App\Services\Market\DigitalGoods::class)->deliver($order->fresh());
+        app(DigitalGoods::class)->deliver($order->fresh());
         $this->activity->record('payment.received', null, ['payment' => $payment->id, 'market_order' => $order->id, 'amount' => (float) $payment->amount], null);
 
         if ($order->seller) {
-            app(\App\Services\Messages\Messenger::class)->send($order->seller, 'market_order_new', ['name' => $order->title], '/wholesale/sell/orders');
+            app(Messenger::class)->send($order->seller, 'market_order_new', ['name' => $order->title], '/wholesale/sell/orders');
         }
 
         return $payment;

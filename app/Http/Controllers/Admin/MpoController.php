@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\MpoBid;
 use App\Models\MpoListing;
+use App\Models\Preorder;
 use App\Models\User;
 use App\Services\Mpo\MpoService;
 use App\Services\Stock\StockException;
@@ -68,7 +69,7 @@ class MpoController extends Controller
             'mpo' => [
                 'id' => $user->id, 'number' => $user->mpo_number, 'name' => $user->name, 'phone' => $user->phone, 'email' => $user->email, 'area' => $user->area, 'note' => $user->mpo_note,
                 'closed' => $user->isSuspended(), 'failed' => (int) $user->mpo_failed, 'submitted' => MpoListing::where('user_id', $user->id)->count(), 'approved' => MpoListing::where('user_id', $user->id)->where('status', 'approved')->count(),
-                'sold' => \App\Models\Preorder::whereIn('mpo_listing_id', MpoListing::where('user_id', $user->id)->select('id'))->where('status', 'fulfilled')->count(), 'since' => $user->created_at?->toIso8601String(), 'company_ids' => $user->mpoCompanies()->pluck('companies.id'),
+                'sold' => Preorder::whereIn('mpo_listing_id', MpoListing::where('user_id', $user->id)->select('id'))->where('status', 'fulfilled')->count(), 'since' => $user->created_at?->toIso8601String(), 'company_ids' => $user->mpoCompanies()->pluck('companies.id'),
                 'products' => $user->mpoProducts()->with('company:id,name')->orderBy('brand_name')->get()->map(fn ($m) => ['id' => $m->id, 'name' => trim($m->brand_name.' '.$m->strength), 'company' => $m->company?->name]),
             ],
             'companies' => Company::where('is_active', true)->orderBy('name')->limit(300)->get(['id', 'name']),

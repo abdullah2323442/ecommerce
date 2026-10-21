@@ -9,6 +9,7 @@ use App\Models\MeasurementProfile;
 use App\Models\Notice;
 use App\Models\Setting;
 use App\Models\User;
+use App\Services\Custom\Craftsmen;
 use App\Services\Custom\CustomOrders;
 use App\Services\Custom\MeasurementProfiles;
 use App\Services\Market\MarketOrders;
@@ -16,6 +17,7 @@ use App\Services\Stock\StockException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
 
@@ -40,7 +42,7 @@ class CustomOrdersTest extends TestCase
     {
         parent::setUp();
         Carbon::setTestNow('2026-10-15 09:00:00');
-        \Illuminate\Support\Facades\Storage::fake();
+        Storage::fake();
         $this->buyer = User::factory()->create(['account_type' => AccountType::Public, 'name' => 'Karim']);
         $this->staff = User::factory()->create(['account_type' => AccountType::Staff]);
         $this->maker = User::factory()->create(['account_type' => AccountType::Craftsman, 'name' => 'Karim Mistri']);
@@ -63,7 +65,7 @@ class CustomOrdersTest extends TestCase
         ], $over));
     }
 
-    private function clothing(array $items = null): CustomOrder
+    private function clothing(?array $items = null): CustomOrder
     {
         return $this->orders->place($this->buyer, [
             'kind' => 'clothing', 'fabric_by' => 'shop', 'material_id' => $this->silk->id,
@@ -81,7 +83,7 @@ class CustomOrdersTest extends TestCase
         $o = $this->memo($o);
         $o = $this->orders->confirm($o, $this->buyer, true);
         $o = $this->orders->receiveAdvance($o, $this->staff, 2700);
-        $o = app(\App\Services\Custom\Craftsmen::class)->assign($o, $this->staff, $this->maker);
+        $o = app(Craftsmen::class)->assign($o, $this->staff, $this->maker);
 
         return $this->orders->start($o, $this->staff);
     }
@@ -89,7 +91,7 @@ class CustomOrdersTest extends TestCase
     /** The work is all done and entered at 100%, so it can be marked ready. */
     private function finish(CustomOrder $o): CustomOrder
     {
-        app(\App\Services\Custom\Craftsmen::class)->record($o->fresh(), $this->maker, $this->maker, 100, UploadedFile::fake()->image('work.jpg'));
+        app(Craftsmen::class)->record($o->fresh(), $this->maker, $this->maker, 100, UploadedFile::fake()->image('work.jpg'));
 
         return $this->orders->markDone($o->fresh(), $this->staff);
     }
@@ -297,7 +299,7 @@ class CustomOrdersTest extends TestCase
         } catch (StockException) {
         }
 
-        app(\App\Services\Custom\Craftsmen::class)->assign($o->fresh(), $this->staff, $this->maker);
+        app(Craftsmen::class)->assign($o->fresh(), $this->staff, $this->maker);
         $started = $this->orders->start($o->fresh(), $this->staff);
 
         $this->assertSame(['making', '2026-10-25'], [$started->status, $started->due_on->toDateString()]);
@@ -457,7 +459,7 @@ class CustomOrdersTest extends TestCase
         $this->post("/admin/custom/{$order->id}/assign", ['craftsman_id' => $this->maker->id])->assertSessionHasNoErrors();
         $this->post("/admin/custom/{$order->id}/start")->assertSessionHasNoErrors();
         $this->post("/admin/custom/{$order->id}/done")->assertSessionHasErrors('custom');   // below 100% it is not complete
-        app(\App\Services\Custom\Craftsmen::class)->record($order->fresh(), $this->maker, $this->maker, 100, UploadedFile::fake()->image('w.jpg'));
+        app(Craftsmen::class)->record($order->fresh(), $this->maker, $this->maker, 100, UploadedFile::fake()->image('w.jpg'));
         $this->post("/admin/custom/{$order->id}/done")->assertSessionHasNoErrors();
         $this->get('/admin/custom')->assertInertia(fn (Assert $p) => $p->has('done', 1)->where('done.0.profit', 3500));   // price 9000 − material 4000 − wages 1500
         $this->post("/admin/custom/{$order->id}/bogus")->assertRedirect('/');

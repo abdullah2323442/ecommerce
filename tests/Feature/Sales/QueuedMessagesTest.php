@@ -4,9 +4,12 @@ namespace Tests\Feature\Sales;
 
 use App\Enums\AccountType;
 use App\Jobs\SendSms;
+use App\Models\Notice;
 use App\Models\User;
 use App\Services\Integrations\Integrations;
 use App\Services\Integrations\SafeUrl;
+use App\Services\Messages\ConfiguredSmsGateway;
+use App\Services\Messages\Messenger;
 use App\Services\Messages\QueuedSmsGateway;
 use App\Services\Messages\SmsGateway;
 use App\Services\Security\PhoneVerifier;
@@ -59,7 +62,7 @@ class QueuedMessagesTest extends TestCase
         $this->liveText();
         Http::fake(['sms.example.com/*' => Http::response('ok', 200)]);
 
-        (new SendSms('01712345678', 'Hello'))->handle(app(\App\Services\Messages\ConfiguredSmsGateway::class));
+        (new SendSms('01712345678', 'Hello'))->handle(app(ConfiguredSmsGateway::class));
 
         Http::assertSent(fn ($r) => $r['to'] === '01712345678' && $r['message'] === 'Hello');
     }
@@ -70,7 +73,7 @@ class QueuedMessagesTest extends TestCase
         Http::fake(['sms.example.com/*' => Http::response('no', 500)]);
 
         $this->expectException(\RuntimeException::class);
-        (new SendSms('01712345678', 'Hello'))->handle(app(\App\Services\Messages\ConfiguredSmsGateway::class));
+        (new SendSms('01712345678', 'Hello'))->handle(app(ConfiguredSmsGateway::class));
     }
 
     public function test_it_is_tried_four_times_with_longer_waits_and_a_time_limit(): void
@@ -98,16 +101,16 @@ class QueuedMessagesTest extends TestCase
         Queue::fake();
 
         $user = User::factory()->create(['phone' => '01712345678']);
-        app(\App\Services\Messages\Messenger::class)->send($user, 'order_received', ['number' => 'ORD1']);
+        app(Messenger::class)->send($user, 'order_received', ['number' => 'ORD1']);
 
-        $this->assertSame(1, \App\Models\Notice::where('user_id', $user->id)->count());
+        $this->assertSame(1, Notice::where('user_id', $user->id)->count());
     }
 
     public function test_a_code_someone_is_waiting_for_is_not_made_to_wait_in_the_queue(): void
     {
         Queue::fake();
         $sent = [];
-        $this->app->instance(\App\Services\Messages\ConfiguredSmsGateway::class, new class($sent) implements SmsGateway
+        $this->app->instance(ConfiguredSmsGateway::class, new class($sent) implements SmsGateway
         {
             public function __construct(private array &$out) {}
 

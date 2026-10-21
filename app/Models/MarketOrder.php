@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\Wallet\Referrals;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -16,7 +17,7 @@ class MarketOrder extends Model
     {
         static::saved(function (MarketOrder $order) {
             if ($order->status === 'delivered' && $order->wasChanged('status') && $order->buyer_id !== null) {
-                app(\App\Services\Wallet\Referrals::class)->qualify(User::find($order->buyer_id));
+                app(Referrals::class)->qualify(User::find($order->buyer_id));
             }
         });
     }

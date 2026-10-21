@@ -194,6 +194,17 @@ class CustomerAdminTest extends TestCase
         $this->assertSame(10.0, app(PriceResolver::class)->resolve($this->customer->refresh(), $this->medicine)->percent);
     }
 
+    public function test_a_taka_price_at_or_above_the_printed_piece_price_is_refused_with_an_explanation(): void
+    {
+        foreach ([100, 250] as $price) {
+            $this->actingAs($this->admin)->put("/admin/customers/{$this->customer->id}/rates", ['medicine_id' => $this->medicine->id, 'fixed_price' => $price])
+                ->assertSessionHasErrors('fixed_price');
+        }
+
+        $this->assertDatabaseCount('customer_rates', 0);
+        $this->assertStringContainsString('100.00', session('errors')->first('fixed_price'), 'the message names the printed piece price');
+    }
+
     public function test_saving_a_rate_twice_updates_instead_of_duplicating(): void
     {
         foreach ([20, 30] as $percent) {

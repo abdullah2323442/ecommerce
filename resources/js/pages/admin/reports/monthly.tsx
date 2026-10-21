@@ -53,6 +53,7 @@ interface Props {
     customers: { id: number; name: string | null; phone: string | null; area: string | null; memos: number; total: number; profit: number }[];
     inactive: { name: string | null; phone: string | null; last: string; days: number; total: number; memos: number }[];
     season: { id: number; name: string; strength: string | null; units: number; then_per_day: number; now_per_day: number; on_hand: number; rise: number | null; order: number }[];
+    losses: { below_cost: number; expired_not_taken: number };
     tonight: Totals & { cash_expected: number; open_drafts: number; returns: number; finished: number; low_stock: number; pending_approvals: number };
 }
 
@@ -105,6 +106,24 @@ export default function MonthlyReport(p: Props) {
                         </Button>
                     </div>
                 </div>
+
+                {(p.losses.below_cost > 0 || p.losses.expired_not_taken > 0) && (
+                    <section aria-labelledby="losses-h" className="border-destructive/40 bg-destructive/5 rounded-md border p-4">
+                        <h2 id="losses-h" className="text-destructive mb-2 font-medium">
+                            {t('Money lost')}
+                        </h2>
+                        <dl className="grid gap-2 text-sm sm:grid-cols-2">
+                            <div>
+                                <dt className="text-muted-foreground">{t('Sold below cost this month')}</dt>
+                                <dd className="font-medium tabular-nums">{money(p.losses.below_cost)}</dd>
+                            </div>
+                            <div>
+                                <dt className="text-muted-foreground">{t('Expired goods the company would not take back')}</dt>
+                                <dd className="font-medium tabular-nums">{money(p.losses.expired_not_taken)}</dd>
+                            </div>
+                        </dl>
+                    </section>
+                )}
 
                 <section aria-labelledby="tonight-h" className="bg-muted/30 rounded-md border p-4">
                     <h2 id="tonight-h" className="mb-2 font-medium">
@@ -290,22 +309,22 @@ export default function MonthlyReport(p: Props) {
                     </Block>
                 </div>
 
-                {p.inactive.length > 0 && (
-                    <Block title={t('Shops that have gone quiet')}>
+                <Block title={t('Shops that have gone quiet')}>
+                    {p.inactive.length === 0 ? (
+                        <p className="text-muted-foreground text-sm">{t('Nobody has stopped buying. Everyone bought within the last 30 days.')}</p>
+                    ) : (
                         <ul className="divide-y rounded-md border text-sm">
                             {p.inactive.map((c, i) => (
                                 <li key={i} className="flex flex-wrap justify-between gap-3 px-3 py-1.5">
                                     <span>
                                         {c.name} <span className="text-muted-foreground">{c.phone}</span>
                                     </span>
-                                    <span className="tabular-nums">
-                                        {t('last bought {d} days ago · {amount} so far', { d: num(c.days), amount: money(c.total) })}
-                                    </span>
+                                    <span className="tabular-nums">{t('last bought {d} days ago · {amount} so far', { d: num(c.days), amount: money(c.total) })}</span>
                                 </li>
                             ))}
                         </ul>
-                    </Block>
-                )}
+                    )}
+                </Block>
 
                 <Block title={t('Day by day')}>
                     <div className="overflow-x-auto">

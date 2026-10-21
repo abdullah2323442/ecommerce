@@ -7,10 +7,12 @@ use App\Models\Courier;
 use App\Models\Setting;
 use App\Services\Audit\ActivityLogger;
 use App\Services\Audit\Bin;
+use App\Services\Couriers\CourierBooking;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -36,7 +38,7 @@ class CourierController extends Controller
                 'rates' => collect(Courier::ZONES)->mapWithKeys(fn ($z) => [$z => ($r = $c->rates->firstWhere('zone', $z)) ? ['first_kg' => (float) $r->first_kg, 'extra_kg' => (float) $r->extra_kg] : null])->all(),
             ]),
             'checked_on' => $checked,
-            'providers' => app(\App\Services\Couriers\CourierBooking::class)->providers(),
+            'providers' => app(CourierBooking::class)->providers(),
             'stale' => $this->stale(),
         ]);
     }
@@ -94,7 +96,7 @@ class CourierController extends Controller
 
         $rules = ['name' => ['required', 'string', 'max:80'], 'cod_percent' => ['required', 'numeric', 'min:0', 'max:20'], 'is_active' => ['required', 'boolean'], 'rates' => ['required', 'array'],
             // Tie this courier to a company connected in Admin > Connections, to book parcels with them.
-            'provider' => ['nullable', 'string', \Illuminate\Validation\Rule::in(array_column(app(\App\Services\Couriers\CourierBooking::class)->providers(), 'key'))]];
+            'provider' => ['nullable', 'string', Rule::in(array_column(app(CourierBooking::class)->providers(), 'key'))]];
         foreach (Courier::ZONES as $zone) {
             $rules["rates.$zone"] = ['nullable', 'array'];
             $rules["rates.$zone.first_kg"] = ["required_with:rates.$zone.extra_kg", 'nullable', 'numeric', 'min:0', 'max:100000'];

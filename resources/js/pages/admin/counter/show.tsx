@@ -8,9 +8,10 @@ import { Input } from '@/components/ui/input';
 import { useSimpleCounter } from '@/hooks/use-simple-counter';
 import AppLayout from '@/layouts/app-layout';
 import { useI18n } from '@/lib/i18n';
+import { postJson } from '@/lib/post-json';
 import { type BreadcrumbItem } from '@/types';
 import { Head, router, usePage } from '@inertiajs/react';
-import { Printer, Trash2 } from 'lucide-react';
+import { FileDown, Mail, MessageCircle, Printer, Trash2 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
 interface Line {
@@ -41,6 +42,7 @@ interface Invoice {
     invoice_percent: string | null;
     end_discount_percent: string;
     totals: { subtotal: number; discount: number; delivery: number; total: number };
+    below_cost: number;
     finalised_at: string | null;
     note: string | null;
     credit_applied: number;
@@ -65,6 +67,7 @@ interface Result {
 
 interface Props {
     invoice: Invoice;
+    working: string | null;
     otherDrafts: { id: number; label: string }[];
     limit: number;
     policy: { days: number; cash_percent: number };
@@ -373,7 +376,19 @@ function LineRow({ invoice, line, others }: { invoice: Invoice; line: Line; othe
     );
 }
 
-export default function CounterShow({ invoice, otherDrafts, limit, policy, approvals, isAdmin, popular, controlled, controlledDefaults }: Props) {
+/** Ask for the memo's link, then open WhatsApp or the mail program with the words and the link already written. */
+async function shareMemo(id: number, how: 'whatsapp' | 'email') {
+    const r = await postJson<{ url: string; phone: string; email: string | null; subject: string; text: string }>(`/admin/counter/${id}/share`);
+    if (!r) return;
+
+    const target =
+        how === 'whatsapp'
+            ? `https://wa.me/${r.phone}?text=${encodeURIComponent(r.text)}`
+            : `mailto:${r.email ?? ''}?subject=${encodeURIComponent(r.subject)}&body=${encodeURIComponent(r.text)}`;
+    window.open(target, '_blank', 'noopener');
+}
+
+export default function CounterShow({ invoice, working, otherDrafts, limit, policy, approvals, isAdmin, popular, controlled, controlledDefaults }: Props) {
     const { t, money, num, dateTime } = useI18n();
     const errors = usePage().props.errors as Record<string, string>;
     const draft = invoice.status === 'draft';
@@ -387,6 +402,16 @@ export default function CounterShow({ invoice, otherDrafts, limit, policy, appro
     const over = !isAdmin && pct !== '' && Number(pct) > limit;
     const asked = approvals.find((a) => a.kind === kind);
     const waiting = asked?.status === 'pending';
+
+    // Tell the server this draft is open here, and learn who else has it open. Others can still come in.
+    const [other, setOther] = useState<string | null>(working);
+    useEffect(() => {
+        if (!draft) return;
+        const beat = () => postJson<{ other: string | null }>(`/admin/counter/${invoice.id}/working`).then((r) => r && setOther(r.other));
+        beat(); // at once, so someone opening it a moment later sees this person
+        const timer = setInterval(beat, 30000);
+        return () => clearInterval(timer);
+    }, [draft, invoice.id]);
 
     // While a request is open the screen checks for the admin's answer by itself.
     useEffect(() => {
@@ -407,6 +432,11 @@ export default function CounterShow({ invoice, otherDrafts, limit, policy, appro
             <Head title={invoice.number ?? t('Draft')} />
             <div className="mx-auto w-full max-w-4xl space-y-6 p-4 print:max-w-none print:p-0">
                 <Flash />
+                {other && (
+                    <p role="status" className="rounded-md border border-warning/50 bg-warning/10 px-3 py-2 text-sm font-semibold">
+                        {t('{name} is working on this draft.', { name: other })}
+                    </p>
+                )}
                 <InputError message={errors.invoice} />
 
                 <header className="flex flex-wrap items-start justify-between gap-3">
@@ -441,6 +471,24 @@ export default function CounterShow({ invoice, otherDrafts, limit, policy, appro
                                     {t('Print memo')}
                                 </a>
                             </Button>
+                            {invoice.status === 'final' && (
+                                <>
+                                    <Button asChild variant="outline">
+                                        <a href={`/memo/${invoice.id}`} target="_blank" rel="noreferrer" title={t('In the print window, choose Save as PDF.')}>
+                                            <FileDown className="size-4" />
+                                            {t('Save as PDF')}
+                                        </a>
+                                    </Button>
+                                    <Button type="button" variant="outline" onClick={() => void shareMemo(invoice.id, 'whatsapp')}>
+                                        <MessageCircle className="size-4" />
+                                        {t('Send by WhatsApp')}
+                                    </Button>
+                                    <Button type="button" variant="outline" onClick={() => void shareMemo(invoice.id, 'email')}>
+                                        <Mail className="size-4" />
+                                        {t('Send by email')}
+                                    </Button>
+                                </>
+                            )}
                             {invoice.can_correct && invoice.status === 'final' && (
                                 <Button
                                     variant="ghost"
@@ -562,6 +610,11 @@ export default function CounterShow({ invoice, otherDrafts, limit, policy, appro
                             <span>{t('Discount')}</span>
                             <span className="tabular">−{money(invoice.totals.discount)}</span>
                         </div>
+                    )}
+                    {invoice.below_cost > 0 && (
+                        <p role="alert" className="border-destructive/40 bg-destructive/5 text-destructive rounded-md border p-2 text-sm font-medium">
+                            {t('This sale is below cost by {amount}. It will be counted as a loss.', { amount: money(invoice.below_cost) })}
+                        </p>
                     )}
                     <div className="font-display flex justify-between border-t pt-2 text-xl font-extrabold">
                         <span>{t('Total')}</span>

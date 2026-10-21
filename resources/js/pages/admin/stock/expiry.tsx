@@ -208,6 +208,9 @@ export default function StockExpiry({ needsChecking, moneyAtRisk, nearExpiry, ex
                                 <section key={c.company} className="rounded-xl border bg-card">
                                     <header className="flex flex-wrap items-baseline justify-between gap-2 border-b px-4 py-3">
                                         <h2 className="font-display text-xl font-bold">{c.company}</h2>
+                                        <a href={`/admin/stock/expiry/return-list?company=${encodeURIComponent(c.company)}`} target="_blank" rel="noreferrer" className="text-sm underline underline-offset-4">
+                                            {t('Print the return list')}
+                                        </a>
                                         <p className="tabular text-sm text-muted-foreground">
                                             {t('{units} units, {value}', { units: num(c.units), value: money(c.value) })}
                                             {c.lost > 0 && <span className="ml-2 font-semibold text-destructive">{t('Lost {value}', { value: money(c.lost) })}</span>}

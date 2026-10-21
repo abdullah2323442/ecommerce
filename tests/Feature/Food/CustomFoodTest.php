@@ -8,6 +8,7 @@ use App\Models\FoodFavorite;
 use App\Models\FoodOrder;
 use App\Models\Ingredient;
 use App\Models\IngredientRequest;
+use App\Models\IngredientRule;
 use App\Models\Notice;
 use App\Models\Restaurant;
 use App\Models\RestaurantIngredient;
@@ -204,7 +205,7 @@ class CustomFoodTest extends TestCase
         $this->custom->addRule($this->shop, $this->cheddar, $this->bbq);
         $this->custom->untick($this->shop, $this->cheddar);
 
-        $this->assertSame(0, \App\Models\IngredientRule::count());
+        $this->assertSame(0, IngredientRule::count());
         $this->assertSame(0, RestaurantIngredient::where('ingredient_id', $this->cheddar->id)->count());
     }
 
@@ -249,7 +250,7 @@ class CustomFoodTest extends TestCase
     {
         $this->custom->addRule($this->shop, $this->bbq, $this->cheddar);
         $this->custom->addRule($this->shop, $this->cheddar, $this->bbq);   // the same rule once, whichever way round
-        $this->assertSame(1, \App\Models\IngredientRule::count());
+        $this->assertSame(1, IngredientRule::count());
 
         try {
             $this->custom->build($this->shop, $this->burger->id, [$this->bbq->id, $this->cheddar->id]);
@@ -464,7 +465,7 @@ class CustomFoodTest extends TestCase
         $rival = app(Restaurants::class)->open(['name' => 'Rival', 'owner_name' => 'R', 'password' => 'long-password-1', 'area' => 'Mirpur', 'commission_value' => 5], $this->admin)->owner;
         $ri = RestaurantIngredient::firstOrFail();
         $this->custom->addRule($this->shop, $this->cheddar, $this->bbq);
-        $rule = \App\Models\IngredientRule::firstOrFail();
+        $rule = IngredientRule::firstOrFail();
 
         $this->actingAs($rival)->put("/food/vendor/custom/ri/{$ri->id}/available", ['on' => false])->assertRedirect('/');
         $this->actingAs($rival)->put("/food/vendor/custom/bases/{$this->burger->id}/sold-out", ['on' => true])->assertRedirect('/');
@@ -472,7 +473,7 @@ class CustomFoodTest extends TestCase
         $this->actingAs($rival)->post("/food/vendor/custom/bases/{$this->burger->id}", ['kind' => 'burger', 'price' => 1])->assertRedirect('/');
 
         $this->assertTrue($ri->fresh()->available);
-        $this->assertSame(1, \App\Models\IngredientRule::count());
+        $this->assertSame(1, IngredientRule::count());
         $this->assertEquals(200, $this->burger->fresh()->price);
     }
 

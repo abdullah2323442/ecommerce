@@ -9,6 +9,7 @@ use App\Models\MarketOrder;
 use App\Models\Notice;
 use App\Models\Role;
 use App\Models\Sector;
+use App\Models\Setting;
 use App\Models\User;
 use App\Services\Market\MarketCases;
 use App\Services\Market\MarketOrders;
@@ -97,7 +98,7 @@ class CasesTest extends TestCase
 
     public function test_the_window_is_a_setting(): void
     {
-        \App\Models\Setting::write('market.return_days', 14);
+        Setting::write('market.return_days', 14);
         $order = $this->order('delivered', '2026-10-01 12:00:00');
 
         $this->assertTrue($this->cases->allowed($order)['return']);

@@ -10,10 +10,12 @@ use App\Models\Notice;
 use App\Models\Role;
 use App\Models\Sector;
 use App\Models\SellerPenalty;
+use App\Models\Setting;
 use App\Models\User;
 use App\Services\Market\Marketplace;
 use App\Services\Market\Penalties;
 use App\Services\Market\SellerTrust;
+use App\Services\Market\Statements;
 use App\Services\Stock\StockException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
@@ -124,7 +126,7 @@ class PenaltiesTest extends TestCase
 
     public function test_the_limit_is_a_setting(): void
     {
-        \App\Models\Setting::write('market.trust_limit', 8000);
+        Setting::write('market.trust_limit', 8000);
 
         $this->assertSame('pending', app(Marketplace::class)->submit($this->seller, $this->dear())->status);
     }
@@ -185,7 +187,7 @@ class PenaltiesTest extends TestCase
     {
         app(Penalties::class)->issue($this->seller, $this->reviewer, 'suspended', 'Repeated problems');
 
-        app(\App\Services\Market\Statements::class)->liftIfClear($this->seller);
+        app(Statements::class)->liftIfClear($this->seller);
 
         $this->assertTrue($this->seller->fresh()->sellingStopped());
     }

@@ -198,7 +198,9 @@ export default function AdminMarket({ queue, asking, published, sectors }: { que
     const { t } = useI18n();
     const section = (title: string, items: Listing[], empty: string, review?: boolean) => (
         <section className="space-y-2">
-            <h2 className="font-medium">{title}</h2>
+            <h2 className="font-medium">
+                {title} <span className="text-muted-foreground tabular-nums">({items.length})</span>
+            </h2>
             {items.length === 0 ? <p className="rounded-md border border-dashed p-6 text-center text-sm text-muted-foreground">{empty}</p> : <ul className="divide-y rounded-md border bg-card">{items.map((l) => <Card key={l.id} l={l} review={review} />)}</ul>}
         </section>
     );

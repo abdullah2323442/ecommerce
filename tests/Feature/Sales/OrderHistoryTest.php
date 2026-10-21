@@ -3,11 +3,9 @@
 namespace Tests\Feature\Sales;
 
 use App\Enums\AccountType;
-use App\Models\Company;
 use App\Models\Invoice;
 use App\Models\Listing;
 use App\Models\MarketOrder;
-use App\Models\Medicine;
 use App\Models\Sector;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;

@@ -6,6 +6,8 @@ use App\Models\Listing;
 use App\Models\ListingVariant;
 use App\Models\MarketOrder;
 use App\Models\User;
+use App\Services\Payments\Payments;
+use App\Services\Sales\CartStore;
 use App\Services\Stock\StockException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -26,7 +28,7 @@ class MarketCart
     /** @return array<int, array{l: int, v: ?int, q: float}> */
     public function raw(): array
     {
-        return \App\Services\Sales\CartStore::get(self::KEY);
+        return CartStore::get(self::KEY);
     }
 
     public function count(): int
@@ -81,28 +83,28 @@ class MarketCart
         $row = $items->get($at);
         $row['q'] = min(1000000.0, $row['q'] + $quantity);
 
-        if ($row['q'] + 0.00001 < $price['min_qty']) {
+        if ($price['min_qty'] > $row['q'] + 0.00001) {
             throw new StockException(__('The smallest order is {n}.', ['n' => rtrim(rtrim(number_format($price['min_qty'], 2, '.', ''), '0'), '.')]));
         }
 
         $items->put($at, $row);
-        \App\Services\Sales\CartStore::put(self::KEY, $items->values()->all());
+        CartStore::put(self::KEY, $items->values()->all());
     }
 
     public function set(string $key, float $quantity): void
     {
         $quantity = min(1000000.0, max(0.01, $quantity));
-        \App\Services\Sales\CartStore::put(self::KEY, collect($this->raw())->map(fn ($i) => self::key($i['l'], $i['v']) === $key ? [...$i, 'q' => $quantity] : $i)->values()->all());
+        CartStore::put(self::KEY, collect($this->raw())->map(fn ($i) => self::key($i['l'], $i['v']) === $key ? [...$i, 'q' => $quantity] : $i)->values()->all());
     }
 
     public function remove(string $key): void
     {
-        \App\Services\Sales\CartStore::put(self::KEY, collect($this->raw())->reject(fn ($i) => self::key($i['l'], $i['v']) === $key)->values()->all());
+        CartStore::put(self::KEY, collect($this->raw())->reject(fn ($i) => self::key($i['l'], $i['v']) === $key)->values()->all());
     }
 
     public function clear(): void
     {
-        \App\Services\Sales\CartStore::forget(self::KEY);
+        CartStore::forget(self::KEY);
     }
 
     /**
@@ -144,7 +146,7 @@ class MarketCart
         // Spec ch 13: one product without cash on delivery and it is hidden for the whole cart.
         $cod = collect($lines)->every(fn ($l) => (bool) $l['listing']->cod_allowed);
 
-        return ['packages' => $packages, 'total' => round((float) collect($packages)->sum('total'), 2), 'cod' => $cod, 'online_open' => app(\App\Services\Payments\Payments::class)->enabled()];
+        return ['packages' => $packages, 'total' => round((float) collect($packages)->sum('total'), 2), 'cod' => $cod, 'online_open' => app(Payments::class)->enabled()];
     }
 
     /**

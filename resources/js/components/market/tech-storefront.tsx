@@ -1,4 +1,16 @@
-import { TechGrid, type ShelfItem } from '@/components/market/layouts';
+import { type ShelfItem, TechGrid } from '@/components/market/layouts';
+import { Feature, Numbers, Rail, Showcase, Ticker, type ToneItem } from '@/components/market/market-home-extra';
+import {
+    Collections,
+    type Department,
+    Departments,
+    type MediaItem,
+    Promos,
+    type Review,
+    Reviews,
+    type SellerCard,
+    Sellers,
+} from '@/components/market/market-home-sections';
 import { FaqList, ServiceStrip, StepsList } from '@/components/storefront/shared';
 import { useI18n } from '@/lib/i18n';
 import { Link } from '@inertiajs/react';
@@ -7,10 +19,31 @@ import { useState } from 'react';
 
 export interface StoreBlock {
     id: number;
-    kind: 'hero' | 'categories' | 'products' | 'premium' | 'banner' | 'budget' | 'service' | 'faq' | 'cta' | 'steps';
+    kind:
+        | 'hero'
+        | 'categories'
+        | 'products'
+        | 'premium'
+        | 'banner'
+        | 'budget'
+        | 'service'
+        | 'faq'
+        | 'cta'
+        | 'steps'
+        | 'departments'
+        | 'promos'
+        | 'collections'
+        | 'sellers'
+        | 'reviews'
+        | 'showcase'
+        | 'ticker'
+        | 'numbers'
+        | 'feature'
+        | 'rail';
     title: string | null;
     text: string | null;
     button: string | null;
+    link?: string | null;
     image?: string | null;
     count?: number;
     source?: string | null;
@@ -18,11 +51,14 @@ export interface StoreBlock {
     products?: ShelfItem[];
     product?: ShelfItem;
     ranges?: { from: number; to: number | null }[];
-    items?: { title: string; text: string }[];
+    items?: { title: string; text: string; link?: string | null; image?: string | null; tone?: string | null }[];
+    departments?: Department[];
+    sellers?: SellerCard[];
+    reviews?: Review[];
 }
 
 export interface StoreFront {
-    sector: string;
+    sector: string | null;
     count: number;
     blocks: StoreBlock[];
 }
@@ -35,7 +71,7 @@ const DISPLAY = { fontFamily: "'Changa One', 'Noto Serif Bengali', Georgia, seri
  */
 export default function Storefront({ data }: { data: StoreFront }) {
     const { t, num, money } = useI18n();
-    const allHref = route('market.index', { sector: data.sector, all: 1 });
+    const allHref = route('market.index', data.sector ? { sector: data.sector, all: 1 } : { all: 1 });
 
     return (
         <div className="tech space-y-16">
@@ -43,16 +79,44 @@ export default function Storefront({ data }: { data: StoreFront }) {
                 switch (b.kind) {
                     case 'hero':
                         return <Hero key={b.id} b={b} href={allHref} />;
+                    case 'showcase':
+                        return <Showcase key={b.id} b={{ ...b, link: b.link ?? null }} items={(b.items ?? []) as ToneItem[]} href={allHref} />;
+                    case 'ticker':
+                        return <Ticker key={b.id} items={(b.items ?? []) as MediaItem[]} />;
+                    case 'numbers':
+                        return <Numbers key={b.id} title={b.title} items={(b.items ?? []) as MediaItem[]} />;
+                    case 'feature':
+                        return (
+                            <Feature
+                                key={b.id}
+                                b={{ ...b, link: b.link ?? null }}
+                                items={(b.items ?? []) as MediaItem[]}
+                                flip={data.blocks.filter((x) => x.kind === 'feature').findIndex((x) => x.id === b.id) % 2 === 1}
+                                href={allHref}
+                            />
+                        );
+                    case 'rail':
+                        return <Rail key={b.id} title={b.title} text={b.text} items={(b.items ?? []) as MediaItem[]} />;
                     case 'categories':
                         return <Categories key={b.id} b={b} sector={data.sector} />;
                     case 'products':
-                        return <Shelf key={b.id} b={b} href={allHref} />;
+                        return <Shelf key={b.id} b={b} href={allHref} tabs={data.sector !== null} />;
                     case 'premium':
                         return <Premium key={b.id} b={b} />;
                     case 'banner':
                         return <Banner key={b.id} b={b} />;
                     case 'budget':
                         return <Budget key={b.id} b={b} sector={data.sector} />;
+                    case 'departments':
+                        return <Departments key={b.id} title={b.title} text={b.text} list={b.departments ?? []} />;
+                    case 'promos':
+                        return <Promos key={b.id} items={(b.items ?? []) as MediaItem[]} />;
+                    case 'collections':
+                        return <Collections key={b.id} title={b.title} text={b.text} items={(b.items ?? []) as MediaItem[]} />;
+                    case 'sellers':
+                        return <Sellers key={b.id} title={b.title} text={b.text} list={b.sellers ?? []} />;
+                    case 'reviews':
+                        return <Reviews key={b.id} title={b.title} list={b.reviews ?? []} />;
                     case 'service':
                         return <ServiceStrip key={b.id} items={b.items ?? []} label={t('Why shop here')} />;
                     case 'faq':
@@ -118,7 +182,7 @@ function Hero({ b, href }: { b: StoreBlock; href: string }) {
     );
 }
 
-function Categories({ b, sector }: { b: StoreBlock; sector: string }) {
+function Categories({ b, sector }: { b: StoreBlock; sector: string | null }) {
     const { t, num, money } = useI18n();
     const list = b.categories ?? [];
 
@@ -137,7 +201,7 @@ function Categories({ b, sector }: { b: StoreBlock; sector: string }) {
                         return (
                             <li key={`${c.slug}-${n}`} aria-hidden={copy || undefined} className="w-44 shrink-0 pe-3 sm:w-56">
                                 <Link
-                                    href={route('market.index', { sector, category: c.slug })}
+                                    href={route('market.index', { ...(sector ? { sector } : {}), category: c.slug })}
                                     tabIndex={copy ? -1 : undefined}
                                     className="art-zoom art-lift relative isolate flex aspect-[3/4] flex-col justify-end overflow-hidden rounded-2xl bg-[var(--t-navy)] p-4 text-white"
                                 >
@@ -168,7 +232,7 @@ function Categories({ b, sector }: { b: StoreBlock; sector: string }) {
     );
 }
 
-function Shelf({ b, href }: { b: StoreBlock; href: string }) {
+function Shelf({ b, href, tabs }: { b: StoreBlock; href: string; tabs: boolean }) {
     const { t, num, money } = useI18n();
     const items = b.products ?? [];
     const types = Array.from(new Set(items.map((i) => i.category).filter((c): c is string => !!c)));
@@ -192,7 +256,7 @@ function Shelf({ b, href }: { b: StoreBlock; href: string }) {
                 </Link>
             </div>
             {b.text && <p className="mt-3 max-w-xl text-[var(--t-muted)]">{b.text}</p>}
-            {types.length > 1 && (
+            {tabs && types.length > 1 && (
                 <div role="group" aria-label={t('Kind of product')} className="mt-6 flex flex-wrap gap-2">
                     <button type="button" aria-pressed={tab === null} onClick={() => setTab(null)} className={chip(tab === null)}>
                         {t('All')}
@@ -254,7 +318,7 @@ function Banner({ b }: { b: StoreBlock }) {
     );
 }
 
-function Budget({ b, sector }: { b: StoreBlock; sector: string }) {
+function Budget({ b, sector }: { b: StoreBlock; sector: string | null }) {
     const { t, num, money } = useI18n();
     const label = (r: { from: number; to: number | null }) =>
         r.to === null
@@ -277,7 +341,12 @@ function Budget({ b, sector }: { b: StoreBlock; sector: string }) {
                 {(b.ranges ?? []).map((r) => (
                     <li key={r.from} className="border-b border-[var(--t-line)]">
                         <Link
-                            href={route('market.index', { sector, all: 1, from: r.from, ...(r.to === null ? {} : { to: r.to }) })}
+                            href={route('market.index', {
+                                ...(sector ? { sector } : {}),
+                                all: 1,
+                                from: r.from,
+                                ...(r.to === null ? {} : { to: r.to }),
+                            })}
                             className="group flex min-h-16 items-center justify-between gap-4 py-4 text-[var(--t-ink)]"
                         >
                             <span style={DISPLAY} className="tabular text-2xl sm:text-3xl">

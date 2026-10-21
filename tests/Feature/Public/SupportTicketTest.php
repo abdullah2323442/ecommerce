@@ -3,15 +3,15 @@
 namespace Tests\Feature\Public;
 
 use App\Enums\AccountType;
+use App\Jobs\SendSms;
 use App\Models\Invoice;
-use App\Models\MarketOrder;
 use App\Models\Notice;
 use App\Models\Setting;
 use App\Models\SupportMessage;
 use App\Models\SupportTicket;
 use App\Models\User;
-use App\Services\Messages\SmsGateway;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Routing\Middleware\ThrottleRequests;
 use Illuminate\Support\Facades\Queue;
 use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
@@ -72,7 +72,7 @@ class SupportTicketTest extends TestCase
 
     public function test_name_phone_subject_and_words_are_needed_and_limited(): void
     {
-        $this->withoutMiddleware(\Illuminate\Routing\Middleware\ThrottleRequests::class);
+        $this->withoutMiddleware(ThrottleRequests::class);
 
         foreach ([['name' => ''], ['phone' => 'abc'], ['phone' => '12345'], ['subject' => 'ab'], ['body' => 'hi'], ['body' => str_repeat('x', 2001)], ['subject' => str_repeat('s', 121)]] as $bad) {
             $r = $this->post('/support', $this->body($bad));
@@ -184,7 +184,7 @@ class SupportTicketTest extends TestCase
         auth()->logout();
         $guest2 = $this->open(['phone' => '01912345679', 'subject' => 'Guest question two']);
         $this->actingAs($this->staff)->post("/admin/support/{$guest2->id}/reply", ['body' => 'Hello again'])->assertSessionHasNoErrors();
-        Queue::assertPushed(\App\Jobs\SendSms::class, fn ($j) => $j->phone === '01912345679' && str_contains($j->text, '/support/t/'.$guest2->public_token));
+        Queue::assertPushed(SendSms::class, fn ($j) => $j->phone === '01912345679' && str_contains($j->text, '/support/t/'.$guest2->public_token));
     }
 
     public function test_the_buyer_writes_back_and_it_goes_to_waiting_for_us(): void

@@ -7,7 +7,7 @@ use App\Models\ActivityLog;
 use App\Models\Integration;
 use App\Models\User;
 use App\Services\Integrations\Integrations;
-use App\Services\Messages\ConfiguredSmsGateway;
+use App\Services\Messages\QueuedSmsGateway;
 use App\Services\Messages\SmsGateway;
 use App\Services\Stock\StockException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -163,7 +163,7 @@ class ConnectionsTest extends TestCase
 
         Http::assertNothingSent();
         Log::shouldHaveReceived('info')->once();
-        $this->assertInstanceOf(\App\Services\Messages\QueuedSmsGateway::class, app(SmsGateway::class));
+        $this->assertInstanceOf(QueuedSmsGateway::class, app(SmsGateway::class));
     }
 
     public function test_a_service_in_test_mode_sends_nothing_real(): void

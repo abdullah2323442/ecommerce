@@ -7,6 +7,7 @@ use App\Models\GameOrder;
 use App\Models\GamePackage;
 use App\Services\Gaming\GameTopUp;
 use App\Services\Stock\StockException;
+use App\Services\Storefront\PageFronts;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -31,7 +32,7 @@ class GamingController extends Controller
                 'from' => (float) $g->packages->min('price'),
             ])->values();
 
-        return Inertia::render('gaming/index', ['games' => $games, 'front' => app(\App\Services\Storefront\PageFronts::class)->gaming($games->all())]);
+        return Inertia::render('gaming/index', ['games' => $games, 'front' => app(PageFronts::class)->gaming($games->all())]);
     }
 
     /** A game's cover picture, shown to everyone while the game is on sale. */

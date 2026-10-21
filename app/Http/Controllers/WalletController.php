@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\Wallet\Referrals;
 use App\Services\Wallet\Tokens;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -16,6 +17,6 @@ class WalletController extends Controller
     {
         $user = $request->user();
 
-        return Inertia::render('wallet', ['wallet' => $this->tokens->wallet($user), 'history' => $this->tokens->history($user), 'referral' => app(\App\Services\Wallet\Referrals::class)->summary($user)]);
+        return Inertia::render('wallet', ['wallet' => $this->tokens->wallet($user), 'history' => $this->tokens->history($user), 'referral' => app(Referrals::class)->summary($user)]);
     }
 }

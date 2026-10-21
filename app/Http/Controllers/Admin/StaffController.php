@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Services\Audit\ActivityLogger;
 use App\Services\Audit\Bin;
 use App\Services\Security\TemporaryPowers;
+use App\Services\Security\TwoFactor;
 use App\Services\Stock\StockException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -36,7 +37,7 @@ class StaffController extends Controller
             'staff' => User::where('account_type', AccountType::Staff->value)->with('role:id,name')->orderBy('name')->get()->map(fn (User $u) => [
                 'id' => $u->id, 'name' => $u->name, 'email' => $u->email, 'phone' => $u->phone, 'role_id' => $u->role_id, 'role' => $u->role?->name,
                 'discount_limit' => $u->discount_limit !== null ? (float) $u->discount_limit : null, 'closed' => $u->suspended_at !== null,
-                'two_factor' => app(\App\Services\Security\TwoFactor::class)->enabled($u),
+                'two_factor' => app(TwoFactor::class)->enabled($u),
             ]),
             'roles' => Role::withCount('users')->orderBy('name')->get()->map(fn (Role $r) => ['id' => $r->id, 'name' => $r->name, 'permissions' => $r->permissions, 'system' => $r->is_system, 'users' => $r->users_count]),
             'catalog' => config('permissions.catalog'),

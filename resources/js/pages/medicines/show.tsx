@@ -1,4 +1,5 @@
-import MedicineRow, { MedicineFlags, MedicineThumb } from '@/components/medicines/medicine-row';
+import { MedicineFlagsExplained } from '@/components/medicines/medicine-flags';
+import MedicineRow, { MedicineThumb } from '@/components/medicines/medicine-row';
 import { type MedicineSummary } from '@/components/medicines/types';
 import PublicLayout from '@/layouts/public-layout';
 import { useI18n } from '@/lib/i18n';
@@ -202,7 +203,9 @@ export default function MedicineShow({ medicine, alternatives, preorderDays, mpo
                     </h1>
                     <p className="mt-1 text-[var(--pt-muted)]">{[medicine.form && t(medicine.form), medicine.generic_name].filter(Boolean).join(' · ')}</p>
                     <p className="mt-0.5 text-[var(--pt-muted)]">{medicine.company?.name}</p>
-                    <MedicineFlags medicine={medicine} />
+                    <div className="mt-3">
+                        <MedicineFlagsExplained medicine={medicine} />
+                    </div>
 
                     {prices.length > 0 && (
                         <dl className="tabular mt-6 max-w-sm divide-y divide-[var(--pt-line)] rounded-lg border border-[var(--pt-line)] bg-[var(--pt-surface)]">

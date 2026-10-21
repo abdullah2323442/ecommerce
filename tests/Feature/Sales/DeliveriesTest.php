@@ -10,7 +10,6 @@ use App\Models\Medicine;
 use App\Models\Notice;
 use App\Models\Role;
 use App\Models\StockSource;
-use App\Models\Tier;
 use App\Models\User;
 use App\Services\Messages\SmsGateway;
 use App\Services\Sales\Deliveries;
@@ -54,7 +53,7 @@ class DeliveriesTest extends TestCase
         ]);
         $stock->setMasterSync(true);
 
-        $this->texts = new \ArrayObject();
+        $this->texts = new \ArrayObject;
         $this->app->instance(SmsGateway::class, new class($this->texts) implements SmsGateway
         {
             public function __construct(private \ArrayObject $texts) {}

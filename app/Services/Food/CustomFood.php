@@ -117,7 +117,7 @@ class CustomFood
             throw new StockException('Check the price.');
         }
 
-        return RestaurantIngredient::updateOrCreate(['restaurant_id' => $r->id, 'ingredient_id' => $i->id], ['price' => round($price, 2)]) ->fresh();
+        return RestaurantIngredient::updateOrCreate(['restaurant_id' => $r->id, 'ingredient_id' => $i->id], ['price' => round($price, 2)])->fresh();
     }
 
     public function untick(Restaurant $r, Ingredient $i): void

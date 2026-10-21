@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Enums\AccountType;
 use App\Models\Address;
+use App\Models\Setting;
 use App\Services\Analytics\Behavior;
+use App\Services\Location\Locator;
 use App\Services\Sales\DeliveryCharge;
 use App\Services\Sales\OrderNotes;
 use App\Services\Sales\OrderNotice;
 use App\Services\Sales\PublicCart;
 use App\Services\Sales\PublicOrders;
 use App\Services\Stock\StockException;
+use App\Services\Wallet\Tokens;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -44,8 +47,8 @@ class CheckoutController extends Controller
             ])->values(),
             'subtotal' => round((float) $lines->sum('total'), 2),
             'districts' => config('bd.districts'),
-            'locate' => app(\App\Services\Location\Locator::class)->enabled(),
-            'advance_over' => (float) \App\Models\Setting::read('delivery.advance_over', 0),
+            'locate' => app(Locator::class)->enabled(),
+            'advance_over' => (float) Setting::read('delivery.advance_over', 0),
             'delivery' => [
                 'district' => $this->delivery->shopDistrict(), 'pickup' => $this->delivery->pickupAvailable(), 'address' => config('brand.address'),
             ],
@@ -55,7 +58,7 @@ class CheckoutController extends Controller
             'notice' => $this->notice->at(),
             'signedIn' => $user !== null,
             // A token the buyer may use on this order (spec ch 24): the biggest one, if they have any.
-            'token' => $user && ($t = app(\App\Services\Wallet\Tokens::class)->best($user)) ? ['amount' => (float) $t->amount] : null,
+            'token' => $user && ($t = app(Tokens::class)->best($user)) ? ['amount' => (float) $t->amount] : null,
         ]);
     }
 

@@ -12,13 +12,16 @@ use App\Models\MedicineBarcode;
 use App\Models\OfferProduct;
 use App\Models\QuickNote;
 use App\Models\Setting;
+use App\Models\StockLot;
+use App\Models\StockMovement;
 use App\Models\Tier;
 use App\Models\User;
+use App\Services\Audit\ActivityLogger;
 use App\Services\Sales\ApprovalService;
 use App\Services\Sales\ControlledRegister;
-use App\Services\Audit\ActivityLogger;
 use App\Services\Sales\InvoiceService;
 use App\Services\Sales\OfferProducts;
+use App\Services\Sales\Presence;
 use App\Services\Sales\ReturnService;
 use App\Services\Stock\StockException;
 use Illuminate\Http\JsonResponse;
@@ -152,6 +155,46 @@ class CounterController extends Controller
         return redirect()->route('admin.counter.show', $invoice);
     }
 
+    /**
+     * A link the buyer can open without signing in, to send a finished memo by WhatsApp or email. The link is made the first time it is
+     * asked for and stays the same after that. Only a finished memo can be sent.
+     */
+    public function share(Request $request, Invoice $invoice): JsonResponse
+    {
+        $this->authorize('use-counter');
+        abort_unless($invoice->status === 'final' && $invoice->number !== null, 422, __('Only a finished memo can be sent.'));
+
+        if ($invoice->public_token === null) {
+            $invoice->forceFill(['public_token' => Str::random(40)])->saveQuietly();
+        }
+
+        $invoice->loadMissing('customer:id,name,phone,email');
+        $url = url('/memo/t/'.$invoice->public_token);
+        $phone = preg_replace('/\D/', '', (string) ($invoice->customer?->phone ?? ($invoice->ship_to['phone'] ?? '')));
+        // A Bangladesh mobile number written 01XXXXXXXXX goes to WhatsApp as 8801XXXXXXXXX.
+        $phone = str_starts_with($phone, '01') ? '88'.$phone : $phone;
+        $shop = (string) Setting::read('shop.name', config('app.name'));
+
+        return response()->json([
+            'url' => $url, 'phone' => $phone, 'email' => $invoice->customer?->email,
+            'subject' => __('Your memo :number from :shop', ['number' => $invoice->number, 'shop' => $shop]),
+            'text' => __('Your memo :number from :shop: :url', ['number' => $invoice->number, 'shop' => $shop, 'url' => $url]),
+        ]);
+    }
+
+    /** The open draft says "I am here" every half minute, so anyone else who opens it sees who is working on it. Others can still go in. */
+    public function working(Request $request, Invoice $invoice): JsonResponse
+    {
+        $this->authorize('use-counter');
+        $presence = app(Presence::class);
+        $other = $presence->otherOn($invoice, $request->user());
+        if ($invoice->status === 'draft') {
+            $presence->touch($invoice, $request->user());
+        }
+
+        return response()->json(['other' => $other]);
+    }
+
     public function show(Invoice $invoice): Response
     {
         $this->authorize('use-counter');
@@ -159,6 +202,7 @@ class CounterController extends Controller
 
         return Inertia::render('admin/counter/show', [
             'invoice' => $this->detail($invoice),
+            'working' => $invoice->status === 'draft' ? app(Presence::class)->otherOn($invoice, request()->user()) : null,
             'controlled' => $this->controlled->panel($invoice),
             'controlledDefaults' => $invoice->kind === 'retail' ? null : ['buyer_name' => $invoice->customer?->name, 'buyer_phone' => $invoice->customer?->phone],
             'otherDrafts' => Invoice::where('status', 'draft')->where('id', '!=', $invoice->id)->where('kind', $invoice->kind)
@@ -184,7 +228,7 @@ class CounterController extends Controller
         $found = Medicine::query()->with('company:id,name')
             ->where('brand_name', 'like', addcslashes($q, '%_\\').'%')
             // In-stock medicines first, the rest after (spec 6.10); then by name.
-            ->orderByDesc(\App\Models\StockLot::query()->select(\Illuminate\Support\Facades\DB::raw('1'))->whereColumn('stock_lots.medicine_id', 'medicines.id')->where('units_remaining', '>', 0)->limit(1))
+            ->orderByDesc(StockLot::query()->select(DB::raw('1'))->whereColumn('stock_lots.medicine_id', 'medicines.id')->where('units_remaining', '>', 0)->limit(1))
             ->orderBy('brand_name')->limit(12)->get();
 
         $offers = $invoice->kind === 'retail' ? collect() : $this->offerProducts->visibleTo('paikari', true)->keyBy('medicine_id'); // no offers at retail; staff see every one
@@ -436,12 +480,22 @@ class CounterController extends Controller
         ];
     }
 
+    /** How much this memo loses, if what the buyer pays is less than the goods cost: the owner may go on, but is told first. */
+    private function belowCost(Invoice $i, array $totals): float
+    {
+        $cost = StockMovement::whereIn('invoice_line_id', $i->lines->pluck('id'))->where('type', 'sale')->where('reversed', false)->get(['units', 'unit_cost'])
+            ->sum(fn (StockMovement $m) => abs((float) $m->units) * (float) $m->unit_cost);
+
+        return max(0.0, round($cost - ($totals['subtotal'] - $totals['discount']), 2));
+    }
+
     private function detail(Invoice $i): array
     {
         return $this->summary($i) + [
             'status' => $i->status, 'number' => $i->number, 'corrects' => $i->corrects_invoice_id ? Invoice::whereKey($i->corrects_invoice_id)->value('number') : null, 'can_correct' => $i->status === 'final' && request()->user()?->can('manage-stock'), 'note' => $i->note, 'credit_applied' => (float) $i->credit_applied, 'print_count' => (int) $i->print_count, 'payment_method' => $i->payment_method, 'paid_amount' => (float) $i->paid_amount, 'invoice_percent' => $i->invoice_percent, 'end_discount_percent' => $i->end_discount_percent,
-            'totals' => $this->invoices->totals($i), 'finalised_at' => $i->finalised_at?->toIso8601String(),
-            'lines_detail' => $i->lines->map(fn (InvoiceLine $l) => [
+            'totals' => $totals = $this->invoices->totals($i), 'below_cost' => $this->belowCost($i, $totals), 'finalised_at' => $i->finalised_at?->toIso8601String(),
+            // Offer lines first, ordinary lines after, each group in the order it was added.
+            'lines_detail' => $i->lines->sortBy(fn (InvoiceLine $l) => [$l->offer_product_id === null ? 1 : 0, $l->id])->map(fn (InvoiceLine $l) => [
                 'id' => $l->id, 'name' => $l->medicine->brand_name, 'strength' => $l->medicine->strength, 'company' => $l->medicine->company?->name,
                 'unit' => $l->unit, 'quantity' => (float) $l->quantity, 'unit_price' => (float) $l->unit_price, 'unit_mrp' => (float) $l->unit_mrp,
                 'offer' => $l->offer_product_id !== null, 'percent_off' => (float) $l->percent_off, 'special' => $l->special_percent !== null, 'held' => (bool) $l->held_for_loss, 'outside' => $l->is_outside, 'total' => $l->lineTotal(),

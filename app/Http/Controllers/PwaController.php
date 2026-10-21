@@ -95,7 +95,7 @@ class PwaController extends Controller
         $text = e(__('Please check your connection. The page opens again as soon as the line is back.'));
         $retry = e(__('Try again'));
 
-        return response("<!doctype html><html lang=\"".e(app()->getLocale())."\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta name=\"theme-color\" content=\"{$color}\"><title>{$name}</title>"
+        return response('<!doctype html><html lang="'.e(app()->getLocale())."\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta name=\"theme-color\" content=\"{$color}\"><title>{$name}</title>"
             ."<style>body{margin:0;min-height:100vh;display:grid;place-items:center;font-family:system-ui,sans-serif;background:#fff;color:#14120f}main{max-width:22rem;padding:1.5rem;text-align:center}h1{font-size:1.4rem}button{margin-top:1rem;padding:.7rem 1.4rem;border:0;border-radius:.6rem;background:{$color};color:#fff;font-size:1rem}</style></head>"
             ."<body><main><h1>{$title}</h1><p>{$text}</p><button onclick=\"location.reload()\">{$retry}</button></main></body></html>", 200, ['Content-Type' => 'text/html; charset=utf-8', 'Cache-Control' => 'no-cache']);
     }

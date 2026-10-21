@@ -7,6 +7,7 @@ use App\Models\Listing;
 use App\Models\MarketOrder;
 use App\Models\Sector;
 use App\Models\User;
+use App\Services\Wallet\Tokens;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -135,7 +136,7 @@ class MarketCartTest extends TestCase
     public function test_only_the_first_package_takes_a_token(): void
     {
         $this->actingAs($this->buyer);
-        app(\App\Services\Wallet\Tokens::class)->give($this->buyer, 50, 'Welcome', null, $this->rahim);
+        app(Tokens::class)->give($this->buyer, 50, 'Welcome', null, $this->rahim);
         $this->add($this->chair);
         $this->add($this->shirt);
 

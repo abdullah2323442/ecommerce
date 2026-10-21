@@ -145,14 +145,14 @@ class CounterExtrasTest extends TestCase
     public function test_an_unknown_barcode_is_asked_about_then_linked_and_remembered(): void
     {
         $this->actingAs($this->staff)->post('/admin/counter', ['kind' => 'retail']);
-        $draft = \App\Models\Invoice::latest('id')->firstOrFail();
+        $draft = Invoice::latest('id')->firstOrFail();
 
         $this->actingAs($this->staff)->post("/admin/counter/{$draft->id}/scan", ['code' => '999 111 222'])->assertSessionHasErrors(['invoice', 'unknown_barcode']);
         $this->assertSame(0, $draft->lines()->count());
 
         $this->actingAs($this->staff)->post("/admin/counter/{$draft->id}/scan", ['code' => '999 111 222', 'medicine_id' => $this->napa->id])->assertSessionHasNoErrors();
         $this->assertSame(1, $draft->lines()->count(), 'linked, and the box is on the draft');
-        $this->assertSame($this->napa->id, \App\Models\MedicineBarcode::where('code', '999111222')->value('medicine_id'));
+        $this->assertSame($this->napa->id, MedicineBarcode::where('code', '999111222')->value('medicine_id'));
 
         $this->actingAs($this->staff)->post("/admin/counter/{$draft->id}/scan", ['code' => '999111222'])->assertSessionHasNoErrors();
         $this->assertSame('2.00', (string) $draft->lines()->first()->quantity, 'next time the code is known');
@@ -161,13 +161,13 @@ class CounterExtrasTest extends TestCase
     public function test_a_code_already_linked_is_not_relinked_by_a_later_pick(): void
     {
         $this->actingAs($this->staff)->post('/admin/counter', ['kind' => 'retail']);
-        $draft = \App\Models\Invoice::latest('id')->firstOrFail();
-        \App\Models\MedicineBarcode::create(['medicine_id' => $this->napa->id, 'code' => '123456789']);
-        $other = \App\Models\Medicine::create(['company_id' => $this->napa->company_id, 'brand_name' => 'Other', 'strength' => '1', 'form' => 'tablet', 'packaging_type' => 'box', 'strips_per_box' => 3, 'pieces_per_strip' => 10, 'mrp_box' => 300, 'mrp_strip' => 100, 'mrp_piece' => 10, 'is_active' => true]);
+        $draft = Invoice::latest('id')->firstOrFail();
+        MedicineBarcode::create(['medicine_id' => $this->napa->id, 'code' => '123456789']);
+        $other = Medicine::create(['company_id' => $this->napa->company_id, 'brand_name' => 'Other', 'strength' => '1', 'form' => 'tablet', 'packaging_type' => 'box', 'strips_per_box' => 3, 'pieces_per_strip' => 10, 'mrp_box' => 300, 'mrp_strip' => 100, 'mrp_piece' => 10, 'is_active' => true]);
 
         $this->actingAs($this->staff)->post("/admin/counter/{$draft->id}/scan", ['code' => '123456789', 'medicine_id' => $other->id])->assertSessionHasNoErrors();
 
         $this->assertSame($this->napa->id, $draft->lines()->firstOrFail()->medicine_id, 'the code stays on its own medicine');
-        $this->assertSame(1, \App\Models\MedicineBarcode::where('code', '123456789')->count());
+        $this->assertSame(1, MedicineBarcode::where('code', '123456789')->count());
     }
 }

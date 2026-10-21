@@ -6,10 +6,12 @@ use App\Enums\AccountType;
 use App\Models\Listing;
 use App\Models\MarketCase;
 use App\Models\MarketOrder;
+use App\Services\Market\DigitalGoods;
 use App\Services\Market\MarketCases;
-use App\Services\Market\Reviews;
 use App\Services\Market\MarketOrders;
 use App\Services\Market\Marketplace;
+use App\Services\Market\Reviews;
+use App\Services\Payments\Payments;
 use App\Services\Stock\StockException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
@@ -79,8 +81,8 @@ class MarketOrderController extends Controller
         $ship = (array) $order->ship_to;
 
         return Inertia::render('market/order', [
-            'pay' => app(\App\Services\Payments\Payments::class)->forMarketOrder($order),
-            'digital' => app(\App\Services\Market\DigitalGoods::class)->panel($order),
+            'pay' => app(Payments::class)->forMarketOrder($order),
+            'digital' => app(DigitalGoods::class)->panel($order),
             'token' => $order->public_token,
             'order' => [
                 'number' => $order->number(), 'title' => $order->title, 'variant' => $order->variant_label, 'unit' => $order->unit, 'quantity' => (float) $order->quantity, 'unit_price' => (float) $order->unit_price,
@@ -110,7 +112,7 @@ class MarketOrderController extends Controller
     public function download(string $token): SymfonyResponse|RedirectResponse
     {
         try {
-            return app(\App\Services\Market\DigitalGoods::class)->download($this->find($token)->load('listing'));
+            return app(DigitalGoods::class)->download($this->find($token)->load('listing'));
         } catch (StockException $e) {
             return back()->withErrors(['order' => __($e->getMessage())]);
         }

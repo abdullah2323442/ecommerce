@@ -30,6 +30,29 @@ class AuthenticationTest extends TestCase
         $response->assertRedirect(route('dashboard', absolute: false));
     }
 
+    public function test_each_kind_of_person_starts_on_their_own_screen_after_signing_in()
+    {
+        $start = [
+            'paikari' => '/paikari', 'wholesaler' => '/wholesale', 'mpo' => '/mpo', 'food_vendor' => '/food/vendor', 'craftsman' => '/craftsman',
+            'admin' => route('dashboard', absolute: false), 'staff' => route('dashboard', absolute: false), 'public' => route('dashboard', absolute: false),
+        ];
+
+        foreach ($start as $type => $path) {
+            $user = User::factory()->create(['account_type' => $type]);
+
+            $this->post('/login', ['email' => $user->email, 'password' => 'password'])->assertRedirect($path);
+            $this->post('/logout');
+        }
+    }
+
+    public function test_a_page_the_person_asked_for_still_wins_over_their_start_screen()
+    {
+        $user = User::factory()->create(['account_type' => 'paikari']);
+
+        $this->get('/inbox');
+        $this->post('/login', ['email' => $user->email, 'password' => 'password'])->assertRedirect('/inbox');
+    }
+
     public function test_users_can_not_authenticate_with_invalid_password()
     {
         $user = User::factory()->create();

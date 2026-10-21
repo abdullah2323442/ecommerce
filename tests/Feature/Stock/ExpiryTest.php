@@ -146,6 +146,29 @@ class ExpiryTest extends TestCase
         $this->assertSame(480.0, $this->expiry->expiredByCompany()->first()['lost']);
     }
 
+    public function test_the_return_list_holds_only_what_is_still_waiting_to_go_back_to_the_company(): void
+    {
+        $waiting = $this->expiry->expire($this->buy($this->medicine, 6), $this->admin);
+        $gone = $this->expiry->expire($this->buy($this->med('Seclo'), 4), $this->admin);
+        $this->expiry->setReturnStatus($gone, 'returned');
+
+        $this->actingAs($this->admin)->get('/admin/stock/expiry/return-list?company=Square')
+            ->assertOk()
+            ->assertInertia(fn (\Inertia\Testing\AssertableInertia $page) => $page
+                ->component('admin/stock/expiry-print')
+                ->has('groups', 1)
+                ->where('groups.0.company', 'Square')
+                ->has('groups.0.batches', 1)
+                ->where('groups.0.batches.0.lot_id', $waiting->id));
+    }
+
+    public function test_only_the_admin_can_open_the_return_list(): void
+    {
+        $paikari = User::factory()->create(['account_type' => AccountType::Paikari]);
+
+        $this->actingAs($paikari)->get('/admin/stock/expiry/return-list')->assertRedirect('/');
+    }
+
     public function test_staff_cannot_expire_stock_and_a_live_lot_has_no_return_status(): void
     {
         $lot = $this->buy($this->medicine);

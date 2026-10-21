@@ -10,6 +10,7 @@ use App\Models\LoginEvent;
 use App\Models\Medicine;
 use App\Models\ProductRequest;
 use App\Models\User;
+use App\Services\Admin\CommerceStats;
 use App\Services\Backup\BackupService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -57,7 +58,7 @@ class DashboardController extends Controller
             'alerts' => $this->alerts($stats, $backups),
             'stats' => $stats,
             'recent' => $this->recentActivity(),
-            'commerce' => app(\App\Services\Admin\CommerceStats::class)->all(),
+            'commerce' => app(CommerceStats::class)->all(),
         ]);
     }
 

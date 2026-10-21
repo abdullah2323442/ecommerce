@@ -12,6 +12,7 @@ use App\Models\Role;
 use App\Models\StockSource;
 use App\Models\User;
 use App\Services\Sales\BulkOrder;
+use App\Services\Sales\InvoiceService;
 use App\Services\Sales\Quotes;
 use App\Services\Stock\StockException;
 use App\Services\Stock\StockService;
@@ -61,7 +62,7 @@ class BulkAndQuotesTest extends TestCase
 
     public function test_a_list_fills_the_order_and_reports_what_it_could_not_add(): void
     {
-        $cart = app(\App\Services\Sales\InvoiceService::class)->open('wholesale', $this->buyer, $this->buyer, 'online');
+        $cart = app(InvoiceService::class)->open('wholesale', $this->buyer, $this->buyer, 'online');
 
         $result = app(BulkOrder::class)->import($cart, $this->buyer, "name,quantity,unit\nNapa 500mg,5,box\nSeclo 20mg,3\nNapa,2\nNothing here,1\nNapa 500mg,0\nNapa 665 mg,2,carton\n");
 
@@ -77,7 +78,7 @@ class BulkAndQuotesTest extends TestCase
 
     public function test_the_same_product_twice_adds_up_and_semicolons_and_tabs_work(): void
     {
-        $cart = app(\App\Services\Sales\InvoiceService::class)->open('wholesale', $this->buyer, $this->buyer, 'online');
+        $cart = app(InvoiceService::class)->open('wholesale', $this->buyer, $this->buyer, 'online');
 
         $result = app(BulkOrder::class)->import($cart, $this->buyer, "\xEF\xBB\xBFNapa 500mg;2;box\nNapa 500mg\t3\tbox\n");
 
@@ -87,7 +88,7 @@ class BulkAndQuotesTest extends TestCase
 
     public function test_an_empty_or_huge_list_is_refused(): void
     {
-        $cart = app(\App\Services\Sales\InvoiceService::class)->open('wholesale', $this->buyer, $this->buyer, 'online');
+        $cart = app(InvoiceService::class)->open('wholesale', $this->buyer, $this->buyer, 'online');
 
         try {
             app(BulkOrder::class)->import($cart, $this->buyer, "name,quantity\n");

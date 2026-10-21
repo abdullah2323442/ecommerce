@@ -8,6 +8,7 @@ use App\Models\CustomChatMessage;
 use App\Models\CustomMaterial;
 use App\Models\CustomOrder;
 use App\Models\Notice;
+use App\Models\Sector;
 use App\Models\Setting;
 use App\Models\User;
 use App\Services\Custom\Craftsmen;
@@ -214,7 +215,7 @@ class CustomChatTest extends TestCase
     public function test_once_a_wood_sector_is_opened_its_own_chat_choice_decides(): void
     {
         $o = $this->order();
-        $wood = \App\Models\Sector::create(['slug' => 'wood', 'name' => 'Wood', 'unit' => 'foot', 'chat' => false, 'custom_orders' => true]);
+        $wood = Sector::create(['slug' => 'wood', 'name' => 'Wood', 'unit' => 'foot', 'chat' => false, 'custom_orders' => true]);
 
         $this->assertFalse($this->chat->enabled($o), 'the sector says no chat');
         $this->expectException(StockException::class);
@@ -239,7 +240,7 @@ class CustomChatTest extends TestCase
 
     public function test_a_sector_that_takes_no_made_to_order_jobs_refuses_them(): void
     {
-        \App\Models\Sector::create(['slug' => 'wood', 'name' => 'Wood', 'unit' => 'foot', 'custom_orders' => false]);
+        Sector::create(['slug' => 'wood', 'name' => 'Wood', 'unit' => 'foot', 'custom_orders' => false]);
         $teak = CustomMaterial::firstOrCreate(['name' => 'Teak'], ['kind' => 'wood', 'rate' => 3000]);
 
         $this->expectException(StockException::class);
@@ -248,10 +249,10 @@ class CustomChatTest extends TestCase
 
     public function test_clothing_jobs_are_not_stopped_by_the_wood_sector(): void
     {
-        \App\Models\Sector::create(['slug' => 'wood', 'name' => 'Wood', 'unit' => 'foot', 'custom_orders' => false]);
+        Sector::create(['slug' => 'wood', 'name' => 'Wood', 'unit' => 'foot', 'custom_orders' => false]);
 
-        $this->assertNotNull(\App\Models\Sector::where('slug', 'wood')->first());
-        $this->assertNull(\App\Models\Sector::where('slug', 'clothing')->first(), 'no clothing sector, so clothing keeps working as before');
+        $this->assertNotNull(Sector::where('slug', 'wood')->first());
+        $this->assertNull(Sector::where('slug', 'clothing')->first(), 'no clothing sector, so clothing keeps working as before');
     }
 
     // ------------------------------------------------------------------ the two cards

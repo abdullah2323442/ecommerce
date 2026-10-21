@@ -11,6 +11,7 @@ use App\Models\ListingVariant;
 use App\Models\MarketOrder;
 use App\Models\Sector;
 use App\Models\StorefrontBlock;
+use App\Models\Testimonial;
 use App\Models\User;
 use App\Services\Analytics\Behavior;
 use App\Services\Market\Catalog;
@@ -29,6 +30,7 @@ use App\Services\Stock\StockException;
 use App\Services\Wallet\Tokens;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
@@ -118,7 +120,7 @@ class MarketController extends Controller
         return Inertia::render('market/index', [
             'category' => $category ? $this->categoryNode($category, $inShop) : null,
             'tree' => is_string($sector) && $chosen ? $this->categoryTree($chosen, $inShop) : [],
-            'storefront' => $plain && $chosen ? $this->storefront($chosen, $inShop, $ranges, $total, $hero) : null,
+            'storefront' => $plain ? ($chosen ? $this->storefront($chosen, $inShop, $ranges, $total, $hero) : ($sector === null ? $this->home($all, $ranges, $total, $sectors) : null)) : null,
             'hero' => $hero,
             'sectors' => $sectors,
             'ranges' => $ranges,
@@ -517,6 +519,189 @@ class MarketController extends Controller
         abort_unless($block->image_path && Storage::exists($block->image_path) && $block->is_active && ($block->sector_id === null || $block->sector?->is_active), 404);
 
         return Storage::response($block->image_path, null, ['Cache-Control' => 'public, max-age=31536000, immutable', 'X-Content-Type-Options' => 'nosniff']);
+    }
+
+    /**
+     * The marketplace home (/market with no shop chosen), as the admin built it: the active sections in order, each with its live data or its
+     * words and pictures in the viewer's language. A product shows once on the page. No sections means the plain list.
+     *
+     * @param  Collection  $rows  every product open to this viewer
+     * @return array<string, mixed>|null
+     */
+    private function home($rows, array $ranges, int $total, Collection $sectors): ?array
+    {
+        $blocks = StorefrontBlock::where('page', 'market')->where('is_active', true)->orderBy('sort')->orderBy('id')->get();
+
+        if ($blocks->isEmpty()) {
+            return null;
+        }
+
+        $bn = app()->getLocale() === 'bn';
+        $sold = MarketOrder::whereIn('listing_id', $rows->pluck('listing.id')->all())->where('status', '!=', 'cancelled')->selectRaw('listing_id, count(*) as n')->groupBy('listing_id')->pluck('n', 'listing_id');
+        $slugOf = fn ($r) => $r['listing']->sector->slug;
+        $pool = function (?string $source) use ($rows, $sold, $slugOf) {
+            if ($source === 'best') {
+                return $rows->sortByDesc(fn ($r) => [$sold[$r['listing']->id] ?? 0, $r['listing']->approved_at])->values();
+            }
+            if ($source === 'premium' || $source === 'top') {
+                return $rows->sortByDesc('price')->values();
+            }
+            if (is_string($source) && str_starts_with($source, 'sector:')) {
+                return $rows->filter(fn ($r) => $slugOf($r) === substr($source, 7))->sortByDesc(fn ($r) => $r['listing']->approved_at)->values();
+            }
+            if (is_numeric($source)) {
+                return $rows->filter(fn ($r) => $r['listing']->id === (int) $source)->values();
+            }
+
+            return $rows->sortByDesc(fn ($r) => $r['listing']->approved_at)->values();
+        };
+        $used = [];
+        $take = function ($set, int $limit) use (&$used) {
+            $out = $set->filter(fn ($r) => ! in_array($r['listing']->id, $used, true))->take($limit)->values();
+            foreach ($out as $r) {
+                $used[] = $r['listing']->id;
+            }
+
+            return $this->withStars($out->map(fn ($r) => $this->card($r))->values());
+        };
+        $image = fn (StorefrontBlock $b) => $b->image_path ? route('market.storefront-image', ['block' => $b->id, 'v' => substr(md5($b->image_path.$b->updated_at), 0, 8)]) : null;
+
+        $shopPictures = Sector::where('is_active', true)->whereNotNull('hero_path')->get(['slug', 'hero_path'])->keyBy('slug');
+        $shopPicture = fn (string $slug) => isset($shopPictures[$slug]) ? route('market.hero', ['slug' => $slug, 'v' => substr(md5($shopPictures[$slug]->hero_path), 0, 8)]) : null;
+
+        $out = [];
+
+        foreach ($blocks as $b) {
+            $row = ['id' => $b->id, 'kind' => $b->kind, 'title' => $b->say('title'), 'text' => $b->say('text'), 'button' => $b->say('button'), 'link' => $b->link];
+
+            switch ($b->kind) {
+                case 'hero':
+                    $row['image'] = $image($b);
+                    $row['count'] = $total;
+                    break;
+                case 'showcase':
+                case 'rail':
+                    $row['count'] = $total;
+                    // A tile with no picture of its own borrows the picture of the shop its link leads to.
+                    $row['items'] = collect($b->itemList())->map(function ($i) use ($shopPicture) {
+                        if ($i['image'] === null && preg_match('#^/market\?sector=([a-z0-9-]+)#', (string) $i['link'], $m)) {
+                            $i['image'] = $shopPicture($m[1]);
+                        }
+
+                        return $i;
+                    })->all();
+                    if ($row['items'] === []) {
+                        continue 2;
+                    }
+                    break;
+                case 'feature':
+                    $row['image'] = $image($b);
+                    $row['items'] = $b->itemList();
+                    break;
+                case 'ticker':
+                case 'numbers':
+                    $row['items'] = $b->itemList();
+                    if ($row['items'] === []) {
+                        continue 2;
+                    }
+                    break;
+                case 'premium':
+                    $row['products'] = $take($pool($b->source ?? 'premium'), max(1, $b->item_limit))->all();
+                    if ($row['products'] === []) {
+                        continue 2;
+                    }
+                    break;
+                case 'departments':
+                    $row['departments'] = Sector::where('is_active', true)->orderBy('sort')->orderBy('name')->get()
+                        ->map(function (Sector $s) use ($sectors, $bn) {
+                            $count = $sectors->firstWhere('slug', $s->slug)['count'] ?? 0;
+
+                            return ['slug' => $s->slug, 'name' => $bn && $s->name_bn ? $s->name_bn : $s->name, 'tagline' => ($bn && $s->tagline_bn ? $s->tagline_bn : $s->tagline), 'count' => $count,
+                                'image' => $s->hero_path ? route('market.hero', ['slug' => $s->slug, 'v' => substr(md5($s->hero_path), 0, 8)]) : null];
+                        })->filter(fn ($d) => $d['count'] > 0)->take(max(1, $b->item_limit))->values()->all();
+                    if ($row['departments'] === []) {
+                        continue 2;
+                    }
+                    break;
+                case 'products':
+                    $row['source'] = $b->source;
+                    $row['products'] = $take($pool($b->source ?? 'fresh'), max(1, $b->item_limit));
+                    if ($row['products']->isEmpty()) {
+                        continue 2;
+                    }
+                    $row['products'] = $row['products']->all();
+                    break;
+                case 'banner':
+                    $item = $take($pool($b->source ?? 'top'), 1)->first();
+                    if (! $item) {
+                        continue 2;
+                    }
+                    $row['product'] = $item;
+                    $row['image'] = $image($b) ?? $item['photo'];
+                    break;
+                case 'budget':
+                    $row['ranges'] = $ranges;
+                    if ($ranges === []) {
+                        continue 2;
+                    }
+                    break;
+                case 'promos':
+                case 'collections':
+                case 'service':
+                case 'faq':
+                case 'steps':
+                    $row['items'] = $b->itemList();
+                    if ($row['items'] === []) {
+                        continue 2;
+                    }
+                    break;
+                case 'sellers':
+                    $row['sellers'] = $this->sellerShelf($rows, max(1, $b->item_limit));
+                    if ($row['sellers'] === []) {
+                        continue 2;
+                    }
+                    break;
+                case 'reviews':
+                    $row['reviews'] = Testimonial::where('is_active', true)->orderBy('sort')->orderByDesc('id')->limit(max(1, $b->item_limit))->get()
+                        ->map(fn ($t) => ['name' => $t->name, 'place' => $t->place, 'quote' => $bn && $t->quote_bn ? $t->quote_bn : $t->quote, 'rating' => (int) $t->rating])->values()->all();
+                    if ($row['reviews'] === []) {
+                        continue 2;
+                    }
+                    break;
+                case 'cta':
+                    $row['count'] = $total;
+                    break;
+            }
+
+            $out[] = $row;
+        }
+
+        return ['sector' => null, 'count' => $total, 'blocks' => $out];
+    }
+
+    /** The shops that have a page of their own, trusted ones first, each with a few of its products. */
+    private function sellerShelf($rows, int $limit): array
+    {
+        return $rows->filter(fn ($r) => $r['listing']->seller && app(Shops::class)->hasPage($r['listing']->seller))
+            ->groupBy(fn ($r) => $r['listing']->seller_id)
+            ->map(function ($group) {
+                $seller = $group->first()['listing']->seller;
+
+                return [
+                    'id' => $seller->id, 'name' => $this->market->sellerName($group->first()['listing']), 'products' => $group->count(), 'trusted' => $this->trustedSeller($seller),
+                    'photos' => $group->map(fn ($r) => $r['listing']->photo_path !== null ? $this->photoUrl($r['listing']) : null)->filter()->take(3)->values()->all(),
+                ];
+            })
+            ->sortBy([['trusted', 'desc'], ['products', 'desc']])->take($limit)->values()->all();
+    }
+
+    /** One picture of a collection or promo item, served from private storage while its section is shown. */
+    public function storefrontItemImage(StorefrontBlock $block, int $index): StreamedResponse
+    {
+        $path = $block->items[$index]['image_path'] ?? null;
+        abort_unless($path && str_starts_with($path, 'storefront/') && Storage::exists($path) && $block->is_active && ($block->sector_id === null || $block->sector?->is_active), 404);
+
+        return Storage::response($path, null, ['Cache-Control' => 'public, max-age=31536000, immutable', 'X-Content-Type-Options' => 'nosniff']);
     }
 
     /** What the list and the page show of a listing. The seller's price and our commission are never in it. */

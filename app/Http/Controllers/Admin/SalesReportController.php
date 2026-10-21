@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Services\Sales\SalesReports;
+use App\Services\Stock\ExpiryService;
+use App\Services\Stock\ReportService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Inertia\Inertia;
@@ -40,6 +42,11 @@ class SalesReportController extends Controller
             'customers' => $this->reports->customers($from, $to),
             'inactive' => $this->reports->inactive(),
             'tonight' => $this->reports->nightly(),
+            // Money lost that the profit line alone hides: sales made below cost this month, and expired goods the company would not take back.
+            'losses' => [
+                'below_cost' => app(ReportService::class)->gross($month)['loss_sales_value'],
+                'expired_not_taken' => round((float) app(ExpiryService::class)->expiredByCompany()->sum('lost'), 2),
+            ],
             // "Last year this sold a lot at this time" (spec 6.9).
             'season' => $this->reports->seasonal()->take(15)->values(),
         ]);

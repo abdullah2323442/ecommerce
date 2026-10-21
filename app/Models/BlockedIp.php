@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class BlockedIp extends Model
 {
@@ -11,6 +12,11 @@ class BlockedIp extends Model
     protected function casts(): array
     {
         return ['expires_at' => 'datetime'];
+    }
+
+    public function blocker(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'blocked_by');
     }
 
     public function isActive(): bool

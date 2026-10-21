@@ -101,10 +101,18 @@ export function TechGrid({ items, render, badge }: { items: ShelfItem[]; render?
                             {badge}
                         </span>
                     )}
-                    <Link href={route('market.show', i.id)} aria-hidden tabIndex={-1} className="art-zoom block aspect-square rounded-lg bg-[var(--t-bg)]">
+                    <Link
+                        href={route('market.show', i.id)}
+                        aria-hidden
+                        tabIndex={-1}
+                        className="art-zoom block aspect-square rounded-lg bg-[var(--t-bg)]"
+                    >
                         {i.photo && <img src={i.photo} alt="" loading="lazy" decoding="async" className="size-full object-contain p-2" />}
                     </Link>
-                    <Link href={route('market.show', i.id)} className="mt-3 line-clamp-2 min-h-6 leading-snug font-semibold hover:text-[var(--t-gold-ink)]">
+                    <Link
+                        href={route('market.show', i.id)}
+                        className="mt-3 line-clamp-2 min-h-6 leading-snug font-semibold hover:text-[var(--t-gold-ink)]"
+                    >
                         {i.title}
                     </Link>
                     <ul className="mt-2 space-y-1 text-xs text-[var(--t-muted)]">

@@ -250,7 +250,6 @@ class SellerReportsTest extends TestCase
         $shirtOrder = $this->order($shirt);         // 2000 for clothing
         $shirtOrder->update(['seller_price' => 500]);
 
-
         $this->actingAs($seller)->get('/wholesale/sell/reports')->assertInertia(fn ($p) => $p
             ->has('businesses', 2)->where('business', null)->has('products', 2)->where('months.11.sales', 5000));
 

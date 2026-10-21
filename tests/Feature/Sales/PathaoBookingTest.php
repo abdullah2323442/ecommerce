@@ -5,6 +5,7 @@ namespace Tests\Feature\Sales;
 use App\Enums\AccountType;
 use App\Models\Company;
 use App\Models\Courier;
+use App\Models\Integration;
 use App\Models\Invoice;
 use App\Models\Medicine;
 use App\Models\StockSource;
@@ -13,6 +14,7 @@ use App\Services\Couriers\CourierBooking;
 use App\Services\Couriers\PathaoProvider;
 use App\Services\Integrations\Integrations;
 use App\Services\Integrations\SafeUrl;
+use App\Services\Sales\Deliveries;
 use App\Services\Stock\StockService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Client\ConnectionException;
@@ -113,7 +115,7 @@ class PathaoBookingTest extends TestCase
         Http::assertSent(fn ($r) => $r->url() === self::BASE.'/orders' && $r->hasHeader('Authorization', 'Bearer TOKEN-AAA')
             && $r['store_id'] === 77 && $r['merchant_order_id'] === 'ORD'.$o->id && $r['recipient_name'] === 'Hasan Ali' && $r['recipient_phone'] === '01711000000'
             && $r['recipient_city'] === 1 && $r['recipient_zone'] === 11 && $r['delivery_type'] === 48 && $r['item_type'] === 2 && $r['item_weight'] == 0.5
-            && $r['amount_to_collect'] === (int) round(app(\App\Services\Sales\Deliveries::class)->due($o->fresh())) && str_contains($r['recipient_address'], 'House 5'));
+            && $r['amount_to_collect'] === (int) round(app(Deliveries::class)->due($o->fresh())) && str_contains($r['recipient_address'], 'House 5'));
 
         $o = $o->fresh();
         $this->assertSame('DL121224VS8TTJ', $o->courier_consignment);
@@ -211,7 +213,7 @@ class PathaoBookingTest extends TestCase
         $this->fakePathao();
         $o = $this->order();
 
-        $this->actingAs(User::factory()->create(['account_type' => AccountType::Public]))->getJson("/admin/orders/{$o->id}/courier-places")->assertRedirect("/");
+        $this->actingAs(User::factory()->create(['account_type' => AccountType::Public]))->getJson("/admin/orders/{$o->id}/courier-places")->assertRedirect('/');
 
         $o->forceFill(['courier_id' => null])->save();
         $this->actingAs($this->staff)->getJson("/admin/orders/{$o->id}/courier-places")->assertNotFound();
@@ -339,7 +341,7 @@ class PathaoBookingTest extends TestCase
     {
         $this->connect();
 
-        $row = \App\Models\Integration::where('key', 'courier:pathao')->firstOrFail();
+        $row = Integration::where('key', 'courier:pathao')->firstOrFail();
         $this->assertTrue($row->enabled);
         $this->actingAs($this->admin)->get('/admin/connections')->assertOk();
         $this->assertStringNotContainsString('SECRET-222', $this->actingAs($this->admin)->get('/admin/connections')->getContent());

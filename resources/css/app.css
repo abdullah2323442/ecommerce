@@ -526,6 +526,27 @@
     --t-line: var(--pt-line);
     --t-ink: var(--pt-ink);
     --t-muted: var(--pt-muted);
+    /* Jewel tones for banner tiles and chips; the admin picks one per tile. */
+    --tone-saffron: oklch(0.8 0.15 75);
+    --tone-rose: oklch(0.72 0.15 10);
+    --tone-jade: oklch(0.7 0.12 165);
+    --tone-indigo: oklch(0.6 0.14 275);
+    --tone-clay: oklch(0.66 0.12 45);
+    --tone-plum: oklch(0.58 0.14 335);
+}
+.tone-saffron { --tone: var(--tone-saffron); }
+.tone-rose { --tone: var(--tone-rose); }
+.tone-jade { --tone: var(--tone-jade); }
+.tone-indigo { --tone: var(--tone-indigo); }
+.tone-clay { --tone: var(--tone-clay); }
+.tone-plum { --tone: var(--tone-plum); }
+@keyframes art-drift {
+    from { transform: translateY(0); }
+    to { transform: translateY(-1.5rem); }
+}
+@media (prefers-reduced-motion: no-preference) {
+    .art-drift { animation: art-drift 9s ease-in-out infinite alternate; }
+    .art-drift-b { animation-duration: 12s; animation-direction: alternate-reverse; }
 }
 .fashion {
     --f-ink: oklch(0.16 0 0);

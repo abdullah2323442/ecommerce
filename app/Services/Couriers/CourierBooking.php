@@ -9,6 +9,7 @@ use App\Services\Audit\ActivityLogger;
 use App\Services\Integrations\Integrations;
 use App\Services\Sales\Deliveries;
 use App\Services\Sales\Dispatching;
+use App\Services\Sales\InvoiceService;
 use App\Services\Stock\StockException;
 use Illuminate\Support\Facades\DB;
 
@@ -198,7 +199,7 @@ class CourierBooking
     /** What the parcel weighs, from the weights of the products on the order (half a kilo at least, as the companies charge). */
     private function weightKg(Invoice $order): float
     {
-        $g = $order->lines()->with('medicine')->where('quantity', '>', 0)->get()->sum(fn ($l) => $l->medicine ? (int) $l->medicine->weight_g * (float) $l->quantity * \App\Services\Sales\InvoiceService::fraction($l->medicine, (string) $l->unit) : 0);
+        $g = $order->lines()->with('medicine')->where('quantity', '>', 0)->get()->sum(fn ($l) => $l->medicine ? (int) $l->medicine->weight_g * (float) $l->quantity * InvoiceService::fraction($l->medicine, (string) $l->unit) : 0);
 
         return max(0.5, round($g / 1000, 1));
     }

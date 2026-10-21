@@ -71,7 +71,7 @@ class FoodTest extends TestCase
         return ['name' => 'Bibi', 'phone' => '01712345678', 'area' => $area, 'address' => 'House 4, Road 2'];
     }
 
-    private function place(array $lines = null, string $mode = 'delivery', string $area = 'Mirpur', ?User $buyer = null): FoodOrder
+    private function place(?array $lines = null, string $mode = 'delivery', string $area = 'Mirpur', ?User $buyer = null): FoodOrder
     {
         return $this->orders->place($this->shop, $buyer, $lines ?? [['item_id' => $this->burger->id, 'quantity' => 2], ['item_id' => $this->fries->id, 'quantity' => 1]], $mode, $this->ship($area));
     }

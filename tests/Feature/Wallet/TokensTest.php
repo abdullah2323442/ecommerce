@@ -8,8 +8,8 @@ use App\Models\Company;
 use App\Models\CreditEntry;
 use App\Models\Invoice;
 use App\Models\Listing;
+use App\Models\MarketOrder;
 use App\Models\Medicine;
-use App\Models\Role;
 use App\Models\Sector;
 use App\Models\StockSource;
 use App\Models\Tier;
@@ -349,7 +349,7 @@ class TokensTest extends TestCase
         $this->actingAs($this->buyer)->get("/market/{$this->chair->id}")->assertInertia(fn (Assert $page) => $page->where('token', 40));
 
         $this->actingAs($this->buyer)->post("/market/{$this->chair->id}/order", $this->ship() + ['quantity' => 1, 'use_token' => 1])->assertSessionHasNoErrors();
-        $order = \App\Models\MarketOrder::latest('id')->first();
+        $order = MarketOrder::latest('id')->first();
         $this->actingAs($this->buyer)->get("/market/orders/{$order->public_token}")->assertInertia(fn (Assert $page) => $page->where('order.token_off', 40));
     }
 

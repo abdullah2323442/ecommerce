@@ -8,6 +8,7 @@ use App\Models\Invoice;
 use App\Models\InvoiceLine;
 use App\Models\Setting;
 use App\Models\User;
+use App\Services\Couriers\CourierBooking;
 use App\Services\Sales\ApprovalService;
 use App\Services\Sales\ControlledRegister;
 use App\Services\Sales\CustomerFlags;
@@ -65,7 +66,7 @@ class OrderController extends Controller
             'working' => app(Presence::class)->otherOn($invoice, request()->user()),
             'people' => app(Deliveries::class)->people()->map(fn ($p) => ['id' => $p->id, 'name' => $p->name])->values(),
             'delivery_person' => $invoice->delivery_person_id ? User::whereKey($invoice->delivery_person_id)->value('name') : null, 'arrived_at' => $invoice->arrived_at?->toIso8601String(),
-            'courier_id' => $invoice->courier_id, 'courier_panel' => app(\App\Services\Couriers\CourierBooking::class)->panel($invoice->loadMissing('courier')),
+            'courier_id' => $invoice->courier_id, 'courier_panel' => app(CourierBooking::class)->panel($invoice->loadMissing('courier')),
             'trade' => $invoice->kind !== 'retail', 'courier_terms' => $invoice->courier_terms, 'courier_cost' => $invoice->courier_cost !== null ? (float) $invoice->courier_cost : null, 'cartons' => $invoice->cartons, 'delivery_refund' => (float) $invoice->delivery_refund, 'advance_needed' => app(Dispatching::class)->advanceRequired($invoice), 'advance_at' => $invoice->delivery_advance_at?->toIso8601String(), 'sent_at' => $invoice->sent_at?->toIso8601String(), 'tracking' => $invoice->tracking, 'delivery_extra' => (float) $invoice->delivery_extra,
             'delivered_at' => $invoice->delivered_at?->toIso8601String(), 'delivered_by' => $invoice->delivered_by, 'not_received' => $invoice->not_received_at !== null,
             'subtotal' => $this->invoices->totals($invoice)['subtotal'], 'delivery_charge' => (float) $invoice->delivery_charge, 'free_over' => (float) Setting::read('delivery.free_over', 0),

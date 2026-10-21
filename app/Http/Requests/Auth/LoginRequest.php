@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\User;
+use App\Services\Security\TwoFactor;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -38,13 +40,13 @@ class LoginRequest extends FormRequest
      *
      * @throws ValidationException
      */
-    public function authenticate(): ?\App\Models\User
+    public function authenticate(): ?User
     {
         $this->ensureIsNotRateLimited();
 
         // Someone with two-step sign-in on is not signed in yet: the password is checked, then the code is asked for.
-        $user = \App\Models\User::where('email', (string) $this->input('email'))->first();
-        if ($user && app(\App\Services\Security\TwoFactor::class)->enabled($user) && Auth::validate($this->only('email', 'password'))) {
+        $user = User::where('email', (string) $this->input('email'))->first();
+        if ($user && app(TwoFactor::class)->enabled($user) && Auth::validate($this->only('email', 'password'))) {
             RateLimiter::clear($this->throttleKey());
 
             return $user;

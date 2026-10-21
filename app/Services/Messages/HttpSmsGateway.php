@@ -3,6 +3,7 @@
 namespace App\Services\Messages;
 
 use App\Services\Integrations\Integrations;
+use App\Services\Integrations\SafeUrl;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
 use RuntimeException;
@@ -47,7 +48,7 @@ class HttpSmsGateway implements SmsGateway
         $s = $values['settings'] ?? [];
         $url = (string) ($s['url'] ?? '');
 
-        if (! \App\Services\Integrations\SafeUrl::ok($url)) {
+        if (! SafeUrl::ok($url)) {
             return ['ok' => false, 'note' => 'The address must be https and a public website.'];
         }
 

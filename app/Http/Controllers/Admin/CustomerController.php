@@ -20,6 +20,7 @@ use App\Services\Sales\CustomerFlags;
 use App\Services\Sales\CustomerTransactions;
 use App\Services\Sales\TierUpgrade;
 use App\Services\Stock\StockService;
+use App\Support\Categories;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -116,7 +117,7 @@ class CustomerController extends Controller
                 ->map(fn ($r) => ['name' => $r->name, 'boxes' => (float) $r->quantity, 'price' => (float) $r->unit_price, 'memo' => $r->number, 'status' => $r->status]),
             'transactions' => app(CustomerTransactions::class)->for($user),
             'tiers' => Tier::orderBy('name')->get(['id', 'name', 'discount_percent']),
-            'categoryOptions' => collect(\App\Support\Categories::all())->map(fn ($label, $key) => ['key' => $key, 'label' => $label])->values(),
+            'categoryOptions' => collect(Categories::all())->map(fn ($label, $key) => ['key' => $key, 'label' => $label])->values(),
             'manualRates' => CustomerRate::query()
                 ->where('user_id', $user->id)
                 ->join('medicines', 'medicines.id', '=', 'customer_rates.medicine_id')
@@ -164,7 +165,7 @@ class CustomerController extends Controller
         $data = $request->validate([
             'account_type' => ['required', Rule::in(array_map(fn (AccountType $t) => $t->value, self::CUSTOMER_TYPES))],
             'categories' => ['nullable', 'array'],
-            'categories.*' => ['in:'.implode(',', array_keys(\App\Support\Categories::all()))],
+            'categories.*' => ['in:'.implode(',', array_keys(Categories::all()))],
             'moq' => ['nullable', 'numeric', 'min:0', 'max:100000'],
             'pay_cod' => ['required', 'boolean'],
             'pay_advance' => ['required', 'boolean'],
@@ -251,8 +252,14 @@ class CustomerController extends Controller
         $percent = $data['discount_percent'] ?? null;
         $fixed = $percent === null ? ($data['fixed_price'] ?? null) : null;
 
+        // A taka price is for ONE PIECE. A price at or above the printed piece price gives no discount at all, and is almost always a box price typed by mistake.
+        $medicine = Medicine::findOrFail($data['medicine_id']);
+        if ($fixed !== null && (float) $medicine->mrp_piece > 0 && (float) $fixed >= (float) $medicine->mrp_piece) {
+            throw ValidationException::withMessages(['fixed_price' => __('A taka price is for one piece, and this medicine is printed at :price a piece. Type a price below that (for a box, divide by the pieces in it), or use a percent.', ['price' => number_format((float) $medicine->mrp_piece, 2)])]);
+        }
+
         // LOS-1: a rate that loses money on every lot in stock is blocked when it is set. LOS-5: the admin may force it.
-        $loses = app(StockService::class)->rateWouldLose(Medicine::findOrFail($data['medicine_id']), $percent === null ? null : (float) $percent, $fixed === null ? null : (float) $fixed);
+        $loses = app(StockService::class)->rateWouldLose($medicine, $percent === null ? null : (float) $percent, $fixed === null ? null : (float) $fixed);
         if ($loses && ! ($data['force_loss'] ?? false)) {
             throw ValidationException::withMessages(['loss' => __('This rate is below what this medicine cost. Raise it, or confirm to sell at a loss.')]);
         }

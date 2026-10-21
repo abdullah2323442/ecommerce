@@ -6,6 +6,7 @@ use App\Enums\AccountType;
 use App\Models\Company;
 use App\Models\Invoice;
 use App\Models\Medicine;
+use App\Models\Restaurant;
 use App\Models\Setting;
 use App\Models\StockSource;
 use App\Models\Tier;
@@ -144,7 +145,7 @@ class WholesaleTest extends TestCase
 
         $user->refresh();
         $this->assertSame(AccountType::FoodVendor, $user->account_type);
-        $restaurant = \App\Models\Restaurant::where('owner_id', $user->id)->firstOrFail();
+        $restaurant = Restaurant::where('owner_id', $user->id)->firstOrFail();
         $this->assertSame('Dhaka Kitchen', $restaurant->name);
         $this->assertSame('8.00', (string) $restaurant->commission_value);
         $this->assertSame('approved', $app->fresh()->status);

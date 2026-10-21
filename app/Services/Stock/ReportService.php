@@ -3,6 +3,8 @@
 namespace App\Services\Stock;
 
 use App\Models\Expense;
+use App\Models\Invoice;
+use App\Models\InvoiceLine;
 use App\Models\Medicine;
 use App\Models\StockLot;
 use App\Models\StockMovement;
@@ -58,23 +60,46 @@ class ReportService
             ->values();
     }
 
-    /** Sales profit for a month: what was charged less the cost of the lots sold. Loss sales are included and counted separately. */
+    /**
+     * Sales profit for a month: what was charged less the cost of the lots sold. Loss sales are included and counted separately.
+     * An end discount on a memo comes off the memo as a whole, not off a line, so it is taken off here too: without that a sale
+     * the owner pushed below cost with a 30% end discount would look like a profit.
+     */
     public function gross(Carbon $month): array
     {
         $sales = StockMovement::query()->where('type', 'sale')->where('reversed', false)
-            ->whereBetween('created_at', [$month->copy()->startOfMonth(), $month->copy()->endOfMonth()])->get(['units', 'unit_cost', 'unit_price', 'is_loss']);
+            ->whereBetween('created_at', [$month->copy()->startOfMonth(), $month->copy()->endOfMonth()])->get(['invoice_line_id', 'units', 'unit_cost', 'unit_price', 'is_loss']);
 
         $revenue = 0.0;
         $cost = 0.0;
         $lossValue = 0.0;
+        $perInvoice = []; // invoice id => [revenue, cost, line loss]
+        $invoiceOfLine = InvoiceLine::whereIn('id', $sales->pluck('invoice_line_id')->filter()->unique())->pluck('invoice_id', 'id');
 
         foreach ($sales as $s) {
             $units = abs((float) $s->units);
-            $revenue += $units * (float) $s->unit_price;
-            $cost += $units * (float) $s->unit_cost;
-            if ($s->is_loss) {
-                $lossValue += $units * ((float) $s->unit_cost - (float) $s->unit_price);
+            $lineRevenue = $units * (float) $s->unit_price;
+            $lineCost = $units * (float) $s->unit_cost;
+            $lineLoss = $s->is_loss ? $lineCost - $lineRevenue : 0.0;
+            $revenue += $lineRevenue;
+            $cost += $lineCost;
+            $lossValue += $lineLoss;
+
+            $invoice = $invoiceOfLine[$s->invoice_line_id] ?? null;
+            if ($invoice !== null) {
+                $perInvoice[$invoice] ??= [0.0, 0.0, 0.0];
+                $perInvoice[$invoice][0] += $lineRevenue;
+                $perInvoice[$invoice][1] += $lineCost;
+                $perInvoice[$invoice][2] += $lineLoss;
             }
+        }
+
+        $discounted = Invoice::whereIn('id', array_keys($perInvoice))->where('status', 'final')->where('discount_total', '>', 0)->pluck('discount_total', 'id');
+        foreach ($discounted as $id => $discount) {
+            [$invoiceRevenue, $invoiceCost, $lineLoss] = $perInvoice[$id];
+            $revenue -= (float) $discount;
+            // The discount can turn a memo that made money line by line into one that lost it overall; the part not already counted is a loss too.
+            $lossValue += max(0.0, max(0.0, $invoiceCost - ($invoiceRevenue - (float) $discount)) - $lineLoss);
         }
 
         return ['revenue' => round($revenue, 2), 'cost' => round($cost, 2), 'profit' => round($revenue - $cost, 2), 'loss_sales_value' => round($lossValue, 2), 'sales_lines' => $sales->count()];

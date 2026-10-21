@@ -76,7 +76,7 @@ class PageFrontsTest extends TestCase
             ->has('blocks', 8)
             ->has('kinds.dishes')
             ->missing('kinds.games')
-            ->has('pages', 3)
+            ->has('pages', 4)
             ->has('sources.best'));
     }
 

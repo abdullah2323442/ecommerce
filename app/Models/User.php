@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Enums\AccountType;
 use App\Enums\Section;
+use App\Services\Security\TemporaryPowers;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -179,7 +180,7 @@ class User extends Authenticatable
         // Their role, and anything the owner has lent them for a while (spec ch 25).
         return $this->permissionCache ??= array_values(array_unique(array_merge(
             (array) ($this->role?->permissions ?? config('permissions.defaults.Counter staff')),
-            app(\App\Services\Security\TemporaryPowers::class)->activeFor($this),
+            app(TemporaryPowers::class)->activeFor($this),
         )));
     }
 

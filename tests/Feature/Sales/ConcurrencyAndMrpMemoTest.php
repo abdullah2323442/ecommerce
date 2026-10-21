@@ -68,6 +68,20 @@ class ConcurrencyAndMrpMemoTest extends TestCase
         $this->actingAs($this->rina)->postJson("/admin/orders/{$order->id}/working")->assertJson(['other' => 'Robiul']);
     }
 
+    public function test_an_open_counter_draft_shows_who_else_has_it_open(): void
+    {
+        $draft = app(\App\Services\Sales\InvoiceService::class)->open('retail', $this->rina);
+
+        $this->actingAs($this->rina)->get("/admin/counter/{$draft->id}")->assertInertia(fn (Assert $p) => $p->where('working', null));
+        $this->postJson("/admin/counter/{$draft->id}/working")->assertOk()->assertJson(['other' => null]);
+
+        $this->actingAs($this->robiul)->get("/admin/counter/{$draft->id}")->assertInertia(fn (Assert $p) => $p->where('working', 'Rina'));
+        $this->postJson("/admin/counter/{$draft->id}/working")->assertJson(['other' => 'Rina']);
+
+        // Rina sees Robiul, never herself.
+        $this->actingAs($this->rina)->postJson("/admin/counter/{$draft->id}/working")->assertJson(['other' => 'Robiul']);
+    }
+
     public function test_a_heartbeat_that_has_gone_quiet_no_longer_counts(): void
     {
         $order = $this->order();

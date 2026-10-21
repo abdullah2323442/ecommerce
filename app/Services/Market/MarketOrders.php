@@ -8,6 +8,7 @@ use App\Models\MarketOrder;
 use App\Models\Setting;
 use App\Models\User;
 use App\Services\Messages\Messenger;
+use App\Services\Payments\Payments;
 use App\Services\Stock\StockException;
 use App\Services\Wallet\Tokens;
 use Illuminate\Support\Carbon;
@@ -57,7 +58,7 @@ class MarketOrders
             throw new StockException('This product is paid online only.');
         }
 
-        if ($payBy === 'online' && ! app(\App\Services\Payments\Payments::class)->enabled()) {
+        if ($payBy === 'online' && ! app(Payments::class)->enabled()) {
             throw new StockException('This needs payment online, and online payment is not open yet.');
         }
 
@@ -269,7 +270,7 @@ class MarketOrders
 
             // The token used on it comes back (spec ch 24).
             app(Tokens::class)->releaseMarket($order);
-            app(\App\Services\Payments\Payments::class)->marketCancelled($order);
+            app(Payments::class)->marketCancelled($order);
         });
 
         // An unpaid online order was never shown to the seller, so there is nothing to tell them.

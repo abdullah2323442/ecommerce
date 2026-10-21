@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\BehaviorController;
 use App\Http\Controllers\Admin\BinController;
 use App\Http\Controllers\Admin\CatalogController as AdminCatalogController;
 use App\Http\Controllers\Admin\ControlledController;
+use App\Http\Controllers\Admin\BlockedIpController;
 use App\Http\Controllers\Admin\CounterController;
 use App\Http\Controllers\Admin\CourierBookingController;
 use App\Http\Controllers\Admin\CourierController;
@@ -47,6 +48,7 @@ use App\Http\Controllers\Admin\StockReportController;
 use App\Http\Controllers\Admin\StockSourceController;
 use App\Http\Controllers\Admin\StorefrontController as AdminStorefrontController;
 use App\Http\Controllers\Admin\TestimonialController as AdminTestimonialController;
+use App\Http\Controllers\Admin\SellingRateController;
 use App\Http\Controllers\Admin\TierController;
 use App\Http\Controllers\Admin\TokenController as AdminTokenController;
 use App\Http\Controllers\Admin\TwoFactorResetController;
@@ -152,6 +154,7 @@ Route::get('sw.js', [PwaController::class, 'worker'])->name('pwa.worker');
 Route::get('offline', [PwaController::class, 'offline'])->name('pwa.offline');
 Route::get('sector-hero/{slug}', [MarketController::class, 'hero'])->where('slug', '[a-z0-9_]+')->name('market.hero');
 Route::get('storefront-image/{block}', [MarketController::class, 'storefrontImage'])->whereNumber('block')->name('market.storefront-image');
+Route::get('storefront-item-image/{block}/{index}', [\App\Http\Controllers\MarketController::class, 'storefrontItemImage'])->whereNumber(['block', 'index'])->name('market.storefront-item-image');
 Route::get('site-image/{name}', [BrandImageController::class, 'block'])->where('name', '[A-Za-z0-9_.-]+')->name('site.block-image');
 Route::get('brand/{which}', [BrandImageController::class, 'show'])->whereIn('which', ['logo', 'favicon'])->name('brand.image');
 Route::get('shop/{seller}', [MarketController::class, 'shop'])->whereNumber('seller')->name('shop.show');
@@ -509,6 +512,7 @@ Route::middleware(['auth', 'section:admin_panel', 'two-factor.required'])->prefi
     Route::put('stock/rates/company/{company}', [StockSourceController::class, 'companyRate'])->middleware('password.confirm')->name('stock.rates.company');
     Route::put('stock/rates/medicine/{medicine}', [StockSourceController::class, 'medicineRate'])->middleware('password.confirm')->name('stock.rates.medicine');
     Route::get('stock/expiry', [ExpiryController::class, 'index'])->name('stock.expiry');
+    Route::get('stock/expiry/return-list', [ExpiryController::class, 'returnList'])->name('stock.expiry.return-list');
     Route::post('stock/expiry/checked', [ExpiryController::class, 'checked'])->name('stock.expiry.checked');
     Route::post('stock/expiry/settings', [ExpiryController::class, 'settings'])->name('stock.expiry.settings');
     Route::post('stock/lots/{lot}/expire', [ExpiryController::class, 'expire'])->name('stock.lots.expire');
@@ -611,11 +615,13 @@ Route::middleware(['auth', 'section:admin_panel', 'two-factor.required'])->prefi
     Route::get('storefront', [AdminStorefrontController::class, 'index'])->name('storefront.index');
     Route::post('storefront/{sector}/defaults', [AdminStorefrontController::class, 'seed'])->whereNumber('sector')->name('storefront.seed');
     Route::post('storefront/{sector}/blocks', [AdminStorefrontController::class, 'store'])->whereNumber('sector')->name('storefront.store');
-    Route::post('storefront/pages/{page}/defaults', [AdminStorefrontController::class, 'seedPage'])->whereIn('page', ['medicines', 'food', 'gaming'])->name('storefront.seed-page');
-    Route::post('storefront/pages/{page}/blocks', [AdminStorefrontController::class, 'storePage'])->whereIn('page', ['medicines', 'food', 'gaming'])->name('storefront.store-page');
+    Route::post('storefront/pages/{page}/defaults', [AdminStorefrontController::class, 'seedPage'])->whereIn('page', ['medicines', 'food', 'gaming', 'market'])->name('storefront.seed-page');
+    Route::post('storefront/pages/{page}/blocks', [AdminStorefrontController::class, 'storePage'])->whereIn('page', ['medicines', 'food', 'gaming', 'market'])->name('storefront.store-page');
     Route::put('storefront/blocks/{block}', [AdminStorefrontController::class, 'update'])->whereNumber('block')->name('storefront.update');
     Route::post('storefront/blocks/{block}/move', [AdminStorefrontController::class, 'move'])->whereNumber('block')->name('storefront.move');
     Route::delete('storefront/blocks/{block}', [AdminStorefrontController::class, 'destroy'])->whereNumber('block')->name('storefront.destroy');
+    Route::post('storefront/blocks/{block}/items/{index}/image', [AdminStorefrontController::class, 'itemImage'])->whereNumber(['block', 'index'])->middleware('throttle:30,1,storefront-item-image')->name('storefront.item-image');
+    Route::delete('storefront/blocks/{block}/items/{index}/image', [AdminStorefrontController::class, 'removeItemImage'])->whereNumber(['block', 'index'])->name('storefront.item-image.remove');
     Route::post('storefront/blocks/{block}/image', [AdminStorefrontController::class, 'image'])->whereNumber('block')->middleware('throttle:30,1,storefront-image')->name('storefront.image');
     Route::delete('storefront/blocks/{block}/image', [AdminStorefrontController::class, 'removeImage'])->whereNumber('block')->name('storefront.image.remove');
     Route::get('site', [AdminSiteController::class, 'index'])->name('site.index');
@@ -709,6 +715,11 @@ Route::middleware(['auth', 'section:admin_panel', 'two-factor.required'])->prefi
     Route::get('settings', [SettingsController::class, 'index'])->name('settings.index');
     Route::put('settings/{group}', [SettingsController::class, 'update'])->name('settings.update');
 
+    // Addresses the owner has blocked (spec ch 26).
+    Route::get('blocked-ips', [BlockedIpController::class, 'index'])->name('blocked-ips.index');
+    Route::post('blocked-ips', [BlockedIpController::class, 'store'])->middleware('password.confirm')->name('blocked-ips.store');
+    Route::delete('blocked-ips/{blockedIp}', [BlockedIpController::class, 'destroy'])->middleware('password.confirm')->name('blocked-ips.destroy');
+
     // Staff, roles and the activity log (spec ch 26). Changes ask for the password again.
     Route::get('staff', [StaffController::class, 'index'])->name('staff.index');
     Route::get('activity', [StaffController::class, 'activity'])->name('activity.index');
@@ -779,6 +790,8 @@ Route::middleware(['auth', 'section:admin_panel', 'two-factor.required'])->prefi
     Route::get('counter/offline/snapshot', [OfflineCounterController::class, 'snapshot'])->name('counter.offline.snapshot');
     Route::post('counter/offline/sync', [OfflineCounterController::class, 'sync'])->middleware('throttle:30,1,offline-sync')->name('counter.offline.sync');
     Route::get('counter/{invoice}', [CounterController::class, 'show'])->name('counter.show');
+    Route::post('counter/{invoice}/working', [CounterController::class, 'working'])->name('counter.working');
+    Route::post('counter/{invoice}/share', [CounterController::class, 'share'])->name('counter.share');
     Route::get('counter/{invoice}/search', [CounterController::class, 'search'])->name('counter.search');
     Route::post('counter/{invoice}/scan', [CounterController::class, 'scan'])->name('counter.scan');
     Route::post('counter/{invoice}/lines', [CounterController::class, 'addLine'])->name('counter.lines.add');
@@ -801,6 +814,8 @@ Route::middleware(['auth', 'section:admin_panel', 'two-factor.required'])->prefi
     Route::post('tiers', [TierController::class, 'store'])->name('tiers.store');
     Route::put('tiers/{tier}', [TierController::class, 'update'])->name('tiers.update');
     Route::delete('tiers/{tier}', [TierController::class, 'destroy'])->name('tiers.destroy');
+    Route::put('selling-rates/company/{company}', [SellingRateController::class, 'company'])->middleware('password.confirm')->name('selling-rates.company');
+    Route::put('selling-rates/medicine/{medicine}', [SellingRateController::class, 'medicine'])->middleware('password.confirm')->name('selling-rates.medicine');
 });
 
 require __DIR__.'/settings.php';

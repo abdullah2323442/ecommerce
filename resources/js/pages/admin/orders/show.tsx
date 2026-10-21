@@ -180,6 +180,7 @@ export default function OrderShow({ order, approvals, controlled, controlledDefa
     // Tell the server this order is open here, and learn who else has it open. Others can still come in.
     useEffect(() => {
         const beat = () => postJson<{ other: string | null }>(`/admin/orders/${order.id}/working`).then((r) => r && setOther(r.other));
+        beat(); // at once, not only after the first half minute: someone opening the order a moment later must see this
         const timer = setInterval(beat, 30000);
         return () => clearInterval(timer);
     }, [order.id]);

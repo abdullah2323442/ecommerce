@@ -102,7 +102,7 @@ export default function MarketIndex({ category, tree, storefront, hero, sectors,
                         photos={[hero?.image ?? null, ...items.map((i) => i.photo)].filter(Boolean).slice(0, 2)}
                     />
                 )}
-                {layout === 'default' && !category && !storefront && (
+                {layout === 'default' && !category && !storefront && !filters.all && (
                     <SectionHero
                         {...(hero ? { src: hero.image } : { image: '/images/home/bazaar' })}
                         title={hero ? heroTitle : t('Market')}
@@ -131,6 +131,18 @@ export default function MarketIndex({ category, tree, storefront, hero, sectors,
                                 <SubTiles sector={hero.slug} nodes={category.children} />
                             </div>
                         )}
+                    </header>
+                )}
+
+                {!storefront && !hero && !category && filters.all && (
+                    <header className="space-y-2">
+                        <h1
+                            style={{ fontFamily: "'Changa One', 'Noto Serif Bengali', Georgia, serif" }}
+                            className="text-4xl leading-none tracking-tight sm:text-6xl"
+                        >
+                            {t('All products')}
+                        </h1>
+                        <p className="tabular text-[var(--pt-muted)]">{t('{n} products', { n: num(total) })}</p>
                     </header>
                 )}
 

@@ -4,6 +4,7 @@ namespace App\Services\Medicines;
 
 use App\Models\Company;
 use App\Models\Medicine;
+use App\Models\StockLot;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
@@ -42,8 +43,11 @@ class MedicineSearch
             $hits = $hits->merge($this->fuzzy($needle, $limit, $filters))->unique('id');
         }
 
+        // Stock is never shown to the public, but it decides the order: among equally good name matches, what we hold comes first.
+        $held = StockLot::whereIn('medicine_id', $hits->pluck('id'))->where('units_remaining', '>', 0)->pluck('medicine_id')->flip();
+
         return $hits
-            ->map(fn (Medicine $m) => [$m, $this->rank($m, $needle)])
+            ->map(fn (Medicine $m) => [$m, $this->rank($m, $needle, $held->has($m->id))])
             ->sort(fn (array $a, array $b) => $a[1] <=> $b[1])
             ->take($limit)
             ->map(fn (array $pair) => $pair[0])
@@ -189,9 +193,9 @@ class MedicineSearch
      * Tiers: exact brand, brand prefix, every word of the query prefixes a brand word,
      * brand contains the query, generic contains the query, then fuzzy matches.
      *
-     * @return array{int, int, int, string, string}
+     * @return array{int, int, int, int, string, string}
      */
-    private function rank(Medicine $m, string $needle): array
+    private function rank(Medicine $m, string $needle, bool $inStock = false): array
     {
         $brand = mb_strtolower($m->brand_name);
         $tier = match (true) {
@@ -203,7 +207,7 @@ class MedicineSearch
             default => 5,
         };
 
-        return [$tier, $this->distance($needle, $brand), mb_strlen($brand), $brand, (string) $m->strength];
+        return [$tier, $inStock ? 0 : 1, $this->distance($needle, $brand), mb_strlen($brand), $brand, (string) $m->strength];
     }
 
     /** True when every query word is the start of some word in the brand ("ace plus" ~ "Ace Plus 500"). */

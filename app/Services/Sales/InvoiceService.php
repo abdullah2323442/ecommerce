@@ -12,11 +12,12 @@ use App\Models\SaleReturn;
 use App\Models\Setting;
 use App\Models\User;
 use App\Services\Messages\Messenger;
+use App\Services\Payments\Payments;
 use App\Services\Pricing\PriceResolver;
 use App\Services\Pricing\PriceRounding;
 use App\Services\Stock\StockException;
-use App\Services\Wallet\Tokens;
 use App\Services\Stock\StockService;
+use App\Services\Wallet\Tokens;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -645,7 +646,7 @@ class InvoiceService
 
             $invoice->update(['status' => 'cancelled', 'cancelled_at' => now(), 'delivery_refund' => app(Dispatching::class)->deliveryRefundFor($invoice)]);
             app(Tokens::class)->releaseInvoice($invoice);
-            app(\App\Services\Payments\Payments::class)->orderCancelled($invoice);
+            app(Payments::class)->orderCancelled($invoice);
 
             return $invoice->fresh();
         });

@@ -2,14 +2,17 @@
 
 namespace App\Services\Admin;
 
+use App\Models\CustomOrder;
 use App\Models\FoodOrder;
 use App\Models\GameOrder;
 use App\Models\Invoice;
+use App\Models\Listing;
 use App\Models\MarketOrder;
-use App\Models\CustomOrder;
+use App\Models\Payment;
 use App\Models\SupportTicket;
 use App\Models\User;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -84,13 +87,13 @@ class CommerceStats
             'recent' => $this->recent(),
             'open' => [
                 'tickets' => SupportTicket::where('status', 'open')->count(),
-                'listings_waiting' => \App\Models\Listing::where('status', 'pending')->count(),
-                'refunds_due' => \App\Models\Payment::where('status', 'refund_due')->count(),
+                'listings_waiting' => Listing::where('status', 'pending')->count(),
+                'refunds_due' => Payment::where('status', 'refund_due')->count(),
             ],
         ];
     }
 
-    /** @return \Illuminate\Support\Collection<int, object{day: string, orders: int, money: float}> */
+    /** @return Collection<int, object{day: string, orders: int, money: float}> */
     private function daily(string $source, Carbon $a, Carbon $b)
     {
         [$table, $money, $at, $where] = match ($source) {

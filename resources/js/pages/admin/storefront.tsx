@@ -14,6 +14,10 @@ type Item = {
     title_bn: string | null;
     text: string | null;
     text_bn: string | null;
+    link?: string | null;
+    tone?: string | null;
+    image_path?: string | null;
+    image?: string | null;
 };
 
 interface Block {
@@ -26,6 +30,7 @@ interface Block {
     text_bn: string | null;
     button: string | null;
     button_bn: string | null;
+    link: string | null;
     source: string | null;
     item_limit: number;
     items: Item[];
@@ -129,6 +134,7 @@ function BlockCard({
                 text_bn: draft.text_bn,
                 button: draft.button,
                 button_bn: draft.button_bn,
+                link: draft.link,
                 source: draft.source,
                 item_limit: draft.item_limit,
                 items: draft.items,
@@ -233,6 +239,19 @@ function BlockCard({
                         />
                     )}
 
+                    {has('link') && (
+                        <label className="block text-sm font-medium">
+                            {t('Button leads to (a link on this site)')}
+                            <Input
+                                className="mt-1 max-w-md"
+                                maxLength={200}
+                                placeholder="/market?all=1"
+                                value={draft.link ?? ''}
+                                onChange={(e) => set('link', e.target.value)}
+                            />
+                        </label>
+                    )}
+
                     {has('source') && (
                         <div className="block text-sm font-medium">
                             <span id={`src-${block.id}`}>{t('Fill it from')}</span>
@@ -316,6 +335,87 @@ function BlockCard({
                                         onEn={(v) => setItem(n, 'text', v)}
                                         onBn={(v) => setItem(n, 'text_bn', v)}
                                     />
+                                    {has('media') && (
+                                        <div className="space-y-3">
+                                            {has('tone') && (
+                                                <div className="block text-sm font-medium">
+                                                    <span id={`tone-${block.id}-${n}`}>{t('Colour')}</span>
+                                                    <Listbox value={it.tone ?? 'saffron'} onValueChange={(v) => setItem(n, 'tone', v)}>
+                                                        <SelectTrigger aria-labelledby={`tone-${block.id}-${n}`} className="mt-1 w-full max-w-48">
+                                                            <SelectValue />
+                                                        </SelectTrigger>
+                                                        <SelectContent>
+                                                            {['saffron', 'rose', 'jade', 'indigo', 'clay', 'plum'].map((c) => (
+                                                                <SelectItem key={c} value={c}>
+                                                                    {t(c.charAt(0).toUpperCase() + c.slice(1))}
+                                                                </SelectItem>
+                                                            ))}
+                                                        </SelectContent>
+                                                    </Listbox>
+                                                </div>
+                                            )}
+                                            <label className="block text-sm font-medium">
+                                                {t('Link on this site')}
+                                                <Input
+                                                    className="mt-1"
+                                                    maxLength={200}
+                                                    placeholder="/market?sector=wood"
+                                                    value={it.link ?? ''}
+                                                    onChange={(e) => setItem(n, 'link', e.target.value)}
+                                                />
+                                            </label>
+                                            <div className="flex flex-wrap items-center gap-3">
+                                                {block.items[n]?.image ? (
+                                                    <img
+                                                        src={block.items[n].image ?? ''}
+                                                        alt=""
+                                                        className="h-20 w-16 rounded-md border object-cover"
+                                                    />
+                                                ) : (
+                                                    <span className="text-muted-foreground grid h-20 w-16 place-items-center rounded-md border text-xs">
+                                                        {t('No picture')}
+                                                    </span>
+                                                )}
+                                                {n < block.items.length ? (
+                                                    <>
+                                                        <input
+                                                            type="file"
+                                                            accept="image/png,image/jpeg,image/webp"
+                                                            aria-label={t('Upload a picture')}
+                                                            className="text-sm"
+                                                            onChange={(e) => {
+                                                                const file = e.target.files?.[0];
+                                                                if (file)
+                                                                    router.post(
+                                                                        route('admin.storefront.item-image', [block.id, n]),
+                                                                        { image: file },
+                                                                        { forceFormData: true, preserveScroll: true },
+                                                                    );
+                                                            }}
+                                                        />
+                                                        {block.items[n]?.image && (
+                                                            <Button
+                                                                type="button"
+                                                                variant="outline"
+                                                                size="sm"
+                                                                onClick={() =>
+                                                                    router.delete(route('admin.storefront.item-image.remove', [block.id, n]), {
+                                                                        preserveScroll: true,
+                                                                    })
+                                                                }
+                                                            >
+                                                                {t('Remove picture')}
+                                                            </Button>
+                                                        )}
+                                                    </>
+                                                ) : (
+                                                    <span className="text-muted-foreground text-xs">
+                                                        {t('Save the section first, then add a picture.')}
+                                                    </span>
+                                                )}
+                                            </div>
+                                        </div>
+                                    )}
                                     <Button
                                         type="button"
                                         variant="outline"
@@ -444,7 +544,7 @@ export default function Storefront({ sectors, pages, page, view, sector, blocks,
                     <ol className="space-y-3">
                         {blocks.map((b, i) => (
                             <BlockCard
-                                key={`${b.id}-${b.is_active}-${b.title}`}
+                                key={`${b.id}-${b.is_active}-${b.title}-${b.items.map((i) => i.image_path ?? '').join('|')}`}
                                 block={b}
                                 index={i}
                                 total={blocks.length}

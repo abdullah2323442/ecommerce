@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Enums\AccountType;
+use App\Models\CustomChatMessage;
 use App\Models\CustomMaterial;
 use App\Models\CustomOrder;
 use App\Models\MeasurementProfile;
-use App\Models\CustomChatMessage;
 use App\Services\Custom\CustomChat;
 use App\Services\Custom\CustomOrders;
 use App\Services\Custom\MeasurementProfiles;
@@ -84,7 +84,7 @@ class CustomOrderController extends Controller
         return Inertia::render('custom/show', [
             'order' => $this->orders->forBuyer($order->load('events')),
             'chat' => $panel,
-            'measure' => $panel['can_measure'] ? ['kind' => $order->kind, 'profiles' => \App\Models\MeasurementProfile::where('user_id', $request->user()->id)->orderBy('name')->get()->map(fn ($p) => $this->profiles->present($p)), 'fields' => config('custom.fields'), 'units' => config('custom.units')] : null,
+            'measure' => $panel['can_measure'] ? ['kind' => $order->kind, 'profiles' => MeasurementProfile::where('user_id', $request->user()->id)->orderBy('name')->get()->map(fn ($p) => $this->profiles->present($p)), 'fields' => config('custom.fields'), 'units' => config('custom.units')] : null,
         ]);
     }
 

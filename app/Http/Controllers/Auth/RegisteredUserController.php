@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Services\Wallet\Referrals;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -43,7 +44,7 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        app(\App\Services\Wallet\Referrals::class)->attach($user, $request->session()->pull('referral_code'));
+        app(Referrals::class)->attach($user, $request->session()->pull('referral_code'));
 
         event(new Registered($user));
 

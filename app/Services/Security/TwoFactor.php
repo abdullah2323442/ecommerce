@@ -157,8 +157,8 @@ class TwoFactor
     public function code(string $secret, int $step): string
     {
         $hash = hash_hmac('sha1', pack('J', $step), $this->unbase32($secret), true);
-        $offset = ord($hash[19]) & 0xf;
-        $bin = ((ord($hash[$offset]) & 0x7f) << 24) | (ord($hash[$offset + 1]) << 16) | (ord($hash[$offset + 2]) << 8) | ord($hash[$offset + 3]);
+        $offset = ord($hash[19]) & 0xF;
+        $bin = ((ord($hash[$offset]) & 0x7F) << 24) | (ord($hash[$offset + 1]) << 16) | (ord($hash[$offset + 2]) << 8) | ord($hash[$offset + 3]);
 
         return str_pad((string) ($bin % (10 ** self::DIGITS)), self::DIGITS, '0', STR_PAD_LEFT);
     }

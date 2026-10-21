@@ -5,6 +5,7 @@ namespace App\Services\Sales;
 use App\Models\Invoice;
 use App\Models\Medicine;
 use App\Models\SavedCart;
+use App\Services\Messages\Messenger;
 use App\Services\Stock\StockException;
 use Illuminate\Support\Collection;
 
@@ -127,7 +128,7 @@ class PublicCart
                 return;
             }
 
-            app(\App\Services\Messages\Messenger::class)->send($c->user, 'cart_left', ['name' => (string) $c->items], '/cart');
+            app(Messenger::class)->send($c->user, 'cart_left', ['name' => (string) $c->items], '/cart');
             $c->update(['reminded_at' => now()]);
             $told++;
         });

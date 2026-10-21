@@ -12,6 +12,7 @@ use App\Services\Audit\ActivityLogger;
 use App\Services\Media\ImageCompressor;
 use App\Services\Stock\StockException;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -26,7 +27,7 @@ class Restaurants
     public function __construct(private ActivityLogger $activity, private ImageCompressor $images) {}
 
     /** The time in Bangladesh: opening hours and "today" are Dhaka's, whatever the server says. */
-    public static function now(): \Illuminate\Support\Carbon
+    public static function now(): Carbon
     {
         return now('Asia/Dhaka');
     }

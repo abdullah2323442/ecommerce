@@ -69,6 +69,21 @@ class MedicineSearchTest extends TestCase
         $this->assertSame(['Napa', 'Napa Extra', 'Supernapa'], $this->names('napa'));
     }
 
+    public function test_among_equal_name_matches_the_one_in_stock_comes_first(): void
+    {
+        $a = $this->med('Zolpro A');
+        $b = $this->med('Zolpro B');
+        $c = $this->med('Zolpro C');
+        app(\App\Services\Stock\StockService::class)->receive(\App\Models\StockSource::create(['name' => 'Src', 'type' => 'company', 'default_percent' => 10]), [
+            'invoice_date' => now()->toDateString(), 'lines' => [['medicine_id' => $c->id, 'units' => 5]],
+        ]);
+
+        $names = app(MedicineSearch::class)->search('zolpro')->pluck('brand_name')->all();
+
+        $this->assertSame('Zolpro C', $names[0], 'the medicine we hold is listed first');
+        $this->assertSame(['Zolpro C', 'Zolpro A', 'Zolpro B'], $names, 'the others keep their usual order');
+    }
+
     public function test_tolerates_a_misspelling(): void
     {
         $this->med('Napa', 'Paracetamol');

@@ -10,9 +10,12 @@ use App\Services\Gaming\ManualTopUp;
 use App\Services\Gaming\PlayerVerifier;
 use App\Services\Gaming\TopUpProvider;
 use App\Services\Gaming\UnavailableVerifier;
-use App\Services\Messages\LogSmsGateway;
+use App\Services\Messages\ConfiguredSmsGateway;
+use App\Services\Messages\QueuedSmsGateway;
 use App\Services\Messages\SmsGateway;
+use App\Services\Sales\CartStore;
 use App\Services\Security\LoginMonitor;
+use App\Services\Security\PhoneVerifier;
 use App\Services\Security\SessionLimiter;
 use App\Support\BraceTranslator;
 use Illuminate\Auth\Events\Failed;
@@ -37,8 +40,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(DatabaseDumper::class, MysqlDumper::class);
         // The text service follows what the owner set up in Admin > Connections (a live one sends; none, or a test one, only logs).
         // Texts leave the buyer's request and follow from the queue; a code someone is waiting to type is the exception and goes at once.
-        $this->app->bind(SmsGateway::class, \App\Services\Messages\QueuedSmsGateway::class);
-        $this->app->when(\App\Services\Security\PhoneVerifier::class)->needs(SmsGateway::class)->give(\App\Services\Messages\ConfiguredSmsGateway::class);
+        $this->app->bind(SmsGateway::class, QueuedSmsGateway::class);
+        $this->app->when(PhoneVerifier::class)->needs(SmsGateway::class)->give(ConfiguredSmsGateway::class);
         // Game top-up (spec ch 18): no provider is chosen yet, so no name is looked up and the top-up is done by hand.
         $this->app->bind(PlayerVerifier::class, UnavailableVerifier::class);
         $this->app->bind(TopUpProvider::class, ManualTopUp::class);
@@ -76,7 +79,7 @@ class AppServiceProvider extends ServiceProvider
         Event::listen(Login::class, function (Login $event) {
             app(LoginMonitor::class)->recordSuccess($event->user, request());
             app(SessionLimiter::class)->enforce($event->user);
-            \App\Services\Sales\CartStore::adopt($event->user);
+            CartStore::adopt($event->user);
         });
 
         Event::listen(Failed::class, function (Failed $event) {

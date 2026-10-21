@@ -9,6 +9,7 @@ use App\Models\Notice;
 use App\Models\Setting;
 use App\Models\User;
 use App\Services\Messages\Messenger;
+use App\Services\Payments\Payments;
 use App\Services\Stock\StockException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -171,7 +172,7 @@ class MarketCases
 
         DB::transaction(function () use ($case, $order, $extra) {
             $order->update(['status' => 'returned', 'returned_at' => now()]);
-            app(\App\Services\Payments\Payments::class)->marketCancelled($order);
+            app(Payments::class)->marketCancelled($order);
             $case->update($extra + ['status' => 'returned']);
 
             if ($order->listing_id && ($listing = Listing::whereKey($order->listing_id)->lockForUpdate()->first()) && $listing->stock !== null) {

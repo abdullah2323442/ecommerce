@@ -7,7 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Tier;
 use App\Models\TradeApplication;
 use App\Services\Audit\ActivityLogger;
+use App\Services\Food\Restaurants;
 use App\Services\Messages\Messenger;
+use App\Services\Stock\StockException;
+use App\Support\Categories;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -32,7 +35,7 @@ class ApplicationController extends Controller
             'pending' => $this->rows(TradeApplication::where('status', 'pending')->oldest('id')->get()),
             'done' => $this->rows(TradeApplication::whereIn('status', ['approved', 'rejected'])->latest('reviewed_at')->limit(20)->get()),
             'tiers' => Tier::orderBy('name')->get(['id', 'name']),
-            'categories' => collect(\App\Support\Categories::all())->map(fn ($label, $key) => ['key' => $key, 'label' => $label])->values(),
+            'categories' => collect(Categories::all())->map(fn ($label, $key) => ['key' => $key, 'label' => $label])->values(),
         ]);
     }
 
@@ -61,7 +64,7 @@ class ApplicationController extends Controller
             'account_type' => ['required', Rule::in([AccountType::Paikari->value, AccountType::Wholesaler->value])],
             'tier_id' => ['nullable', 'integer', Rule::exists('tiers', 'id')],
             'categories' => ['nullable', 'array'],
-            'categories.*' => ['in:'.implode(',', array_keys(\App\Support\Categories::all()))],
+            'categories.*' => ['in:'.implode(',', array_keys(Categories::all()))],
             'moq' => ['nullable', 'numeric', 'min:0', 'max:100000'],
             'pay_cod' => ['sometimes', 'boolean'],
             'pay_advance' => ['sometimes', 'boolean'],
@@ -95,11 +98,11 @@ class ApplicationController extends Controller
         ]);
 
         try {
-            app(\App\Services\Food\Restaurants::class)->openFor($application->user, [
+            app(Restaurants::class)->openFor($application->user, [
                 'name' => $application->business_name, 'phone' => $application->phone, 'address' => $application->address,
                 'area' => $data['area'], 'commission_kind' => $data['commission_kind'], 'commission_value' => $data['commission_value'],
             ], $request->user());
-        } catch (\App\Services\Stock\StockException $e) {
+        } catch (StockException $e) {
             return back()->withErrors(['application' => __($e->getMessage())]);
         }
 

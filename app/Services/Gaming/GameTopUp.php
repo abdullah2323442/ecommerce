@@ -10,6 +10,7 @@ use App\Models\Setting;
 use App\Models\User;
 use App\Services\Messages\Messenger;
 use App\Services\Stock\StockException;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -311,7 +312,7 @@ class GameTopUp
     public function sales(?string $month = null): array
     {
         $month ??= now('Asia/Dhaka')->format('Y-m');
-        $rows = GameOrder::where('status', 'topped_up')->whereBetween('topped_up_at', [\Illuminate\Support\Carbon::parse($month.'-01', 'Asia/Dhaka')->startOfMonth()->utc(), \Illuminate\Support\Carbon::parse($month.'-01', 'Asia/Dhaka')->endOfMonth()->utc()])->get(['game_name', 'price']);
+        $rows = GameOrder::where('status', 'topped_up')->whereBetween('topped_up_at', [Carbon::parse($month.'-01', 'Asia/Dhaka')->startOfMonth()->utc(), Carbon::parse($month.'-01', 'Asia/Dhaka')->endOfMonth()->utc()])->get(['game_name', 'price']);
 
         return [
             'orders' => $rows->count(), 'sales' => round((float) $rows->sum('price'), 2),

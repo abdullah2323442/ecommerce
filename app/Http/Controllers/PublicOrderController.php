@@ -6,6 +6,9 @@ use App\Enums\AccountType;
 use App\Models\Invoice;
 use App\Models\InvoiceLine;
 use App\Models\SaleReturn;
+use App\Services\Couriers\CourierBooking;
+use App\Services\Payments\Payments;
+use App\Services\Sales\Deliveries;
 use App\Services\Sales\DeliveryCharge;
 use App\Services\Sales\Dispatching;
 use App\Services\Sales\InvoiceService;
@@ -13,7 +16,6 @@ use App\Services\Sales\OrderNotes;
 use App\Services\Sales\PublicOrders;
 use App\Services\Sales\ReturnService;
 use App\Services\Stock\StockException;
-use App\Services\Sales\Deliveries;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -55,17 +57,17 @@ class PublicOrderController extends Controller
         return Inertia::render('order-public', [
             'token' => $order->public_token,
             'districts' => config('bd.districts'),
-            'pay' => app(\App\Services\Payments\Payments::class)->forOrder($order),
+            'pay' => app(Payments::class)->forOrder($order),
             'order' => [
                 'status' => $order->status, 'number' => $order->number, 'placed_at' => $order->placed_at?->toIso8601String(), 'note' => $order->note, 'wanted_time' => $order->wanted_time, 'has_voice' => $order->voice_path !== null, 'has_photo' => $order->photo_path !== null, 'can_add_note' => app(OrderNotes::class)->open($order),
                 'delivery_mode' => $order->delivery_mode, 'ship_to' => $order->ship_to,
                 'subtotal' => $totals['subtotal'], 'delivery' => $totals['delivery'], 'total' => $totals['total'],
-                'cancel_minutes' => $this->orders->minutesToCancel($order), 'delivery_refund' => (float) $order->delivery_refund, 'advance_needed' => app(\App\Services\Sales\Dispatching::class)->advanceMissing($order), 'can_edit_items' => $this->orders->minutesToCancel($order) > 0, 'can_change_address' => $this->orders->canChangeAddress($order) && $order->delivery_mode === 'delivery',
+                'cancel_minutes' => $this->orders->minutesToCancel($order), 'delivery_refund' => (float) $order->delivery_refund, 'advance_needed' => app(Dispatching::class)->advanceMissing($order), 'can_edit_items' => $this->orders->minutesToCancel($order) > 0, 'can_change_address' => $this->orders->canChangeAddress($order) && $order->delivery_mode === 'delivery',
                 'mine' => $request->user()?->id === $order->customer_id && $order->customer_id !== null,
                 'sent_at' => $order->sent_at?->toIso8601String(), 'tracking' => $order->tracking, 'delivery_extra' => (float) $order->delivery_extra,
                 'delivered' => $order->delivered_at !== null, 'not_received' => $order->not_received_at !== null,
                 // Where the courier company says the parcel is (a fixed set of words; nothing else of theirs is passed on).
-                'courier_status' => $order->courier_status ? (\App\Services\Couriers\CourierBooking::STATUS_LABELS[$order->courier_status] ?? 'With the courier') : null,
+                'courier_status' => $order->courier_status ? (CourierBooking::STATUS_LABELS[$order->courier_status] ?? 'With the courier') : null,
                 // Our own delivery (spec ch 20): the buyer's code for the door, whether the person has arrived, and the rating once it is done.
                 'own_delivery' => $order->delivery_person_id !== null && $order->delivered_at === null, 'code' => $order->delivery_person_id !== null && $order->delivered_at === null ? $order->delivery_code : null,
                 'arrived' => $order->arrived_at !== null && $order->delivered_at === null, 'can_rate' => app(Deliveries::class)->canRate($order),

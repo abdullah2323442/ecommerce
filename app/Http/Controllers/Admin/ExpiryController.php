@@ -32,6 +32,24 @@ class ExpiryController extends Controller
         ]);
     }
 
+    /** The expired goods of one company on plain paper, to hand back with the delivery person. Only what is still waiting to be returned. */
+    public function returnList(Request $request): Response
+    {
+        $this->authorize('manage-stock');
+        $company = (string) $request->query('company', '');
+
+        $groups = $this->expiry->expiredByCompany()
+            ->filter(fn (array $g) => $company === '' || $g['company'] === $company)
+            ->map(fn (array $g) => [
+                'company' => $g['company'],
+                'batches' => collect($g['batches'])->where('status', 'pending')->values(),
+            ])
+            ->filter(fn (array $g) => $g['batches']->isNotEmpty())
+            ->values();
+
+        return Inertia::render('admin/stock/expiry-print', ['groups' => $groups, 'printed_on' => now()->toDateString()]);
+    }
+
     public function checked(Request $request): RedirectResponse
     {
         $this->authorize('manage-stock');

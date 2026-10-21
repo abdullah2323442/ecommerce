@@ -308,7 +308,7 @@ class SeedDemoCatalog extends Command
                 $this->rrect($img, $cx - 55, $base - 480, $cx + 55, $base - 330, 20, $body);
                 imagefilledellipse($img, $cx - 70, $base - 220, 90, 160, $light);
             })(),
-            'lamp' => (function () use ($img, $cx, $base, $body, $light, $pale) {
+            'lamp' => (function () use ($img, $cx, $base, $body, $pale) {
                 $this->rrect($img, $cx - 20, $base - 330, $cx + 20, $base, 8, $body);
                 $this->rrect($img, $cx - 110, $base - 30, $cx + 110, $base, 12, $body);
                 imagefilledpolygon($img, [$cx - 150, $base - 330, $cx + 150, $base - 330, $cx + 90, $base - 520, $cx - 90, $base - 520], $pale);

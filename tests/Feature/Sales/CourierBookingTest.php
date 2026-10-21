@@ -15,6 +15,7 @@ use App\Models\StockSource;
 use App\Models\User;
 use App\Services\Couriers\CourierBooking;
 use App\Services\Integrations\Integrations;
+use App\Services\Integrations\SafeUrl;
 use App\Services\Stock\StockService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Client\ConnectionException;
@@ -41,7 +42,7 @@ class CourierBookingTest extends TestCase
     {
         parent::setUp();
         // No network in tests: the courier's name is pretended to be a public address.
-        \App\Services\Integrations\SafeUrl::resolveUsing(fn () => ['8.8.8.8']);
+        SafeUrl::resolveUsing(fn () => ['8.8.8.8']);
         $this->admin = User::factory()->create(['account_type' => AccountType::Admin]);
         $this->staff = User::factory()->create(['account_type' => AccountType::Staff, 'name' => 'Office Staff']);
         $this->courier = Courier::create(['name' => 'Steadfast', 'provider' => 'steadfast', 'cod_percent' => 1, 'is_active' => true]);
@@ -58,7 +59,7 @@ class CourierBookingTest extends TestCase
 
     protected function tearDown(): void
     {
-        \App\Services\Integrations\SafeUrl::resolveUsing(null);
+        SafeUrl::resolveUsing(null);
         parent::tearDown();
     }
 

@@ -1,4 +1,5 @@
 import Flash from '@/components/admin/flash';
+import SellingRates, { type SellingRatesProps } from '@/components/admin/selling-rates';
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -99,7 +100,7 @@ function TierRow({ tier }: { tier: Tier }) {
     );
 }
 
-export default function TiersIndex({ tiers }: { tiers: Tier[] }) {
+export default function TiersIndex({ tiers, companies, companyRates, medicineRates }: { tiers: Tier[] } & SellingRatesProps) {
     const { t } = useI18n();
     const create = useForm({ name: '', discount_percent: '', upgrade_target: '' });
     const submit = (e: React.FormEvent) => {
@@ -158,6 +159,8 @@ export default function TiersIndex({ tiers }: { tiers: Tier[] }) {
                         </Button>
                     </div>
                 </form>
+
+                <SellingRates companies={companies} companyRates={companyRates} medicineRates={medicineRates} />
             </div>
         </AppLayout>
     );

@@ -12,6 +12,7 @@ use App\Services\Mpo\MpoService;
 use App\Services\Sales\PreOrders;
 use App\Services\Sales\QuantitySteps;
 use App\Services\Stock\StockService;
+use App\Services\Storefront\PageFronts;
 use App\Support\MedicinePresenter;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -54,7 +55,7 @@ class MedicineSearchController extends Controller
             'browse' => $browse,
             'letter' => $letter,
             'fresh' => $front ? MedicinePresenter::many(Medicine::active()->with('company')->latest('id')->limit(10)->get()) : [],
-            'front' => app(\App\Services\Storefront\PageFronts::class)->medicines($front),
+            'front' => app(PageFronts::class)->medicines($front),
             'forms' => collect(FormController::forms())->take(10)->map(fn ($f, $slug) => ['slug' => $slug, 'name' => $f['name'], 'count' => $f['count']])->values()->all(),
             'counts' => Cache::remember('medicine.counts', 600, fn () => ['brands' => Medicine::active()->count(), 'generics' => Medicine::active()->whereNotNull('generic_name')->distinct()->count('generic_name')]),
         ]);
