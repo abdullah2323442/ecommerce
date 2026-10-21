@@ -186,7 +186,9 @@ class CustomChat
     {
         $role = $this->open($order, $viewer, false);
 
+        // A craftsman never sees what the buyer pays: the owner's price offer is between the owner and the buyer (spec ch 16).
         return CustomChatMessage::where('custom_order_id', $order->id)->where('id', '>', $after)->with('sender:id,name')->orderBy('id')->limit(300)->get()
+            ->reject(fn (CustomChatMessage $m) => $role === 'maker' && $m->kind === 'offer')
             ->map(fn (CustomChatMessage $m) => $this->present($m, $role, $viewer))->values()->all();
     }
 

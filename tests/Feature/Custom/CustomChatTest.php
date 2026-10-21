@@ -158,6 +158,26 @@ class CustomChatTest extends TestCase
         }
     }
 
+    public function test_the_maker_never_sees_the_offer_card_with_the_price_the_buyer_pays(): void
+    {
+        $o = $this->order();
+        $offer = $this->chat->sendOffer($o, $this->staff, 9000, 10, 40, 'Includes polish');
+        $this->chat->respondOffer($offer->setRelation('order', $o->fresh()), $this->buyer, true, true);
+        $o = app(Craftsmen::class)->setWages($o->fresh(), $this->staff, 1500);
+        $this->orders->receiveAdvance($o->fresh(), $this->staff, 3600);
+        $o = app(Craftsmen::class)->assign($o->fresh(), $this->staff, $this->maker);
+        $this->orders->start($o, $this->staff);
+        $this->chat->send($o, $this->staff, 'Please polish it twice');
+
+        $maker = json_encode($this->chat->messagesFor($o, $this->maker));
+        $buyer = json_encode($this->chat->messagesFor($o, $this->buyer));
+
+        $this->assertStringNotContainsString('9000', $maker, 'the buyer price is not the maker business');
+        $this->assertStringNotContainsString('"kind":"offer"', $maker);
+        $this->assertStringContainsString('Please polish it twice', $maker, 'ordinary messages still reach the maker');
+        $this->assertStringContainsString('"kind":"offer"', $buyer, 'the buyer still gets the offer');
+    }
+
     public function test_we_see_every_chat_with_real_names(): void
     {
         $o = $this->making();
