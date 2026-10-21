@@ -1,18 +1,31 @@
 {
   "n": 267,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
-  "checks": [],
+  "checks": [
+    {
+      "ok": true,
+      "text": "The returned goods can be sold again like any other stock"
+    },
+    {
+      "ok": true,
+      "text": "Selling the returned box takes it out of stock again (1 became 0)"
+    }
+  ],
   "shots": [
     {
       "file": "f267_1.jpg",
-      "caption": "Lots",
+      "caption": "The returned box added to a new sale",
       "role": "admin",
-      "url": "/admin/stock/medicines/1"
+      "url": "/admin/counter/312"
+    },
+    {
+      "file": "f267_2.jpg",
+      "caption": "Stock after selling it again (0)",
+      "role": "admin",
+      "url": "/admin/stock/medicines/22873"
     }
   ],
-  "notes": [
-    "Not reproduced."
-  ],
-  "did": "Looked for returned goods being sold again."
+  "notes": [],
+  "did": "Sold the returned box of Seclo again at the counter and looked at the stock."
 }

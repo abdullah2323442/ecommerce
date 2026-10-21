@@ -70,4 +70,16 @@ export default [
             await t.see(/Yes, still needed/, 'And can answer yes to keep it open');
         },
     },
+    {
+        n: 49, role: 'paikari',
+        did: 'Thirty-five days after the shop bought and received its goods, opened the shop Returns page. The page says returns are within 3 days of receiving.',
+        async run(t) {
+            await t.go('/paikari/returns');
+            await t.shot('The shop Returns page after the window has passed');
+            await t.see(/Returns within 3 days of receiving\./, 'The page states the rule: returns within 3 days of receiving');
+            await t.see(/M2026-\d{6}/, 'The old memos are still listed');
+            const body = await t.text();
+            t.check(!/Ask to return/.test(body), 'No old memo offers "Ask to return": the 3 days counted from receiving have passed', 'an old memo still offers a return');
+        },
+    },
 ];

@@ -1,18 +1,53 @@
 {
   "n": 268,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
-  "checks": [],
+  "checks": [
+    {
+      "ok": true,
+      "text": "A retail sale cannot be credited, and the screen says so: \"A retail sale has no account to credit. Use exchange or cash.\""
+    },
+    {
+      "ok": true,
+      "text": "The return is recorded against \"Retail\" and waits for the owner"
+    },
+    {
+      "ok": true,
+      "text": "The approved retail return appears in \"Recently decided\""
+    }
+  ],
   "shots": [
     {
       "file": "f268_1.jpg",
-      "caption": "The owner's return page",
+      "caption": "A walk-in sale, memo M2026-000027",
+      "role": "admin",
+      "url": "/admin/counter/301"
+    },
+    {
+      "file": "f268_2.jpg",
+      "caption": "The retail memo opened on the Returns screen",
+      "role": "admin",
+      "url": "/admin/returns"
+    },
+    {
+      "file": "f268_3.jpg",
+      "caption": "Asking for credit on a retail sale: there is no account to credit",
+      "role": "admin",
+      "url": "/admin/returns"
+    },
+    {
+      "file": "f268_4.jpg",
+      "caption": "Cash back recorded, waiting for the owner",
+      "role": "admin",
+      "url": "/admin/returns"
+    },
+    {
+      "file": "f268_5.jpg",
+      "caption": "Approved: the return is decided",
       "role": "admin",
       "url": "/admin/returns"
     }
   ],
-  "notes": [
-    "A retail refund with no profile was not carried through."
-  ],
-  "did": "Looked at the return screen for a retail sale with no customer profile."
+  "notes": [],
+  "did": "Sold a strip of Napa at the counter to a walk-in buyer (no account). Then, on the Returns screen, found the memo and recorded a return of that strip, asking for cash back. The owner approved it."
 }

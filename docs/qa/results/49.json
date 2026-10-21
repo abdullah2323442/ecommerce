@@ -1,18 +1,29 @@
 {
   "n": 49,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
-  "checks": [],
+  "checks": [
+    {
+      "ok": true,
+      "text": "The page states the rule: returns within 3 days of receiving"
+    },
+    {
+      "ok": true,
+      "text": "The old memos are still listed"
+    },
+    {
+      "ok": true,
+      "text": "No old memo offers \"Ask to return\": the 3 days counted from receiving have passed"
+    }
+  ],
   "shots": [
     {
       "file": "f49_1.jpg",
-      "caption": "Returns",
-      "role": "admin",
-      "url": "/admin/returns"
+      "caption": "The shop Returns page after the window has passed",
+      "role": "paikari",
+      "url": "/paikari/returns"
     }
   ],
-  "notes": [
-    "The return window starting from receipt is covered with the Returns features later in this report."
-  ],
-  "did": "Opened the Returns screen, where the return window is counted."
+  "notes": [],
+  "did": "Thirty-five days after the shop bought and received its goods, opened the shop Returns page. The page says returns are within 3 days of receiving."
 }

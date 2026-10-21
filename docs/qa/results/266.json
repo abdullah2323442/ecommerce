@@ -1,18 +1,29 @@
 {
   "n": 266,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
-  "checks": [],
+  "checks": [
+    {
+      "ok": true,
+      "text": "The finished lot reopens with the returned box (0 became 1)"
+    }
+  ],
   "shots": [
     {
       "file": "f266_1.jpg",
-      "caption": "Lots",
+      "caption": "After selling both boxes the lot is finished (0)",
       "role": "admin",
-      "url": "/admin/stock/medicines/1"
+      "url": "/admin/stock/medicines/22873"
+    },
+    {
+      "file": "f266_2.jpg",
+      "caption": "After the return is approved the box is back in its lot (1)",
+      "role": "admin",
+      "url": "/admin/stock/medicines/22873"
     }
   ],
   "notes": [
-    "Needs a lot that is completely sold and then returned. Not reproduced."
+    "Stock page text after the return: Aqua Bazar Overview Dashboard Sales and orders Counter Online orders All orders Pre-orders Prescriptions Returns Price requests Questions Online payments Approvals Delivery My deliveries Delivery money Delivery ratings Couriers Weights Market Market Market commission Commission statements Copied products Market complaints Reviews Food, games and made to order Restaurants Ingredient list Game top-ups Made to order Craftsmen Job chats Catalogue and stock Product catalog Stock Offers Aqua Tokens Pe"
   ],
-  "did": "Looked for a finished lot reopening."
+  "did": "Sold both boxes of a lot of Seclo at the counter, so the lot was finished. Then recorded and approved a return of one box and looked at the stock again."
 }

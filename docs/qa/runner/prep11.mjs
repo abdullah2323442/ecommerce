@@ -1,0 +1,13 @@
+import { Sessions, startBrowser, BASE } from './lib.mjs';
+const b = await startBrowser(); const s = new Sessions(b);
+const a = await s.page('admin');
+await a.goto(BASE + '/admin/settings', { waitUntil: 'networkidle' });
+const box = a.getByLabel('Delivery charge paid first on orders of', { exact: false }).first();
+console.log('old', await box.inputValue()); await box.fill('10');
+await box.locator('xpath=ancestor::*[.//button[normalize-space()="Save"]][1]').getByRole('button', { name: 'Save', exact: true }).first().click(); await a.waitForTimeout(1500);
+const v = await s.page('visitor');
+await v.goto(BASE + '/medicines/1', { waitUntil: 'networkidle' });
+await v.getByRole('button', { name: 'Add to cart' }).first().click(); await v.waitForTimeout(1500);
+await v.goto(BASE + '/checkout', { waitUntil: 'networkidle' });
+console.log((await v.innerText('main')).match(/.{0,60}paid first.{0,80}/i)?.[0]);
+await s.close(); await b.close();

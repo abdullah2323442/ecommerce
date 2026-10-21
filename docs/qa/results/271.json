@@ -1,18 +1,31 @@
 {
   "n": 271,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
-  "checks": [],
+  "checks": [
+    {
+      "ok": true,
+      "text": "A retail return has an optional \"Will receive money\" box"
+    },
+    {
+      "ok": true,
+      "text": "The amount the buyer expects is kept on the return and shown to the owner when deciding"
+    }
+  ],
   "shots": [
     {
       "file": "f271_1.jpg",
-      "caption": "Returns",
+      "caption": "An amount typed in \"Will receive money\"",
+      "role": "admin",
+      "url": "/admin/returns"
+    },
+    {
+      "file": "f271_2.jpg",
+      "caption": "The return keeps what the buyer expects to receive",
       "role": "admin",
       "url": "/admin/returns"
     }
   ],
-  "notes": [
-    "The optional \"will receive return money\" field was not found on the return screens."
-  ],
-  "did": "Looked for the optional \"will receive return money\" field."
+  "notes": [],
+  "did": "Opened a retail memo on the Returns screen and looked for the optional \"Will receive money\" box. Typed an amount and recorded the return."
 }

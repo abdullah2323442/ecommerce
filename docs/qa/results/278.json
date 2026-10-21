@@ -1,18 +1,21 @@
 {
   "n": 278,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
-  "checks": [],
+  "checks": [
+    {
+      "ok": true,
+      "text": "After the same mistake three times the shop gets a stronger \"happening repeatedly\" warning on its own"
+    }
+  ],
   "shots": [
     {
       "file": "f278_1.jpg",
-      "caption": "Returns",
-      "role": "admin",
-      "url": "/admin/returns"
+      "caption": "After the same mistake three times",
+      "role": "paikari",
+      "url": "/inbox"
     }
   ],
-  "notes": [
-    "Not reproduced."
-  ],
-  "did": "Looked for an automatic warning for repeated mistakes."
+  "notes": [],
+  "did": "The shop returned a strip \"Ordered by mistake\" three times in a row, and the owner named each one the shop's mistake. The shop's messages were read."
 }

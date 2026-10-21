@@ -1,18 +1,46 @@
 {
   "n": 274,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
-  "checks": [],
+  "checks": [
+    {
+      "ok": true,
+      "text": "Checkout says a big order pays the delivery charge first"
+    },
+    {
+      "ok": true,
+      "text": "Cancelled before sending: half of the delivery charge paid goes back, and the page says the other half stays for the handling"
+    }
+  ],
   "shots": [
     {
       "file": "f274_1.jpg",
-      "caption": "Returns",
+      "caption": "The shopper's order: the delivery charge comes first",
+      "role": "visitor",
+      "url": "/orders/jTJzqkQzW7AOsKQAf13D7vn7QHWzvZem8teOQRUX"
+    },
+    {
+      "file": "f274_2.jpg",
+      "caption": "The owner order page",
       "role": "admin",
-      "url": "/admin/returns"
+      "url": "/admin/orders/316"
+    },
+    {
+      "file": "f274_3.jpg",
+      "caption": "The owner marks the delivery charge as received",
+      "role": "admin",
+      "url": "/admin/orders/316"
+    },
+    {
+      "file": "f274_4.jpg",
+      "caption": "The shopper cancels before it was sent",
+      "role": "visitor",
+      "url": "/orders/jTJzqkQzW7AOsKQAf13D7vn7QHWzvZem8teOQRUX"
     }
   ],
   "notes": [
-    "Needs a delivered order. Not reproduced."
+    "The owner's buttons: Toggle Sidebar |  | বাংলা | EN | Delivery charge received | Set price | Full | Partial | Not available | Save | Checking done",
+    "Order page of the shopper: http://127.0.0.1:8001/orders/jTJzqkQzW7AOsKQAf13D7vn7QHWzvZem8teOQRUX; the owner's: /admin/orders/316"
   ],
-  "did": "Looked at the delivery charge rule on returns."
+  "did": "With \"delivery charge paid first\" switched on for this order size, a shopper ordered a box of Napa to be delivered. The owner saw the charge had to come first, marked it received, then cancelled the order before sending. The shopper's order page was read."
 }

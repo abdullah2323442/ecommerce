@@ -1,23 +1,47 @@
 {
   "n": 273,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
   "checks": [
     {
       "ok": true,
-      "text": "The memo says how offer items are returned"
+      "text": "The memo marks the offer line"
+    },
+    {
+      "ok": true,
+      "text": "The Returns screen shows the line as an offer line"
+    },
+    {
+      "ok": true,
+      "text": "Cash back for offer goods is 50% of the offer price (offer price 247.5, cash 123.75)"
     }
   ],
   "shots": [
     {
       "file": "f273_1.jpg",
-      "caption": "Offer items on the memo",
+      "caption": "The memo M2026-000034 with the offer line",
       "role": "admin",
-      "url": "/admin/counter/213"
+      "url": "/admin/counter/313"
+    },
+    {
+      "file": "f273_2.jpg",
+      "caption": "The offer line on the Returns screen",
+      "role": "admin",
+      "url": "/admin/returns"
+    },
+    {
+      "file": "f273_3.jpg",
+      "caption": "The waiting return: the offer price and what is paid back in cash",
+      "role": "admin",
+      "url": "/admin/returns"
+    },
+    {
+      "file": "f273_4.jpg",
+      "caption": "Approved",
+      "role": "admin",
+      "url": "/admin/returns"
     }
   ],
-  "notes": [
-    "The checklist says offer returns pay 50% of the offer rate. The memo wording says \"the same rule on the offer price\", and an offer return itself was not made."
-  ],
-  "did": "Read the offer return rule printed on the memo."
+  "notes": [],
+  "did": "Sold 3 boxes through the offer to a paikari shop. On the Returns screen, recorded a return of one offer box for cash, and approved it."
 }

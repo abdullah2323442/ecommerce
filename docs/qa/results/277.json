@@ -1,18 +1,43 @@
 {
   "n": 277,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
-  "checks": [],
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner is asked whose mistake a return was"
+    },
+    {
+      "ok": true,
+      "text": "The shop gets a warning that the return was its own mistake"
+    },
+    {
+      "ok": true,
+      "text": "The staff member who made the sale gets a warning"
+    }
+  ],
   "shots": [
     {
       "file": "f277_1.jpg",
-      "caption": "Returns",
+      "caption": "The owner picks whose mistake it was",
       "role": "admin",
       "url": "/admin/returns"
+    },
+    {
+      "file": "f277_2.jpg",
+      "caption": "The shop is warned",
+      "role": "paikari",
+      "url": "/inbox"
+    },
+    {
+      "file": "f277_3.jpg",
+      "caption": "The staff member who made the sale is warned",
+      "role": "staff",
+      "url": "/admin/counter"
     }
   ],
   "notes": [
-    "Not reproduced."
+    "What the shop sees: Skip to content Aqua Bazar A A A বাংলা EN 70 Account Market Electronics Clothing Jewellery Home and living Beauty and care Pharmacy Food Game top-up Made to order Your messages Mark all as read Back The same mistake (Ordered by mistake) has now happened three times in 90 days. Please take more care."
   ],
-  "did": "Looked for warnings when mistakes are found."
+  "did": "The shop asked to return a strip \"Ordered by mistake\". The owner approved it and named it the shop's mistake. Then the same for a return that was the staff's mistake. The shop's and the staff member's messages were read."
 }

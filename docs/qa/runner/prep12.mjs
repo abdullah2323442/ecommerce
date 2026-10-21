@@ -1,0 +1,17 @@
+import { Sessions, startBrowser, BASE } from './lib.mjs';
+const b = await startBrowser(); const s = new Sessions(b);
+const v = await s.page('visitor');
+await v.goto(BASE + '/medicines/4865', { waitUntil: 'networkidle' });
+await v.getByRole('button', { name: 'Add to cart' }).first().click(); await v.waitForTimeout(1500);
+await v.goto(BASE + '/checkout', { waitUntil: 'networkidle' });
+await v.locator('#co-name').fill('QA Shopper'); await v.locator('#co-phone').fill('01711111111');
+await v.locator('#co-district').selectOption({ label: 'Dhaka' }); await v.locator('#co-area').fill('Mirpur'); await v.locator('#co-address').fill('House 12, Road 4');
+await v.getByRole('button', { name: 'Send order' }).click(); await v.waitForTimeout(2500);
+const url = v.url(); console.log(url);
+console.log((await v.innerText('main')).slice(0, 700).replace(/\n+/g,' | '));
+const a = await s.page('admin'); await a.goto(BASE + '/admin/orders', { waitUntil: 'networkidle' });
+const ids = (await a.locator('main a[href*="/admin/orders/"]').evaluateAll(x => x.map(y => +y.getAttribute('href').split('/').pop()))).filter(Boolean); const id = Math.max(...ids); console.log('order', id);
+await a.goto(BASE + '/admin/orders/' + id, { waitUntil: 'networkidle' });
+console.log((await a.innerText('main')).slice(0, 600).replace(/\n+/g,' | '));
+console.log(await a.evaluate(() => [...document.querySelectorAll('main button,main input')].filter(x=>x.offsetWidth).map(x=>x.tagName+':'+(x.innerText||x.placeholder||x.type)).join(' ; ')));
+await s.close(); await b.close();
