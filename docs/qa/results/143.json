@@ -1,0 +1,21 @@
+{
+  "n": 143,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The order and its result are shown"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f143_1.jpg",
+      "caption": "The shop's page: the buyer sees the result at once",
+      "role": "paikari",
+      "url": "/paikari"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the shop's page right after the owner finished checking."
+}

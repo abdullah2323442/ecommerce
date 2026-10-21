@@ -1,0 +1,21 @@
+{
+  "n": 149,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The order screen has a delivery charge to type in by hand"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f149_1.jpg",
+      "caption": "The order screen",
+      "role": "admin",
+      "url": "/admin/orders/171"
+    }
+  ],
+  "notes": [],
+  "did": "Looked for a box where staff type the delivery charge by hand."
+}

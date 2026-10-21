@@ -1,0 +1,23 @@
+{
+  "n": 117,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Each draft shows how many minutes it has been open"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f117_1.jpg",
+      "caption": "Each draft shows how long it has been open",
+      "role": "admin",
+      "url": "/admin/counter"
+    }
+  ],
+  "notes": [
+    "The colour change as a draft gets old was not shown, because it needs a draft to age for hours."
+  ],
+  "did": "Looked at the time shown on each open draft."
+}

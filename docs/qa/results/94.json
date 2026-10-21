@@ -1,0 +1,23 @@
+{
+  "n": 94,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Staff get a form to report that the shelf and the system disagree"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f94_1.jpg",
+      "caption": "The mismatch form",
+      "role": "staff",
+      "url": "/admin/counter"
+    }
+  ],
+  "notes": [
+    "The form has 6 visible boxes."
+  ],
+  "did": "As staff, pressed \"Report mismatch\" at the counter when the shelf number looked wrong. Then looked at the owner's Mismatch reports."
+}

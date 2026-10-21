@@ -1,0 +1,25 @@
+{
+  "n": 590,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner sees when the last backup was made"
+    },
+    {
+      "ok": true,
+      "text": "And is warned when the nightly backup is not running"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f590_1.jpg",
+      "caption": "The dashboard: backup status",
+      "role": "admin",
+      "url": "/dashboard"
+    }
+  ],
+  "notes": [],
+  "did": "Looked on the dashboard for the daily backup."
+}

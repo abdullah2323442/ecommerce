@@ -1,0 +1,21 @@
+{
+  "n": 549,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The memo shows who served the customer"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f549_1.jpg",
+      "caption": "Served by",
+      "role": "admin",
+      "url": "/memo/213"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at a memo for the staff member's name."
+}

@@ -1,0 +1,21 @@
+{
+  "n": 89,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The screen says how things work \"for now\", pointing to later use"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f89_1.jpg",
+      "caption": "Stock page with the switch off: the screen says how things work \"for now\"",
+      "role": "admin",
+      "url": "/admin/stock"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the options that are built for retail but not used yet."
+}

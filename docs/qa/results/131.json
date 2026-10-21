@@ -1,0 +1,27 @@
+{
+  "n": 131,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The draft keeps the rate it was started at (300)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f131_1.jpg",
+      "caption": "The draft after the printed price rose to 320",
+      "role": "admin",
+      "url": "/admin/counter/220"
+    },
+    {
+      "file": "f131_2.jpg",
+      "caption": "The finished memo",
+      "role": "admin",
+      "url": "/admin/counter/220"
+    }
+  ],
+  "notes": [],
+  "did": "Added a box at the printed price of 300, then changed the printed price to 320, then reopened the draft and finished the sale."
+}

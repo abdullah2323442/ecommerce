@@ -1,0 +1,21 @@
+{
+  "n": 270,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner can take a return without a memo, for rare cases"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f270_1.jpg",
+      "caption": "Return without a memo (admin)",
+      "role": "admin",
+      "url": "/admin/returns"
+    }
+  ],
+  "notes": [],
+  "did": "Looked for a way to take a return with no memo."
+}

@@ -1,0 +1,31 @@
+{
+  "n": 188,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The counter lists the most-sold medicines"
+    },
+    {
+      "ok": true,
+      "text": "One click adds the medicine to the sale"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f188_1.jpg",
+      "caption": "\"Most sold\" shows the favourite medicines",
+      "role": "admin",
+      "url": "/admin/counter/209"
+    },
+    {
+      "file": "f188_2.jpg",
+      "caption": "One click puts it on the sale",
+      "role": "admin",
+      "url": "/admin/counter/209"
+    }
+  ],
+  "notes": [],
+  "did": "Pressed the \"Most sold\" button on a new sale."
+}

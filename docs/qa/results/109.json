@@ -1,0 +1,27 @@
+{
+  "n": 109,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Coming back, the item is still on the draft"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f109_1.jpg",
+      "caption": "The sale is kept in \"Open drafts\" while the owner does something else",
+      "role": "admin",
+      "url": "/admin/counter"
+    },
+    {
+      "file": "f109_2.jpg",
+      "caption": "The same draft, reopened with its item",
+      "role": "admin",
+      "url": "/admin/counter/144"
+    }
+  ],
+  "notes": [],
+  "did": "Started a sale, added a box, left the screen and came back from the list of open drafts."
+}

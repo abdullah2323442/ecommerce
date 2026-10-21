@@ -1,0 +1,18 @@
+{
+  "n": 372,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f372_1.jpg",
+      "caption": "Clothing",
+      "role": "guest",
+      "url": "/market?sector=clothing"
+    }
+  ],
+  "notes": [
+    "Needs a clothing product with a variant grid. Not in the test data."
+  ],
+  "did": "Looked for a price and photo for each colour and size."
+}

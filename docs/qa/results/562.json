@@ -1,0 +1,23 @@
+{
+  "n": 562,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A staff account can be closed"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f562_1.jpg",
+      "caption": "Close account",
+      "role": "admin",
+      "url": "/admin/staff"
+    }
+  ],
+  "notes": [
+    "Closing keeps the staff member's records."
+  ],
+  "did": "Looked at \"Close account\" on a staff member."
+}

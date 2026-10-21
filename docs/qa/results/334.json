@@ -1,0 +1,21 @@
+{
+  "n": 334,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The page shows commission owed"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f334_1.jpg",
+      "caption": "Who owes how much, and how many were sold",
+      "role": "admin",
+      "url": "/admin/market/commissions"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the owner's commission page."
+}

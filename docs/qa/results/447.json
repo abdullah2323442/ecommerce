@@ -1,0 +1,21 @@
+{
+  "n": 447,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A list of paid orders to top up by hand"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f447_1.jpg",
+      "caption": "Manual top-up",
+      "role": "admin",
+      "url": "/admin/gaming"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the manual top-up lists."
+}

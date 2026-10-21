@@ -1,0 +1,18 @@
+{
+  "n": 348,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f348_1.jpg",
+      "caption": "Market cases",
+      "role": "admin",
+      "url": "/admin/market/cases"
+    }
+  ],
+  "notes": [
+    "The checklist marks penalty steps as partly built. Applying a penalty was not carried through."
+  ],
+  "did": "Looked at the cases page for penalty steps."
+}

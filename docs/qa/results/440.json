@@ -1,0 +1,25 @@
+{
+  "n": 440,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner sets a commission for each restaurant, on delivered orders only"
+    },
+    {
+      "ok": true,
+      "text": "Each restaurant has a \"Set the commission\" button"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f440_1.jpg",
+      "caption": "Commission per restaurant",
+      "role": "admin",
+      "url": "/admin/food"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the commission each restaurant pays."
+}

@@ -1,0 +1,25 @@
+{
+  "n": 426,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The restaurant ticks what it has"
+    },
+    {
+      "ok": true,
+      "text": "Each ingredient has a \"We have it\" tick"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f426_1.jpg",
+      "caption": "Ticking ingredients",
+      "role": "vendor",
+      "url": "/food/vendor/custom"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at how a restaurant ticks the ingredients it has."
+}

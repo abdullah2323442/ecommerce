@@ -1,0 +1,29 @@
+{
+  "n": 57,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The company source shows its 18% default"
+    },
+    {
+      "ok": true,
+      "text": "The MPO source shows its 12% default"
+    },
+    {
+      "ok": true,
+      "text": "The shop source shows its 15% default"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f57_1.jpg",
+      "caption": "Each source with its own default percentage",
+      "role": "admin",
+      "url": "/admin/stock/sources"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the list of sources to see each one's default percentage below the printed price."
+}

@@ -1,0 +1,18 @@
+{
+  "n": 204,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f204_1.jpg",
+      "caption": "Offers",
+      "role": "admin",
+      "url": "/admin/offers"
+    }
+  ],
+  "notes": [
+    "Profit worked out at the normal rate below the minimum was not reproduced."
+  ],
+  "did": "Looked at profit on offers below the minimum."
+}

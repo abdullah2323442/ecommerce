@@ -1,0 +1,18 @@
+{
+  "n": 489,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f489_1.jpg",
+      "caption": "A product page",
+      "role": "guest",
+      "url": "/market/78"
+    }
+  ],
+  "notes": [
+    "The checklist marks this as partly built. Not reproduced."
+  ],
+  "did": "Looked for a \"Received\" tap."
+}

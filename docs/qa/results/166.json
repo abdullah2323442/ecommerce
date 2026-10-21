@@ -1,0 +1,23 @@
+{
+  "n": 166,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner sets the month-end window for tier tasks"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f166_1.jpg",
+      "caption": "The month-end tier task setting",
+      "role": "admin",
+      "url": "/admin/settings"
+    }
+  ],
+  "notes": [
+    "A shop qualifying for the next tier at month end was not reproduced, because it needs a month of sales."
+  ],
+  "did": "Looked for the tier upgrade task that appears near the end of the month."
+}

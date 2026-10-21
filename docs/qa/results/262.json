@@ -1,0 +1,21 @@
+{
+  "n": 262,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The return is valued at what the shop paid (85 for a strip)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f262_1.jpg",
+      "caption": "A return waiting",
+      "role": "admin",
+      "url": "/admin/returns"
+    }
+  ],
+  "notes": [],
+  "did": "Opened a return waiting to be approved and read the amount."
+}

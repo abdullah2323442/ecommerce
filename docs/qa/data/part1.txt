@@ -1,0 +1,108 @@
+1|-|p_register|Anyone can create an ordinary shopper account with an email and password, then buy from the public shops.
+2|-|p_login|People can sign in with their Google or Facebook account instead of making a new password.
+3|a_customer|k_home|A pharmacy shop can have a paikari account. It unlocks the shop-to-shop buying screen and special discounts.
+4|a_apps|w_home|A wholesaler applies for an account and the owner reviews the application before approving it.
+5|a_apps|-|A wholesaler uploads their trade licence and the owner checks it is real before they are approved.
+6|a_mpo|-|Medical sales representatives (MPOs) can only be created by the owner, never by themselves.
+7|a_food|v_food|A restaurant owner gets their own account to manage their menu and orders.
+8|a_craftsmen|-|Carpenters and tailors get an account that shows only their jobs, not prices or profit.
+9|a_staff|s_counter|The owner can create accounts for staff. Each person logs in as themselves.
+10|a_dash|k_home|After signing in, each person lands on the screen made for their role. Admin to the back office, paikari to the ordering screen.
+11|a_customer|-|The system checks permissions on the server, so changing a web address cannot reveal pages someone is not allowed to see.
+12|a_settings|u_2fa|Extra security: a second code is needed at sign-in, so a stolen password alone is not enough.
+13|-|p_login|If a password is forgotten, a reset link comes by email. The phone-code version is waiting for the text-message service.
+14|a_customers|-|One phone number can only belong to one account, which stops duplicate and fake accounts.
+15|-|u_orders|An order placed as a guest can later be joined to the person's account once they sign up.
+16|-|p_home|The shopper's app: browsing shops, ordering and tracking. Most of it works; a few role screens are still being finished.
+17|-|-|The separate app for suppliers has not been built yet.
+18|-|-|One login for both apps with a switch button has not been built yet.
+19|a_dash|-|The owner's control room on the web: orders, stock, customers, reports and settings.
+20|a_dash|k_home|People with different jobs (MPO, craftsman, wholesaler) see different screens after signing in.
+21|a_customer|-|One person can run two businesses, each with its own numbers kept apart.
+22|a_tiers|k_home|Customers are grouped into levels (tiers) A, B and C. Each level gets its own default discount.
+23|a_stock_src|-|A discount can be set once for a whole company, and it covers all that company's medicines.
+24|a_stock_med|-|A discount can also be set for one single medicine, overriding the company's.
+25|a_customer|-|The owner can give one customer a special price on one medicine. This beats every other rule.
+26|a_customer|-|When several discounts could apply, the system always picks in a fixed order: hand-set price first, then medicine, company, then tier.
+27|a_customer|-|Moving a customer to a new tier does not change the special prices already set by hand for them.
+28|a_customer|-|A discount can be written as a percentage or as a fixed taka amount.
+29|a_customer|-|A switch on the price form flips between percentage and taka.
+30|a_offers|p_item|Bigger orders can earn bigger discounts, in steps.
+31|a_offers|p_item|The steps are shown on the product page so buyers see what they save by ordering more.
+32|a_offers|-|Discounts stack in a fixed order: price first, then quantity, then token, then credit.
+33|a_stock_med|-|If someone types a strange price, such as far too high or low, the system warns them.
+34|a_customer|-|Every tier change is written to the customer's history, with date and who changed it.
+35|a_invoices|-|An invoice keeps the price from the day it was made, so later price changes never alter old invoices.
+36|-|w_home|Paikari shop owners can never see the wholesale section, and wholesalers cannot see the paikari one.
+37|a_customer|w_home|A wholesale buyer only sees the product categories the owner has opened up for them.
+38|-|p_item|A link to a product opens correctly for people allowed to see it, and quietly redirects everyone else.
+39|-|p_login|If someone opens a page they have no permission for, they are quietly sent home with no scary error.
+40|-|p_item|Shoppers do not see who the seller is when the seller wants to stay private.
+41|a_market|p_item|The owner can switch seller names on or off on the public product pages.
+42|a_staff|s_counter|Counter staff can sell, but cannot see how much profit the shop makes or how much stock costs.
+43|a_staff|s_counter|Staff are warned when a sale would lose money, so they do not make a mistake by accident.
+44|a_craftsmen|-|Craftsmen see the job, not the price or profit of the order.
+45|a_orders|k_orders|A sale is first a draft, still open. It becomes a complete sale only when the goods are received.
+46|a_orders|-|If the goods are not received, the items go back into stock automatically.
+47|a_market_comm|-|The shop's commission is charged only on completed sales, never on drafts.
+48|a_reports|-|Reports count only completed sales, so open drafts never inflate the numbers.
+49|a_returns|k_returns|The window for returning an item starts on the day it is received, not the day it was ordered.
+50|a_orders|-|The five kinds of draft (orders, invoices, stock entries and so on) are kept separate and never mixed up.
+51|a_stock|-|One master switch decides whether stock goes down on every sale or only on offers.
+52|a_stock|-|Before the switch is turned on, a warning explains what will change.
+53|a_stock|-|The switch can be turned off again if needed.
+54|a_stock|-|The whole business uses one single stock list, not separate lists per screen.
+55|a_stock|-|Stock sync with the PharmaTrack system is not finished. Entries are done on this site.
+56|a_stock_src|-|The owner can add any number of buying sources, such as a company, an MPO or a shop.
+57|a_stock_src|-|Each source has a default percentage taken off the printed price when buying.
+58|a_stock_src|-|The buying percentage is picked in order: the medicine's own, then the company's, then the source's.
+59|a_stock_recv|-|Discounts can chain, for example the company's percentage and then the MPO's on top.
+60|a_stock_recv|-|The MPO's percentage is typed by hand when entering stock.
+61|a_stock_recv|-|The screen shows the total buying percentage so the owner sees the true cost.
+62|a_stock_recv|-|The cost per box includes any free bonus boxes, so the cost shown is the real one.
+63|a_stock_recv|-|Bonus boxes (such as buy 10 get 2 free) are switched on by hand when the stock is entered.
+64|a_stock_med|-|A medicine is set up once. After that, buying more only means adding stock.
+65|a_stock_med|-|The buying price is saved in taka at entry, so later percentage changes do not rewrite history.
+66|a_stock_med|-|Sales always use the latest printed price.
+67|a_stock_med|-|When the printed price changes, the system marks that stock for a month.
+68|a_stock_med|-|The owner cannot set a selling rate that would lose money.
+69|a_stock_med|-|The loss check covers every rate, including the retail end discount.
+70|a_counter|s_counter|Staff cannot sell below cost. The counter simply blocks it.
+71|a_activity|-|When staff try to sell at a loss, the owner is notified.
+72|a_approvals|-|If a discount is above what a staff role is allowed, it waits for the owner's approval within a time limit.
+73|a_counter|-|If one invoice must go at a loss, a separate percentage can apply to only those items.
+74|a_staff|-|Each staff role has a discount limit. Above it, the owner must approve.
+75|a_reports|-|A sale forced through at a loss is counted as a loss in the reports.
+76|a_stock_med|-|Stock is taken from the batch (lot) that still leaves a profit.
+77|a_stock_exp|-|The system finds stock that has sat unsold for too long.
+78|a_stock_exp|-|It also works out how many months of stock are on the shelf.
+79|a_settings|-|The limits used to flag slow stock can be changed in settings.
+80|a_stock_exp|-|A stock check has two outcomes: fine, or needs action.
+81|a_stock_exp|-|When marking a medicine as checked, the staff enter its expiry date.
+82|a_stock_exp|-|The screen shows how much money is at risk in near-expiry stock.
+83|a_stock_exp|-|Medicines near expiry are suggested as offers so they sell before they expire.
+84|a_stock_exp|-|Expired medicines sit in their own section, grouped by company.
+85|a_stock_exp|-|An expired list can be printed as a PDF to send back to the company.
+86|a_stock_exp|-|Each expired batch is marked returned, not taken back, or pending.
+87|a_stock_exp|-|If the company will not take it back, it is counted as a loss.
+88|a_stock|-|For now, only offers reduce stock. The other options are ready for later.
+89|a_stock|-|The options for retail selling are built now and will be used later.
+90|a_stock_recv|-|Old stock already on the shelf is entered by hand once at the start.
+91|a_stock_med|-|Only the owner can correct a stock number.
+92|a_stock_med|-|A correction is not counted as a loss.
+93|a_stock_med|-|Every correction is saved with a reason.
+94|a_stock_mism|s_counter|Staff can press "Report mismatch" when the shelf and the system disagree.
+95|a_stock_recv|-|The system warns when stock is split into many tiny batches.
+96|a_stock_recv|-|Every stock entry has a field for the supplier's invoice number.
+97|a_stock_recv|-|An entry will not save until the buying percentage is filled in.
+98|a_stock_recv|-|A half-finished stock entry is saved as a draft and can be finished later.
+99|a_stock_recv|-|Many medicines from one company can be entered at once.
+100|a_stock_recv|-|The percentage is set once at the top and applies to all rows.
+101|a_stock_recv|-|If the unit changes (piece, strip, box), a warning appears.
+102|a_stock_recv|-|An optional shelf number can be saved with each batch.
+103|a_stock_recv|-|Entering the same supplier invoice twice triggers a warning.
+104|a_stock_count|-|Stock count mode lets staff count shelf by shelf or company by company.
+105|a_stock_count|-|Differences are approved only by the owner, and each count report is saved.
+106|a_stock_recv|a_counter|A barcode scanner can be used at the counter, in stock entry and in counts.
+107|a_stock_recv|-|Phone-camera scanning is not finished. USB and Bluetooth scanners work.
+108|a_stock_recv|-|An unknown barcode is linked to a medicine once and remembered afterwards.

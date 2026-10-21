@@ -1,0 +1,31 @@
+{
+  "n": 355,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner's page has a separate place for serious complaints"
+    },
+    {
+      "ok": true,
+      "text": "The buyer's complaint is now listed there"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f355_1.jpg",
+      "caption": "The complaint is brought to the owner",
+      "role": "visitor",
+      "url": "/market/orders/Uij6GEqlFtmq5USSbY4qRfdu3t3mskUoGjPcpL8R"
+    },
+    {
+      "file": "f355_2.jpg",
+      "caption": "Serious complaints have their own place",
+      "role": "admin",
+      "url": "/admin/market/cases"
+    }
+  ],
+  "notes": [],
+  "did": "After a complaint on a delivered order, the buyer pressed \"Ask us to look into it\". Then the owner's Complaints page was opened."
+}

@@ -1,0 +1,31 @@
+{
+  "n": 394,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The progress is now 40%"
+    },
+    {
+      "ok": true,
+      "text": "The job is still being made: it is not complete below 100%"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f394_1.jpg",
+      "caption": "40% saved with a photo",
+      "role": "craftsman",
+      "url": "/craftsman/jobs/1"
+    },
+    {
+      "file": "f394_2.jpg",
+      "caption": "The owner's page: still \"Being made\", not ready",
+      "role": "admin",
+      "url": "/admin/custom"
+    }
+  ],
+  "notes": [],
+  "did": "Saved a progress of 40% with a photo, then looked at the job to see that it is not marked complete."
+}

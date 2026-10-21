@@ -1,0 +1,21 @@
+{
+  "n": 130,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "There is an end-of-day screen for closing the day"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f130_1.jpg",
+      "caption": "End of day",
+      "role": "admin",
+      "url": "/admin/end-of-day"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the End of day page."
+}

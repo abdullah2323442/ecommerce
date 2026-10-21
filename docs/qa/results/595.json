@@ -1,0 +1,23 @@
+{
+  "n": 595,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The system clock shows Bangladesh time"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f595_1.jpg",
+      "caption": "The memo time",
+      "role": "admin",
+      "url": "/admin/counter/216"
+    }
+  ],
+  "notes": [
+    "The memo says 15:32. The time in Dhaka is 15:32. Times on screen follow the viewer's own clock. Rules that run on the server, such as the night hours, use the server's clock, which is set to UTC (six hours behind Bangladesh): see feature 157."
+  ],
+  "did": "Made a retail sale and compared the time printed on the memo with the real time in Bangladesh."
+}

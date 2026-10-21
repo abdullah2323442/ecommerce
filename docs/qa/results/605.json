@@ -1,0 +1,18 @@
+{
+  "n": 605,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f605_1.jpg",
+      "caption": "The cart",
+      "role": "visitor",
+      "url": "/market-cart"
+    }
+  ],
+  "notes": [
+    "Waiting for a reminder to arrive was not possible."
+  ],
+  "did": "Looked for an abandoned cart reminder."
+}

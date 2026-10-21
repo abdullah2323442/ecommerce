@@ -1,0 +1,29 @@
+{
+  "n": 393,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The craftsman sees the wage for the whole job"
+    },
+    {
+      "ok": true,
+      "text": "And what they have earned so far"
+    },
+    {
+      "ok": true,
+      "text": "Progress is tracked as a percentage"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f393_1.jpg",
+      "caption": "Wage and progress",
+      "role": "craftsman",
+      "url": "/craftsman/jobs/1"
+    }
+  ],
+  "notes": [],
+  "did": "Signed in as the craftsman and opened the job, looking at the wage and progress."
+}

@@ -1,0 +1,21 @@
+{
+  "n": 574,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The memo says Paid"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f574_1.jpg",
+      "caption": "Paid",
+      "role": "admin",
+      "url": "/memo/213"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at a memo for Paid or Due."
+}

@@ -1,0 +1,21 @@
+{
+  "n": 158,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The order was accepted at night: there is no cut-off time"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f158_1.jpg",
+      "caption": "An order accepted during the night",
+      "role": "paikari",
+      "url": "/paikari/orders/180"
+    }
+  ],
+  "notes": [],
+  "did": "Sent an order while the screen said it was night."
+}

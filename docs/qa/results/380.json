@@ -1,0 +1,53 @@
+{
+  "n": 380,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The form asks for Chest"
+    },
+    {
+      "ok": true,
+      "text": "The form asks for Waist"
+    },
+    {
+      "ok": true,
+      "text": "The form asks for Length"
+    },
+    {
+      "ok": true,
+      "text": "The form asks for Sleeve"
+    },
+    {
+      "ok": true,
+      "text": "The form asks for Shoulder"
+    },
+    {
+      "ok": true,
+      "text": "The form asks for Neck"
+    },
+    {
+      "ok": true,
+      "text": "The form asks for Trouser length"
+    },
+    {
+      "ok": true,
+      "text": "The form asks for Thigh"
+    },
+    {
+      "ok": true,
+      "text": "The form asks for Hem (mohori)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f380_1.jpg",
+      "caption": "The measurement form",
+      "role": "visitor",
+      "url": "/custom/new/clothing"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the clothing order form and looked at the measurements it asks for."
+}

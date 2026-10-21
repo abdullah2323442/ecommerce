@@ -1,0 +1,25 @@
+{
+  "n": 12,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A Two-step sign-in page exists"
+    },
+    {
+      "ok": true,
+      "text": "It asks for the password before turning anything on"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f12_1.jpg",
+      "caption": "Two-step sign-in settings",
+      "role": "visitor",
+      "url": "/settings/two-factor"
+    }
+  ],
+  "notes": [],
+  "did": "Opened Two-step sign-in in the shopper's settings."
+}

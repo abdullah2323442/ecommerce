@@ -1,0 +1,37 @@
+{
+  "n": 515,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The memo can be printed"
+    },
+    {
+      "ok": true,
+      "text": "The memo can be saved as a PDF"
+    },
+    {
+      "ok": true,
+      "text": "The memo can be sent by WhatsApp"
+    },
+    {
+      "ok": true,
+      "text": "The memo can be sent by email"
+    },
+    {
+      "ok": true,
+      "text": "WhatsApp opens with the message already written"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f515_1.jpg",
+      "caption": "The finished memo: print, PDF, WhatsApp and email",
+      "role": "admin",
+      "url": "/admin/counter/262"
+    }
+  ],
+  "notes": [],
+  "did": "Finished a sale, then looked at what the memo page offers for sending it. Pressed \"Send by WhatsApp\" and looked at the address it opened."
+}

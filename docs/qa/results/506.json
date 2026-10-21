@@ -1,0 +1,21 @@
+{
+  "n": 506,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A share of the price can be asked up front on a pre-order"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f506_1.jpg",
+      "caption": "The advance on a pre-order",
+      "role": "admin",
+      "url": "/admin/settings"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the advance a pre-order asks for."
+}

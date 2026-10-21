@@ -1,0 +1,31 @@
+{
+  "n": 492,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A courier can book parcels through a service"
+    },
+    {
+      "ok": true,
+      "text": "Steadfast is offered"
+    },
+    {
+      "ok": true,
+      "text": "Pathao is offered"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f492_1.jpg",
+      "caption": "Courier integration",
+      "role": "admin",
+      "url": "/admin/couriers"
+    }
+  ],
+  "notes": [
+    "Both services show \"not switched on\" in the test copy."
+  ],
+  "did": "Looked at the courier list for booking parcels with a courier service."
+}

@@ -1,0 +1,31 @@
+{
+  "n": 306,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A shopper who saved an address sees it the next time they order"
+    },
+    {
+      "ok": true,
+      "text": "With its details, ready to use"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f306_1.jpg",
+      "caption": "Saving the address with the order",
+      "role": "visitor",
+      "url": "/checkout"
+    },
+    {
+      "file": "f306_2.jpg",
+      "caption": "A new checkout offers the saved address",
+      "role": "visitor",
+      "url": "/checkout"
+    }
+  ],
+  "notes": [],
+  "did": "Ordered with \"Save this address for next time\" ticked, then started a new order and looked for the saved address."
+}

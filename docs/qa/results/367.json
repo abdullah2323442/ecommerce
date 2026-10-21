@@ -1,0 +1,43 @@
+{
+  "n": 367,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A sector can ask for \"Colour\""
+    },
+    {
+      "ok": true,
+      "text": "A sector can ask for \"Size\""
+    },
+    {
+      "ok": true,
+      "text": "A sector can ask for \"Measurements\""
+    },
+    {
+      "ok": true,
+      "text": "A sector can ask for \"Weight\""
+    },
+    {
+      "ok": true,
+      "text": "A sector can ask for \"Expiry date\""
+    },
+    {
+      "ok": true,
+      "text": "A sector can ask for \"Warranty\""
+    }
+  ],
+  "shots": [
+    {
+      "file": "f367_1.jpg",
+      "caption": "Fields a sector can ask for",
+      "role": "admin",
+      "url": "/admin/market"
+    }
+  ],
+  "notes": [
+    "A unit for each sector (piece, metre, kilo) was not found on this screen. The unit shows on product pages, such as \"/ Piece\"."
+  ],
+  "did": "Looked at the fields a sector can ask sellers for."
+}

@@ -1,0 +1,25 @@
+{
+  "n": 565,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner can lend powers for a set number of hours"
+    },
+    {
+      "ok": true,
+      "text": "They end by themselves"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f565_1.jpg",
+      "caption": "Temporary powers",
+      "role": "admin",
+      "url": "/admin/staff"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at \"Lend extra powers for a while\" on the Staff page."
+}

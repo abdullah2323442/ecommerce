@@ -1,0 +1,27 @@
+{
+  "n": 498,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Pre-order can be switched on for a whole company"
+    },
+    {
+      "ok": true,
+      "text": "Or for one medicine"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f498_1.jpg",
+      "caption": "A company or one medicine",
+      "role": "admin",
+      "url": "/admin/preorders"
+    }
+  ],
+  "notes": [
+    "No size or colour choice was found. Pre-order here is by company or medicine only."
+  ],
+  "did": "Looked at what a pre-order can be switched on for."
+}

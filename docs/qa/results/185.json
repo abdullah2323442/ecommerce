@@ -1,0 +1,25 @@
+{
+  "n": 185,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The offer lines come first, the ordinary lines after, and one total at the bottom"
+    },
+    {
+      "ok": true,
+      "text": "One combined total"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f185_1.jpg",
+      "caption": "Order of the lines",
+      "role": "admin",
+      "url": "/admin/counter/254"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the order of the lines in the draft where the ordinary strip was added first and the offer after it."
+}

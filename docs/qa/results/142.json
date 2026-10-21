@@ -1,0 +1,33 @@
+{
+  "n": 142,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The shop's open page updates by itself once the owner is done"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f142_1.jpg",
+      "caption": "The shop's page while the order is still being checked",
+      "role": "paikari",
+      "url": "/paikari/orders/170"
+    },
+    {
+      "file": "f142_2.jpg",
+      "caption": "The owner has finished checking",
+      "role": "admin",
+      "url": "/admin/orders/170"
+    },
+    {
+      "file": "f142_3.jpg",
+      "caption": "The shop's page, not reloaded, some seconds later",
+      "role": "admin",
+      "url": "/paikari/orders/170"
+    }
+  ],
+  "notes": [],
+  "did": "Kept the shop's order page open. Meanwhile the owner marked the item Full and pressed \"Checking done\". Then looked at the shop's page without reloading it."
+}

@@ -1,0 +1,33 @@
+{
+  "n": 69,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Before finishing, the owner is warned that the sale is below cost, and by how much"
+    },
+    {
+      "ok": true,
+      "text": "The owner is allowed to go on, because only the owner may sell at a loss"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f69_1.jpg",
+      "caption": "A 30% end discount: the total falls to 210, below the box's cost of 240",
+      "role": "admin",
+      "url": "/admin/counter/257"
+    },
+    {
+      "file": "f69_2.jpg",
+      "caption": "The owner may still finish it: only the owner can sell at a loss",
+      "role": "admin",
+      "url": "/admin/counter/257"
+    }
+  ],
+  "notes": [
+    "Staff are held back (see feature 43). The loss the owner chose is counted in the reports (see feature 75)."
+  ],
+  "did": "At the counter, as the owner, gave a retail sale a 30% end discount (the box cost 240 and sells at 300, so 30% off means selling at 210), then pressed Finish sale."
+}

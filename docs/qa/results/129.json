@@ -1,0 +1,21 @@
+{
+  "n": 129,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The correction screen has a customer option"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f129_1.jpg",
+      "caption": "The correction screen",
+      "role": "admin",
+      "url": "/admin/counter/163"
+    }
+  ],
+  "notes": [],
+  "did": "On the correction screen, looked for a way to change the customer."
+}

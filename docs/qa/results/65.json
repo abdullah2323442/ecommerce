@@ -1,0 +1,29 @@
+{
+  "n": 65,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The lot's cost is written down in taka (240 a box)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f65_1.jpg",
+      "caption": "A purchase of 10 boxes at 20%: cost 240 a box",
+      "role": "admin",
+      "url": "/admin/stock/receive"
+    },
+    {
+      "file": "f65_2.jpg",
+      "caption": "The saved lot shows its cost in taka",
+      "role": "admin",
+      "url": "/admin/stock/medicines/1"
+    }
+  ],
+  "notes": [
+    "The cost is stored as a taka amount, so a later change to any percentage cannot rewrite what was paid."
+  ],
+  "did": "Saved a purchase at 20%, then changed the percentage for the medicine, then looked at the saved lot."
+}

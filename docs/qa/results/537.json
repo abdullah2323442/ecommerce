@@ -1,0 +1,21 @@
+{
+  "n": 537,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Sales are split by kind (retail, shops, trade)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f537_1.jpg",
+      "caption": "Sales by kind",
+      "role": "admin",
+      "url": "/admin/reports"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the monthly report and looked at \"By kind of sale\"."
+}

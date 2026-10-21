@@ -1,0 +1,23 @@
+{
+  "n": 100,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The Source at the top sets one default percentage for every line"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f100_1.jpg",
+      "caption": "The purchase form: the Source sets one default for all lines",
+      "role": "admin",
+      "url": "/admin/stock/receive"
+    }
+  ],
+  "notes": [
+    "The percentage is set once through the Source at the top. Each line can still change it."
+  ],
+  "did": "Looked for one place at the top of the purchase to set the percentage for every line."
+}

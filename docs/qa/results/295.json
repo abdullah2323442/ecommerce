@@ -1,0 +1,27 @@
+{
+  "n": 295,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A clothing product offers size and colour choices"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f295_1.jpg",
+      "caption": "The Clothing shop",
+      "role": "guest",
+      "url": "/market?sector=clothing"
+    },
+    {
+      "file": "f295_2.jpg",
+      "caption": "A clothing product page",
+      "role": "guest",
+      "url": "/market/7"
+    }
+  ],
+  "notes": [],
+  "did": "Opened a clothing product and looked for size and colour choices."
+}

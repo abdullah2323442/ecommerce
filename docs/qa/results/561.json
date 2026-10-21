@@ -1,0 +1,21 @@
+{
+  "n": 561,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A staff account has a limit on devices"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f561_1.jpg",
+      "caption": "Device limit",
+      "role": "admin",
+      "url": "/admin/settings"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the device limit in Settings."
+}

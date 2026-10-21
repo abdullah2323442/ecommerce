@@ -1,0 +1,23 @@
+{
+  "n": 308,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A product that allows it tells the buyer they pay on arrival"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f308_1.jpg",
+      "caption": "The owner's Market page",
+      "role": "admin",
+      "url": "/admin/market"
+    }
+  ],
+  "notes": [
+    "The cash-on-delivery switch is set by the seller on their own listing form. It was not changed here. The product page tells the buyer \"You pay when it arrives\" when cash on delivery is allowed."
+  ],
+  "did": "Looked at the owner's Market page for the cash-on-delivery choice on each product."
+}

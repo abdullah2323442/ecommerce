@@ -1,0 +1,31 @@
+{
+  "n": 72,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The screen says the request is waiting for the owner"
+    },
+    {
+      "ok": true,
+      "text": "The owner sees the 10% discount request"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f72_1.jpg",
+      "caption": "After asking: the request is waiting for the owner",
+      "role": "staff",
+      "url": "/admin/counter/138"
+    },
+    {
+      "file": "f72_2.jpg",
+      "caption": "The owner's Approvals page lists the request",
+      "role": "admin",
+      "url": "/admin/approvals"
+    }
+  ],
+  "notes": [],
+  "did": "As staff, typed a 10% discount (their limit is 5%), pressed \"Need admin approval\", and then looked at the owner's Approvals page."
+}

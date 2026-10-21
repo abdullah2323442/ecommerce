@@ -1,0 +1,21 @@
+{
+  "n": 103,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The system warns that this invoice number was already entered"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f103_1.jpg",
+      "caption": "The second time with the same invoice number",
+      "role": "admin",
+      "url": "/admin/stock/receive"
+    }
+  ],
+  "notes": [],
+  "did": "Saved a purchase, then tried to save another with the same invoice number."
+}

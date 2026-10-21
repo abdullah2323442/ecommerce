@@ -1,0 +1,23 @@
+{
+  "n": 155,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The shop is told it will be reminded when a regular medicine is due"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f155_1.jpg",
+      "caption": "The reminder explained",
+      "role": "paikari",
+      "url": "/my-orders"
+    }
+  ],
+  "notes": [
+    "An actual reminder arriving at the right time was not reproduced, because it needs months of history."
+  ],
+  "did": "Read the reminder note on the shop's orders page."
+}

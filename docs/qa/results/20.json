@@ -1,0 +1,27 @@
+{
+  "n": 20,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The two screens are different"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f20_1.jpg",
+      "caption": "The MPO's own screen",
+      "role": "mpo",
+      "url": "/mpo"
+    },
+    {
+      "file": "f20_2.jpg",
+      "caption": "The craftsman's own, different screen",
+      "role": "craftsman",
+      "url": "/craftsman"
+    }
+  ],
+  "notes": [],
+  "did": "Signed in as an MPO and then as a craftsman to see that each gets a different screen."
+}

@@ -1,0 +1,21 @@
+{
+  "n": 465,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The shop keeps a list of couriers"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f465_1.jpg",
+      "caption": "Couriers",
+      "role": "admin",
+      "url": "/admin/couriers"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the Couriers page where the shop lists the couriers it uses."
+}

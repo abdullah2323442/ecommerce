@@ -1,0 +1,25 @@
+{
+  "n": 60,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "There is a box for the MPO's percentage, typed by hand"
+    },
+    {
+      "ok": true,
+      "text": "Typing 7% for the MPO changes the cost (saw 23.74% below the printed price)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f60_1.jpg",
+      "caption": "The MPO percentage typed by hand",
+      "role": "admin",
+      "url": "/admin/stock/receive"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the \"MPO % on top\" box on the purchase line."
+}

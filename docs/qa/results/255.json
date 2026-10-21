@@ -1,0 +1,31 @@
+{
+  "n": 255,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "One choice: an exchange"
+    },
+    {
+      "ok": true,
+      "text": "Another: cash back at half the price"
+    },
+    {
+      "ok": true,
+      "text": "And: credit on the next memo"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f255_1.jpg",
+      "caption": "Credit, exchange or half the price in cash",
+      "role": "paikari",
+      "url": "/paikari/returns"
+    }
+  ],
+  "notes": [
+    "The choices are: Credit on my next memo / Exchange for another medicine / Cash back (half the price)"
+  ],
+  "did": "Looked at the choices the shop has for what it wants back."
+}

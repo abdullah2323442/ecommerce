@@ -1,0 +1,21 @@
+{
+  "n": 202,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "An offer can carry its own minimum delivery charge"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f202_1.jpg",
+      "caption": "A delivery charge for this product",
+      "role": "admin",
+      "url": "/admin/offers"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the delivery charge box on the offer form."
+}

@@ -1,0 +1,18 @@
+{
+  "n": 346,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f346_1.jpg",
+      "caption": "Messages",
+      "role": "admin",
+      "url": "/admin/messages"
+    }
+  ],
+  "notes": [
+    "Not reproduced."
+  ],
+  "did": "Looked for notifications that come from the owner's site."
+}

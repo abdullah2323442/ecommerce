@@ -1,0 +1,21 @@
+{
+  "n": 244,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A preset list of companies is offered (292 companies)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f244_1.jpg",
+      "caption": "A preset list of companies",
+      "role": "paikari",
+      "url": "/paikari"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the company list on the ordering screen."
+}

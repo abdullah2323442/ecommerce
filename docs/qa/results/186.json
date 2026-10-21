@@ -1,0 +1,21 @@
+{
+  "n": 186,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Several Napa medicines are listed with their strength and company (12 shown)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f186_1.jpg",
+      "caption": "Similar names listed with their strength and company",
+      "role": "admin",
+      "url": "/admin/counter/207"
+    }
+  ],
+  "notes": [],
+  "did": "Searched for \"napa\" and looked at how similar medicine names are told apart."
+}

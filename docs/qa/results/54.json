@@ -1,0 +1,27 @@
+{
+  "n": 54,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The medicine page shows the same stock as lots"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f54_1.jpg",
+      "caption": "The single stock list",
+      "role": "admin",
+      "url": "/admin/stock"
+    },
+    {
+      "file": "f54_2.jpg",
+      "caption": "The same medicine's own stock page, with its lots",
+      "role": "admin",
+      "url": "/admin/stock/medicines/1"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the stock page and the medicine page to see one stock list used everywhere."
+}

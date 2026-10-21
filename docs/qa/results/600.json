@@ -1,0 +1,18 @@
+{
+  "n": 600,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f600_1.jpg",
+      "caption": "A product page",
+      "role": "guest",
+      "url": "/market/78"
+    }
+  ],
+  "notes": [
+    "Progressive image loading was not measured."
+  ],
+  "did": "Looked for a low-quality image that loads first."
+}

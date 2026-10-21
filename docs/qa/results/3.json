@@ -1,0 +1,35 @@
+{
+  "n": 3,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The paikari ordering screen is shown"
+    },
+    {
+      "ok": true,
+      "text": "The owner sees Karim Pharmacy in the customer list"
+    },
+    {
+      "ok": true,
+      "text": "Its account type is Paikari"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f3_1.jpg",
+      "caption": "The paikari shop's own buying screen",
+      "role": "paikari",
+      "url": "/paikari"
+    },
+    {
+      "file": "f3_2.jpg",
+      "caption": "The owner's customer list: Karim Pharmacy is a Paikari account",
+      "role": "admin",
+      "url": "/admin/customers"
+    }
+  ],
+  "notes": [],
+  "did": "Signed in as a pharmacy shop (paikari) and saw the shop-to-shop buying screen. Then looked the account up in the owner's customer list."
+}

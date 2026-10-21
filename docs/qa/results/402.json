@@ -1,0 +1,25 @@
+{
+  "n": 402,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The job has a chat for the buyer"
+    },
+    {
+      "ok": true,
+      "text": "The chat says the shop can read it"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f402_1.jpg",
+      "caption": "The chat on the job",
+      "role": "visitor",
+      "url": "/custom/YWqp5Mw964YyEaqPGFkNVXFzqoPOexRqu8CRvOea"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the buyer's job page and looked at the chat."
+}

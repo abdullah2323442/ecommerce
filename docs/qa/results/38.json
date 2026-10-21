@@ -1,0 +1,35 @@
+{
+  "n": 38,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A direct link to a public product opens straight to it"
+    },
+    {
+      "ok": true,
+      "text": "A stranger cannot open /wholesale (they were sent to /login)"
+    },
+    {
+      "ok": true,
+      "text": "A stranger gets no scary error page, just a quiet redirect"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f38_1.jpg",
+      "caption": "A direct product link works for everyone allowed to see it",
+      "role": "guest",
+      "url": "/market/78"
+    },
+    {
+      "file": "f38_2.jpg",
+      "caption": "A direct link to a restricted page quietly goes elsewhere",
+      "role": "guest",
+      "url": "/login"
+    }
+  ],
+  "notes": [],
+  "did": "As a stranger, opened a direct link to a public product, then a direct link to a restricted page."
+}

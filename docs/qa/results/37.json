@@ -1,0 +1,37 @@
+{
+  "n": 37,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "With the Medicine category removed, the list of medicine companies is gone"
+    },
+    {
+      "ok": true,
+      "text": "Giving the category back brings the medicine list back"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f37_1.jpg",
+      "caption": "The owner's \"Categories they can see\" for Rahim Traders",
+      "role": "admin",
+      "url": "/admin/customers/5"
+    },
+    {
+      "file": "f37_2.jpg",
+      "caption": "Rahim's screen without the Medicine category",
+      "role": "wholesale",
+      "url": "/wholesale"
+    },
+    {
+      "file": "f37_3.jpg",
+      "caption": "The category is given back and the list returns",
+      "role": "wholesale",
+      "url": "/wholesale"
+    }
+  ],
+  "notes": [],
+  "did": "As the owner, took the \"Medicine\" category away from the wholesaler Rahim Traders. Then signed in as Rahim to see if the medicine ordering list was still there. Finally gave the category back."
+}

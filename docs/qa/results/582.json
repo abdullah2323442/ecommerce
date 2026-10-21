@@ -1,0 +1,21 @@
+{
+  "n": 582,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The product name is not translated"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f582_1.jpg",
+      "caption": "A product page in Bangla: the name is left as it was written",
+      "role": "guest",
+      "url": "/market/78"
+    }
+  ],
+  "notes": [],
+  "did": "Switched to Bangla and looked at the name of a product."
+}

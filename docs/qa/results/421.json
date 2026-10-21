@@ -1,0 +1,25 @@
+{
+  "n": 421,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The shopper sees a countdown timer: \"Cooking. It will be ready in about 19:51\""
+    },
+    {
+      "ok": true,
+      "text": "And the order moves to the \"Confirmed: cooking\" step"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f421_1.jpg",
+      "caption": "The shopper's order after confirmation",
+      "role": "visitor",
+      "url": "/food/orders/RKkL3lhJVoauV7z6cA20rHB59JU4w3hmvJBWnyfl"
+    }
+  ],
+  "notes": [],
+  "did": "As the shopper, opened the food order after the restaurant confirmed it."
+}

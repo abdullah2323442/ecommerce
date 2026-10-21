@@ -1,0 +1,21 @@
+{
+  "n": 386,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Each profile shows the date it was measured, so an old one can be spotted"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f386_1.jpg",
+      "caption": "Saved profiles",
+      "role": "visitor",
+      "url": "/custom/profiles"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the saved profile for its measuring date."
+}

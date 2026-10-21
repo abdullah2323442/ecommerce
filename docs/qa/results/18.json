@@ -1,0 +1,11 @@
+{
+  "n": 18,
+  "status": "notbuilt",
+  "error": null,
+  "checks": [],
+  "shots": [],
+  "notes": [
+    "One login with a switch button between the two apps has not been built yet."
+  ],
+  "did": "Checked the checklist."
+}

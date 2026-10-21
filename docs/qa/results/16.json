@@ -1,0 +1,22 @@
+{
+  "n": 16,
+  "status": "pass",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f16_1.jpg",
+      "caption": "The shopper's app on a phone-sized screen",
+      "role": "visitor",
+      "url": "/"
+    },
+    {
+      "file": "f16_2.jpg",
+      "caption": "The shopper's own page on a phone",
+      "role": "visitor",
+      "url": "/dashboard"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the shopper side of the site on a phone-sized screen."
+}

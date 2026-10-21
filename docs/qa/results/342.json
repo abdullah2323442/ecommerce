@@ -1,0 +1,21 @@
+{
+  "n": 342,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Buyers pay the seller directly, outside the platform"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f342_1.jpg",
+      "caption": "Money is paid outside the platform",
+      "role": "wholesale",
+      "url": "/wholesale/sell/statements"
+    }
+  ],
+  "notes": [],
+  "did": "Read how money moves between buyer and seller."
+}

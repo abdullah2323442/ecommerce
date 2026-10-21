@@ -1,0 +1,21 @@
+{
+  "n": 320,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Many companies are listed (56 links)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f320_1.jpg",
+      "caption": "All Companies",
+      "role": "guest",
+      "url": "/companies"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the Companies page (the \"All Companies\" sector)."
+}

@@ -1,0 +1,31 @@
+{
+  "n": 305,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The cart holds what was added"
+    },
+    {
+      "ok": true,
+      "text": "The wishlist holds what was saved for later"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f305_1.jpg",
+      "caption": "The market cart",
+      "role": "visitor",
+      "url": "/market-cart"
+    },
+    {
+      "file": "f305_2.jpg",
+      "caption": "The wishlist",
+      "role": "visitor",
+      "url": "/wishlist"
+    }
+  ],
+  "notes": [],
+  "did": "Put a product in the market cart and in the wishlist, then opened both."
+}

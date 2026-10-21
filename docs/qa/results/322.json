@@ -1,0 +1,21 @@
+{
+  "n": 322,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner chooses which categories a wholesale buyer can see"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f322_1.jpg",
+      "caption": "\"Categories they can see\"",
+      "role": "admin",
+      "url": "/admin/customers/5"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the wholesaler's customer page and looked at the categories the owner gives them."
+}

@@ -1,0 +1,23 @@
+{
+  "n": 198,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "There are two ways to show stock (Just \"In stock\", Exact number of boxes)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f198_1.jpg",
+      "caption": "\"Just In stock\" or \"Exact number of boxes\"",
+      "role": "admin",
+      "url": "/admin/offers"
+    }
+  ],
+  "notes": [
+    "The choices are: Just \"In stock\" / Exact number of boxes"
+  ],
+  "did": "Looked at the choices for how the offer's stock is shown."
+}

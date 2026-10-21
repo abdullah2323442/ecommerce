@@ -1,0 +1,33 @@
+{
+  "n": 569,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The status says the suspension lasts until a date"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f569_1.jpg",
+      "caption": "A reason and a number of days",
+      "role": "admin",
+      "url": "/admin/customers/6"
+    },
+    {
+      "file": "f569_2.jpg",
+      "caption": "The account is suspended until a date",
+      "role": "admin",
+      "url": "/admin/customers/6"
+    },
+    {
+      "file": "f569_3.jpg",
+      "caption": "Reactivated again",
+      "role": "admin",
+      "url": "/admin/customers/6"
+    }
+  ],
+  "notes": [],
+  "did": "On a customer, wrote a reason and 3 days in the Suspend box and pressed Suspend account, then looked at the status."
+}

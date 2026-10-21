@@ -1,0 +1,27 @@
+{
+  "n": 583,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The site has an app manifest, so it can be installed on a phone"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f583_1.jpg",
+      "caption": "The app manifest",
+      "role": "guest",
+      "url": "/manifest.webmanifest"
+    },
+    {
+      "file": "f583_2.jpg",
+      "caption": "The offline page",
+      "role": "guest",
+      "url": "/offline"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the files that make the site installable as an app."
+}

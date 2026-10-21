@@ -1,0 +1,29 @@
+{
+  "n": 184,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The offer line is marked OFFER"
+    },
+    {
+      "ok": true,
+      "text": "The ordinary line keeps its own rate (a strip at 82.50)"
+    },
+    {
+      "ok": true,
+      "text": "The offer line is priced at 3 boxes at 247.50 (742.50)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f184_1.jpg",
+      "caption": "One draft with two kinds of rate",
+      "role": "admin",
+      "url": "/admin/counter/254"
+    }
+  ],
+  "notes": [],
+  "did": "In a sale to a shop, added one strip of Napa at its normal rate first, and then 3 boxes through the offer."
+}

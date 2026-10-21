@@ -1,0 +1,51 @@
+{
+  "n": 312,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The buyer is told the order went to the seller, and that payment is on arrival"
+    },
+    {
+      "ok": true,
+      "text": "The order shows its four steps: Sent, Accepted, On the way, Done"
+    },
+    {
+      "ok": true,
+      "text": "Once it is on the way the buyer is asked if it arrived"
+    },
+    {
+      "ok": true,
+      "text": "The buyer confirms it arrived and the order is done"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f312_1.jpg",
+      "caption": "Step 1: the order is sent to the seller",
+      "role": "visitor",
+      "url": "/market/orders/MWOP9Rd1CCx7CnkWHLrsUwFijMJ3qEPJqjLpnJZk"
+    },
+    {
+      "file": "f312_2.jpg",
+      "caption": "Step 2: the seller accepted it",
+      "role": "visitor",
+      "url": "/market/orders/MWOP9Rd1CCx7CnkWHLrsUwFijMJ3qEPJqjLpnJZk"
+    },
+    {
+      "file": "f312_3.jpg",
+      "caption": "Step 3: the seller sent it, so the buyer is asked \"Did it arrive?\"",
+      "role": "visitor",
+      "url": "/market/orders/MWOP9Rd1CCx7CnkWHLrsUwFijMJ3qEPJqjLpnJZk"
+    },
+    {
+      "file": "f312_4.jpg",
+      "caption": "Step 4: the buyer confirms it arrived",
+      "role": "visitor",
+      "url": "/market/orders/MWOP9Rd1CCx7CnkWHLrsUwFijMJ3qEPJqjLpnJZk"
+    }
+  ],
+  "notes": [],
+  "did": "As the buyer, placed an order, then watched its steps change as the seller accepted it and sent it, and finally pressed \"Yes, I got it\"."
+}

@@ -1,0 +1,21 @@
+{
+  "n": 527,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A token comes back if the order is cancelled"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f527_1.jpg",
+      "caption": "A token comes back on cancellation",
+      "role": "admin",
+      "url": "/admin/tokens"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the token rule on cancellation."
+}

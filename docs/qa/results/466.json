@@ -1,0 +1,21 @@
+{
+  "n": 466,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The new courier is added and kept on the list with its charges: there is no fixed limit"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f466_1.jpg",
+      "caption": "The courier is on the list, with its charges",
+      "role": "admin",
+      "url": "/admin/couriers"
+    }
+  ],
+  "notes": [],
+  "did": "Added a new courier called \"QA Express\" with its charges."
+}

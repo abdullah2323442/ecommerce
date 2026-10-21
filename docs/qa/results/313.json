@@ -1,0 +1,27 @@
+{
+  "n": 313,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The shopper has a profile"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f313_1.jpg",
+      "caption": "All the shopper's orders",
+      "role": "visitor",
+      "url": "/history"
+    },
+    {
+      "file": "f313_2.jpg",
+      "caption": "The shopper's profile",
+      "role": "visitor",
+      "url": "/settings/profile"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the shopper's order history and profile."
+}

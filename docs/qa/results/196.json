@@ -1,0 +1,21 @@
+{
+  "n": 196,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Each suggestion is a lot bought at a high discount, with its boxes in the shop"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f196_1.jpg",
+      "caption": "Only lots bought at a high discount are suggested",
+      "role": "admin",
+      "url": "/admin/offers"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the list of medicines bought at a high discount."
+}

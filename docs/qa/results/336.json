@@ -1,0 +1,21 @@
+{
+  "n": 336,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "New products wait for the owner before they go live"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f336_1.jpg",
+      "caption": "Waiting to be read",
+      "role": "admin",
+      "url": "/admin/market"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the \"Waiting to be read\" list, where a new product waits before it is published."
+}

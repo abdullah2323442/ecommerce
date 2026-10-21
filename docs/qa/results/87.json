@@ -1,0 +1,33 @@
+{
+  "n": 87,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The money in goods the company would not take back shows up as a loss in the reports"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f87_1.jpg",
+      "caption": "After marking a lot as not taken back",
+      "role": "admin",
+      "url": "/admin/stock/expiry"
+    },
+    {
+      "file": "f87_2.jpg",
+      "caption": "The monthly report: no loss line for the expired goods",
+      "role": "admin",
+      "url": "/admin/reports"
+    },
+    {
+      "file": "f87_3.jpg",
+      "caption": "The stock profit report: no loss line either",
+      "role": "admin",
+      "url": "/admin/stock/reports"
+    }
+  ],
+  "notes": [],
+  "did": "Marked an expired lot as \"Not taken back\" and looked for the loss."
+}

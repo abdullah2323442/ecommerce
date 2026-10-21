@@ -1,0 +1,21 @@
+{
+  "n": 589,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A seller can choose the main photo"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f589_1.jpg",
+      "caption": "The seller's listings",
+      "role": "wholesale",
+      "url": "/wholesale/sell"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the seller listing form for choosing the main photo."
+}

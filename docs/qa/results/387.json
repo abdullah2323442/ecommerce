@@ -1,0 +1,18 @@
+{
+  "n": 387,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f387_1.jpg",
+      "caption": "Saved profiles",
+      "role": "visitor",
+      "url": "/custom/profiles"
+    }
+  ],
+  "notes": [
+    "Needs a job made from a saved profile. Not carried through."
+  ],
+  "did": "Looked for previous orders on a profile."
+}

@@ -1,0 +1,31 @@
+{
+  "n": 405,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The chat says phone numbers and links cannot be sent"
+    },
+    {
+      "ok": true,
+      "text": "A phone number and a link are blocked or hidden in the chat"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f405_1.jpg",
+      "caption": "A message with a number and a link",
+      "role": "visitor",
+      "url": "/custom/YWqp5Mw964YyEaqPGFkNVXFzqoPOexRqu8CRvOea"
+    },
+    {
+      "file": "f405_2.jpg",
+      "caption": "What the chat shows",
+      "role": "visitor",
+      "url": "/custom/YWqp5Mw964YyEaqPGFkNVXFzqoPOexRqu8CRvOea"
+    }
+  ],
+  "notes": [],
+  "did": "In the job chat, typed a message that contains a phone number and a web link."
+}

@@ -1,0 +1,21 @@
+{
+  "n": 73,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "There is a \"Special %\" box that applies to one item at a time"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f73_1.jpg",
+      "caption": "The counter draft: \"Special %\" sits on each item",
+      "role": "admin",
+      "url": "/admin/counter/134"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the counter for a way to apply a loss percentage to only some items on an invoice."
+}

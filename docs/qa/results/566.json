@@ -1,0 +1,25 @@
+{
+  "n": 566,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Some messages are Urgent"
+    },
+    {
+      "ok": true,
+      "text": "Some are Low"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f566_1.jpg",
+      "caption": "Messages by importance",
+      "role": "admin",
+      "url": "/admin/messages"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the importance of each message."
+}

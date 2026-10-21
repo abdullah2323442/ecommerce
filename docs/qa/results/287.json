@@ -1,0 +1,18 @@
+{
+  "n": 287,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f287_1.jpg",
+      "caption": "The owner's Market page",
+      "role": "admin",
+      "url": "/admin/market"
+    }
+  ],
+  "notes": [
+    "Changing a price and watching an item move in or out of Premium was not carried through."
+  ],
+  "did": "Looked for items moving in and out of premium when their price changes."
+}

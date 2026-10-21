@@ -1,0 +1,27 @@
+{
+  "n": 153,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The note is kept under \"Phone orders to enter\""
+    }
+  ],
+  "shots": [
+    {
+      "file": "f153_1.jpg",
+      "caption": "A quick note typed at the counter",
+      "role": "admin",
+      "url": "/admin/counter"
+    },
+    {
+      "file": "f153_2.jpg",
+      "caption": "The note waits to be entered as an order",
+      "role": "admin",
+      "url": "/admin/counter"
+    }
+  ],
+  "notes": [],
+  "did": "At the counter, typed a quick note about a phone order from a shop and saved it."
+}

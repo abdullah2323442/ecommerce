@@ -1,0 +1,21 @@
+{
+  "n": 286,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The shop has a Premium section that fills itself with the dearest items"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f286_1.jpg",
+      "caption": "The Electronics shop: its premium picks",
+      "role": "guest",
+      "url": "/market?sector=electronics"
+    }
+  ],
+  "notes": [],
+  "did": "Opened a shop's page and looked for the premium section."
+}

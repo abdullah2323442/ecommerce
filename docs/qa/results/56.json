@@ -1,0 +1,35 @@
+{
+  "n": 56,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The new company source is on the list"
+    },
+    {
+      "ok": true,
+      "text": "The new MPO source is on the list"
+    },
+    {
+      "ok": true,
+      "text": "The new shop source is on the list"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f56_1.jpg",
+      "caption": "Sources and rates, before adding",
+      "role": "admin",
+      "url": "/admin/stock/sources"
+    },
+    {
+      "file": "f56_2.jpg",
+      "caption": "Four buying sources now: there is no fixed limit",
+      "role": "admin",
+      "url": "/admin/stock/sources"
+    }
+  ],
+  "notes": [],
+  "did": "Opened Sources and rates and added three new buying sources: a company, an MPO and a shop."
+}

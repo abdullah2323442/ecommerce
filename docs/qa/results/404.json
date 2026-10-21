@@ -1,0 +1,18 @@
+{
+  "n": 404,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f404_1.jpg",
+      "caption": "Chats",
+      "role": "admin",
+      "url": "/admin/chats"
+    }
+  ],
+  "notes": [
+    "Needs a chat on a job. Not carried through."
+  ],
+  "did": "Looked for the \"Send offer\" button in chat."
+}

@@ -1,0 +1,21 @@
+{
+  "n": 364,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Anyone can report a copied product"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f364_1.jpg",
+      "caption": "Report this as a copy",
+      "role": "visitor",
+      "url": "/market/78"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the \"Report this as a copy\" link on a product."
+}

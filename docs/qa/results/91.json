@@ -1,0 +1,31 @@
+{
+  "n": 91,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Staff cannot correct a stock number"
+    },
+    {
+      "ok": true,
+      "text": "The owner's screen says only the admin can correct stock"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f91_1.jpg",
+      "caption": "A staff member on the medicine page",
+      "role": "staff",
+      "url": "/dashboard"
+    },
+    {
+      "file": "f91_2.jpg",
+      "caption": "The owner's \"Correct the stock number\" box",
+      "role": "admin",
+      "url": "/admin/stock/medicines/1"
+    }
+  ],
+  "notes": [],
+  "did": "As staff, tried to open the stock-correction screen. Then as the owner, opened it."
+}

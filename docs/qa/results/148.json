@@ -1,0 +1,23 @@
+{
+  "n": 148,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "There are three collection options (I will collect it, Send it by courier, Deliver it to me)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f148_1.jpg",
+      "caption": "Collection choices on the order",
+      "role": "paikari",
+      "url": "/paikari"
+    }
+  ],
+  "notes": [
+    "The choices are: I will collect it / Send it by courier / Deliver it to me"
+  ],
+  "did": "Looked at the choices for how to receive the goods."
+}

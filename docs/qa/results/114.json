@@ -1,0 +1,31 @@
+{
+  "n": 114,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The draft offers other drafts to merge in"
+    },
+    {
+      "ok": true,
+      "text": "After merging, the items of both drafts are on one"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f114_1.jpg",
+      "caption": "The second draft, with its own box",
+      "role": "admin",
+      "url": "/admin/counter/151"
+    },
+    {
+      "file": "f114_2.jpg",
+      "caption": "After merging: both boxes are on one draft",
+      "role": "admin",
+      "url": "/admin/counter/151"
+    }
+  ],
+  "notes": [],
+  "did": "Made two drafts with a box each, then used \"Merge another draft\" to join them."
+}

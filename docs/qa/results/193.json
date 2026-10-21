@@ -1,0 +1,23 @@
+{
+  "n": 193,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The shop sees that Napa 500 mg is on offer"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f193_1.jpg",
+      "caption": "The medicine search with the offer",
+      "role": "paikari",
+      "url": "/paikari"
+    }
+  ],
+  "notes": [
+    "An offer is sold in boxes only. The search shows one box price for the offer, with its minimum."
+  ],
+  "did": "Looked at how the offer is sold to a paikari shop."
+}

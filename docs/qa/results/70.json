@@ -1,0 +1,25 @@
+{
+  "n": 70,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The Apply button turns into \"Need admin approval\""
+    },
+    {
+      "ok": true,
+      "text": "The discount is not applied: the total stays at 300 and no discount line appears"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f70_1.jpg",
+      "caption": "Staff type 30%: the button changes to \"Need admin approval\" and the total stays at 300",
+      "role": "staff",
+      "url": "/admin/counter/137"
+    }
+  ],
+  "notes": [],
+  "did": "Signed in as counter staff and gave a retail sale a 30% end discount, far above their 5% limit."
+}

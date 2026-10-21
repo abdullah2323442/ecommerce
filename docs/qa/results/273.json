@@ -1,0 +1,23 @@
+{
+  "n": 273,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The memo says how offer items are returned"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f273_1.jpg",
+      "caption": "Offer items on the memo",
+      "role": "admin",
+      "url": "/admin/counter/213"
+    }
+  ],
+  "notes": [
+    "The checklist says offer returns pay 50% of the offer rate. The memo wording says \"the same rule on the offer price\", and an offer return itself was not made."
+  ],
+  "did": "Read the offer return rule printed on the memo."
+}

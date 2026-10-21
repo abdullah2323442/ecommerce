@@ -1,0 +1,21 @@
+{
+  "n": 189,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A simpler screen is available"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f189_1.jpg",
+      "caption": "The simple screen for staff",
+      "role": "staff",
+      "url": "/admin/counter/210"
+    }
+  ],
+  "notes": [],
+  "did": "As staff, pressed \"Simple screen\" on a draft."
+}

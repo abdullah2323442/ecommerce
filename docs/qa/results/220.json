@@ -1,0 +1,27 @@
+{
+  "n": 220,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Each MPO has an anonymous number"
+    },
+    {
+      "ok": true,
+      "text": "The list counts each MPO's products and how many are on the market"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f220_1.jpg",
+      "caption": "The MPO list: name, anonymous number, phone, area and counts",
+      "role": "admin",
+      "url": "/admin/mpo"
+    }
+  ],
+  "notes": [
+    "The checklist marks the detailed MPO profile as only partly built. A full profile page was not found."
+  ],
+  "did": "Opened the MPO page and looked at what is kept for each MPO."
+}

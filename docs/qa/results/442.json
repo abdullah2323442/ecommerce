@@ -1,0 +1,41 @@
+{
+  "n": 442,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The restaurant's sales for today count the delivered order"
+    },
+    {
+      "ok": true,
+      "text": "After delivery the shopper is asked if something was wrong with the food"
+    },
+    {
+      "ok": true,
+      "text": "The complaint is accepted and shown on the order"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f442_1.jpg",
+      "caption": "The restaurant has delivered the order: today's sales show",
+      "role": "vendor",
+      "url": "/food/vendor"
+    },
+    {
+      "file": "f442_2.jpg",
+      "caption": "A complaint with a photo, ready to send",
+      "role": "visitor",
+      "url": "/food/orders/RKkL3lhJVoauV7z6cA20rHB59JU4w3hmvJBWnyfl"
+    },
+    {
+      "file": "f442_3.jpg",
+      "caption": "After sending the complaint",
+      "role": "visitor",
+      "url": "/food/orders/RKkL3lhJVoauV7z6cA20rHB59JU4w3hmvJBWnyfl"
+    }
+  ],
+  "notes": [],
+  "did": "The restaurant moved the order through Packing, Out for delivery and Delivered. Then the shopper opened the order, wrote what was wrong and sent it with a photo."
+}

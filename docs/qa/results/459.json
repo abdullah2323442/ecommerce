@@ -1,0 +1,21 @@
+{
+  "n": 459,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The page says plainly that deals between people are not the platform's responsibility"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f459_1.jpg",
+      "caption": "The responsibility notice",
+      "role": "visitor",
+      "url": "/help/new"
+    }
+  ],
+  "notes": [],
+  "did": "Read the notice about deals between people."
+}

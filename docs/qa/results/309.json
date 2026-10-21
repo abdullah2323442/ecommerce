@@ -1,0 +1,18 @@
+{
+  "n": 309,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f309_1.jpg",
+      "caption": "The market cart",
+      "role": "visitor",
+      "url": "/market-cart"
+    }
+  ],
+  "notes": [
+    "Hiding cash on delivery when one item does not allow it needs a product that refuses it, which the test data does not have."
+  ],
+  "did": "Looked at the cart for the payment choice when every item allows cash on delivery."
+}

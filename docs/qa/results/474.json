@@ -1,0 +1,27 @@
+{
+  "n": 474,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The page says when the courier rates were last checked"
+    },
+    {
+      "ok": true,
+      "text": "The owner confirms they are still correct with one press"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f474_1.jpg",
+      "caption": "Rates last checked",
+      "role": "admin",
+      "url": "/admin/couriers"
+    }
+  ],
+  "notes": [
+    "The reminder that appears after three months was not waited for."
+  ],
+  "did": "Looked at the top of the Couriers page for the rate check."
+}

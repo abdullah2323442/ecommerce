@@ -1,0 +1,33 @@
+{
+  "n": 197,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The form asks who can see the offer"
+    },
+    {
+      "ok": true,
+      "text": "Shops can be chosen"
+    },
+    {
+      "ok": true,
+      "text": "Public can be chosen"
+    },
+    {
+      "ok": true,
+      "text": "Wholesale can be chosen"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f197_1.jpg",
+      "caption": "Shops, Public or Wholesale",
+      "role": "admin",
+      "url": "/admin/offers"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at who the offer can be shown to."
+}

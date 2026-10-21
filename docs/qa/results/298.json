@@ -1,0 +1,21 @@
+{
+  "n": 298,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A product has a Share button"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f298_1.jpg",
+      "caption": "Share",
+      "role": "guest",
+      "url": "/market/78"
+    }
+  ],
+  "notes": [],
+  "did": "Looked for the Share button on a product."
+}

@@ -1,0 +1,25 @@
+{
+  "n": 222,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The MPO sends the products they choose to work with"
+    },
+    {
+      "ok": true,
+      "text": "The MPO chooses the products themselves"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f222_1.jpg",
+      "caption": "The MPO's own page",
+      "role": "mpo2",
+      "url": "/mpo"
+    }
+  ],
+  "notes": [],
+  "did": "Signed in as the new MPO and looked at how an MPO chooses a product to work with."
+}

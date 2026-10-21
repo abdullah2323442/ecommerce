@@ -1,0 +1,21 @@
+{
+  "n": 416,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Restaurants that deliver to the typed area are listed"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f416_1.jpg",
+      "caption": "Restaurants for the area \"Mirpur\"",
+      "role": "guest",
+      "url": "/food?area=Mirpur"
+    }
+  ],
+  "notes": [],
+  "did": "Opened Food as a stranger and looked at how restaurants near the shopper are found."
+}

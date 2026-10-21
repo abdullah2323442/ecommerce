@@ -1,0 +1,25 @@
+{
+  "n": 245,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "\"paracetmol\" still finds paracetamol medicines (1 found)"
+    },
+    {
+      "ok": true,
+      "text": "\"napaa\" still finds Napa (14 found)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f245_1.jpg",
+      "caption": "A misspelled search",
+      "role": "guest",
+      "url": "/medicines?q=paracetmol"
+    }
+  ],
+  "notes": [],
+  "did": "Searched with a spelling mistake (\"paracetmol\") and with \"napaa\"."
+}

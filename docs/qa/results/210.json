@@ -1,0 +1,27 @@
+{
+  "n": 210,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The offer is on sale again with its boxes back"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f210_1.jpg",
+      "caption": "The draft is cancelled",
+      "role": "admin",
+      "url": "/admin/counter"
+    },
+    {
+      "file": "f210_2.jpg",
+      "caption": "The offer is back for the shop",
+      "role": "paikari",
+      "url": "/paikari"
+    }
+  ],
+  "notes": [],
+  "did": "Cancelled the counter draft that held all 8 offer boxes, then looked at the offer again."
+}

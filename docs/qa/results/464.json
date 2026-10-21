@@ -1,0 +1,21 @@
+{
+  "n": 464,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The mandatory product charge is the highest layer"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f464_1.jpg",
+      "caption": "Weights and delivery charges",
+      "role": "admin",
+      "url": "/admin/weights"
+    }
+  ],
+  "notes": [],
+  "did": "Read the rule that a product's own charge is the highest."
+}

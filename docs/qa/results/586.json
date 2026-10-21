@@ -1,0 +1,39 @@
+{
+  "n": 586,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A \"Normal text size\" button exists"
+    },
+    {
+      "ok": true,
+      "text": "A \"Large text\" button exists"
+    },
+    {
+      "ok": true,
+      "text": "A \"Largest text\" button exists"
+    },
+    {
+      "ok": true,
+      "text": "Choosing the largest makes the whole page's text bigger (16px became 20.8px)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f586_1.jpg",
+      "caption": "Normal text size",
+      "role": "guest",
+      "url": "/market/78"
+    },
+    {
+      "file": "f586_2.jpg",
+      "caption": "After choosing \"Largest text\"",
+      "role": "guest",
+      "url": "/market/78"
+    }
+  ],
+  "notes": [],
+  "did": "Pressed the larger \"A\" in the header to change the text size."
+}

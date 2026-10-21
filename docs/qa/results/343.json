@@ -1,0 +1,21 @@
+{
+  "n": 343,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The seller has a dashboard of orders for their products"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f343_1.jpg",
+      "caption": "The seller's own dashboard",
+      "role": "wholesale",
+      "url": "/wholesale/sell"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the seller's own dashboard."
+}

@@ -1,0 +1,18 @@
+{
+  "n": 508,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f508_1.jpg",
+      "caption": "Pre-orders",
+      "role": "admin",
+      "url": "/admin/preorders"
+    }
+  ],
+  "notes": [
+    "Needs time to pass. Not carried through."
+  ],
+  "did": "Looked for a pre-order turning red when its promised time passes."
+}

@@ -1,0 +1,33 @@
+{
+  "n": 30,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The step is kept after reloading the page (the field shows \"5\")"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f30_1.jpg",
+      "caption": "The \"Buy more, pay less\" section before any step is added",
+      "role": "admin",
+      "url": "/admin/stock/medicines/1/edit"
+    },
+    {
+      "file": "f30_2.jpg",
+      "caption": "A step typed in: from 5 boxes, 10 percent off each",
+      "role": "admin",
+      "url": "/admin/stock/medicines/1/edit"
+    },
+    {
+      "file": "f30_3.jpg",
+      "caption": "After reloading, the step is still there",
+      "role": "admin",
+      "url": "/admin/stock/medicines/1/edit"
+    }
+  ],
+  "notes": [],
+  "did": "On the medicine screen, added a step to \"Buy more, pay less\": from 5 boxes, 10% off each. Saved it and reloaded to see it was kept."
+}

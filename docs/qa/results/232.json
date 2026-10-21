@@ -1,0 +1,21 @@
+{
+  "n": 232,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The MPO's Orders list is a proof record for their own target report"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f232_1.jpg",
+      "caption": "The Orders record",
+      "role": "mpo",
+      "url": "/mpo"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the MPO's Orders section."
+}

@@ -1,0 +1,29 @@
+{
+  "n": 86,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "State one: Pending"
+    },
+    {
+      "ok": true,
+      "text": "State two: Returned to company representative"
+    },
+    {
+      "ok": true,
+      "text": "State three: Not taken back"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f86_1.jpg",
+      "caption": "Pending, Returned, or Not taken back",
+      "role": "admin",
+      "url": "/admin/stock/expiry"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the three states offered for each expired lot."
+}

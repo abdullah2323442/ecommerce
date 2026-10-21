@@ -1,0 +1,25 @@
+{
+  "n": 560,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Each staff member gets their own account"
+    },
+    {
+      "ok": true,
+      "text": "The page says so"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f560_1.jpg",
+      "caption": "One account per staff member",
+      "role": "admin",
+      "url": "/admin/staff"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the form for opening a staff account."
+}

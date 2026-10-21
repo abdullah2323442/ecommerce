@@ -1,0 +1,31 @@
+{
+  "n": 209,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The offer is greyed out and says \"Was on offer a moment ago. Stock out.\""
+    },
+    {
+      "ok": true,
+      "text": "It has no order box and no price, so it cannot be added to the order"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f209_1.jpg",
+      "caption": "All 8 offer boxes are now in a draft",
+      "role": "admin",
+      "url": "/admin/counter/245"
+    },
+    {
+      "file": "f209_2.jpg",
+      "caption": "The shop looks at the offer after it is all taken",
+      "role": "paikari",
+      "url": "/paikari"
+    }
+  ],
+  "notes": [],
+  "did": "At the counter, ordered every box of the offer (8) into a draft, then looked at the offer as a paikari shop and tried to add it."
+}

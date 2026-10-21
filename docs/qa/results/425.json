@@ -1,0 +1,25 @@
+{
+  "n": 425,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "One ingredient list serves every restaurant"
+    },
+    {
+      "ok": true,
+      "text": "It holds many ingredients"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f425_1.jpg",
+      "caption": "The one ingredient list",
+      "role": "admin",
+      "url": "/admin/food-ingredients"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the central ingredient list."
+}

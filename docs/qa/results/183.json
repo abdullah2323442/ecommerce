@@ -1,0 +1,29 @@
+{
+  "n": 183,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The shop profile has an offers section"
+    },
+    {
+      "ok": true,
+      "text": "It lists the offer boxes sold at the counter with the offer price"
+    },
+    {
+      "ok": true,
+      "text": "With the memo number"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f183_1.jpg",
+      "caption": "The shop profile: Offers taken",
+      "role": "admin",
+      "url": "/admin/customers/4"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the shop profile after selling it offer boxes at the counter."
+}

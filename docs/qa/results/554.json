@@ -1,0 +1,23 @@
+{
+  "n": 554,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A summary of the night's figures"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f554_1.jpg",
+      "caption": "Tonight's summary",
+      "role": "admin",
+      "url": "/admin/reports"
+    }
+  ],
+  "notes": [
+    "The checklist marks the nightly message to the owner's phone as partly built. No WhatsApp or text message was sent."
+  ],
+  "did": "Looked at \"Tonight's summary\"."
+}

@@ -1,0 +1,37 @@
+{
+  "n": 378,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Wood can be made to order"
+    },
+    {
+      "ok": true,
+      "text": "Clothing can be made to order"
+    },
+    {
+      "ok": true,
+      "text": "Step one: tell us what you need"
+    },
+    {
+      "ok": true,
+      "text": "Step two: we send a price"
+    },
+    {
+      "ok": true,
+      "text": "Step three: we make it"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f378_1.jpg",
+      "caption": "Made to order: wood and clothing",
+      "role": "visitor",
+      "url": "/custom"
+    }
+  ],
+  "notes": [],
+  "did": "Opened \"Made to order\" and looked at the two kinds of work."
+}

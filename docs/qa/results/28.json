@@ -1,0 +1,43 @@
+{
+  "n": 28,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A box price typed by mistake is refused, and the message says a taka price is for one piece and what the printed piece price is"
+    },
+    {
+      "ok": true,
+      "text": "A fixed taka price typed per piece works (8.2 per piece gives 246 for a box)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f28_1.jpg",
+      "caption": "Typing a fixed taka price for this shop on Napa 500 mg",
+      "role": "admin",
+      "url": "/admin/customers/4"
+    },
+    {
+      "file": "f28_2.jpg",
+      "caption": "Typed 250, a box price, into the \"Taka price per piece\" box: the system explains the mistake",
+      "role": "admin",
+      "url": "/admin/customers/4"
+    },
+    {
+      "file": "f28_3.jpg",
+      "caption": "Typing a fixed taka price for this shop on Napa 500 mg",
+      "role": "admin",
+      "url": "/admin/customers/4"
+    },
+    {
+      "file": "f28_4.jpg",
+      "caption": "Typed 8.2 as the price of one piece: the box is now 246",
+      "role": "paikari",
+      "url": "/paikari"
+    }
+  ],
+  "notes": [],
+  "did": "Gave the shop a fixed taka price on Napa 500 mg. First typed 250, thinking of the price of a box. Then typed 8.2, the price of one piece."
+}

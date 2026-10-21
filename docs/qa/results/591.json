@@ -1,0 +1,18 @@
+{
+  "n": 591,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f591_1.jpg",
+      "caption": "Connections",
+      "role": "admin",
+      "url": "/admin/connections"
+    }
+  ],
+  "notes": [
+    "The checklist marks off-server backup as partly built. Not found on a screen."
+  ],
+  "did": "Looked for backups stored outside the server."
+}

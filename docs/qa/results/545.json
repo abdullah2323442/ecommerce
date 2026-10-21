@@ -1,0 +1,25 @@
+{
+  "n": 545,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Compared with last month"
+    },
+    {
+      "ok": true,
+      "text": "And with the same month last year"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f545_1.jpg",
+      "caption": "Comparison",
+      "role": "admin",
+      "url": "/admin/reports"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the comparison with last month and last year."
+}

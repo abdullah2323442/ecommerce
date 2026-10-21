@@ -1,0 +1,18 @@
+{
+  "n": 488,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f488_1.jpg",
+      "caption": "My deliveries",
+      "role": "admin",
+      "url": "/admin/deliveries"
+    }
+  ],
+  "notes": [
+    "Needs a delivery. Not carried through."
+  ],
+  "did": "Looked for the code turning a draft sale into a complete sale."
+}

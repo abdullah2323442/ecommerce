@@ -1,0 +1,21 @@
+{
+  "n": 540,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The report names the medicine that earns the most"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f540_1.jpg",
+      "caption": "Earns the most",
+      "role": "admin",
+      "url": "/admin/reports"
+    }
+  ],
+  "notes": [],
+  "did": "Looked for which medicine earns most."
+}

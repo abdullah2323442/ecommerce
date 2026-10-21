@@ -1,0 +1,21 @@
+{
+  "n": 118,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The counter shows how many drafts are open"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f118_1.jpg",
+      "caption": "\"Open drafts (n)\"",
+      "role": "admin",
+      "url": "/admin/counter"
+    }
+  ],
+  "notes": [],
+  "did": "Read the \"Open drafts\" count at the top of the list."
+}

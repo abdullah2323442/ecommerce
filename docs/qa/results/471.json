@@ -1,0 +1,18 @@
+{
+  "n": 471,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f471_1.jpg",
+      "caption": "A product page",
+      "role": "guest",
+      "url": "/market/78"
+    }
+  ],
+  "notes": [
+    "Courier choices side by side appear only when every product in the order has a weight. The test products have none."
+  ],
+  "did": "Looked for all couriers side by side at checkout."
+}

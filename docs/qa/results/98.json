@@ -1,0 +1,27 @@
+{
+  "n": 98,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The half-finished purchase is kept as a draft"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f98_1.jpg",
+      "caption": "After \"Save as draft\"",
+      "role": "admin",
+      "url": "/admin/stock/receive"
+    },
+    {
+      "file": "f98_2.jpg",
+      "caption": "Back on Enter purchase: the draft waits here",
+      "role": "admin",
+      "url": "/admin/stock/receive"
+    }
+  ],
+  "notes": [],
+  "did": "Filled part of a purchase and pressed \"Save as draft\", then looked for it on the next visit."
+}

@@ -1,0 +1,33 @@
+{
+  "n": 328,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner sees the quotation request"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f328_1.jpg",
+      "caption": "A custom quotation request",
+      "role": "wholesale",
+      "url": "/wholesale/quotes"
+    },
+    {
+      "file": "f328_2.jpg",
+      "caption": "The request is sent",
+      "role": "wholesale",
+      "url": "/wholesale/quotes"
+    },
+    {
+      "file": "f328_3.jpg",
+      "caption": "The owner sees the request",
+      "role": "admin",
+      "url": "/admin/quotes"
+    }
+  ],
+  "notes": [],
+  "did": "Asked for a price on a bulk purchase using the quotation form, then looked at the owner's Quotes page."
+}

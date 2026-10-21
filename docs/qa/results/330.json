@@ -1,0 +1,23 @@
+{
+  "n": 330,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Medicine for paikari shops cannot be listed from the seller screen"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f330_1.jpg",
+      "caption": "The categories a wholesaler may sell in",
+      "role": "wholesale",
+      "url": "/wholesale/sell"
+    }
+  ],
+  "notes": [
+    "The categories offered when adding a listing include: Wood, Clothing, Electronics, Home and living, Beauty and care, Books and stationery, Pantry, Jewellery We decide, 2 days, 3 days, 4 days, 5 days inch, foot, cm"
+  ],
+  "did": "Looked at what a wholesaler may sell, to see if medicine for paikari shops is left out."
+}

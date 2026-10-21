@@ -1,0 +1,29 @@
+{
+  "n": 451,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A post can be about needing a worker"
+    },
+    {
+      "ok": true,
+      "text": "Or looking for a product"
+    },
+    {
+      "ok": true,
+      "text": "Or needing help"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f451_1.jpg",
+      "caption": "The Help board",
+      "role": "guest",
+      "url": "/help"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the Help board and its post types."
+}

@@ -1,0 +1,146 @@
+220|a_mpo|-|Each medical sales representative (MPO) has a detailed profile. Part of it is still to be finished.
+221|a_mpo|-|MPOs are grouped automatically by the area they cover.
+222|a_mpo_list|-|An MPO chooses which products they work with.
+223|a_mpo|-|One MPO can work with several companies.
+224|a_mpo|-|One company can have many MPOs behind it.
+225|a_mpo|-|MPOs cannot see each other.
+226|a_mpo_list|-|Each MPO product shows if it is in stock or can be pre-ordered.
+227|a_mpo_list|-|Bonus products such as buy 10, get 2 free are supported.
+228|a_invoices|-|A bonus shows on its own line on the memo.
+229|a_mpo|-|The owner reviews and approves MPO goods before they go on sale.
+230|a_mpo|-|MPO identities appear as "Anonymous 1 (my name)" to the other side.
+231|a_mpo|-|Identity stays secret in both directions.
+232|a_mpo|-|The MPO gets an order record as proof.
+233|a_mpo|-|Wholesalers bid on MPO goods without seeing each other's bids.
+234|a_mpo|-|One wholesaler never sees another's bid.
+235|a_mpo|-|The MPO accepts the bid they like.
+236|a_mpo|-|If the goods are not selling, the MPO is told to raise the percentage.
+237|a_mpo|-|The system counts how many deliveries failed.
+238|a_mpo|-|The goods pass through the owner's hands before reaching the buyer.
+239|a_stock|-|MPO goods then enter the shop's own stock.
+240|a_catalog|p_medicines|A complete medicine database holds every brand with its details.
+241|a_catalog|p_medicines|Each medicine has brand, generic name, company, strength and printed price.
+242|-|p_med_search|The search suggests other brands of the same generic medicine.
+243|a_catalog|-|Medicine names can only be chosen from the database, never typed freely.
+244|a_catalog|-|The list of companies is preset.
+245|-|p_med_search|The search still finds a medicine when its name is spelled wrongly.
+246|a_catalog|-|Other names for the same medicine are linked together.
+247|a_catalog|-|A medicine no longer sold can be marked inactive.
+248|a_catalog|p_medicines|A medicine that needs a prescription carries a "prescription required" mark.
+249|a_catalog|-|Medicines that need a fridge are flagged "keep refrigerated".
+250|a_deliveries|-|Fridge medicines are blocked from normal couriers.
+251|a_controlled|-|Controlled medicines are flagged and handled under stricter rules.
+252|-|p_med_search|Medicines that are in stock show first in the search.
+253|a_returns|k_returns|Only paikari buyers can return medicines.
+254|a_returns|k_returns|A return has a two to three day limit and needs the memo.
+255|a_returns|-|The buyer gets an exchange, or half the money back if they paid cash.
+256|a_catalog|-|A "returnable" mark shows which medicines can come back.
+257|a_returns|-|Returns can be searched by date.
+258|a_returns|u_orders|Public buyers apply for a return, the shop approves, then calls them.
+259|-|u_orders|A buyer must be signed in to return something.
+260|a_returns|k_returns|A reason or a voice note is required for a return.
+261|a_returns|k_returns|Part of an order can be returned.
+262|a_returns|-|Returns are valued at the original buying price.
+263|a_returns|-|The return becomes credit, taken off the next memo.
+264|a_returns|-|If the credit sits unused for one or two months, a warning shows.
+265|a_returns|-|A returned item goes back to its own batch.
+266|a_returns|-|If that batch was finished, it is reopened.
+267|a_returns|-|Returned goods can be sold again.
+268|a_returns|-|Retail refunds need no customer profile.
+269|a_returns|-|A return can be found by memo, by date or by medicine name.
+270|a_returns|-|In rare cases a return is allowed without an invoice.
+271|a_returns|-|An optional field notes who will receive the return money.
+272|a_invoices|-|Retail memos print the return policy.
+273|a_returns|-|Offer items return at half the offer rate.
+274|a_returns|-|The delivery charge rule differs if the return is before or after sending.
+275|a_returns|-|If a product advance was paid, 50 per cent applies.
+276|a_returns|-|Return analysis shows which customers and products come back most.
+277|a_returns|-|When a mistake is found, warnings appear.
+278|a_returns|-|Repeated mistakes trigger an automatic warning.
+279|a_returns|-|A "previously returned" mark shows on the item.
+280|a_invoices|-|A memo can be reprinted when needed.
+281|-|p_home|The homepage shows an icon for each shop sector.
+282|-|p_market|Items from the shopper's own area show first.
+283|-|p_market|Shoppers can browse categories, search, filter and sort.
+284|-|-|Personal recommendations have not been built yet.
+285|-|p_market_all|Shoppers can start from a budget and see what fits.
+286|-|p_market|A premium sector fills itself with the highest priced items.
+287|-|p_market|When a price changes, the item moves in or out of premium by itself.
+288|-|p_market_all|Only price ranges that actually have products are shown.
+289|a_market|p_item|One product can be sold by many sellers.
+290|a_market|p_item|Sellers are ordered by price, delivery charge and rating together.
+291|a_catalog|-|A central product catalogue keeps one entry per product.
+292|a_market|p_market|Each shop has its own public page.
+293|-|p_item|A shopper can follow a shop.
+294|a_market|p_item|A product page can show many photos with zoom.
+295|a_market|p_item|Products can come in variants such as size and colour.
+296|a_reviews|p_item|Buyers can leave reviews and ratings, with photos.
+297|a_reviews|p_item|Only people who really bought can review.
+298|-|p_item|A product page has share buttons for social media.
+299|-|p_item|A price history shows how the price moved.
+300|-|p_item|The page suggests things often bought together.
+301|a_requests|p_item|If a shopper leaves without buying, they can say why and propose a price.
+302|a_requests|-|A price offer lapses after 24 hours.
+303|a_requests|p_item|A button says "I was looking for this" when something is missing.
+304|a_requests|-|The owner sees those requests grouped together.
+305|-|u_cart|A shopper can keep a mixed cart and a wishlist.
+306|-|u_settings|A shopper can save several delivery addresses.
+307|-|p_cart|A guest can check out with just name, phone and address.
+308|a_market|p_item|Each product can allow or refuse cash on delivery.
+309|-|p_cart|If any item refuses cash on delivery, that choice is hidden.
+310|a_market|p_cart|An order with several sellers splits into one order per seller.
+311|a_couriers|-|Each seller's part can use a different courier.
+312|a_deliveries|u_orders|Shoppers can track where their order is.
+313|a_orders|u_orders|Order history and profile are kept for every shopper.
+314|-|u_orders|A "buy again" reminder appears when a product is due.
+315|a_orders|u_orders|An order can be edited or cancelled within a set time.
+316|a_orders|u_orders|The address can be changed before the order is packed.
+317|-|p_cart|A "for whom" field says who the parcel is for.
+318|a_orders|-|Old unconfirmed orders cancel by themselves.
+319|a_market|-|Digital products are supported, with download limits.
+320|a_catalog|p_companies|An All Companies sector lists every pharmaceutical company.
+321|-|p_companies|Shoppers can filter by brand.
+322|a_customer|w_home|A wholesale buyer only sees categories opened for them.
+323|a_customer|w_home|A wholesale buyer has a minimum order quantity.
+324|a_customer|-|Payment options can be set for each customer.
+325|-|w_home|The wholesale dashboard shows the buyer's own grade.
+326|a_preorders|w_home|Pre-orders for wholesale open within a set time window.
+327|-|w_sell|Wholesalers can upload orders in bulk.
+328|a_quotes|w_quotes|A buyer can ask for a custom quotation.
+329|a_market|w_sell|Wholesalers can also sell to the public.
+330|-|w_sell|Wholesalers cannot sell into the paikari section.
+331|a_market_comm|w_sell|The platform's commission is added on top of the seller's price.
+332|a_market_comm|-|Each product can have its own commission.
+333|a_market_comm|-|Commission can be a percentage or a fixed taka amount.
+334|a_market_comm|w_sell_stmt|The owner sees who owes how much, and how many were sold.
+335|a_market_comm|-|A seller can ask for a lower commission and add a note.
+336|a_market|-|The owner approves a product before it goes live.
+337|a_market|-|The owner sees how many products wait for approval.
+338|a_market|-|Products without photos are flagged.
+339|a_market_stmt|w_sell_stmt|A monthly commission statement is sent and the seller replies.
+340|a_market_stmt|-|A seller who does not reply is suspended.
+341|a_market_comm|-|If an order is cancelled, its commission is removed.
+342|a_market|-|Customer money is settled outside the platform, between seller and buyer.
+343|a_market|w_sell|A white-label dashboard shows sellers only what they need.
+344|a_market|-|Sellers see only the buyer's phone and address, not their name.
+345|a_market|-|After a sale, the phone and address show as stars so sellers cannot poach customers.
+346|a_market|-|Notifications come from the owner's site, not the seller's.
+347|a_market|-|The rule against promotional material in parcels is partly in place.
+348|a_market_cases|-|Penalty steps for rule breaking are partly in place.
+349|a_market_cases|-|Return money is handled separately for cash on delivery and online.
+350|a_market|-|Returned goods go straight to the seller.
+351|a_payments|-|Holding online payments until delivery is partly built.
+352|a_market|-|New sellers gain trust gradually.
+353|-|-|A security deposit has not been built yet.
+354|a_market_cases|w_questions|Both the buyer and the seller see a complaint.
+355|a_market_cases|-|Serious complaints go to a separate place.
+356|a_market_cases|w_returns|Returns are recorded on the seller's profile.
+357|a_market_rep|w_sell_rep|Sellers get their own reports.
+358|a_market_rep|w_sell_rep|Sellers see who viewed but did not buy.
+359|a_market_rep|-|Suppliers are ranked.
+360|a_market|-|A "not received" option is available to buyers.
+361|a_market|-|A seller cannot buy their own product.
+362|a_market|w_sell|A seller can switch on vacation mode.
+363|a_market|w_sell|A product with active orders cannot be deleted.
+364|a_market|-|A seller can report copied products.
+365|a_market|w_sell_orders|Sellers see how many orders are unseen. Text-message alerts are partly built.

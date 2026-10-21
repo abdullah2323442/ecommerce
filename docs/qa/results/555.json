@@ -1,0 +1,25 @@
+{
+  "n": 555,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A VAT (Mushak) report for the accountant"
+    },
+    {
+      "ok": true,
+      "text": "With a download"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f555_1.jpg",
+      "caption": "VAT report",
+      "role": "admin",
+      "url": "/admin/reports/vat"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the VAT report."
+}

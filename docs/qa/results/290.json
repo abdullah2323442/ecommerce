@@ -1,0 +1,18 @@
+{
+  "n": 290,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f290_1.jpg",
+      "caption": "A product page",
+      "role": "guest",
+      "url": "/market/78"
+    }
+  ],
+  "notes": [
+    "Needs one product with several sellers, which the test data does not have."
+  ],
+  "did": "Looked for sellers ordered by price, charge and rating together."
+}

@@ -1,0 +1,21 @@
+{
+  "n": 299,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The page tells the buyer what the price was before the recent change"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f299_1.jpg",
+      "caption": "The medicine page after a recent price change",
+      "role": "guest",
+      "url": "/medicines/1"
+    }
+  ],
+  "notes": [],
+  "did": "The owner raised the printed price of a box of Napa from 300 to 320. A visitor then opened the medicine page. The owner put the price back afterwards."
+}

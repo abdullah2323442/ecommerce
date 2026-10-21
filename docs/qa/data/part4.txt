@@ -1,0 +1,163 @@
+366|a_site|-|A sector builder lets the owner add a new kind of shop without a programmer.
+367|a_site|-|Each sector gets its own fields and its own unit, such as piece or metre.
+368|a_site|-|Some sectors allow fractional quantities, such as 2.5 metres.
+369|a_site|-|Each sector decides between chat and pre-order.
+370|a_market|p_item|Clothing has a colour and size grid.
+371|a_market|p_item|When one colour sells out, only that colour greys out.
+372|a_market|p_item|Each colour and size can have its own price and photo.
+373|a_market|p_item|Wooden items can have sizes too.
+374|a_market|w_sell_rep|Sellers get basic stock figures, such as best and worst sellers and their own purchase price.
+375|a_market|-|One product can sit in many categories with one stock.
+376|a_market|-|A list of prohibited categories blocks banned goods.
+377|a_returns|-|Wood and clothing returns use the same Return section.
+378|a_custom|p_custom|Custom orders cover wood and clothing made to measure.
+379|-|p_custom|Everyone can place a custom order.
+380|a_custom|p_custom|A measurement form takes every measurement from A to Z.
+381|a_custom|p_custom|The price changes with the type of wood.
+382|a_custom|p_custom|The buyer picks the fabric and its details.
+383|-|p_custom|A photo of the space can be uploaded.
+384|-|u_profiles|Measurements are saved under a name, such as "Rahim".
+385|-|u_profiles|One order can use several saved profiles.
+386|-|u_profiles|The measurement date shows, with a reminder when it is old.
+387|-|u_profiles|Each profile lists its previous orders.
+388|a_custom|-|Measurements are final only when both sides agree.
+389|a_custom|-|Clothing has a trial step before finishing.
+390|a_craftsmen|-|Each order is given to one craftsman.
+391|a_craftsmen|-|A job can be shifted or shared with another craftsman.
+392|a_craftsmen|-|Every shift is recorded.
+393|a_craftsmen|-|Wages and progress are tracked by percentage.
+394|a_craftsmen|-|A job is not complete below 100 per cent.
+395|a_craftsmen|-|A photo is required each time progress is updated.
+396|a_craftsmen|-|The buyer does not see craftsman names.
+397|a_craftsmen|-|The owner assigns the jobs.
+398|a_craftsmen|-|The screen shows each craftsman's active job count.
+399|a_craftsmen|-|No job goes out before the wage is agreed.
+400|a_craftsmen|-|The owner sees what each craftsman is owed and has been paid.
+401|a_craftsmen|-|A "materials needed" message can be sent.
+402|a_chats|-|Custom orders use the chat system.
+403|a_chats|-|A "send measurements" button in the chat shares them in one tap.
+404|a_chats|-|A "send offer" button shares a price offer.
+405|a_chats|-|Phone numbers and links are blocked in chat.
+406|a_chats|-|The owner can read every chat.
+407|a_chats|-|Measurements and offers show as separate cards.
+408|a_chats|-|The owner is notified if a craftsman does not reply.
+409|a_custom|-|An advance percentage is taken and goes to the craftsman.
+410|a_custom|-|Custom orders cannot be returned.
+411|a_custom|-|A "work not done right" complaint is available instead.
+412|a_custom|-|Cancellation rules differ before and after work starts.
+413|a_custom|-|An urgent order carries an extra charge.
+414|a_custom|-|Wood used is taken from stock.
+415|a_custom|-|No commission is charged on custom orders.
+416|a_food|p_food|Restaurants near the shopper show first.
+417|a_food|v_food|A restaurant manages its own menu.
+418|-|v_food|Each dish has a "sold out today" switch.
+419|a_food|v_food|Opening hours are set, and the restaurant closes itself.
+420|-|v_food|The restaurant gives a cooking time when it confirms an order.
+421|-|u_food_orders|The buyer sees a timer counting the cooking time.
+422|a_food|-|The owner is told when an order is not confirmed in time.
+423|-|p_food|The buyer picks home delivery or eating there.
+424|-|v_custom|Custom food lets a buyer build their own dish.
+425|a_food_ing|-|A central list holds every ingredient.
+426|-|v_custom|A restaurant ticks the ingredients it has.
+427|-|v_custom|A restaurant sets its own price for each ingredient.
+428|-|v_custom|A restaurant can ask to add an ingredient to the list.
+429|-|v_custom|An ingredient can be marked sold out today.
+430|a_food_ing|-|A maximum ingredient limit applies to each dish.
+431|a_food_ing|-|Rules block combinations that do not work.
+432|-|p_food|A buyer can save favourite combinations.
+433|-|v_food|The kitchen can print the order.
+434|a_food|-|Three delivery-charge options are partly built.
+435|-|-|A maximum distance and minimum charge have not been built yet.
+436|-|-|Charging by road distance has not been built yet.
+437|a_food|-|A restaurant can ask for an advance payment.
+438|a_food|-|The memo is made in the restaurant's name.
+439|a_food|-|The restaurant delivers itself or uses the platform's riders.
+440|a_food|-|Commission is set for each restaurant.
+441|-|v_food|The restaurant has its own dashboard.
+442|a_food|-|Complaints can include photos.
+443|a_food|-|Two orders can go on one delivery.
+444|a_gaming|p_gaming|A list of games and their top-up packages.
+445|a_gaming|p_gaming|The player's name shows after typing the game ID, so a wrong ID is caught.
+446|a_gaming|-|Automatic top-up is partly built.
+447|a_gaming|-|Top-ups can also be done by hand as a backup.
+448|a_gaming|-|A failed top-up is refunded automatically.
+449|a_gaming|p_gaming|Game top-ups are paid online only.
+450|a_help|p_help|Help posts need approval before they appear.
+451|a_help|p_help|The Help section lists job opportunities for young unemployed people.
+452|a_help|p_help|Page owners can find moderators.
+453|a_help|p_help|A product card can appear inside a comment.
+454|a_help|p_help|The card shows photo, name, price and a "View" button.
+455|a_help|-|The card follows the visibility rules.
+456|a_help|-|Photos are not allowed in help posts.
+457|a_help|-|After 30 days the post asks "still needed?".
+458|a_help|-|There is a limit on how many posts one person can make.
+459|-|p_help|The page says clearly that deals between people are not the platform's responsibility.
+460|a_deliveries|p_cart|Location is filled in automatically.
+461|-|p_cart|A map pin is partly built.
+462|-|p_cart|A "how to get there" field helps the rider.
+463|a_couriers|-|Delivery charge is worked out in three layers.
+464|a_couriers|-|A product's mandatory delivery charge is the highest layer.
+465|a_couriers|-|A courier list is kept in the seller's profile.
+466|a_couriers|-|There is no limit on couriers.
+467|a_couriers|-|Charges are typed in by hand, with no outside service.
+468|a_couriers|-|A courier's price uses a zone, a first kilogram and each extra kilogram.
+469|a_couriers|-|A percentage is added for cash on delivery.
+470|a_weights|-|A rounding rule for weight is set.
+471|-|p_cart|All couriers show side by side at checkout.
+472|a_couriers|-|If there is no weight, a flat charge applies.
+473|a_weights|-|Reminders ask staff to add weights.
+474|a_couriers|-|Courier rates are checked again after three months.
+475|a_deliveries|-|A delivery charge draft lets staff add extra.
+476|-|u_orders|"Product on the way" shows to the buyer.
+477|a_couriers|w_sell|Wholesale courier charge is split 50-50.
+478|a_weights|-|Charges can be by weight and by carton.
+479|a_deliveries|-|An advance delivery charge can be taken.
+480|a_deliveries|-|A pickup point can be used.
+481|a_deliveries|-|It is only for sellers whose name is visible.
+482|a_deliveries|-|A reminder goes out after three days.
+483|a_deliveries|-|The delivery person has a list of drops.
+484|a_deliveries|-|The list is grouped by area.
+485|a_deliveries|-|An "arrived" mark notifies the buyer.
+486|a_delivery_cash|-|The delivery person's cash is accounted for.
+487|a_deliveries|-|Delivery is confirmed by a code or a photo.
+488|a_deliveries|-|The code turns the draft sale into a complete sale.
+489|a_deliveries|u_orders|A "received" tap or automatic confirm is partly built.
+490|a_delivery_rate|u_orders|The buyer can rate the delivery and the service.
+491|a_delivery_rate|-|Ratings are kept per delivery person and per staff, with an alert if one is low.
+492|a_deliveries|u_orders|Courier tracking is connected.
+493|a_couriers|-|Delivery zones are set.
+494|a_deliveries|-|"Delivery by arrangement" is an option.
+495|a_preorders|k_preorders|Pre-order is one system used in every sector.
+496|a_preorders|-|The order goes to whoever turned pre-order on.
+497|a_preorders|k_preorders|Medicines are pre-ordered by company or product.
+498|a_preorders|-|Other sectors pre-order by size and colour.
+499|a_preorders|-|Pre-orders have limited options.
+500|a_preorders|-|Pre-orders are shown together in one total.
+501|a_preorders|-|They are not linked to stock.
+502|a_preorders|k_inbox|The buyer is told after the goods arrive.
+503|a_preorders|-|Goods are held in reserve or general stock.
+504|a_invoices|-|A draft memo can be edited.
+505|a_invoices|k_orders|The buyer also sees it when they press "Receive".
+506|a_invoices|-|An advance field and refund rules are on the memo.
+507|a_preorders|k_inbox|A sorry note is sent if the goods do not come.
+508|a_preorders|-|A late pre-order turns red and notifies the owner.
+509|a_preorders|-|When supply is short, earlier orders are served first.
+510|a_invoices|-|Every sector has a nicely formatted memo.
+511|a_invoices|-|Each step has its own memo line.
+512|a_invoices|-|The year is part of the memo number.
+513|a_invoices|-|Memos print on 58 mm and 80 mm receipt printers.
+514|a_invoices|-|A correction gets a new number and the old one is cancelled.
+515|a_invoices|-|Memos can be sent as PDF or email. WhatsApp is partly built.
+516|a_invoices|-|A print-friendly format is available.
+517|a_settings|k_inbox|Automatic status messages go out as orders move along. Some channels are partly built.
+518|a_settings|k_inbox|Four channels are planned: inbox, push, text message and email. Some are partly built.
+519|a_settings|-|Messages are controlled from admin.
+520|a_messages|k_inbox|Notes and voice notes can be sent.
+521|a_messages|-|A time and photo can go with an order.
+522|a_questions|p_item|Buyers ask questions on a product page and the seller answers.
+523|a_questions|-|An unanswered question comes to the owner.
+524|a_tokens|k_wallet|The wallet has two parts.
+525|a_tokens|k_wallet|Aqua Token has two levels.
+526|a_tokens|-|A seller's token works only on their own products.
+527|a_tokens|-|A token is returned when an order is cancelled.
+528|a_tokens|-|An offer and a token do not combine.

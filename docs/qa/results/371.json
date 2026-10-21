@@ -1,0 +1,18 @@
+{
+  "n": 371,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f371_1.jpg",
+      "caption": "Clothing",
+      "role": "guest",
+      "url": "/market?sector=clothing"
+    }
+  ],
+  "notes": [
+    "Needs a clothing product with several colours and one sold out. Not in the test data."
+  ],
+  "did": "Looked for a colour greying out when it sells out."
+}

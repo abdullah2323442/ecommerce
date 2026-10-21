@@ -1,0 +1,23 @@
+{
+  "n": 215,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The page says an offer ends with the month or when stock is gone"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f215_1.jpg",
+      "caption": "The Offers page explains when offers end",
+      "role": "admin",
+      "url": "/admin/offers"
+    }
+  ],
+  "notes": [
+    "Waiting for a month end to see it happen was not possible."
+  ],
+  "did": "Looked for offers ending themselves at month end."
+}

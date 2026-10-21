@@ -1,0 +1,37 @@
+{
+  "n": 530,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The customer page has: Tier"
+    },
+    {
+      "ok": true,
+      "text": "The customer page has: Account type and terms"
+    },
+    {
+      "ok": true,
+      "text": "The customer page has: Manual rates"
+    },
+    {
+      "ok": true,
+      "text": "The customer page has: Monthly total"
+    },
+    {
+      "ok": true,
+      "text": "The customer page has: Account status"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f530_1.jpg",
+      "caption": "Every control for a customer, on one page",
+      "role": "admin",
+      "url": "/admin/customers/4"
+    }
+  ],
+  "notes": [],
+  "did": "Opened a customer's page and looked at the controls on it."
+}

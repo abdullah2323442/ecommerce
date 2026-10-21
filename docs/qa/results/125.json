@@ -1,0 +1,29 @@
+{
+  "n": 125,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The counter warns that this shop already has an order open, and offers to open it"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f125_1.jpg",
+      "caption": "Choosing a shop that already has a draft open: the counter warns before starting another",
+      "role": "admin",
+      "url": "/admin/counter"
+    },
+    {
+      "file": "f125_2.jpg",
+      "caption": "The shop's existing draft opens",
+      "role": "admin",
+      "url": "/admin/counter/200"
+    }
+  ],
+  "notes": [
+    "The warning names one open order. A count such as \"2 drafts open\" was not seen."
+  ],
+  "did": "Started a sale to a shop that already has a draft open and looked for a warning."
+}

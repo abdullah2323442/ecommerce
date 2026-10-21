@@ -1,0 +1,18 @@
+{
+  "n": 521,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f521_1.jpg",
+      "caption": "The ordering screen",
+      "role": "paikari",
+      "url": "/paikari"
+    }
+  ],
+  "notes": [
+    "Not carried through."
+  ],
+  "did": "Looked at the order page for the time and photo with orders."
+}

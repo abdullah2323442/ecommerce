@@ -1,0 +1,25 @@
+{
+  "n": 366,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Each sector has a list of the fields its business needs"
+    },
+    {
+      "ok": true,
+      "text": "And whether sellers must pick from the catalog"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f366_1.jpg",
+      "caption": "Each sector has its own settings: no programmer needed",
+      "role": "admin",
+      "url": "/admin/market"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the Sectors area of the owner's Market page, where each kind of shop is set up."
+}

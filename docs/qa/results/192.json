@@ -1,0 +1,31 @@
+{
+  "n": 192,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The offer product is listed as running"
+    },
+    {
+      "ok": true,
+      "text": "It has a minimum of 3 boxes"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f192_1.jpg",
+      "caption": "The offer form filled in: 10% off, from 3 boxes",
+      "role": "admin",
+      "url": "/admin/offers"
+    },
+    {
+      "file": "f192_2.jpg",
+      "caption": "The offer is running",
+      "role": "admin",
+      "url": "/admin/offers"
+    }
+  ],
+  "notes": [],
+  "did": "Made an offer product: Napa 500 mg at 10% off, with a minimum of 3 boxes, and started it."
+}

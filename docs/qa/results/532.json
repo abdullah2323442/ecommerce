@@ -1,0 +1,23 @@
+{
+  "n": 532,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Applications wait here for review"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f532_1.jpg",
+      "caption": "Applications",
+      "role": "admin",
+      "url": "/admin/applications"
+    }
+  ],
+  "notes": [
+    "Reviewing a real application and checking its licence was not carried through (none was waiting)."
+  ],
+  "did": "Opened the Applications page."
+}

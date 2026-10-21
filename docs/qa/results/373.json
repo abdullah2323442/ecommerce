@@ -1,0 +1,18 @@
+{
+  "n": 373,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f373_1.jpg",
+      "caption": "Wood",
+      "role": "guest",
+      "url": "/market?sector=wood"
+    }
+  ],
+  "notes": [
+    "Needs a wooden product with sizes. Not carried through."
+  ],
+  "did": "Looked for sizes on wooden items."
+}

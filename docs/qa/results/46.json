@@ -1,0 +1,31 @@
+{
+  "n": 46,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The box left stock while on the draft (26 became 25)"
+    },
+    {
+      "ok": true,
+      "text": "After the draft is cancelled the box is back in stock (26)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f46_1.jpg",
+      "caption": "The draft with its box, about to be cancelled",
+      "role": "admin",
+      "url": "/admin/counter/129"
+    },
+    {
+      "file": "f46_2.jpg",
+      "caption": "After cancelling the draft",
+      "role": "admin",
+      "url": "/admin/counter"
+    }
+  ],
+  "notes": [],
+  "did": "Started a sale, added a box, then cancelled the draft, and watched the stock go down and come back."
+}

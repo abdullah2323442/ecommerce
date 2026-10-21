@@ -1,0 +1,25 @@
+{
+  "n": 34,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The customer page has a Tier changes list"
+    },
+    {
+      "ok": true,
+      "text": "The change between tiers is written down"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f34_1.jpg",
+      "caption": "The customer page lists every tier change",
+      "role": "admin",
+      "url": "/admin/customers/4"
+    }
+  ],
+  "notes": [],
+  "did": "Changed the shop's tier and looked at the Tier changes list on the customer page."
+}

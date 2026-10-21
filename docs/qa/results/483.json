@@ -1,0 +1,21 @@
+{
+  "n": 483,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A delivery person has their own list"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f483_1.jpg",
+      "caption": "The delivery person's list",
+      "role": "admin",
+      "url": "/admin/deliveries"
+    }
+  ],
+  "notes": [],
+  "did": "Opened \"My deliveries\", the delivery person's list."
+}

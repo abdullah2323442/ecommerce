@@ -1,0 +1,21 @@
+{
+  "n": 256,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A memo that can still be returned is marked \"Returnable\""
+    }
+  ],
+  "shots": [
+    {
+      "file": "f256_1.jpg",
+      "caption": "The \"Returnable\" mark",
+      "role": "paikari",
+      "url": "/paikari/returns"
+    }
+  ],
+  "notes": [],
+  "did": "Looked for the \"Returnable\" mark beside each memo."
+}

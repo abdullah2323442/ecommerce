@@ -1,0 +1,39 @@
+{
+  "n": 518,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Channel: Inbox"
+    },
+    {
+      "ok": true,
+      "text": "Channel: Email"
+    },
+    {
+      "ok": true,
+      "text": "Channel: SMS"
+    },
+    {
+      "ok": true,
+      "text": "Channel: Phone notification"
+    },
+    {
+      "ok": true,
+      "text": "The inbox is always on; SMS starts off because it costs money"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f518_1.jpg",
+      "caption": "Four channels",
+      "role": "admin",
+      "url": "/admin/messages"
+    }
+  ],
+  "notes": [
+    "The checklist marks the channels as partly built. Only the inbox was seen working; email, SMS and phone notifications were not sent."
+  ],
+  "did": "Looked at the channels on the Messages page."
+}

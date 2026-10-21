@@ -1,0 +1,21 @@
+{
+  "n": 512,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The memo number includes the year (2026)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f512_1.jpg",
+      "caption": "The year is in the memo number",
+      "role": "admin",
+      "url": "/memo/213"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the memo number."
+}

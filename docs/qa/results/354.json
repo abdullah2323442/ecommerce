@@ -1,0 +1,47 @@
+{
+  "n": 354,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The complaint is kept on the order"
+    },
+    {
+      "ok": true,
+      "text": "The seller's record counts the complaint"
+    },
+    {
+      "ok": true,
+      "text": "The owner sees the same complaint in one place"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f354_1.jpg",
+      "caption": "A complaint typed on the buyer's order",
+      "role": "visitor",
+      "url": "/market/orders/Uij6GEqlFtmq5USSbY4qRfdu3t3mskUoGjPcpL8R"
+    },
+    {
+      "file": "f354_2.jpg",
+      "caption": "After the complaint is sent",
+      "role": "visitor",
+      "url": "/market/orders/Uij6GEqlFtmq5USSbY4qRfdu3t3mskUoGjPcpL8R"
+    },
+    {
+      "file": "f354_3.jpg",
+      "caption": "The seller's orders after the complaint",
+      "role": "wholesale",
+      "url": "/wholesale/sell/orders"
+    },
+    {
+      "file": "f354_4.jpg",
+      "caption": "The owner's cases page",
+      "role": "admin",
+      "url": "/admin/market/cases"
+    }
+  ],
+  "notes": [],
+  "did": "Ordered again, the seller sent it and the buyer confirmed it arrived. Then the buyer wrote what went wrong and sent the complaint. Then looked at it from the seller's side and the owner's side."
+}

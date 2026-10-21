@@ -1,0 +1,33 @@
+{
+  "n": 76,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The dear lot (285) was left alone because selling from it at 270 would lose money (it still has 5 of 5)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f76_1.jpg",
+      "caption": "An older lot bought at only 5% off: cost 285 a box",
+      "role": "admin",
+      "url": "/admin/stock/receive"
+    },
+    {
+      "file": "f76_2.jpg",
+      "caption": "Lots before the sale",
+      "role": "admin",
+      "url": "/admin/stock/medicines/1"
+    },
+    {
+      "file": "f76_3.jpg",
+      "caption": "Lots after selling one box at a 10% special price",
+      "role": "admin",
+      "url": "/admin/stock/medicines/1"
+    }
+  ],
+  "notes": [],
+  "did": "Bought an older, dearer lot of 5 boxes (cost 285 each), then sold a box with a 10% special price (270). A lot costing 285 would lose money at 270, so the system should take the box from a cheaper lot."
+}

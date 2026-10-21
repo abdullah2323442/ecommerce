@@ -1,0 +1,23 @@
+{
+  "n": 412,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The buyer is told the advance is not refunded if they cancel after work has started"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f412_1.jpg",
+      "caption": "The cancelling rule",
+      "role": "visitor",
+      "url": "/custom/YWqp5Mw964YyEaqPGFkNVXFzqoPOexRqu8CRvOea"
+    }
+  ],
+  "notes": [
+    "Cancelling before work starts was not carried through."
+  ],
+  "did": "Read what the buyer is told about cancelling."
+}

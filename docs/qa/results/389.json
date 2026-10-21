@@ -1,0 +1,18 @@
+{
+  "n": 389,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f389_1.jpg",
+      "caption": "Made to order",
+      "role": "visitor",
+      "url": "/custom"
+    }
+  ],
+  "notes": [
+    "Needs a job in progress. Not carried through."
+  ],
+  "did": "Looked for a trial step on clothing."
+}

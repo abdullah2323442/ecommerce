@@ -1,0 +1,35 @@
+{
+  "n": 85,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "There is a PDF or print link for the company return list"
+    },
+    {
+      "ok": true,
+      "text": "The list opens on plain paper with the heading \"Return to company\""
+    },
+    {
+      "ok": true,
+      "text": "And a line to sign when the goods are handed back"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f85_1.jpg",
+      "caption": "The expired list",
+      "role": "admin",
+      "url": "/admin/stock/expiry"
+    },
+    {
+      "file": "f85_2.jpg",
+      "caption": "The return list on plain paper, ready to print or save as PDF",
+      "role": "admin",
+      "url": "/admin/stock/expiry/return-list"
+    }
+  ],
+  "notes": [],
+  "did": "Looked on the expired list for a way to hand the goods back to the company, with a printable list."
+}

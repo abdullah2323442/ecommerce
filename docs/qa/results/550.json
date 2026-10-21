@@ -1,0 +1,21 @@
+{
+  "n": 550,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner sees searches that found nothing"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f550_1.jpg",
+      "caption": "Asked for but not available",
+      "role": "admin",
+      "url": "/admin/requests"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the page of things shoppers asked for."
+}

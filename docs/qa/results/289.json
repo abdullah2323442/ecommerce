@@ -1,0 +1,23 @@
+{
+  "n": 289,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner has a catalogue of products that several sellers can list under"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f289_1.jpg",
+      "caption": "The catalogue: one product, many sellers",
+      "role": "admin",
+      "url": "/admin/catalog"
+    }
+  ],
+  "notes": [
+    "Only one seller exists in this copy, so a product page with two sellers side by side could not be shown."
+  ],
+  "did": "Opened the Catalogue page, which joins listings of the same product from different sellers."
+}

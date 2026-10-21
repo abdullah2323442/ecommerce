@@ -1,0 +1,21 @@
+{
+  "n": 238,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Goods from an MPO are entered as a purchase from an MPO source"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f238_1.jpg",
+      "caption": "Enter purchase has an \"MPO\" source",
+      "role": "admin",
+      "url": "/admin/stock/receive"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at how goods pass through the owner."
+}

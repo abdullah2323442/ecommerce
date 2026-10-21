@@ -1,0 +1,25 @@
+{
+  "n": 395,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The page says a photo is needed each time"
+    },
+    {
+      "ok": true,
+      "text": "The Save button stays disabled until a photo is attached, so progress cannot be saved without one"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f395_1.jpg",
+      "caption": "40% typed, no photo attached: the Save button stays greyed out",
+      "role": "craftsman",
+      "url": "/craftsman/jobs/1"
+    }
+  ],
+  "notes": [],
+  "did": "Typed a progress of 40% and pressed Save without attaching a photo."
+}

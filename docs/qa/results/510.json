@@ -1,0 +1,29 @@
+{
+  "n": 510,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The memo carries the shop's name"
+    },
+    {
+      "ok": true,
+      "text": "And its items"
+    },
+    {
+      "ok": true,
+      "text": "And who served the customer"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f510_1.jpg",
+      "caption": "A memo",
+      "role": "admin",
+      "url": "/memo/213"
+    }
+  ],
+  "notes": [],
+  "did": "Opened a finished memo."
+}

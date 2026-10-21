@@ -1,0 +1,21 @@
+{
+  "n": 167,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner can upgrade the shop with one save"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f167_1.jpg",
+      "caption": "The owner moves the shop up a tier",
+      "role": "admin",
+      "url": "/admin/customers/4"
+    }
+  ],
+  "notes": [],
+  "did": "Changed the shop's tier by hand, as the owner does when checking an upgrade."
+}

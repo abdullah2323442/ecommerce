@@ -1,0 +1,21 @@
+{
+  "n": 59,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The two discounts chain to 24% (20% off, then 5% off what is left), saw 24%"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f59_1.jpg",
+      "caption": "20% from the company, then 5% on top from the MPO",
+      "role": "admin",
+      "url": "/admin/stock/receive"
+    }
+  ],
+  "notes": [],
+  "did": "Typed a company percentage of 20 and an MPO percentage of 5 on top, to see them chain."
+}

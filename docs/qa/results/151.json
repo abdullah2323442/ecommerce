@@ -1,0 +1,21 @@
+{
+  "n": 151,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "An order above the limit warns that the delivery charge is paid first"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f151_1.jpg",
+      "caption": "Checkout for an order above the limit",
+      "role": "guest",
+      "url": "/checkout"
+    }
+  ],
+  "notes": [],
+  "did": "Set \"Delivery charge paid first on orders of\" to 100 taka, put a medicine in the public cart (300 taka) and opened checkout."
+}

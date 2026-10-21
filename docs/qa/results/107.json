@@ -1,0 +1,18 @@
+{
+  "n": 107,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f107_1.jpg",
+      "caption": "The scan box works with a USB or Bluetooth scanner that types the code",
+      "role": "admin",
+      "url": "/admin/stock/receive"
+    }
+  ],
+  "notes": [
+    "Scanning with a phone camera is not built. USB and Bluetooth scanners, which type the number, are supported."
+  ],
+  "did": "Looked for phone-camera scanning."
+}

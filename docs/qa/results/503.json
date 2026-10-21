@@ -1,0 +1,25 @@
+{
+  "n": 503,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Waiting pre-orders are counted"
+    },
+    {
+      "ok": true,
+      "text": "A buying list gathers what to order from suppliers"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f503_1.jpg",
+      "caption": "Waiting orders and the buying list",
+      "role": "admin",
+      "url": "/admin/preorders"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the owner's Pre-orders page and the \"Buying list\"."
+}

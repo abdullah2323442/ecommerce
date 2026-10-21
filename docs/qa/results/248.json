@@ -1,0 +1,21 @@
+{
+  "n": 248,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The page carries a \"Prescription required\" mark"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f248_1.jpg",
+      "caption": "The \"Prescription required\" mark",
+      "role": "guest",
+      "url": "/medicines/4864"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the page of a medicine flagged as needing a prescription."
+}

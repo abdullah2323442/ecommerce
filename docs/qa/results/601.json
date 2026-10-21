@@ -1,0 +1,18 @@
+{
+  "n": 601,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f601_1.jpg",
+      "caption": "Settings",
+      "role": "admin",
+      "url": "/admin/settings"
+    }
+  ],
+  "notes": [
+    "The checklist marks this as partly built. A load test was not run."
+  ],
+  "did": "Looked for festival peak handling."
+}

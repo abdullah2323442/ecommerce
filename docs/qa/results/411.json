@@ -1,0 +1,18 @@
+{
+  "n": 411,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f411_1.jpg",
+      "caption": "The buyer's job page while the work is under way",
+      "role": "visitor",
+      "url": "/custom/YWqp5Mw964YyEaqPGFkNVXFzqoPOexRqu8CRvOea"
+    }
+  ],
+  "notes": [
+    "A complaint that the work was not done right would be made once the job is finished. The job is still being made."
+  ],
+  "did": "Looked on the buyer's page for a \"work not done right\" complaint."
+}

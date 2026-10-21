@@ -1,0 +1,25 @@
+{
+  "n": 597,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The site records what visitors search and view"
+    },
+    {
+      "ok": true,
+      "text": "From search to cart"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f597_1.jpg",
+      "caption": "Behaviour data",
+      "role": "admin",
+      "url": "/admin/behavior"
+    }
+  ],
+  "notes": [],
+  "did": "Opened \"What people look for\"."
+}

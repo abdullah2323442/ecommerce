@@ -1,0 +1,25 @@
+{
+  "n": 276,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner sees why things come back, by reason, with counts and amounts"
+    },
+    {
+      "ok": true,
+      "text": "And which products come back most"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f276_1.jpg",
+      "caption": "Why things come back, and what comes back most",
+      "role": "admin",
+      "url": "/admin/returns"
+    }
+  ],
+  "notes": [],
+  "did": "Looked for return analysis by customer and product."
+}

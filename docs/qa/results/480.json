@@ -1,0 +1,21 @@
+{
+  "n": 480,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A seller can set a pickup point"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f480_1.jpg",
+      "caption": "Where buyers can collect",
+      "role": "wholesale",
+      "url": "/wholesale/sell"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the seller screen for a pickup point."
+}

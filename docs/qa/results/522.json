@@ -1,0 +1,21 @@
+{
+  "n": 522,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A product page has a questions and answers area"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f522_1.jpg",
+      "caption": "Questions and answers",
+      "role": "guest",
+      "url": "/market/78"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the questions and answers area on a product page."
+}

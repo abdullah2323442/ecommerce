@@ -1,0 +1,18 @@
+{
+  "n": 458,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f458_1.jpg",
+      "caption": "A new post",
+      "role": "visitor",
+      "url": "/help/new"
+    }
+  ],
+  "notes": [
+    "Not carried through."
+  ],
+  "did": "Looked for a limit on how many posts one person can make."
+}

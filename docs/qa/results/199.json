@@ -1,0 +1,25 @@
+{
+  "n": 199,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "More boxes than the offer holds are not given at the offer rate"
+    },
+    {
+      "ok": true,
+      "text": "The screen tells the owner how many boxes the offer has"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f199_1.jpg",
+      "caption": "9 boxes asked for, 8 available",
+      "role": "admin",
+      "url": "/admin/counter/243"
+    }
+  ],
+  "notes": [],
+  "did": "Tried to order 9 boxes of an offer that has only 8 boxes available."
+}

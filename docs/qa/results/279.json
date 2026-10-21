@@ -1,0 +1,27 @@
+{
+  "n": 279,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The line that already has a return is marked \"Previously returned\""
+    }
+  ],
+  "shots": [
+    {
+      "file": "f279_1.jpg",
+      "caption": "The shop asks to return one strip",
+      "role": "paikari",
+      "url": "/paikari/returns"
+    },
+    {
+      "file": "f279_2.jpg",
+      "caption": "The owner opens memo M2026-000016",
+      "role": "admin",
+      "url": "/admin/returns"
+    }
+  ],
+  "notes": [],
+  "did": "As a paikari shop, asked to return one strip from its newest memo. Then, as the owner, looked the same memo up on the Returns screen."
+}

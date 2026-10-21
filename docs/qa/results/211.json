@@ -1,0 +1,21 @@
+{
+  "n": 211,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The medicine now shows under \"Shop tier offers running now\""
+    }
+  ],
+  "shots": [
+    {
+      "file": "f211_1.jpg",
+      "caption": "A shop tier offer is running",
+      "role": "admin",
+      "url": "/admin/offers"
+    }
+  ],
+  "notes": [],
+  "did": "Pressed \"Upload to the shop tier\" for a medicine bought at a high discount, to start a tier offer with no minimum."
+}

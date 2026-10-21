@@ -1,0 +1,39 @@
+{
+  "n": 283,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Sort: price, low to high"
+    },
+    {
+      "ok": true,
+      "text": "Sort: price, high to low"
+    },
+    {
+      "ok": true,
+      "text": "Sort: most ordered"
+    },
+    {
+      "ok": true,
+      "text": "Search finds the Soundbar"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f283_1.jpg",
+      "caption": "Price filters and sorting",
+      "role": "guest",
+      "url": "/market?all=1"
+    },
+    {
+      "file": "f283_2.jpg",
+      "caption": "Searching for \"soundbar\"",
+      "role": "guest",
+      "url": "/market?q=soundbar"
+    }
+  ],
+  "notes": [],
+  "did": "Searched, filtered by price and changed the sort order on the market list."
+}

@@ -1,0 +1,31 @@
+{
+  "n": 576,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A register of every controlled-medicine sale"
+    },
+    {
+      "ok": true,
+      "text": "It can be printed"
+    },
+    {
+      "ok": true,
+      "text": "And downloaded"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f576_1.jpg",
+      "caption": "Controlled register",
+      "role": "admin",
+      "url": "/admin/controlled"
+    }
+  ],
+  "notes": [
+    "A controlled medicine was not sold, so the register itself was empty."
+  ],
+  "did": "Opened the Controlled register."
+}

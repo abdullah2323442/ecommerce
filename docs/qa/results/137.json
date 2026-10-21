@@ -1,0 +1,25 @@
+{
+  "n": 137,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The short list is on the ordering screen"
+    },
+    {
+      "ok": true,
+      "text": "Each short-list entry has an \"Order now\" button, so it can be ordered straight from the list"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f137_1.jpg",
+      "caption": "The short list on the ordering screen, with an \"Order now\" button",
+      "role": "paikari",
+      "url": "/paikari"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the short list for a way to order from it directly."
+}

@@ -1,0 +1,35 @@
+{
+  "n": 463,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A charge for inside the shop's district"
+    },
+    {
+      "ok": true,
+      "text": "A charge for outside it"
+    },
+    {
+      "ok": true,
+      "text": "A charge set on a product beats every other delivery charge"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f463_1.jpg",
+      "caption": "The shop-wide delivery charges",
+      "role": "admin",
+      "url": "/admin/settings"
+    },
+    {
+      "file": "f463_2.jpg",
+      "caption": "A product's own charge beats the others",
+      "role": "admin",
+      "url": "/admin/weights"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the delivery charges in settings and on a product to see the layers."
+}

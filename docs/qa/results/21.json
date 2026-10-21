@@ -1,0 +1,18 @@
+{
+  "n": 21,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f21_1.jpg",
+      "caption": "The customer list: each account has its own business type and its own numbers",
+      "role": "admin",
+      "url": "/admin/customers"
+    }
+  ],
+  "notes": [
+    "Running two business accounts for one person was not exercised end to end here."
+  ],
+  "did": "Looked at how one person can have two business accounts."
+}

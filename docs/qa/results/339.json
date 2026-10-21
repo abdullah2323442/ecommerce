@@ -1,0 +1,31 @@
+{
+  "n": 339,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner can make the monthly statements"
+    },
+    {
+      "ok": true,
+      "text": "The seller answers each statement with Paid, or Problem with a reason"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f339_1.jpg",
+      "caption": "The owner's statements page",
+      "role": "admin",
+      "url": "/admin/market/statements"
+    },
+    {
+      "file": "f339_2.jpg",
+      "caption": "The seller's statements page: answer Paid or Problem",
+      "role": "wholesale",
+      "url": "/wholesale/sell/statements"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the monthly commission statement from both sides."
+}

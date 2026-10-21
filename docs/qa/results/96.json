@@ -1,0 +1,21 @@
+{
+  "n": 96,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Every purchase has an invoice number box"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f96_1.jpg",
+      "caption": "Enter purchase: the invoice number box",
+      "role": "admin",
+      "url": "/admin/stock/receive"
+    }
+  ],
+  "notes": [],
+  "did": "Opened Enter purchase and looked for the supplier invoice number box."
+}

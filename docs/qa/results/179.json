@@ -1,0 +1,21 @@
+{
+  "n": 179,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A retail sale is the printed price with a discount taken off the total"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f179_1.jpg",
+      "caption": "Retail: printed price 300, end discount 4%, total 288",
+      "role": "admin",
+      "url": "/admin/counter/204"
+    }
+  ],
+  "notes": [],
+  "did": "Sold a retail box with an end discount of 4% (inside the staff limit)."
+}

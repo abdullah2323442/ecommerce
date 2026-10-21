@@ -1,0 +1,25 @@
+{
+  "n": 249,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The page says \"Keep refrigerated\""
+    },
+    {
+      "ok": true,
+      "text": "And explains it in plain words"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f249_1.jpg",
+      "caption": "The \"Keep refrigerated\" mark",
+      "role": "guest",
+      "url": "/medicines/4864"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the same medicine, flagged as cold-chain."
+}

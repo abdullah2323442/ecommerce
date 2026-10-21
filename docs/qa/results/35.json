@@ -1,0 +1,35 @@
+{
+  "n": 35,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The memo shows the box at 300"
+    },
+    {
+      "ok": true,
+      "text": "The memo still shows 300: it keeps that day's price"
+    },
+    {
+      "ok": true,
+      "text": "It does not change to the new price"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f35_1.jpg",
+      "caption": "The finished memo at 300",
+      "role": "admin",
+      "url": "/admin/counter/248"
+    },
+    {
+      "file": "f35_2.jpg",
+      "caption": "The same memo after the printed price rose to 320",
+      "role": "admin",
+      "url": "/admin/counter/248"
+    }
+  ],
+  "notes": [],
+  "did": "Finished a retail sale of a box of Napa at 300, then raised the printed price to 320 and opened the memo again."
+}

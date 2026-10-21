@@ -1,0 +1,18 @@
+{
+  "n": 224,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f224_1.jpg",
+      "caption": "The MPO list",
+      "role": "admin",
+      "url": "/admin/mpo"
+    }
+  ],
+  "notes": [
+    "The one-to-many structure is how the data is stored. The screen shows MPOs and their companies, but not the structure itself."
+  ],
+  "did": "Looked at the MPO list to see one company linked to more than one MPO."
+}

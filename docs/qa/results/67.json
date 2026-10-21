@@ -1,0 +1,21 @@
+{
+  "n": 67,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The medicine page says the printed price changed, with the date and the old price (300)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f67_1.jpg",
+      "caption": "The medicine page after the printed price changed",
+      "role": "admin",
+      "url": "/admin/stock/medicines/1"
+    }
+  ],
+  "notes": [],
+  "did": "Changed the printed price and looked for a one-month marker on the medicine."
+}

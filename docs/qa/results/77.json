@@ -1,0 +1,25 @@
+{
+  "n": 77,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The page says only slow-moving goods are a risk"
+    },
+    {
+      "ok": true,
+      "text": "There is a \"Needs checking\" list for slow stock"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f77_1.jpg",
+      "caption": "The Expiry page: goods that sit still are the risk",
+      "role": "admin",
+      "url": "/admin/stock/expiry"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the Expiry page to see which goods have been sitting still."
+}

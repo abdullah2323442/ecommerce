@@ -1,0 +1,23 @@
+{
+  "n": 123,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Each item has a \"Move…\" menu to shift it to another draft"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f123_1.jpg",
+      "caption": "The \"Move…\" menu beside the item",
+      "role": "admin",
+      "url": "/admin/counter/156"
+    }
+  ],
+  "notes": [
+    "The menu lists: Move…, Customer 4, Customer 5, Customer 16, Customer 17, Customer 18, Customer 25, Customer 26, Customer 28, Customer 29, Customer 31, Customer 33"
+  ],
+  "did": "On a draft with an item, opened the \"Move…\" menu beside the item."
+}

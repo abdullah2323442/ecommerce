@@ -1,0 +1,33 @@
+{
+  "n": 401,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner sees what materials are needed"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f401_1.jpg",
+      "caption": "A materials request typed",
+      "role": "craftsman",
+      "url": "/craftsman/jobs/1"
+    },
+    {
+      "file": "f401_2.jpg",
+      "caption": "After sending",
+      "role": "craftsman",
+      "url": "/craftsman/jobs/1"
+    },
+    {
+      "file": "f401_3.jpg",
+      "caption": "The owner sees the request",
+      "role": "admin",
+      "url": "/admin/custom"
+    }
+  ],
+  "notes": [],
+  "did": "On the job, typed what materials are needed and sent it to the owner."
+}

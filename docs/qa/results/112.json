@@ -1,0 +1,21 @@
+{
+  "n": 112,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Each open draft has its own number (Customer 2, Customer 4, Customer 5, Customer 16 ...)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f112_1.jpg",
+      "caption": "Several drafts open, each with its own name",
+      "role": "admin",
+      "url": "/admin/counter"
+    }
+  ],
+  "notes": [],
+  "did": "Opened two retail drafts and looked at how each is named on the counter list."
+}

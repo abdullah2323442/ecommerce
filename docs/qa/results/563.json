@@ -1,0 +1,31 @@
+{
+  "n": 563,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The Staff page says changes ask for the password again"
+    },
+    {
+      "ok": true,
+      "text": "There is a separate password confirmation for big changes"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f563_1.jpg",
+      "caption": "Changes ask for the password again",
+      "role": "admin",
+      "url": "/admin/staff"
+    },
+    {
+      "file": "f563_2.jpg",
+      "caption": "The password confirmation screen",
+      "role": "admin",
+      "url": "/confirm-password"
+    }
+  ],
+  "notes": [],
+  "did": "Tried a big change (setting a customer's hand-set rate) without having confirmed the password recently, then looked at what happened."
+}

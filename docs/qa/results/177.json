@@ -1,0 +1,21 @@
+{
+  "n": 177,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The phone number shows beside the shop's name"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f177_1.jpg",
+      "caption": "Suggestions show the shop's phone number",
+      "role": "admin",
+      "url": "/admin/counter"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at what shows beside each shop in the counter search."
+}

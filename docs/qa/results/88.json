@@ -1,0 +1,21 @@
+{
+  "n": 88,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "With the switch off, an ordinary retail sale does not take stock out (25 stayed 25)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f88_1.jpg",
+      "caption": "A sale made while the switch is off",
+      "role": "admin",
+      "url": "/admin/counter"
+    }
+  ],
+  "notes": [],
+  "did": "Checked that, with Master Stock Sync off, only offer orders take stock out."
+}

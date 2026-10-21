@@ -1,0 +1,21 @@
+{
+  "n": 493,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A courier can leave out zones it does not serve"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f493_1.jpg",
+      "caption": "Delivery zones",
+      "role": "admin",
+      "url": "/admin/couriers"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the zones on a courier."
+}

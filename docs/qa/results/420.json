@@ -1,0 +1,35 @@
+{
+  "n": 420,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The new order is waiting on the restaurant's screen"
+    },
+    {
+      "ok": true,
+      "text": "The restaurant is asked how long it will take"
+    },
+    {
+      "ok": true,
+      "text": "The order is now confirmed and being cooked"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f420_1.jpg",
+      "caption": "A cooking time of 20 minutes typed in",
+      "role": "vendor",
+      "url": "/food/vendor"
+    },
+    {
+      "file": "f420_2.jpg",
+      "caption": "After pressing Confirm",
+      "role": "vendor",
+      "url": "/food/vendor"
+    }
+  ],
+  "notes": [],
+  "did": "As the restaurant, opened the waiting order, wrote that it will take 20 minutes and pressed Confirm."
+}

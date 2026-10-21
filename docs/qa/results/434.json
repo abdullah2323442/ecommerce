@@ -1,0 +1,27 @@
+{
+  "n": 434,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The charge can depend on the area: one price inside, another outside"
+    },
+    {
+      "ok": true,
+      "text": "Or the restaurant writes it on each order"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f434_1.jpg",
+      "caption": "Delivery charge choices",
+      "role": "vendor",
+      "url": "/food/vendor"
+    }
+  ],
+  "notes": [
+    "The checklist marks the third choice as partly built."
+  ],
+  "did": "On the restaurant's page, looked at how the delivery charge is set."
+}

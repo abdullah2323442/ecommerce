@@ -1,0 +1,21 @@
+{
+  "n": 559,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner can create new roles"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f559_1.jpg",
+      "caption": "Staff",
+      "role": "admin",
+      "url": "/admin/staff"
+    }
+  ],
+  "notes": [],
+  "did": "Looked for a way to create a new role."
+}

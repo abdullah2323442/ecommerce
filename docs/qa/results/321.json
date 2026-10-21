@@ -1,0 +1,21 @@
+{
+  "n": 321,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A company page lists its brands"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f321_1.jpg",
+      "caption": "One company's brands",
+      "role": "guest",
+      "url": "/companies/245"
+    }
+  ],
+  "notes": [],
+  "did": "Opened one company and looked at filtering its products by brand."
+}

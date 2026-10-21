@@ -1,0 +1,27 @@
+{
+  "n": 226,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A product can be marked In stock"
+    },
+    {
+      "ok": true,
+      "text": "Or Pre-order"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f226_1.jpg",
+      "caption": "Stock: In stock or Pre-order",
+      "role": "mpo2",
+      "url": "/mpo"
+    }
+  ],
+  "notes": [
+    "Choices on the page: Choose"
+  ],
+  "did": "Looked at the Stock choice when sending a product."
+}

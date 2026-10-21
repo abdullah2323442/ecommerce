@@ -1,0 +1,18 @@
+{
+  "n": 408,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f408_1.jpg",
+      "caption": "Chats",
+      "role": "admin",
+      "url": "/admin/chats"
+    }
+  ],
+  "notes": [
+    "Needs time to pass. Not carried through."
+  ],
+  "did": "Looked for a notice when a craftsman does not reply."
+}

@@ -1,0 +1,33 @@
+{
+  "n": 92,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The page says a correction is an entry fix, not a sale, so it is not counted as a loss"
+    },
+    {
+      "ok": true,
+      "text": "The movement is written as a correction"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f92_1.jpg",
+      "caption": "Correcting the number by one, as an entry mistake",
+      "role": "admin",
+      "url": "/admin/stock/medicines/1"
+    },
+    {
+      "file": "f92_2.jpg",
+      "caption": "After the correction",
+      "role": "admin",
+      "url": "/admin/stock/medicines/1"
+    }
+  ],
+  "notes": [
+    "The system asked the owner to type the password again before saving. It was typed and the change went through."
+  ],
+  "did": "Corrected the stock number and looked at how it was recorded."
+}

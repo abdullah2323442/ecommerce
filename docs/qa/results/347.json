@@ -1,0 +1,23 @@
+{
+  "n": 347,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Sellers are told not to put cards or leaflets in the package"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f347_1.jpg",
+      "caption": "The package rule",
+      "role": "wholesale",
+      "url": "/wholesale/sell/orders"
+    }
+  ],
+  "notes": [
+    "The checklist marks this rule only partly built: it is a notice, with no way to check what is in a package."
+  ],
+  "did": "Read the package rule."
+}

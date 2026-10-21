@@ -1,0 +1,21 @@
+{
+  "n": 110,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The box left stock the moment it was added (31 became 30)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f110_1.jpg",
+      "caption": "The draft: stock is already reduced",
+      "role": "admin",
+      "url": "/admin/counter/145"
+    }
+  ],
+  "notes": [],
+  "did": "Added a box to a draft and looked at the stock number straight away."
+}

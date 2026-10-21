@@ -1,0 +1,25 @@
+{
+  "n": 82,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The page shows how much money is in goods that need checking"
+    },
+    {
+      "ok": true,
+      "text": "Each slow item shows its value"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f82_1.jpg",
+      "caption": "The page states how much money is at risk",
+      "role": "admin",
+      "url": "/admin/stock/expiry"
+    }
+  ],
+  "notes": [],
+  "did": "Read the money figure on the Expiry page."
+}

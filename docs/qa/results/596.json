@@ -1,0 +1,23 @@
+{
+  "n": 596,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A month-end window is set in Settings"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f596_1.jpg",
+      "caption": "Month-end window",
+      "role": "admin",
+      "url": "/admin/settings"
+    }
+  ],
+  "notes": [
+    "The checklist marks the monthly report date as partly built. A date for the monthly report itself was not found."
+  ],
+  "did": "Looked for the monthly report date in settings."
+}

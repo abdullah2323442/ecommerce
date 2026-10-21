@@ -1,0 +1,31 @@
+{
+  "n": 172,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The hand-set price for this shop (246) is used first"
+    },
+    {
+      "ok": true,
+      "text": "With no hand-set price the tier rate is used (255)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f172_1.jpg",
+      "caption": "With a hand-set rate of 18%, the counter offers the box at 246",
+      "role": "admin",
+      "url": "/admin/counter/200"
+    },
+    {
+      "file": "f172_2.jpg",
+      "caption": "Without it, the shop's tier rate (255) is used",
+      "role": "admin",
+      "url": "/admin/counter/202"
+    }
+  ],
+  "notes": [],
+  "did": "Sold a box of Napa to Karim Pharmacy with and without a hand-set price, to see which rate the counter uses first."
+}

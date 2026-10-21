@@ -1,0 +1,18 @@
+{
+  "n": 606,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f606_1.jpg",
+      "caption": "The wishlist",
+      "role": "visitor",
+      "url": "/wishlist"
+    }
+  ],
+  "notes": [
+    "A price drop and its alert were not reproduced."
+  ],
+  "did": "Looked at the wishlist for a price-drop alert."
+}

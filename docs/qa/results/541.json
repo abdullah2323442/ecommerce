@@ -1,0 +1,29 @@
+{
+  "n": 541,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Gross profit"
+    },
+    {
+      "ok": true,
+      "text": "Shop expenses"
+    },
+    {
+      "ok": true,
+      "text": "And net profit"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f541_1.jpg",
+      "caption": "Gross profit, expenses and net profit",
+      "role": "admin",
+      "url": "/admin/stock/reports"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the stock profit report."
+}

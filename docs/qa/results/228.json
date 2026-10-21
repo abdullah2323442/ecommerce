@@ -1,0 +1,18 @@
+{
+  "n": 228,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f228_1.jpg",
+      "caption": "Invoices",
+      "role": "admin",
+      "url": "/admin/invoices"
+    }
+  ],
+  "notes": [
+    "Needs an MPO product with a bonus to be sold and a memo made. Not carried through."
+  ],
+  "did": "Looked for a bonus on its own memo line."
+}

@@ -1,0 +1,45 @@
+{
+  "n": 281,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The Market sector is on the top row"
+    },
+    {
+      "ok": true,
+      "text": "The Electronics sector is on the top row"
+    },
+    {
+      "ok": true,
+      "text": "The Clothing sector is on the top row"
+    },
+    {
+      "ok": true,
+      "text": "The Jewellery sector is on the top row"
+    },
+    {
+      "ok": true,
+      "text": "The Pharmacy sector is on the top row"
+    },
+    {
+      "ok": true,
+      "text": "The Food sector is on the top row"
+    },
+    {
+      "ok": true,
+      "text": "The Game top-up sector is on the top row"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f281_1.jpg",
+      "caption": "The home page with the sector row",
+      "role": "guest",
+      "url": "/"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the home page as a stranger and looked at the row of sector icons and names."
+}

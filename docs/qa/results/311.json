@@ -1,0 +1,18 @@
+{
+  "n": 311,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f311_1.jpg",
+      "caption": "Couriers",
+      "role": "admin",
+      "url": "/admin/couriers"
+    }
+  ],
+  "notes": [
+    "A separate courier per seller part needs two sellers in one order."
+  ],
+  "did": "Looked at the couriers each seller can choose."
+}

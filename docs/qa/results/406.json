@@ -1,0 +1,21 @@
+{
+  "n": 406,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner can open the chat of any job"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f406_1.jpg",
+      "caption": "The owner reads the chat",
+      "role": "admin",
+      "url": "/admin/chats/1"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the chat of the job as the owner."
+}

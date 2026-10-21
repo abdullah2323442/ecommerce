@@ -1,0 +1,21 @@
+{
+  "n": 361,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The seller is stopped: \"You cannot buy your own product.\""
+    }
+  ],
+  "shots": [
+    {
+      "file": "f361_1.jpg",
+      "caption": "The seller trying to buy their own product",
+      "role": "wholesale",
+      "url": "/market/78"
+    }
+  ],
+  "notes": [],
+  "did": "As the seller, tried to order the seller's own phone case."
+}

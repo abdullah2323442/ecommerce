@@ -1,0 +1,27 @@
+{
+  "n": 384,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The measurements are saved under a name"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f384_1.jpg",
+      "caption": "A measurement profile filled in",
+      "role": "visitor",
+      "url": "/custom/profiles"
+    },
+    {
+      "file": "f384_2.jpg",
+      "caption": "The saved profile",
+      "role": "visitor",
+      "url": "/custom/profiles"
+    }
+  ],
+  "notes": [],
+  "did": "Saved a set of measurements under the name \"Rahim\" on the Saved measurements page."
+}

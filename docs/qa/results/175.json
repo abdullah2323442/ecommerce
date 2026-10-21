@@ -1,0 +1,21 @@
+{
+  "n": 175,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The shop does not see its own monthly total unless the owner switches it on"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f175_1.jpg",
+      "caption": "The shop's page, with the monthly total switched off",
+      "role": "paikari",
+      "url": "/my-orders"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the shop's own pages for its monthly total when the owner has not switched it on."
+}

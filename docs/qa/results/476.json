@@ -1,0 +1,18 @@
+{
+  "n": 476,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f476_1.jpg",
+      "caption": "A product page",
+      "role": "guest",
+      "url": "/market/78"
+    }
+  ],
+  "notes": [
+    "The \"On the way\" step was seen on a seller order earlier (see feature 345)."
+  ],
+  "did": "Looked at an order for the \"On the way\" step."
+}

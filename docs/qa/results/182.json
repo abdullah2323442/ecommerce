@@ -1,0 +1,29 @@
+{
+  "n": 182,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The normal box rate is shown"
+    },
+    {
+      "ok": true,
+      "text": "And the offer, with its price and minimum"
+    },
+    {
+      "ok": true,
+      "text": "The offer shows how many boxes are left"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f182_1.jpg",
+      "caption": "The normal rate and the offer, side by side",
+      "role": "admin",
+      "url": "/admin/counter/242"
+    }
+  ],
+  "notes": [],
+  "did": "In a sale to a shop, searched for Napa 500 mg (Square) and read the normal price and the offer."
+}

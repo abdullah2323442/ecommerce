@@ -1,0 +1,21 @@
+{
+  "n": 200,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "An offer can give a bigger discount for each extra box"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f200_1.jpg",
+      "caption": "The extra discount per box",
+      "role": "admin",
+      "url": "/admin/offers"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the \"Extra % for each box above the minimum\" box on the offer form."
+}

@@ -1,0 +1,29 @@
+{
+  "n": 252,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The medicine in stock (Napa 500 mg, Square) comes first in the results"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f252_1.jpg",
+      "caption": "The public search for \"napa\"",
+      "role": "guest",
+      "url": "/medicines?q=napa"
+    },
+    {
+      "file": "f252_2.jpg",
+      "caption": "The paikari search puts the in-stock one first",
+      "role": "paikari",
+      "url": "/paikari"
+    }
+  ],
+  "notes": [
+    "On the paikari ordering screen the first result is \"Napa 500 mg\"."
+  ],
+  "did": "Searched for \"napa\" on the public site and looked at where the one medicine the shop actually holds appears."
+}

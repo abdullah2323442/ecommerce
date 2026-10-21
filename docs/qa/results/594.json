@@ -1,0 +1,18 @@
+{
+  "n": 594,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f594_1.jpg",
+      "caption": "Settings",
+      "role": "admin",
+      "url": "/admin/settings"
+    }
+  ],
+  "notes": [
+    "No import screen was found. The medicine database was loaded in bulk before this test."
+  ],
+  "did": "Looked for a bulk import of old data."
+}

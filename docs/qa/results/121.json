@@ -1,0 +1,21 @@
+{
+  "n": 121,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Staff can open and see a draft the owner started"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f121_1.jpg",
+      "caption": "Staff on the owner's draft",
+      "role": "staff",
+      "url": "/admin/counter/154"
+    }
+  ],
+  "notes": [],
+  "did": "As staff, opened a draft that the owner started."
+}

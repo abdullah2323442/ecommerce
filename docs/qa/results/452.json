@@ -1,0 +1,18 @@
+{
+  "n": 452,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f452_1.jpg",
+      "caption": "A new post",
+      "role": "visitor",
+      "url": "/help/new"
+    }
+  ],
+  "notes": [
+    "Not carried through."
+  ],
+  "did": "Looked for page owners finding moderators."
+}

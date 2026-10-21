@@ -1,0 +1,23 @@
+{
+  "n": 419,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Each restaurant shows \"Open now\" or closed"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f419_1.jpg",
+      "caption": "Restaurants and whether they are open now",
+      "role": "admin",
+      "url": "/admin/food"
+    }
+  ],
+  "notes": [
+    "Setting opening hours and seeing the restaurant close by itself was not reproduced."
+  ],
+  "did": "Looked at the owner's Restaurants page for opening hours and the open/closed mark."
+}

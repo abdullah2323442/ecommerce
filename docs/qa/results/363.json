@@ -1,0 +1,25 @@
+{
+  "n": 363,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The seller is told the listing has orders on the way and to pause it instead"
+    },
+    {
+      "ok": true,
+      "text": "The product is still on sale: it was not removed"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f363_1.jpg",
+      "caption": "After pressing Remove on a product with live orders",
+      "role": "wholesale",
+      "url": "/wholesale/sell"
+    }
+  ],
+  "notes": [],
+  "did": "On the seller's listings, pressed Remove on the phone case, which has several orders still on the way."
+}

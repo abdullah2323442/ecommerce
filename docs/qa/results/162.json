@@ -1,0 +1,18 @@
+{
+  "n": 162,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f162_1.jpg",
+      "caption": "The customer list",
+      "role": "admin",
+      "url": "/admin/customers"
+    }
+  ],
+  "notes": [
+    "A shop being flagged after repeated late cancellations was not reproduced."
+  ],
+  "did": "Looked for a flag on shops that keep cancelling late."
+}

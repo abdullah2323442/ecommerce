@@ -1,0 +1,35 @@
+{
+  "n": 51,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The stock page has a Master Stock Sync switch"
+    },
+    {
+      "ok": true,
+      "text": "When it is on, every sale takes stock out"
+    },
+    {
+      "ok": true,
+      "text": "When it is off, only offer orders take stock out"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f51_1.jpg",
+      "caption": "Master Stock Sync is on: every sale takes stock out",
+      "role": "admin",
+      "url": "/admin/stock"
+    },
+    {
+      "file": "f51_2.jpg",
+      "caption": "Master Stock Sync is off: only offer orders take stock out",
+      "role": "admin",
+      "url": "/admin/stock"
+    }
+  ],
+  "notes": [],
+  "did": "On the stock page, looked at the Master Stock Sync switch in its On position."
+}

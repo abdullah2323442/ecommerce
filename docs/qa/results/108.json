@@ -1,0 +1,23 @@
+{
+  "n": 108,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "An unknown barcode asks \"Which medicine is it?\" so the owner can link it once"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f108_1.jpg",
+      "caption": "An unknown barcode on the purchase form",
+      "role": "admin",
+      "url": "/admin/stock/receive"
+    }
+  ],
+  "notes": [
+    "Linking the code once, so it is remembered, cannot be reached because the scan box on this screen does not respond to Enter (see feature 106). Once a code is linked, the counter does recognise it."
+  ],
+  "did": "Typed a barcode the system has never seen into the scan box on the purchase form, expecting it to ask which medicine it belongs to."
+}

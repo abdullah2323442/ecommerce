@@ -1,0 +1,21 @@
+{
+  "n": 187,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The keyboard shortcuts add a medicine without touching the mouse"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f187_1.jpg",
+      "caption": "A medicine added with the keyboard alone",
+      "role": "admin",
+      "url": "/admin/counter/208"
+    }
+  ],
+  "notes": [],
+  "did": "Used the keyboard only: pressed \"/\" to reach the search, typed, moved down with the arrow key and pressed Enter."
+}

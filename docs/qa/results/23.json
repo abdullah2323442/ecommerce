@@ -1,0 +1,37 @@
+{
+  "n": 23,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The Tiers page has a place for rates by company"
+    },
+    {
+      "ok": true,
+      "text": "The company rate is saved: every Square medicine is 10% off for customers without a rate of their own"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f23_1.jpg",
+      "caption": "A 10% rate for the company Square",
+      "role": "admin",
+      "url": "/admin/tiers"
+    },
+    {
+      "file": "f23_2.jpg",
+      "caption": "The company rate is saved and listed",
+      "role": "admin",
+      "url": "/admin/tiers"
+    },
+    {
+      "file": "f23_3.jpg",
+      "caption": "Removed again",
+      "role": "admin",
+      "url": "/admin/tiers"
+    }
+  ],
+  "notes": [],
+  "did": "On the Tiers page, set a 10% rate for the whole company \"Square\", then looked at what a Square medicine costs a shop, then removed the rate."
+}

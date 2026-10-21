@@ -1,0 +1,18 @@
+{
+  "n": 327,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f327_1.jpg",
+      "caption": "The wholesale screen",
+      "role": "wholesale",
+      "url": "/wholesale"
+    }
+  ],
+  "notes": [
+    "No bulk upload control was found on the wholesale screen."
+  ],
+  "did": "Looked for a bulk order upload."
+}

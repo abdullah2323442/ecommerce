@@ -1,0 +1,18 @@
+{
+  "n": 455,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f455_1.jpg",
+      "caption": "The Help board",
+      "role": "guest",
+      "url": "/help"
+    }
+  ],
+  "notes": [
+    "Not carried through."
+  ],
+  "did": "Looked for the card following visibility rules."
+}

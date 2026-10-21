@@ -1,0 +1,18 @@
+{
+  "n": 457,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f457_1.jpg",
+      "caption": "The shopper's own posts",
+      "role": "visitor",
+      "url": "/help/mine"
+    }
+  ],
+  "notes": [
+    "Needs a post that is 30 days old. Not carried through."
+  ],
+  "did": "Looked for the \"still needed?\" question after 30 days."
+}

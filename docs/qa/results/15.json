@@ -1,0 +1,18 @@
+{
+  "n": 15,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f15_1.jpg",
+      "caption": "The shopper's full order history",
+      "role": "visitor",
+      "url": "/history"
+    }
+  ],
+  "notes": [
+    "Joining a guest order to an account needs a phone code, which cannot be sent in the test setup. Only the history screen was shown."
+  ],
+  "did": "Opened the shopper's order history, where earlier guest orders are joined once the shopper signs in."
+}

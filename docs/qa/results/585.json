@@ -1,0 +1,29 @@
+{
+  "n": 585,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The page fits a phone screen without sideways scrolling"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f585_1.jpg",
+      "caption": "The home page on a phone",
+      "role": "guest",
+      "url": "/"
+    },
+    {
+      "file": "f585_2.jpg",
+      "caption": "A product page on a phone",
+      "role": "guest",
+      "url": "/market/78"
+    }
+  ],
+  "notes": [
+    "Loading speed on a real phone connection was not measured."
+  ],
+  "did": "Opened the home page and a product page on a phone-sized screen."
+}

@@ -1,0 +1,33 @@
+{
+  "n": 607,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner sees the ticket"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f607_1.jpg",
+      "caption": "A support ticket filled in",
+      "role": "visitor",
+      "url": "/support/new"
+    },
+    {
+      "file": "f607_2.jpg",
+      "caption": "The ticket is sent",
+      "role": "visitor",
+      "url": "/support/t/blWt1jQQwPo5Exv4OUY7WQU1IO3SkT4G0PbUdWNW"
+    },
+    {
+      "file": "f607_3.jpg",
+      "caption": "The owner's Support tickets",
+      "role": "admin",
+      "url": "/admin/support"
+    }
+  ],
+  "notes": [],
+  "did": "Opened a support ticket as a shopper, then looked at it on the owner's Support page."
+}

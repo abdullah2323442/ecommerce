@@ -1,0 +1,21 @@
+{
+  "n": 571,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "After repeated wrong passwords the account is locked for a while"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f571_1.jpg",
+      "caption": "After several wrong passwords",
+      "role": "newguest",
+      "url": "/login"
+    }
+  ],
+  "notes": [],
+  "did": "Typed a wrong password for the same account several times in a row."
+}

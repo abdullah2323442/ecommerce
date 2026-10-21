@@ -1,0 +1,25 @@
+{
+  "n": 567,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Deleted items stay for 30 days and can be put back"
+    },
+    {
+      "ok": true,
+      "text": "With a Put back button"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f567_1.jpg",
+      "caption": "Deleted",
+      "role": "admin",
+      "url": "/admin/deleted"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the Deleted page."
+}

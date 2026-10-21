@@ -1,0 +1,21 @@
+{
+  "n": 132,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The report says profit uses the cost of the lot each sale came from"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f132_1.jpg",
+      "caption": "Profit uses the cost of the lot each sale came from",
+      "role": "admin",
+      "url": "/admin/stock/reports"
+    }
+  ],
+  "notes": [],
+  "did": "Read how profit is worked out on the stock report."
+}

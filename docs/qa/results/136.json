@@ -1,0 +1,21 @@
+{
+  "n": 136,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The medicine goes onto a short list"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f136_1.jpg",
+      "caption": "After \"Save for later\"",
+      "role": "paikari",
+      "url": "/paikari"
+    }
+  ],
+  "notes": [],
+  "did": "Pressed \"Save for later\" under a medicine to put it on the short list."
+}

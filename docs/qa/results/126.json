@@ -1,0 +1,21 @@
+{
+  "n": 126,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "After reloading the page, the item is still on the draft (every item is saved at once)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f126_1.jpg",
+      "caption": "After reloading the page",
+      "role": "admin",
+      "url": "/admin/counter/158"
+    }
+  ],
+  "notes": [],
+  "did": "Added a box, reloaded the page, and saw the item was kept."
+}

@@ -1,0 +1,23 @@
+{
+  "n": 529,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Products are listed with their status"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f529_1.jpg",
+      "caption": "Product management",
+      "role": "admin",
+      "url": "/admin/market"
+    }
+  ],
+  "notes": [
+    "The checklist marks product management as only partly built; not every option was tried."
+  ],
+  "did": "Looked at the owner's Market page, where products are managed."
+}

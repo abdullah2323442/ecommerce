@@ -1,0 +1,25 @@
+{
+  "n": 319,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The seller can say how many times the file may be downloaded"
+    },
+    {
+      "ok": true,
+      "text": "And for how many days"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f319_1.jpg",
+      "caption": "A digital file with download limits",
+      "role": "wholesale",
+      "url": "/wholesale/sell"
+    }
+  ],
+  "notes": [],
+  "did": "On the seller's listing, pressed \"Add a file to download\" and looked at what the seller can set for a digital product."
+}

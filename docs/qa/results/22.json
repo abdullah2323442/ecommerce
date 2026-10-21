@@ -1,0 +1,59 @@
+{
+  "n": 22,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Tier A exists"
+    },
+    {
+      "ok": true,
+      "text": "Tier A gives 10%"
+    },
+    {
+      "ok": true,
+      "text": "Tier B gives 15%"
+    },
+    {
+      "ok": true,
+      "text": "Tier C gives 20%"
+    },
+    {
+      "ok": true,
+      "text": "A tier B shop pays 255 for a box printed at 300, which is 15% off (saw 255 at 15%)"
+    },
+    {
+      "ok": true,
+      "text": "The new tier D appears with its 25% discount"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f22_1.jpg",
+      "caption": "The owner's Tiers page: three discount levels",
+      "role": "admin",
+      "url": "/admin/tiers"
+    },
+    {
+      "file": "f22_2.jpg",
+      "caption": "A paikari shop on tier B: the box printed at 300 is charged 255",
+      "role": "paikari",
+      "url": "/paikari"
+    },
+    {
+      "file": "f22_3.jpg",
+      "caption": "Adding a fourth tier, D, at 25%",
+      "role": "admin",
+      "url": "/admin/tiers"
+    },
+    {
+      "file": "f22_4.jpg",
+      "caption": "Tier D is now on the list: the number of tiers is not fixed",
+      "role": "admin",
+      "url": "/admin/tiers"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the Tiers page to see the discount levels. Then signed in as a paikari shop on tier B and looked at what it is charged for Napa 500 mg. Finally added a new tier \"D\"."
+}

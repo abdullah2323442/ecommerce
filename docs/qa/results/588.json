@@ -1,0 +1,23 @@
+{
+  "n": 588,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The site serves an installable app worker that carries its build number, which is how it knows a newer build exists"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f588_1.jpg",
+      "caption": "The dashboard (the banner only appears once a newer build has been fetched)",
+      "role": "admin",
+      "url": "/dashboard"
+    }
+  ],
+  "notes": [
+    "The message \"A new version is ready\" appears only after a second build is published and the installed app fetches it. Only one build existed, so the banner itself could not be shown."
+  ],
+  "did": "Looked for the \"A new version is ready\" message."
+}

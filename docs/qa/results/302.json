@@ -1,0 +1,18 @@
+{
+  "n": 302,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f302_1.jpg",
+      "caption": "Requests",
+      "role": "admin",
+      "url": "/admin/requests"
+    }
+  ],
+  "notes": [
+    "Waiting 24 hours to watch an offer lapse was not possible."
+  ],
+  "did": "Looked for price offers lapsing after 24 hours."
+}

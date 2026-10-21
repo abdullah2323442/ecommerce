@@ -1,0 +1,29 @@
+{
+  "n": 513,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A 58 mm receipt printer"
+    },
+    {
+      "ok": true,
+      "text": "An 80 mm receipt printer"
+    },
+    {
+      "ok": true,
+      "text": "Or a full A4 page"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f513_1.jpg",
+      "caption": "58 mm, 80 mm or A4",
+      "role": "admin",
+      "url": "/memo/213"
+    }
+  ],
+  "notes": [],
+  "did": "Opened a memo and looked at the paper sizes."
+}

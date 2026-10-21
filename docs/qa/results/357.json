@@ -1,0 +1,25 @@
+{
+  "n": 357,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The seller sees their own rank"
+    },
+    {
+      "ok": true,
+      "text": "And which products sell the most"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f357_1.jpg",
+      "caption": "Seller reports",
+      "role": "wholesale",
+      "url": "/wholesale/sell/reports"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the seller's reports page."
+}

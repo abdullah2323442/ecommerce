@@ -1,0 +1,25 @@
+{
+  "n": 433,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The ticket carries the order number"
+    },
+    {
+      "ok": true,
+      "text": "And what to cook"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f433_1.jpg",
+      "caption": "The kitchen ticket",
+      "role": "vendor",
+      "url": "/food/vendor/orders/1/print/kitchen"
+    }
+  ],
+  "notes": [],
+  "did": "As the restaurant, opened the kitchen ticket of the order."
+}

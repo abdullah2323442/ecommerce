@@ -1,0 +1,31 @@
+{
+  "n": 217,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "With no boxes left the offer goes off by itself"
+    },
+    {
+      "ok": true,
+      "text": "When the boxes are back the offer comes on again by itself"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f217_1.jpg",
+      "caption": "Boxes all taken: the offer is off",
+      "role": "paikari",
+      "url": "/paikari"
+    },
+    {
+      "file": "f217_2.jpg",
+      "caption": "Boxes back: the offer is on again",
+      "role": "paikari",
+      "url": "/paikari"
+    }
+  ],
+  "notes": [],
+  "did": "Watched the offer go off when its boxes were all taken, and come back when the boxes were put back."
+}

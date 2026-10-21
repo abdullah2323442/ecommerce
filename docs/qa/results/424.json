@@ -1,0 +1,21 @@
+{
+  "n": 424,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A buyer can build their own dish on a base"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f424_1.jpg",
+      "caption": "Custom food bases",
+      "role": "vendor",
+      "url": "/food/vendor/custom"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the restaurant's Custom food page, where a buyer builds a burger, pizza, sandwich or roll."
+}

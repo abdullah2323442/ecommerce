@@ -1,0 +1,21 @@
+{
+  "n": 570,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The customer page lists recent sign-ins"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f570_1.jpg",
+      "caption": "Recent logins",
+      "role": "admin",
+      "url": "/admin/customers/4"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the customer page for recent logins."
+}

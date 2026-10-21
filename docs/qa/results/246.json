@@ -1,0 +1,25 @@
+{
+  "n": 246,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Searching the generic name finds the Napa brand"
+    },
+    {
+      "ok": true,
+      "text": "The Bangla spelling finds the medicine too (28 found)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f246_1.jpg",
+      "caption": "Searching in Bangla",
+      "role": "guest",
+      "url": "/medicines?q=%E0%A6%A8%E0%A6%BE%E0%A6%AA%E0%A6%BE"
+    }
+  ],
+  "notes": [],
+  "did": "Searched by the generic name and by the Bangla spelling of Napa."
+}

@@ -1,0 +1,23 @@
+{
+  "n": 31,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The public page shows that buying 5 or more boxes earns 10% off"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f31_1.jpg",
+      "caption": "The public medicine page shows the quantity discount steps",
+      "role": "guest",
+      "url": "/medicines/1"
+    }
+  ],
+  "notes": [
+    "The discount is the same for every public buyer."
+  ],
+  "did": "Opened the public page for Napa 500 mg as a stranger and looked for the quantity discount."
+}

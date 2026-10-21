@@ -1,0 +1,21 @@
+{
+  "n": 398,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Each craftsman shows active and late jobs"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f398_1.jpg",
+      "caption": "Active jobs per craftsman",
+      "role": "admin",
+      "url": "/admin/craftsmen"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the active job count shown for each craftsman."
+}

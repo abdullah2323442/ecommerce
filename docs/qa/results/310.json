@@ -1,0 +1,18 @@
+{
+  "n": 310,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f310_1.jpg",
+      "caption": "The market cart",
+      "role": "visitor",
+      "url": "/market-cart"
+    }
+  ],
+  "notes": [
+    "All products in the test data belong to one seller, so a split into two seller orders could not be shown."
+  ],
+  "did": "Put products from two sellers in the cart and looked at how the order splits."
+}

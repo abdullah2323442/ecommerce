@@ -1,0 +1,35 @@
+{
+  "n": 235,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The MPO sees the bid (12%) and a button to accept it"
+    },
+    {
+      "ok": true,
+      "text": "The accepted bid becomes a confirmed order in the MPO's own record"
+    },
+    {
+      "ok": true,
+      "text": "And the bid is no longer waiting"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f235_1.jpg",
+      "caption": "The MPO's portal: the bid under the product",
+      "role": "mpo2",
+      "url": "/mpo"
+    },
+    {
+      "file": "f235_2.jpg",
+      "caption": "After accepting",
+      "role": "mpo2",
+      "url": "/mpo"
+    }
+  ],
+  "notes": [],
+  "did": "As the MPO, opened the portal, found the bid on the product and pressed Accept."
+}

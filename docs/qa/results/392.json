@@ -1,0 +1,21 @@
+{
+  "n": 392,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Every hand-over is recorded with its time"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f392_1.jpg",
+      "caption": "The job with its record",
+      "role": "admin",
+      "url": "/admin/custom"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the job on the owner's page and read the record of who the job was given to."
+}

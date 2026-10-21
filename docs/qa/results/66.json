@@ -1,0 +1,21 @@
+{
+  "n": 66,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A sale uses the latest printed price (320)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f66_1.jpg",
+      "caption": "The counter now offers the box at the new printed price",
+      "role": "admin",
+      "url": "/admin/counter/130"
+    }
+  ],
+  "notes": [],
+  "did": "Raised the printed price of a box from 300 to 320, then added a box to a counter sale."
+}

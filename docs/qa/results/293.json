@@ -1,0 +1,21 @@
+{
+  "n": 293,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The shop's page has a Follow button"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f293_1.jpg",
+      "caption": "The shop's page for a signed-in shopper",
+      "role": "visitor",
+      "url": "/shop/5"
+    }
+  ],
+  "notes": [],
+  "did": "On the seller's page, looked for a Follow button."
+}

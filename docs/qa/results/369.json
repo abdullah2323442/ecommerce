@@ -1,0 +1,25 @@
+{
+  "n": 369,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A sector can switch pre-order on or off"
+    },
+    {
+      "ok": true,
+      "text": "A sector can switch chat on or off"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f369_1.jpg",
+      "caption": "Pre-order and Chat switches",
+      "role": "admin",
+      "url": "/admin/market"
+    }
+  ],
+  "notes": [],
+  "did": "Looked for the Pre-order and Chat switches on a sector."
+}

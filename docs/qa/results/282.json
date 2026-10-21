@@ -1,0 +1,21 @@
+{
+  "n": 282,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The first sort choice puts the nearest shops, and the newest items, first"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f282_1.jpg",
+      "caption": "The full list with its sort choices",
+      "role": "guest",
+      "url": "/market?all=1"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the full product list and looked at the sort choices."
+}

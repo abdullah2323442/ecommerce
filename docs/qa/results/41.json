@@ -1,0 +1,21 @@
+{
+  "n": 41,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Each product has a switch for showing the seller's own name"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f41_1.jpg",
+      "caption": "The switch on each product in the owner's Market page",
+      "role": "admin",
+      "url": "/admin/market"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the owner's Market page and found the switch beside each product: \"Show this seller's own name instead of ours\"."
+}

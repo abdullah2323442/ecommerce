@@ -1,0 +1,25 @@
+{
+  "n": 400,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "There is a place to record wages paid"
+    },
+    {
+      "ok": true,
+      "text": "And a total earned"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f400_1.jpg",
+      "caption": "Owed and paid",
+      "role": "admin",
+      "url": "/admin/craftsmen"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the craftsman accounting."
+}

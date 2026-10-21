@@ -1,0 +1,18 @@
+{
+  "n": 191,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f191_1.jpg",
+      "caption": "The offline counter",
+      "role": "admin",
+      "url": "/admin/counter/offline"
+    }
+  ],
+  "notes": [
+    "Temporary memo numbers and the clash alert when syncing need a real offline period, which was not reproduced."
+  ],
+  "did": "Looked at the offline counter for temporary memo numbers."
+}

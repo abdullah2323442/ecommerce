@@ -1,0 +1,21 @@
+{
+  "n": 383,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "There is a box to upload a photo of the place"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f383_1.jpg",
+      "caption": "A photo of the place",
+      "role": "visitor",
+      "url": "/custom/new/wood"
+    }
+  ],
+  "notes": [],
+  "did": "Looked for an upload box for a photo of the space."
+}

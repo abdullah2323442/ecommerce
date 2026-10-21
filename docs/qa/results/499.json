@@ -1,0 +1,21 @@
+{
+  "n": 499,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Four promise times are offered (2 days, 3 days, 4 days, 5 days)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f499_1.jpg",
+      "caption": "Promise: 2 to 5 days",
+      "role": "admin",
+      "url": "/admin/preorders"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at how long the promise can be."
+}

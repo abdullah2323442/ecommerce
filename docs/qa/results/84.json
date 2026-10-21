@@ -1,0 +1,21 @@
+{
+  "n": 84,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Expired goods are grouped under their company, with the unit count and value"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f84_1.jpg",
+      "caption": "The expired section, grouped by company",
+      "role": "admin",
+      "url": "/admin/stock/expiry"
+    }
+  ],
+  "notes": [],
+  "did": "Moved a near-expiry lot to the expired section and opened the Expired list."
+}

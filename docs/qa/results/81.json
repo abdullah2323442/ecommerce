@@ -1,0 +1,21 @@
+{
+  "n": 81,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Marking an item Checked asks for its expiry date"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f81_1.jpg",
+      "caption": "The Expiry date box on the Checked form",
+      "role": "admin",
+      "url": "/admin/stock/expiry"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the Checked form for an expiry date box."
+}

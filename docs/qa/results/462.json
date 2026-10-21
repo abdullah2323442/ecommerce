@@ -1,0 +1,21 @@
+{
+  "n": 462,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The form has a box to help the rider find the place (a Note box)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f462_1.jpg",
+      "caption": "The order form",
+      "role": "guest",
+      "url": "/market/78"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the order form for a \"how to get there\" box."
+}

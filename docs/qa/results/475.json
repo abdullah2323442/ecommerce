@@ -1,0 +1,18 @@
+{
+  "n": 475,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f475_1.jpg",
+      "caption": "My deliveries",
+      "role": "admin",
+      "url": "/admin/deliveries"
+    }
+  ],
+  "notes": [
+    "Needs an order in delivery. Not carried through."
+  ],
+  "did": "Looked at the order screen for adding an extra delivery charge."
+}

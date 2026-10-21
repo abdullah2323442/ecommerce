@@ -1,0 +1,18 @@
+{
+  "n": 432,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f432_1.jpg",
+      "caption": "Food",
+      "role": "visitor",
+      "url": "/food"
+    }
+  ],
+  "notes": [
+    "Saving a favourite combination was not carried through."
+  ],
+  "did": "Looked for saved favourite combinations."
+}

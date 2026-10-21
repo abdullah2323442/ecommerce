@@ -1,0 +1,31 @@
+{
+  "n": 584,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A robots.txt file is served"
+    },
+    {
+      "ok": true,
+      "text": "A sitemap is served"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f584_1.jpg",
+      "caption": "robots.txt",
+      "role": "guest",
+      "url": "/robots.txt"
+    },
+    {
+      "file": "f584_2.jpg",
+      "caption": "sitemap.xml",
+      "role": "guest",
+      "url": "/sitemap.xml"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the files that help search engines find the site."
+}

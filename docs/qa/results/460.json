@@ -1,0 +1,23 @@
+{
+  "n": 460,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A full list of districts is offered (64)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f460_1.jpg",
+      "caption": "The district list on an order form",
+      "role": "guest",
+      "url": "/market/78"
+    }
+  ],
+  "notes": [
+    "Filling the place in automatically from the phone's location was not reproduced."
+  ],
+  "did": "Looked at the district box on a product order form to see how the place is chosen."
+}

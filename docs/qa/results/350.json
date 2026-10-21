@@ -1,0 +1,24 @@
+{
+  "n": 350,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The buyer is told returned goods go straight to the seller, within 7 days, with no delivery charge"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f350_1.jpg",
+      "caption": "\"I want to send it back\"",
+      "role": "visitor",
+      "url": "/market/orders/MWOP9Rd1CCx7CnkWHLrsUwFijMJ3qEPJqjLpnJZk"
+    }
+  ],
+  "notes": [
+    "A return was not carried through to the seller receiving the goods, so only the rule is shown here.",
+    "Only the rule was shown. The goods were not actually posted back to the seller."
+  ],
+  "did": "On a delivered order, read what happens when the buyer wants to send the goods back."
+}

@@ -1,0 +1,21 @@
+{
+  "n": 410,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The page says returns do not apply to made-to-order work"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f410_1.jpg",
+      "caption": "No returns on made-to-order work",
+      "role": "visitor",
+      "url": "/custom"
+    }
+  ],
+  "notes": [],
+  "did": "Read the return rule on the made-to-order page."
+}

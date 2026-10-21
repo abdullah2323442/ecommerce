@@ -1,0 +1,21 @@
+{
+  "n": 557,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A log of who did what, which cannot be changed"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f557_1.jpg",
+      "caption": "Activity",
+      "role": "admin",
+      "url": "/admin/activity"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the Activity log."
+}

@@ -1,0 +1,31 @@
+{
+  "n": 6,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner has an MPO page"
+    },
+    {
+      "ok": true,
+      "text": "An ordinary shopper cannot open the MPO page"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f6_1.jpg",
+      "caption": "The owner's MPO page: MPO accounts are created here, never by the MPOs",
+      "role": "admin",
+      "url": "/admin/mpo"
+    },
+    {
+      "file": "f6_2.jpg",
+      "caption": "A shopper trying the same page is sent away",
+      "role": "visitor",
+      "url": "/"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the MPO page, which only the owner can reach. Then tried to open it as an ordinary shopper."
+}

@@ -1,0 +1,18 @@
+{
+  "n": 274,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f274_1.jpg",
+      "caption": "Returns",
+      "role": "admin",
+      "url": "/admin/returns"
+    }
+  ],
+  "notes": [
+    "Needs a delivered order. Not reproduced."
+  ],
+  "did": "Looked at the delivery charge rule on returns."
+}

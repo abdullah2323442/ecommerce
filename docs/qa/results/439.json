@@ -1,0 +1,25 @@
+{
+  "n": 439,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The restaurant can deliver with its own people"
+    },
+    {
+      "ok": true,
+      "text": "Or ask the platform's courier"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f439_1.jpg",
+      "caption": "Who delivers: own people or the platform's courier",
+      "role": "vendor",
+      "url": "/food/vendor"
+    }
+  ],
+  "notes": [],
+  "did": "On the restaurant's page, looked at who delivers."
+}

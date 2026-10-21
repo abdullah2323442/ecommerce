@@ -1,0 +1,31 @@
+{
+  "n": 575,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The Terms of Service page opens"
+    },
+    {
+      "ok": true,
+      "text": "The Privacy Policy page opens"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f575_1.jpg",
+      "caption": "Terms of Service",
+      "role": "guest",
+      "url": "/terms"
+    },
+    {
+      "file": "f575_2.jpg",
+      "caption": "Privacy Policy",
+      "role": "guest",
+      "url": "/privacy"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the Terms of Service and the Privacy Policy."
+}

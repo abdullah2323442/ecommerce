@@ -1,0 +1,33 @@
+{
+  "n": 97,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The purchase is refused until a percentage is given"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f97_1.jpg",
+      "caption": "Adding a source with no default percentage",
+      "role": "admin",
+      "url": "/admin/stock/sources"
+    },
+    {
+      "file": "f97_2.jpg",
+      "caption": "A purchase from it with no percentage typed",
+      "role": "admin",
+      "url": "/admin/stock/receive"
+    },
+    {
+      "file": "f97_3.jpg",
+      "caption": "What the system says",
+      "role": "admin",
+      "url": "/admin/stock/receive"
+    }
+  ],
+  "notes": [],
+  "did": "Added a buying source with no percentage and tried to save a purchase from it with no percentage typed."
+}

@@ -1,0 +1,29 @@
+{
+  "n": 374,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The seller sees their best sellers"
+    },
+    {
+      "ok": true,
+      "text": "And their worst sellers"
+    },
+    {
+      "ok": true,
+      "text": "And which product earns the most"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f374_1.jpg",
+      "caption": "Basic stock figures for sellers",
+      "role": "wholesale",
+      "url": "/wholesale/sell/reports"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the seller's reports for best and worst sellers and what each earns."
+}

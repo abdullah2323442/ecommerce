@@ -1,0 +1,25 @@
+{
+  "n": 229,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner reviews each product and chooses where it shows and the price"
+    },
+    {
+      "ok": true,
+      "text": "Products from several MPOs sit side by side"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f229_1.jpg",
+      "caption": "Products to look at",
+      "role": "admin",
+      "url": "/admin/mpo/listings"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the owner's page for MPO products waiting to be looked at."
+}

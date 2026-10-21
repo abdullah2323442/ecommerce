@@ -1,0 +1,21 @@
+{
+  "n": 212,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A list of offer candidates is kept"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f212_1.jpg",
+      "caption": "Medicines bought at a high discount",
+      "role": "admin",
+      "url": "/admin/offers"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the list of medicines grouped for offers."
+}

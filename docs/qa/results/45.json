@@ -1,0 +1,47 @@
+{
+  "n": 45,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "While the sale is still a draft, the box is already out of stock (27 became 26)"
+    },
+    {
+      "ok": true,
+      "text": "The unfinished sale is listed as an open draft"
+    },
+    {
+      "ok": true,
+      "text": "The finished sale shows a receipt"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f45_1.jpg",
+      "caption": "Stock before the sale: 27 boxes",
+      "role": "admin",
+      "url": "/admin/stock"
+    },
+    {
+      "file": "f45_2.jpg",
+      "caption": "A sale in progress: the box is on the draft",
+      "role": "admin",
+      "url": "/admin/counter/128"
+    },
+    {
+      "file": "f45_3.jpg",
+      "caption": "The counter lists the sale under \"Open drafts\"",
+      "role": "admin",
+      "url": "/admin/counter"
+    },
+    {
+      "file": "f45_4.jpg",
+      "caption": "After pressing Finish sale",
+      "role": "admin",
+      "url": "/admin/counter/128"
+    }
+  ],
+  "notes": [],
+  "did": "Checked the stock of Napa 500 mg, started a sale at the counter and added a box (a draft), then finished the sale. Looked at the stock at each step."
+}

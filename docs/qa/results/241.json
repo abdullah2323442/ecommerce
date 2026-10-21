@@ -1,0 +1,41 @@
+{
+  "n": 241,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The brand name"
+    },
+    {
+      "ok": true,
+      "text": "The company"
+    },
+    {
+      "ok": true,
+      "text": "The strength"
+    },
+    {
+      "ok": true,
+      "text": "The printed price (MRP)"
+    },
+    {
+      "ok": true,
+      "text": "The page says it is the printed retail price"
+    },
+    {
+      "ok": true,
+      "text": "The form of the medicine"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f241_1.jpg",
+      "caption": "One medicine's page",
+      "role": "guest",
+      "url": "/medicines/1"
+    }
+  ],
+  "notes": [],
+  "did": "Opened one medicine's page and looked for its brand, generic name, company, strength and printed price."
+}

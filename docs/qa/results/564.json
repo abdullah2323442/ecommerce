@@ -1,0 +1,21 @@
+{
+  "n": 564,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The log also records who opened whose data"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f564_1.jpg",
+      "caption": "Who opened whose data",
+      "role": "admin",
+      "url": "/admin/activity"
+    }
+  ],
+  "notes": [],
+  "did": "Read the Activity log description."
+}

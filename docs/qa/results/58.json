@@ -1,0 +1,41 @@
+{
+  "n": 58,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The screen states the order: the medicine's own percentage, then the company's, then the source's"
+    },
+    {
+      "ok": true,
+      "text": "The source default (20%) is used when nothing else is typed (saw 20%)"
+    },
+    {
+      "ok": true,
+      "text": "A percentage typed on the line wins over the source default (saw 30%)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f58_1.jpg",
+      "caption": "The screen explains the order of the three layers",
+      "role": "admin",
+      "url": "/admin/stock/sources"
+    },
+    {
+      "file": "f58_2.jpg",
+      "caption": "With nothing typed, the source's 20% is used",
+      "role": "admin",
+      "url": "/admin/stock/receive"
+    },
+    {
+      "file": "f58_3.jpg",
+      "caption": "With 30% typed on the line, 30% is used instead",
+      "role": "admin",
+      "url": "/admin/stock/receive"
+    }
+  ],
+  "notes": [],
+  "did": "Entered a purchase using the source's default, then typed a percentage for the medicine itself and watched which one is used."
+}

@@ -1,0 +1,25 @@
+{
+  "n": 385,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The form lets the buyer pick saved measurements"
+    },
+    {
+      "ok": true,
+      "text": "And how many pieces"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f385_1.jpg",
+      "caption": "Saved measurements and a quantity",
+      "role": "visitor",
+      "url": "/custom/new/clothing"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the clothing form for choosing a saved profile and how many pieces."
+}

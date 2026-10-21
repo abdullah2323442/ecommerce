@@ -1,0 +1,27 @@
+{
+  "n": 1,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The new shopper is signed in and greeted by name"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f1_1.jpg",
+      "caption": "The sign-up form, filled in",
+      "role": "newguest",
+      "url": "/register"
+    },
+    {
+      "file": "f1_2.jpg",
+      "caption": "Right after signing up: the shopper is inside their own account",
+      "role": "newguest",
+      "url": "/dashboard"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the sign-up page as a stranger, filled in a name, email and password, and created an account."
+}

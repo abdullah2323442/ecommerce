@@ -1,0 +1,25 @@
+{
+  "n": 194,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner can put a medicine on offer by hand"
+    },
+    {
+      "ok": true,
+      "text": "The system also lists medicines bought at a high discount, as suggestions"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f194_1.jpg",
+      "caption": "Two routes: by hand, or from the suggestions",
+      "role": "admin",
+      "url": "/admin/offers"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the two ways to put a medicine on offer: by hand with \"New offer product\", and from the \"Bought at a high discount\" list the system builds."
+}

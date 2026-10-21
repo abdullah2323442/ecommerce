@@ -1,0 +1,23 @@
+{
+  "n": 32,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Five boxes cost 1,350 (270 each, 10% off the printed 300), not 1,500"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f32_1.jpg",
+      "caption": "The cart with 5 boxes: the quantity discount is already in the price",
+      "role": "guest",
+      "url": "/cart"
+    }
+  ],
+  "notes": [
+    "Only the quantity step was shown in the cart. The full order (price, then quantity, then token, then credit) happens inside the system and was not shown screen by screen."
+  ],
+  "did": "As a stranger, put 5 boxes of Napa 500 mg in the cart to see the quantity discount applied in the price."
+}

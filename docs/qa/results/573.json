@@ -1,0 +1,27 @@
+{
+  "n": 573,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A product can be paid for on arrival"
+    },
+    {
+      "ok": true,
+      "text": "A wholesale buyer can be set to pay in advance"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f573_1.jpg",
+      "caption": "Cash on delivery",
+      "role": "guest",
+      "url": "/market/78"
+    }
+  ],
+  "notes": [
+    "The checklist marks this partly built: paying an advance through the site was not made."
+  ],
+  "did": "Looked at cash on delivery on a product and the advance option for a wholesale buyer."
+}

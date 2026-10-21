@@ -1,0 +1,23 @@
+{
+  "n": 176,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A shop can be added at the counter with its name and phone"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f176_1.jpg",
+      "caption": "The quick form for a new shop",
+      "role": "admin",
+      "url": "/admin/counter"
+    }
+  ],
+  "notes": [
+    "The quick form has 3 boxes."
+  ],
+  "did": "Opened \"A new shop with no profile? Add it now\" at the counter and added a shop."
+}

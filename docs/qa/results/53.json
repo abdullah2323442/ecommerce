@@ -1,0 +1,21 @@
+{
+  "n": 53,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The system confirms the switch is off"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f53_1.jpg",
+      "caption": "The switch can be turned off again",
+      "role": "admin",
+      "url": "/admin/stock"
+    }
+  ],
+  "notes": [],
+  "did": "Turned the switch off again from the stock page."
+}

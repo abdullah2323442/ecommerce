@@ -1,0 +1,22 @@
+{
+  "n": 7,
+  "status": "pass",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f7_1.jpg",
+      "caption": "The restaurant owner's own screen: menu and orders",
+      "role": "vendor",
+      "url": "/food/vendor"
+    },
+    {
+      "file": "f7_2.jpg",
+      "caption": "The owner's Food page lists the restaurants",
+      "role": "admin",
+      "url": "/admin/food"
+    }
+  ],
+  "notes": [],
+  "did": "Signed in as a restaurant owner."
+}

@@ -1,0 +1,21 @@
+{
+  "n": 219,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The screen warns when a corrected cost would make an offer or rate lose money"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f219_1.jpg",
+      "caption": "Correcting a lot's cost",
+      "role": "admin",
+      "url": "/admin/stock/medicines/1"
+    }
+  ],
+  "notes": [],
+  "did": "On the medicine's lot, pressed \"Correct price\" to raise the cost while offers are running."
+}

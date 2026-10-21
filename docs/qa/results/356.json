@@ -1,0 +1,21 @@
+{
+  "n": 356,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The seller's record counts orders sent back"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f356_1.jpg",
+      "caption": "The seller's record",
+      "role": "wholesale",
+      "url": "/wholesale/sell/orders"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the seller's record, which shows returns."
+}

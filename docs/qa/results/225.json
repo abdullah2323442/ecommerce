@@ -1,0 +1,21 @@
+{
+  "n": 225,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "MPO Anwar cannot see MPO Kabir"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f225_1.jpg",
+      "caption": "MPO Anwar's page shows only their own things",
+      "role": "mpo",
+      "url": "/mpo"
+    }
+  ],
+  "notes": [],
+  "did": "Signed in as MPO Anwar and looked for any trace of another MPO."
+}

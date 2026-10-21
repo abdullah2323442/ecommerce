@@ -1,0 +1,21 @@
+{
+  "n": 124,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The screen tells the user the medicine was already on the sale and that the amount was added to it"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f124_1.jpg",
+      "caption": "The same medicine added twice",
+      "role": "admin",
+      "url": "/admin/counter/166"
+    }
+  ],
+  "notes": [],
+  "did": "Added the same medicine twice to one draft."
+}

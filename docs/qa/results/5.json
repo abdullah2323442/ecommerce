@@ -1,0 +1,23 @@
+{
+  "n": 5,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The Applications page opens"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f5_1.jpg",
+      "caption": "Where the owner reviews an application and its licence",
+      "role": "admin",
+      "url": "/admin/applications"
+    }
+  ],
+  "notes": [
+    "No wholesale application was waiting in the test data, so the licence preview itself could not be shown."
+  ],
+  "did": "Opened the Applications page. A licence file is uploaded with the application and the owner checks it there."
+}

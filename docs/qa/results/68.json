@@ -1,0 +1,25 @@
+{
+  "n": 68,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The rate is refused with \"below what this medicine cost\""
+    },
+    {
+      "ok": true,
+      "text": "The owner can still confirm on purpose, and the sale is flagged in reports"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f68_1.jpg",
+      "caption": "The system stops the rate: it is below cost",
+      "role": "admin",
+      "url": "/admin/customers/4"
+    }
+  ],
+  "notes": [],
+  "did": "Tried to give a shop a price below what the medicine cost (25% off a box that cost 240 and is printed at 300)."
+}

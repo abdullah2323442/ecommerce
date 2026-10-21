@@ -1,0 +1,21 @@
+{
+  "n": 546,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The advice can say to order more or to take less"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f546_1.jpg",
+      "caption": "Two-way advice",
+      "role": "admin",
+      "url": "/admin/reports"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the \"What to order\" advice."
+}

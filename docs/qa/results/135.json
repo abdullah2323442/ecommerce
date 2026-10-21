@@ -1,0 +1,29 @@
+{
+  "n": 135,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A box can be ordered"
+    },
+    {
+      "ok": true,
+      "text": "A strip can be ordered"
+    },
+    {
+      "ok": true,
+      "text": "A single piece can be ordered"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f135_1.jpg",
+      "caption": "Box, strip or piece, each with its own price",
+      "role": "paikari",
+      "url": "/paikari"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the unit choices under one medicine."
+}

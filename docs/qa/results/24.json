@@ -1,0 +1,33 @@
+{
+  "n": 24,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The rate for one medicine is saved"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f24_1.jpg",
+      "caption": "A 12% rate for one medicine",
+      "role": "admin",
+      "url": "/admin/tiers"
+    },
+    {
+      "file": "f24_2.jpg",
+      "caption": "The medicine rate is saved and listed",
+      "role": "admin",
+      "url": "/admin/tiers"
+    },
+    {
+      "file": "f24_3.jpg",
+      "caption": "Removed again",
+      "role": "admin",
+      "url": "/admin/tiers"
+    }
+  ],
+  "notes": [],
+  "did": "On the Tiers page, set a 12% rate for one medicine (Napa 500 mg), then removed it."
+}

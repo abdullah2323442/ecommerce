@@ -1,0 +1,31 @@
+{
+  "n": 253,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "An ordinary shopper cannot use the paikari return page"
+    },
+    {
+      "ok": true,
+      "text": "A paikari shop sees its own memos with a return form"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f253_1.jpg",
+      "caption": "A shopper is turned away",
+      "role": "visitor",
+      "url": "/dashboard"
+    },
+    {
+      "file": "f253_2.jpg",
+      "caption": "The paikari shop's Returns page",
+      "role": "paikari",
+      "url": "/paikari/returns"
+    }
+  ],
+  "notes": [],
+  "did": "As an ordinary shopper, tried the shops' return page. Then opened it as a paikari shop."
+}

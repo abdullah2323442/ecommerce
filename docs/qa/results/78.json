@@ -1,0 +1,21 @@
+{
+  "n": 78,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Each slow item says how many months of stock it is at the current pace of selling"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f78_1.jpg",
+      "caption": "\"... months of stock at the current pace\"",
+      "role": "admin",
+      "url": "/admin/stock/expiry"
+    }
+  ],
+  "notes": [],
+  "did": "Looked for the \"months of stock\" figure next to slow-moving goods."
+}

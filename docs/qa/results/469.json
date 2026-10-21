@@ -1,0 +1,21 @@
+{
+  "n": 469,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A courier has a cash-on-delivery percentage"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f469_1.jpg",
+      "caption": "Cash on delivery share",
+      "role": "admin",
+      "url": "/admin/couriers"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the cash-on-delivery percentage on a courier."
+}

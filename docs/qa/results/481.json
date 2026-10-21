@@ -1,0 +1,21 @@
+{
+  "n": 481,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A pickup point removes the delivery charge"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f481_1.jpg",
+      "caption": "Pickup point",
+      "role": "wholesale",
+      "url": "/wholesale/sell"
+    }
+  ],
+  "notes": [],
+  "did": "Read the condition on the pickup point."
+}

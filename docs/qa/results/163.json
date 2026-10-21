@@ -1,0 +1,21 @@
+{
+  "n": 163,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner can set how many late cancellations flag a shop"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f163_1.jpg",
+      "caption": "The \"flagged\" setting",
+      "role": "admin",
+      "url": "/admin/settings"
+    }
+  ],
+  "notes": [],
+  "did": "Looked in the settings for the number of late cancellations before a shop is flagged."
+}

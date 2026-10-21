@@ -1,0 +1,25 @@
+{
+  "n": 496,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Pre-order is switched on in one place"
+    },
+    {
+      "ok": true,
+      "text": "The owner turns it on for a company or one medicine, with a promised time"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f496_1.jpg",
+      "caption": "Where pre-order is on",
+      "role": "admin",
+      "url": "/admin/preorders"
+    }
+  ],
+  "notes": [],
+  "did": "Read where pre-orders are switched on and who they go to."
+}

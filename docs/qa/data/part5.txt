@@ -1,0 +1,85 @@
+529|a_market|-|The owner manages products with every option. A few options are still being finished.
+530|a_customer|-|Every control for a customer sits on that customer's profile page.
+531|a_customer|-|All of a customer's transactions show on one page.
+532|a_apps|-|The owner reviews applications and checks licences.
+533|a_orders|-|The owner manages every order from one place.
+534|a_site|-|The owner manages sectors: add, change or hide a shop type.
+535|a_catalog|-|Central lists such as companies are managed in one place.
+536|a_settings|-|Holidays and closed days are set in settings.
+537|a_reports|-|Sales reports are kept separate for each sector.
+538|a_reports|-|A monthly ranking report lists the best sellers.
+539|a_reports|-|It shows boxes sold per day and the ideal stock level.
+540|a_reports|-|It shows which medicine earns the most.
+541|a_reports|-|Shop expenses are entered, and net profit is worked out.
+542|a_reports|-|Repeating expenses such as rent and salary are set once.
+543|a_reports|-|A seasonal forecast predicts busy periods.
+544|a_customers|-|A list shows customers who have stopped buying.
+545|a_reports|-|This year can be compared with last year.
+546|a_stock_rep|-|A two-way reorder suggestion says what to buy and what to stop buying.
+547|a_day|-|A page shows what ran out today.
+548|a_eod|-|End-of-day cash reconciliation checks the till against the books.
+549|a_invoices|-|The staff name is on every memo.
+550|a_requests|-|A list shows what customers asked for but the shop did not have.
+551|-|-|Overnight report generation has not been built yet.
+552|a_day|-|A day-by-day breakdown is available.
+553|a_reports|-|Reports export to CSV or Excel.
+554|a_settings|-|A nightly summary to the owner's phone by WhatsApp or text is partly built.
+555|a_vat|-|A VAT report (Mushak) is made for the accountant.
+556|a_vat|-|VAT fields are in the database from the start.
+557|a_activity|-|An activity log records who did what and when.
+558|a_staff|-|Staff roles and what each may do are set here.
+559|a_staff|-|The owner can create new roles.
+560|a_staff|-|Every staff member has their own account.
+561|a_staff|-|A limit on how many devices one account can sign in on.
+562|a_staff|-|Closing a staff account keeps all their records.
+563|a_settings|-|Big changes ask for a separate confirmation.
+564|a_activity|-|A log shows who viewed whose data.
+565|a_staff|-|A sub-admin can be given powers for a limited time.
+566|a_messages|-|Notifications are sorted by importance.
+567|a_deleted|-|Deleted items wait in a 30-day bin before they are gone.
+568|a_settings|-|An IP address can be blocked.
+569|a_customer|-|An account can be suspended for a set time.
+570|a_activity|-|Suspicious sign-ins are recorded.
+571|a_settings|p_login|The account locks after repeated wrong passwords.
+572|a_payments|-|Payment by bKash, Nagad, Rocket, bank and card. Some are partly built.
+573|a_payments|p_cart|Cash on delivery and advance payment. Partly built.
+574|a_invoices|-|Invoices show Paid or Due.
+575|-|p_terms|Terms of Service and Privacy Policy pages are on the site.
+576|a_controlled|-|A register records every controlled-medicine sale, with required details, and can be printed.
+577|-|-|The prescription marketplace has not been built.
+578|a_market|p_item|A verified badge and trust signals show on sellers.
+579|-|p_home|A WhatsApp or Messenger button helps buyers reach the shop.
+580|-|p_faq|A FAQ and help centre answers common questions.
+581|-|p_home|The site switches between Bangla and English.
+582|-|p_item|Product names are never auto-translated.
+583|-|p_home|The web version stays in sync with the app.
+584|-|p_home|Pages are set up so search engines can find them.
+585|-|p_home|The site is mobile friendly and quick. Some speed work remains.
+586|-|u_appearance|The text size can be changed for easier reading.
+587|-|p_home|Everything works on the web too. A few things are still partial.
+588|-|p_home|An app update message tells people when a new version is ready.
+589|a_market|p_item|The main product photo can be chosen.
+590|a_settings|-|A backup is taken daily and kept for 30 days.
+591|a_settings|-|Backups stored outside the server are partly built.
+592|a_settings|-|A backup is tested each month.
+593|a_counter_off|-|Work is not lost when the internet drops. Partly built.
+594|a_settings|-|Old data can be imported in bulk.
+595|a_settings|-|The system clock is correct.
+596|a_settings|-|The monthly report date is in settings. Partly built.
+597|a_behavior|-|User behaviour data is stored from day one.
+598|-|-|Old data stored separately has not been built yet.
+599|a_site|-|Photos are compressed automatically.
+600|-|p_market|A low quality image shows first, then the sharp one.
+601|a_settings|-|Festival order peaks are handled. Partly built.
+602|a_settings|-|Updates run at night or on closed days.
+603|a_tokens|k_wallet|Reward points and referrals are partly built.
+604|-|-|Bundle deals and flash sales have not been built yet.
+605|a_orders|u_cart|An abandoned cart reminder is sent.
+606|-|u_wishlist|A price-drop alert tells buyers when a saved item gets cheaper.
+607|a_support|u_help_mine|Support tickets let buyers ask for help.
+608|-|-|Facebook Pixel and Analytics have not been built yet.
+609|-|-|Affiliate and bulk text messages have not been built yet.
+610|-|-|A credit ledger (baki khata) has not been built yet.
+611|-|-|Company and supplier dues have not been built yet.
+612|-|-|A full PharmaTrack sync has not been built yet.
+613|-|-|Service and coaching booking has not been built yet.

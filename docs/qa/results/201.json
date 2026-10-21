@@ -1,0 +1,21 @@
+{
+  "n": 201,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "An offer can carry a weight"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f201_1.jpg",
+      "caption": "The weight box",
+      "role": "admin",
+      "url": "/admin/offers"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the weight box on the offer form."
+}

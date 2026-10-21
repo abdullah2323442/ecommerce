@@ -1,0 +1,37 @@
+{
+  "n": 341,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The order now shows as cancelled"
+    },
+    {
+      "ok": true,
+      "text": "A cancelled sale carries no commission (96 before, 96 after)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f341_1.jpg",
+      "caption": "The seller writes why and cancels",
+      "role": "wholesale",
+      "url": "/wholesale/sell/orders"
+    },
+    {
+      "file": "f341_2.jpg",
+      "caption": "The seller cancelled the order",
+      "role": "wholesale",
+      "url": "/wholesale/sell/orders"
+    },
+    {
+      "file": "f341_3.jpg",
+      "caption": "Commission after the cancel: 96",
+      "role": "admin",
+      "url": "/admin/market/commissions"
+    }
+  ],
+  "notes": [],
+  "did": "A buyer ordered a phone case, the seller accepted it and then cancelled it. The month's commission was read before and after."
+}

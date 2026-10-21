@@ -1,0 +1,18 @@
+{
+  "n": 338,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f338_1.jpg",
+      "caption": "The Market page",
+      "role": "admin",
+      "url": "/admin/market"
+    }
+  ],
+  "notes": [
+    "The page has a \"No photo\" flag for a waiting product that has no picture. Every product in this copy has a photo, so the flag never had a chance to show."
+  ],
+  "did": "Looked at the Market page for a flag on products with no photo."
+}

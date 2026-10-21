@@ -1,0 +1,21 @@
+{
+  "n": 156,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The button changes to \"Turn on\", so the reminder is off"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f156_1.jpg",
+      "caption": "After pressing Turn off",
+      "role": "paikari",
+      "url": "/my-orders"
+    }
+  ],
+  "notes": [],
+  "did": "Pressed \"Turn off\" on the reminder, saw it change, then turned it back on."
+}

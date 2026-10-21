@@ -1,0 +1,21 @@
+{
+  "n": 467,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Charges are typed by hand"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f467_1.jpg",
+      "caption": "Charges typed by hand",
+      "role": "admin",
+      "url": "/admin/couriers"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at how courier charges are entered."
+}

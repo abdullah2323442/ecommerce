@@ -1,0 +1,25 @@
+{
+  "n": 524,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The first part: Aqua Tokens"
+    },
+    {
+      "ok": true,
+      "text": "The second part: money from a return, which works in one place only"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f524_1.jpg",
+      "caption": "The wallet has two parts",
+      "role": "paikari",
+      "url": "/wallet"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the shop's wallet."
+}

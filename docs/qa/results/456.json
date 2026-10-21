@@ -1,0 +1,21 @@
+{
+  "n": 456,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The form says photos are not allowed"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f456_1.jpg",
+      "caption": "No photos on the board",
+      "role": "visitor",
+      "url": "/help/new"
+    }
+  ],
+  "notes": [],
+  "did": "Read the photo rule on the new-post form."
+}

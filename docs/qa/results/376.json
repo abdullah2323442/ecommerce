@@ -1,0 +1,18 @@
+{
+  "n": 376,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f376_1.jpg",
+      "caption": "The owner's Market page",
+      "role": "admin",
+      "url": "/admin/market"
+    }
+  ],
+  "notes": [
+    "No prohibited-category list was found on the owner's screens."
+  ],
+  "did": "Looked for a prohibited-category list."
+}

@@ -1,0 +1,45 @@
+{
+  "n": 26,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Hand-set rate wins over the tier rate (saw 246)"
+    },
+    {
+      "ok": true,
+      "text": "Without the hand-set rate the tier rate applies again (saw 255)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f26_1.jpg",
+      "caption": "Typing 18 percent off for this shop on Napa 500 mg",
+      "role": "admin",
+      "url": "/admin/customers/4"
+    },
+    {
+      "file": "f26_2.jpg",
+      "caption": "With the hand-set rate: 246",
+      "role": "paikari",
+      "url": "/paikari"
+    },
+    {
+      "file": "f26_3.jpg",
+      "caption": "The hand-set rate has been removed",
+      "role": "admin",
+      "url": "/admin/customers/4"
+    },
+    {
+      "file": "f26_4.jpg",
+      "caption": "After removing it the shop is back on its tier price: 255",
+      "role": "paikari",
+      "url": "/paikari"
+    }
+  ],
+  "notes": [
+    "Only two of the four layers could be shown (hand-set and tier). The company and medicine layers have no screen to set them."
+  ],
+  "did": "Set a hand-set rate, saw it beat the tier rate, then removed it and watched the price fall back to the tier rate."
+}

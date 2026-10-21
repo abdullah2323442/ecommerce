@@ -1,0 +1,21 @@
+{
+  "n": 251,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The page carries a \"Controlled\" mark"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f251_1.jpg",
+      "caption": "The \"Controlled\" mark",
+      "role": "guest",
+      "url": "/medicines/4864"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the medicine flagged as controlled."
+}

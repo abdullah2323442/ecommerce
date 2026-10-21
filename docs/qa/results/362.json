@@ -1,0 +1,25 @@
+{
+  "n": 362,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The seller has a Holiday mode"
+    },
+    {
+      "ok": true,
+      "text": "It turns off new orders while the seller is away"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f362_1.jpg",
+      "caption": "Holiday mode",
+      "role": "wholesale",
+      "url": "/wholesale/sell"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the \"I am going away\" holiday mode."
+}

@@ -1,0 +1,23 @@
+{
+  "n": 445,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The game page asks for the player ID"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f445_1.jpg",
+      "caption": "A game page asks for the player ID",
+      "role": "guest",
+      "url": "/gaming/mobile-legends"
+    }
+  ],
+  "notes": [
+    "The name check (showing the player's name for an ID) needs a live game connection and was not reproduced."
+  ],
+  "did": "Opened a game and looked at how the player ID is checked."
+}

@@ -1,0 +1,41 @@
+{
+  "n": 171,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A walk-in sale is a Retail sale"
+    },
+    {
+      "ok": true,
+      "text": "A sale to Karim Pharmacy is in the paikari section"
+    },
+    {
+      "ok": true,
+      "text": "A sale to Rahim Traders is in the wholesale section"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f171_1.jpg",
+      "caption": "Section one: Retail",
+      "role": "admin",
+      "url": "/admin/counter/201"
+    },
+    {
+      "file": "f171_2.jpg",
+      "caption": "Section two: a paikari shop",
+      "role": "admin",
+      "url": "/admin/counter/200"
+    },
+    {
+      "file": "f171_3.jpg",
+      "caption": "Section three: a wholesaler",
+      "role": "admin",
+      "url": "/admin/counter/192"
+    }
+  ],
+  "notes": [],
+  "did": "Started a retail sale, a sale to a paikari shop, and a sale to a wholesaler, and looked at how each is labelled."
+}

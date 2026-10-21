@@ -1,0 +1,25 @@
+{
+  "n": 254,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The rule is shown: shops only, within 3 days of receiving"
+    },
+    {
+      "ok": true,
+      "text": "The number of days is a setting"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f254_1.jpg",
+      "caption": "The return rule",
+      "role": "admin",
+      "url": "/admin/returns"
+    }
+  ],
+  "notes": [],
+  "did": "Read the return rule on the owner's Returns page and the setting behind it."
+}

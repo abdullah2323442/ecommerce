@@ -1,0 +1,21 @@
+{
+  "n": 552,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A day-by-day breakdown"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f552_1.jpg",
+      "caption": "Day by day",
+      "role": "admin",
+      "url": "/admin/reports"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the \"Day by day\" table."
+}

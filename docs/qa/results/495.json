@@ -1,0 +1,31 @@
+{
+  "n": 495,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Pre-orders have one page on the owner's side"
+    },
+    {
+      "ok": true,
+      "text": "And one page on the shop's side"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f495_1.jpg",
+      "caption": "The owner's Pre-orders page",
+      "role": "admin",
+      "url": "/admin/preorders"
+    },
+    {
+      "file": "f495_2.jpg",
+      "caption": "The same system, seen by a shop",
+      "role": "paikari",
+      "url": "/preorders"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the owner's Pre-orders page and the shop's own pre-order page."
+}

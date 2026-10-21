@@ -1,0 +1,23 @@
+{
+  "n": 213,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The shop can see Napa 500 mg"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f213_1.jpg",
+      "caption": "The paikari search after a tier offer",
+      "role": "paikari",
+      "url": "/paikari"
+    }
+  ],
+  "notes": [
+    "The tier offer is a single click for the owner and needs no minimum."
+  ],
+  "did": "After the owner pressed one button, looked at what the paikari shop sees."
+}

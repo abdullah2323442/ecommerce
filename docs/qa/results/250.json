@@ -1,0 +1,25 @@
+{
+  "n": 250,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Checkout says something in the cart must stay cold"
+    },
+    {
+      "ok": true,
+      "text": "And that it goes by our own delivery, or cannot go by courier, so no normal courier is offered"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f250_1.jpg",
+      "caption": "Checkout with a cold-chain medicine",
+      "role": "guest",
+      "url": "/checkout"
+    }
+  ],
+  "notes": [],
+  "did": "Added the cold-chain medicine to the cart and opened the cart."
+}

@@ -1,0 +1,21 @@
+{
+  "n": 602,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner can post a notice on every page, for example about a night update"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f602_1.jpg",
+      "caption": "A notice for updates at night",
+      "role": "admin",
+      "url": "/admin/settings"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the notice shown on every page."
+}

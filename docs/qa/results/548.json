@@ -1,0 +1,29 @@
+{
+  "n": 548,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A check before closing the shop"
+    },
+    {
+      "ok": true,
+      "text": "Lists what is still open"
+    },
+    {
+      "ok": true,
+      "text": "And the cash to count"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f548_1.jpg",
+      "caption": "End of day",
+      "role": "admin",
+      "url": "/admin/end-of-day"
+    }
+  ],
+  "notes": [],
+  "did": "Opened End of day."
+}

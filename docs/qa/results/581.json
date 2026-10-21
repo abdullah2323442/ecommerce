@@ -1,0 +1,31 @@
+{
+  "n": 581,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The page is shown in Bangla"
+    },
+    {
+      "ok": true,
+      "text": "And back in English"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f581_1.jpg",
+      "caption": "The site in Bangla",
+      "role": "guest",
+      "url": "/"
+    },
+    {
+      "file": "f581_2.jpg",
+      "caption": "And back in English",
+      "role": "guest",
+      "url": "/"
+    }
+  ],
+  "notes": [],
+  "did": "Pressed the Bangla and English buttons at the top."
+}

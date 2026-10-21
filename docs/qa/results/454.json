@@ -1,0 +1,18 @@
+{
+  "n": 454,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f454_1.jpg",
+      "caption": "The Help board",
+      "role": "guest",
+      "url": "/help"
+    }
+  ],
+  "notes": [
+    "Needs an approved post with a product card. Not carried through."
+  ],
+  "did": "Looked for the product card's photo, name, price and View button."
+}

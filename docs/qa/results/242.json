@@ -1,0 +1,25 @@
+{
+  "n": 242,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The page offers other brands of the same medicine"
+    },
+    {
+      "ok": true,
+      "text": "They share the generic, strength and form, with the cheapest first"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f242_1.jpg",
+      "caption": "Cheaper brands of the same generic medicine",
+      "role": "guest",
+      "url": "/medicines/4864"
+    }
+  ],
+  "notes": [],
+  "did": "Opened a medicine page and read the list \"Same medicine, other brands\"."
+}

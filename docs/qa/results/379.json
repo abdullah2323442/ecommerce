@@ -1,0 +1,33 @@
+{
+  "n": 379,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "An ordinary shopper can start a made-to-order job"
+    },
+    {
+      "ok": true,
+      "text": "A shop account can start one too"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f379_1.jpg",
+      "caption": "An ordinary shopper on the made-to-order form",
+      "role": "visitor",
+      "url": "/custom/new/wood"
+    },
+    {
+      "file": "f379_2.jpg",
+      "caption": "A stranger is asked to sign in first, because a job has a chat, a price and money to follow",
+      "role": "guest",
+      "url": "/login"
+    }
+  ],
+  "notes": [
+    "A stranger is sent to sign in first. The job needs a name, a chat and a payment trail, so \"everyone\" here means every kind of account."
+  ],
+  "did": "As an ordinary shopper, opened the made-to-order form. Then did the same as a paikari shop and as a stranger."
+}

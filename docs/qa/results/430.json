@@ -1,0 +1,25 @@
+{
+  "n": 430,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The restaurant can set the most ingredients in one dish"
+    },
+    {
+      "ok": true,
+      "text": "And the extra cooking minutes custom food needs"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f430_1.jpg",
+      "caption": "Limit and time",
+      "role": "vendor",
+      "url": "/food/vendor/custom"
+    }
+  ],
+  "notes": [],
+  "did": "On the restaurant's custom food page, looked at the limit on how many ingredients one dish can have."
+}

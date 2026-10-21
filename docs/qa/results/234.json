@@ -1,0 +1,27 @@
+{
+  "n": 234,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The wholesaler sees their own offer and that it is waiting"
+    },
+    {
+      "ok": true,
+      "text": "No other bidder appears anywhere"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f234_1.jpg",
+      "caption": "The wholesaler sees only their own offer",
+      "role": "wholesale",
+      "url": "/wholesale"
+    }
+  ],
+  "notes": [
+    "Only one wholesaler account exists in this copy, so a second bidder could not be set up to prove that bids are hidden from each other. The screen shows only the wholesaler's own offer."
+  ],
+  "did": "Looked at the offer again after sending the bid, and read what the wholesaler sees about it."
+}

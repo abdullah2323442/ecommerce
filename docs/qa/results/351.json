@@ -1,0 +1,18 @@
+{
+  "n": 351,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f351_1.jpg",
+      "caption": "Online payments",
+      "role": "admin",
+      "url": "/admin/payments"
+    }
+  ],
+  "notes": [
+    "The checklist marks holding online payments as partly built. Not reproduced."
+  ],
+  "did": "Looked at online payments held until delivery."
+}

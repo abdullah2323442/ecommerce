@@ -1,0 +1,27 @@
+{
+  "n": 8,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The craftsman screen shows no profit figures"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f8_1.jpg",
+      "caption": "The craftsman's screen: jobs only",
+      "role": "craftsman",
+      "url": "/craftsman"
+    },
+    {
+      "file": "f8_2.jpg",
+      "caption": "The owner's Craftsmen page",
+      "role": "admin",
+      "url": "/admin/craftsmen"
+    }
+  ],
+  "notes": [],
+  "did": "Signed in as a craftsman and looked at what they can see."
+}

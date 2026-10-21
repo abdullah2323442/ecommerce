@@ -1,0 +1,18 @@
+{
+  "n": 101,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f101_1.jpg",
+      "caption": "Purchase line",
+      "role": "admin",
+      "url": "/admin/stock/receive"
+    }
+  ],
+  "notes": [
+    "No unit-change warning was found on the purchase line."
+  ],
+  "did": "Looked for a warning when the unit of a purchase differs from the medicine's usual unit."
+}

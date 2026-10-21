@@ -1,0 +1,29 @@
+{
+  "n": 539,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A table says what to order"
+    },
+    {
+      "ok": true,
+      "text": "With boxes sold per day"
+    },
+    {
+      "ok": true,
+      "text": "And the stock the shop should have"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f539_1.jpg",
+      "caption": "What to order",
+      "role": "admin",
+      "url": "/admin/reports"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the \"What to order\" table."
+}

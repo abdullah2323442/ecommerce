@@ -1,0 +1,21 @@
+{
+  "n": 43,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Staff are warned that the sale would lose money"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f43_1.jpg",
+      "caption": "A box at 40% below the printed price, which is below cost",
+      "role": "staff",
+      "url": "/admin/counter/251"
+    }
+  ],
+  "notes": [],
+  "did": "The owner raised the discount staff may give from 5% to 50%. Then, as a staff member, a retail sale was started with a Special % of 40 on a box of Napa that cost 240 and is printed at 300."
+}

@@ -1,0 +1,33 @@
+{
+  "n": 572,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Online payment is not switched on in the test copy"
+    },
+    {
+      "ok": true,
+      "text": "bKash, Nagad and Rocket can be connected"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f572_1.jpg",
+      "caption": "Online payments",
+      "role": "admin",
+      "url": "/admin/payments"
+    },
+    {
+      "file": "f572_2.jpg",
+      "caption": "Connections",
+      "role": "admin",
+      "url": "/admin/connections"
+    }
+  ],
+  "notes": [
+    "The checklist marks the payment methods as partly built. No payment was made."
+  ],
+  "did": "Opened Online payments and the Connections page to see which payment methods are set up."
+}

@@ -1,0 +1,21 @@
+{
+  "n": 428,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A restaurant can ask for a missing ingredient to be added"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f428_1.jpg",
+      "caption": "Asking for a new ingredient",
+      "role": "vendor",
+      "url": "/food/vendor/custom"
+    }
+  ],
+  "notes": [],
+  "did": "Read what a restaurant does when an ingredient is not in the list."
+}

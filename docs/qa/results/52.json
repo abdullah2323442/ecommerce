@@ -1,0 +1,23 @@
+{
+  "n": 52,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Before turning the switch on, the screen warns the owner to enter all goods first"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f52_1.jpg",
+      "caption": "After agreeing to the warning, the switch is on",
+      "role": "admin",
+      "url": "/admin/stock"
+    }
+  ],
+  "notes": [
+    "The pop-up said: \"Make sure all goods are entered first. Then Master Stock Sync will take paikari and retail sales out of stock too. Turn it on?\""
+  ],
+  "did": "With the switch off, pressed \"Turn on\" and read the pop-up that appeared before anything changed."
+}

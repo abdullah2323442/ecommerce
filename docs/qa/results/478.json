@@ -1,0 +1,18 @@
+{
+  "n": 478,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f478_1.jpg",
+      "caption": "Weights",
+      "role": "admin",
+      "url": "/admin/weights"
+    }
+  ],
+  "notes": [
+    "Not carried through."
+  ],
+  "did": "Looked for charges by weight and by carton."
+}

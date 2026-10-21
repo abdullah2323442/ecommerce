@@ -1,0 +1,27 @@
+{
+  "n": 33,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The system warns about an unusually big price drop"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f33_1.jpg",
+      "caption": "Typing 30 where 300 was",
+      "role": "admin",
+      "url": "/admin/stock/medicines/1/edit"
+    },
+    {
+      "file": "f33_2.jpg",
+      "caption": "What the system says",
+      "role": "admin",
+      "url": "/admin/stock/medicines/1/edit"
+    }
+  ],
+  "notes": [],
+  "did": "Tried to change the printed price of a box from 300 to 30, a drop that looks like a typing mistake."
+}

@@ -1,0 +1,18 @@
+{
+  "n": 278,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f278_1.jpg",
+      "caption": "Returns",
+      "role": "admin",
+      "url": "/admin/returns"
+    }
+  ],
+  "notes": [
+    "Not reproduced."
+  ],
+  "did": "Looked for an automatic warning for repeated mistakes."
+}

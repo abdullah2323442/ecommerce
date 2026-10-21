@@ -1,0 +1,21 @@
+{
+  "n": 528,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A token cannot be used together with an offer price"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f528_1.jpg",
+      "caption": "Token and offer do not combine",
+      "role": "paikari",
+      "url": "/wallet"
+    }
+  ],
+  "notes": [],
+  "did": "Read the rule that a token does not go with an offer."
+}

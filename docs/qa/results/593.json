@@ -1,0 +1,23 @@
+{
+  "n": 593,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A counter page that keeps working without internet"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f593_1.jpg",
+      "caption": "The counter without internet",
+      "role": "admin",
+      "url": "/admin/counter/offline"
+    }
+  ],
+  "notes": [
+    "The checklist marks this as partly built. A real internet drop was not reproduced."
+  ],
+  "did": "Opened the counter without internet."
+}

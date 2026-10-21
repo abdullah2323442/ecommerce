@@ -1,0 +1,27 @@
+{
+  "n": 2,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The page offers Google or Facebook sign-in"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f2_1.jpg",
+      "caption": "Connected accounts: where Google and Facebook sign-in is managed",
+      "role": "visitor",
+      "url": "/settings/connected-accounts"
+    },
+    {
+      "file": "f2_2.jpg",
+      "caption": "The sign-in page, as a stranger sees it",
+      "role": "visitor",
+      "url": "/dashboard"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the Connected accounts page, where a shopper links Google or Facebook to their account."
+}

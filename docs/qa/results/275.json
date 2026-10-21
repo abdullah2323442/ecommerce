@@ -1,0 +1,18 @@
+{
+  "n": 275,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f275_1.jpg",
+      "caption": "Returns",
+      "role": "admin",
+      "url": "/admin/returns"
+    }
+  ],
+  "notes": [
+    "Needs an advance payment on an order. Not reproduced."
+  ],
+  "did": "Looked at the 50% on product advance rule."
+}

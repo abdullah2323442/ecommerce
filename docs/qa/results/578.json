@@ -1,0 +1,21 @@
+{
+  "n": 578,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A seller with a clean record wears a \"Trusted seller\" mark"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f578_1.jpg",
+      "caption": "Trusted seller",
+      "role": "guest",
+      "url": "/market/78"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at a product for a verified badge."
+}

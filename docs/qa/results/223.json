@@ -1,0 +1,21 @@
+{
+  "n": 223,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The MPO sees the companies the owner gave them"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f223_1.jpg",
+      "caption": "One MPO, several companies",
+      "role": "mpo2",
+      "url": "/mpo"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the companies this MPO may work with."
+}

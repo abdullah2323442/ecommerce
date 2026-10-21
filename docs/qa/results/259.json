@@ -1,0 +1,21 @@
+{
+  "n": 259,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A stranger must sign in before returning anything"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f259_1.jpg",
+      "caption": "A stranger is sent to sign in",
+      "role": "guest",
+      "url": "/login"
+    }
+  ],
+  "notes": [],
+  "did": "As a stranger, opened the return page."
+}

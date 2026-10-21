@@ -1,0 +1,41 @@
+{
+  "n": 39,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A shopper cannot open /wholesale (they were sent to /)"
+    },
+    {
+      "ok": true,
+      "text": "A shopper gets no scary error page, just a quiet redirect"
+    },
+    {
+      "ok": true,
+      "text": "A shopper cannot open /paikari (they were sent to /)"
+    },
+    {
+      "ok": true,
+      "text": "A shopper gets no scary error page, just a quiet redirect"
+    },
+    {
+      "ok": true,
+      "text": "A shopper cannot open /admin/stock (they were sent to /)"
+    },
+    {
+      "ok": true,
+      "text": "A shopper gets no scary error page, just a quiet redirect"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f39_1.jpg",
+      "caption": "Where the shopper ends up: back on an ordinary page, with no error message",
+      "role": "visitor",
+      "url": "/"
+    }
+  ],
+  "notes": [],
+  "did": "As an ordinary shopper, typed the addresses of three restricted pages."
+}

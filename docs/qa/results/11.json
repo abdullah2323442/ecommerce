@@ -1,0 +1,35 @@
+{
+  "n": 11,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "/admin/stock is closed to a paikari shop"
+    },
+    {
+      "ok": true,
+      "text": "/admin/reports is closed to a paikari shop"
+    },
+    {
+      "ok": true,
+      "text": "/admin/staff is closed to a paikari shop"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f11_1.jpg",
+      "caption": "After typing an owner-only address, the shop is turned away",
+      "role": "paikari",
+      "url": "/"
+    },
+    {
+      "file": "f11_2.jpg",
+      "caption": "Staff also cannot open every owner page",
+      "role": "staff",
+      "url": "/"
+    }
+  ],
+  "notes": [],
+  "did": "Signed in as a paikari shop and typed the web addresses of the owner's pages by hand, as a curious person might."
+}

@@ -1,0 +1,21 @@
+{
+  "n": 542,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "An expense can repeat every month (rent, salary)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f542_1.jpg",
+      "caption": "Repeating expenses",
+      "role": "admin",
+      "url": "/admin/stock/reports"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the expenses block for repeating expenses."
+}

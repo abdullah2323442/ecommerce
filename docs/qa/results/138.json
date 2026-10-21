@@ -1,0 +1,23 @@
+{
+  "n": 138,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Staff can mark a medicine \"Not available\""
+    }
+  ],
+  "shots": [
+    {
+      "file": "f138_1.jpg",
+      "caption": "An order being checked: Full, Partial or Not available",
+      "role": "admin",
+      "url": "/admin/orders/168"
+    }
+  ],
+  "notes": [
+    "The record of medicines asked for but not available is kept on the Price requests and Reports pages."
+  ],
+  "did": "Opened an order in the back office and looked for the \"Not available\" choice."
+}

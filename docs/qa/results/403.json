@@ -1,0 +1,18 @@
+{
+  "n": 403,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f403_1.jpg",
+      "caption": "Chats",
+      "role": "admin",
+      "url": "/admin/chats"
+    }
+  ],
+  "notes": [
+    "Needs a chat on a job. Not carried through."
+  ],
+  "did": "Looked for the \"Send measurements\" button in chat."
+}

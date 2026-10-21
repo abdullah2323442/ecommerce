@@ -1,0 +1,21 @@
+{
+  "n": 317,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The order form asks who the parcel is for, if it is not the buyer"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f317_1.jpg",
+      "caption": "Checkout: \"Ordering for someone else? Their name\"",
+      "role": "visitor",
+      "url": "/checkout"
+    }
+  ],
+  "notes": [],
+  "did": "Put a medicine in the cart and opened checkout, looking for a box saying who the parcel is for."
+}

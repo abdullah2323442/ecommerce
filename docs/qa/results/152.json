@@ -1,0 +1,21 @@
+{
+  "n": 152,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The sale is in the shop's name"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f152_1.jpg",
+      "caption": "A sale started for Karim Pharmacy by the owner",
+      "role": "admin",
+      "url": "/admin/counter/198"
+    }
+  ],
+  "notes": [],
+  "did": "At the counter, started a sale to Karim Pharmacy on the shop's behalf, as if the shop had phoned in."
+}

@@ -1,0 +1,29 @@
+{
+  "n": 160,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The order is cancelled"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f160_1.jpg",
+      "caption": "An order just sent, with its Cancel order button",
+      "role": "paikari",
+      "url": "/paikari/orders/177"
+    },
+    {
+      "file": "f160_2.jpg",
+      "caption": "After cancelling",
+      "role": "paikari",
+      "url": "/paikari"
+    }
+  ],
+  "notes": [
+    "Only one of the three cancellation situations was shown (cancelled before it was checked). The others, after checking and after packing, need the owner to move the order along first."
+  ],
+  "did": "Sent an order and then pressed \"Cancel order\" while it was still waiting to be checked."
+}

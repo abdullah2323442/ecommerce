@@ -1,0 +1,21 @@
+{
+  "n": 240,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A large database answers: 30 brands listed for one generic name"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f240_1.jpg",
+      "caption": "Searching the medicine database for \"paracetamol\"",
+      "role": "guest",
+      "url": "/medicines?q=paracetamol"
+    }
+  ],
+  "notes": [],
+  "did": "As a stranger, searched the public medicine database for a generic name and looked at how many brands came back."
+}

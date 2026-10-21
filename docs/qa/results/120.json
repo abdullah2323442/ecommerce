@@ -1,0 +1,21 @@
+{
+  "n": 120,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Each draft shows who is working on it"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f120_1.jpg",
+      "caption": "Each open draft carries the name of its staff member",
+      "role": "admin",
+      "url": "/admin/counter"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the name of the staff member under each open draft."
+}

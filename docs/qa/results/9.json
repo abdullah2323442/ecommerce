@@ -1,0 +1,27 @@
+{
+  "n": 9,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The staff member has their own account"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f9_1.jpg",
+      "caption": "The owner's Staff page",
+      "role": "admin",
+      "url": "/admin/staff"
+    },
+    {
+      "file": "f9_2.jpg",
+      "caption": "The staff member signed in as themselves, on the counter",
+      "role": "staff",
+      "url": "/admin/counter"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the Staff page, where the owner makes accounts and roles for staff, then signed in as a staff member."
+}

@@ -1,0 +1,25 @@
+{
+  "n": 260,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The \"Ask to return\" button stays disabled until a reason is typed (or a voice note is attached)"
+    },
+    {
+      "ok": true,
+      "text": "A voice note can be used instead of typing a reason"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f260_1.jpg",
+      "caption": "A return with no reason typed: the \"Ask to return\" button stays greyed out",
+      "role": "paikari",
+      "url": "/paikari/returns"
+    }
+  ],
+  "notes": [],
+  "did": "Filled in a return but left the reason blank, and pressed \"Ask to return\"."
+}

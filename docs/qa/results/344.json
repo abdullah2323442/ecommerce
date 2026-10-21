@@ -1,0 +1,29 @@
+{
+  "n": 344,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The seller sees the buyer's phone"
+    },
+    {
+      "ok": true,
+      "text": "And the delivery address"
+    },
+    {
+      "ok": true,
+      "text": "But not the buyer's name"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f344_1.jpg",
+      "caption": "An order as the seller sees it",
+      "role": "wholesale",
+      "url": "/wholesale/sell/orders"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the seller's list of orders and looked at what is shown about the buyer."
+}

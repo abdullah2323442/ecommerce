@@ -1,0 +1,37 @@
+{
+  "n": 47,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "An order that is only on its way is not counted (72 before, 72 after)"
+    },
+    {
+      "ok": true,
+      "text": "Once the buyer has it, the commission is counted: 72 became 96 (2% of 1,200)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f47_1.jpg",
+      "caption": "Commission before the order: 72",
+      "role": "admin",
+      "url": "/admin/market/commissions"
+    },
+    {
+      "file": "f47_2.jpg",
+      "caption": "Commission with the order on its way: 72",
+      "role": "admin",
+      "url": "/admin/market/commissions"
+    },
+    {
+      "file": "f47_3.jpg",
+      "caption": "Commission after delivery: 96",
+      "role": "admin",
+      "url": "/admin/market/commissions"
+    }
+  ],
+  "notes": [],
+  "did": "Read the month's commission, then a buyer ordered a phone case and the seller accepted and sent it, and the commission was read again. Then the buyer pressed \"Yes, I got it\" and it was read a third time."
+}

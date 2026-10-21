@@ -1,0 +1,18 @@
+{
+  "n": 422,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f422_1.jpg",
+      "caption": "Restaurants",
+      "role": "admin",
+      "url": "/admin/food"
+    }
+  ],
+  "notes": [
+    "Needs time to pass on a live order. Not carried through."
+  ],
+  "did": "Looked for a notice when an order is not confirmed."
+}

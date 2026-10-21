@@ -1,0 +1,25 @@
+{
+  "n": 205,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The search points out that this medicine is on offer"
+    },
+    {
+      "ok": true,
+      "text": "And has its own Order button"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f205_1.jpg",
+      "caption": "The offer card points out the offer",
+      "role": "admin",
+      "url": "/admin/counter/237"
+    }
+  ],
+  "notes": [],
+  "did": "At the counter, searched for the medicine that is on offer."
+}

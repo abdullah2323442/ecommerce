@@ -1,0 +1,21 @@
+{
+  "n": 558,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A staff member has a role"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f558_1.jpg",
+      "caption": "Roles",
+      "role": "admin",
+      "url": "/admin/staff"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the role choice for staff."
+}

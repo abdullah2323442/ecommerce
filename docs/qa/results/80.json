@@ -1,0 +1,25 @@
+{
+  "n": 80,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "One outcome: \"Still good, keep it\""
+    },
+    {
+      "ok": true,
+      "text": "The other: record the expiry date, which moves it to the near-expiry or expired lists"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f80_1.jpg",
+      "caption": "After pressing Checked: the owner records the result",
+      "role": "admin",
+      "url": "/admin/stock/expiry"
+    }
+  ],
+  "notes": [],
+  "did": "Pressed \"Checked\" on a slow item and looked at the outcomes offered."
+}

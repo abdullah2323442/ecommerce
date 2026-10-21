@@ -1,0 +1,25 @@
+{
+  "n": 579,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner can set a WhatsApp number"
+    },
+    {
+      "ok": true,
+      "text": "And a Messenger page"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f579_1.jpg",
+      "caption": "WhatsApp and Messenger",
+      "role": "admin",
+      "url": "/admin/site"
+    }
+  ],
+  "notes": [],
+  "did": "Looked on the Site design page for a WhatsApp and Messenger setting."
+}

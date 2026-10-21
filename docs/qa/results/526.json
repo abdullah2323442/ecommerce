@@ -1,0 +1,25 @@
+{
+  "n": 526,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A seller can make a token"
+    },
+    {
+      "ok": true,
+      "text": "It works only on the seller's own products"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f526_1.jpg",
+      "caption": "A seller's token",
+      "role": "wholesale",
+      "url": "/wholesale/sell"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the seller's own token form."
+}

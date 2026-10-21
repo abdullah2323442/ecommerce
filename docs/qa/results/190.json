@@ -1,0 +1,23 @@
+{
+  "n": 190,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "There is a counter that keeps working without internet"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f190_1.jpg",
+      "caption": "The offline counter",
+      "role": "admin",
+      "url": "/admin/counter/offline"
+    }
+  ],
+  "notes": [
+    "Actually disconnecting the internet and selling was not done here."
+  ],
+  "did": "Opened the \"Counter without internet\" page."
+}

@@ -1,0 +1,29 @@
+{
+  "n": 269,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Search by memo number"
+    },
+    {
+      "ok": true,
+      "text": "Search by date"
+    },
+    {
+      "ok": true,
+      "text": "Search by medicine name"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f269_1.jpg",
+      "caption": "Memo, date or medicine name",
+      "role": "admin",
+      "url": "/admin/returns"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the three ways to find a sale to return."
+}

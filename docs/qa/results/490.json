@@ -1,0 +1,25 @@
+{
+  "n": 490,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Buyers rate the delivery and the service"
+    },
+    {
+      "ok": true,
+      "text": "Buyers do not see the names of people rated"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f490_1.jpg",
+      "caption": "Delivery ratings",
+      "role": "admin",
+      "url": "/admin/delivery-ratings"
+    }
+  ],
+  "notes": [],
+  "did": "Opened Delivery ratings."
+}

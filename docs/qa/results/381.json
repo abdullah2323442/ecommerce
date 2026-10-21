@@ -1,0 +1,31 @@
+{
+  "n": 381,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The buyer chooses the wood"
+    },
+    {
+      "ok": true,
+      "text": "Each wood has its own rate, shown to the buyer when they choose"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f381_1.jpg",
+      "caption": "Which wood?",
+      "role": "visitor",
+      "url": "/custom/new/wood"
+    },
+    {
+      "file": "f381_2.jpg",
+      "caption": "Woods and fabrics each have a rate",
+      "role": "admin",
+      "url": "/admin/custom"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the wood order form and looked at how the wood type is chosen and priced."
+}

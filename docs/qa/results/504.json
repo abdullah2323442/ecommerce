@@ -1,0 +1,25 @@
+{
+  "n": 504,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The pre-order is listed with its medicine and quantity"
+    },
+    {
+      "ok": true,
+      "text": "And its state"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f504_1.jpg",
+      "caption": "The shop's pre-orders",
+      "role": "paikari",
+      "url": "/preorders"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the shop's pre-orders after one was made and accepted."
+}

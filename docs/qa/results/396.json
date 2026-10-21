@@ -1,0 +1,21 @@
+{
+  "n": 396,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The buyer never sees the craftsman's name"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f396_1.jpg",
+      "caption": "The buyer's job page",
+      "role": "visitor",
+      "url": "/custom/YWqp5Mw964YyEaqPGFkNVXFzqoPOexRqu8CRvOea"
+    }
+  ],
+  "notes": [],
+  "did": "Looked through the buyer's page for the job for the craftsman's name."
+}

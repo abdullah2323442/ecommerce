@@ -1,0 +1,25 @@
+{
+  "n": 331,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The seller's price for the phone case is 1,200"
+    },
+    {
+      "ok": true,
+      "text": "The public pays 1,224: the commission of 24 is added on top"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f331_1.jpg",
+      "caption": "The public price includes the commission",
+      "role": "admin",
+      "url": "/market/78"
+    }
+  ],
+  "notes": [],
+  "did": "Compared a product's seller price in the owner's Market page with the price the public pays."
+}

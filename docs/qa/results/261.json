@@ -1,0 +1,33 @@
+{
+  "n": 261,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The request is for a strip, not the whole box"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f261_1.jpg",
+      "caption": "Asking to return one strip, not the whole box",
+      "role": "paikari",
+      "url": "/paikari/returns"
+    },
+    {
+      "file": "f261_2.jpg",
+      "caption": "The request is sent",
+      "role": "paikari",
+      "url": "/paikari/returns"
+    },
+    {
+      "file": "f261_3.jpg",
+      "caption": "The owner sees the part-return waiting",
+      "role": "admin",
+      "url": "/admin/returns"
+    }
+  ],
+  "notes": [],
+  "did": "Asked to return one strip out of a box."
+}

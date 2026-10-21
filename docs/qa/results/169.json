@@ -1,0 +1,33 @@
+{
+  "n": 169,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The prescription is on the owner's Prescriptions page"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f169_1.jpg",
+      "caption": "A prescription chosen, with a note",
+      "role": "paikari",
+      "url": "/paikari"
+    },
+    {
+      "file": "f169_2.jpg",
+      "caption": "After sending the prescription",
+      "role": "paikari",
+      "url": "/paikari"
+    },
+    {
+      "file": "f169_3.jpg",
+      "caption": "The prescription arrives on the owner's side only",
+      "role": "admin",
+      "url": "/admin/prescriptions"
+    }
+  ],
+  "notes": [],
+  "did": "On the ordering screen, attached a prescription photo and sent it."
+}

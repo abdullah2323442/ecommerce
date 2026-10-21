@@ -1,0 +1,21 @@
+{
+  "n": 335,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Sellers can ask for less commission, and the owner sees the requests"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f335_1.jpg",
+      "caption": "Requests for less commission",
+      "role": "admin",
+      "url": "/admin/market"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the \"Asking for less commission\" list on the owner's Market page."
+}

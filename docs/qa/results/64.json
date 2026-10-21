@@ -1,0 +1,21 @@
+{
+  "n": 64,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Nothing about pack sizes or printed prices is asked again"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f64_1.jpg",
+      "caption": "Only quantities, percentages and dates are asked: the medicine is already set up",
+      "role": "admin",
+      "url": "/admin/stock/receive"
+    }
+  ],
+  "notes": [],
+  "did": "Entered a second purchase of a medicine that already exists, to see what the screen asks."
+}

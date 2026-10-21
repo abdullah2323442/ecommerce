@@ -1,0 +1,25 @@
+{
+  "n": 203,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Below the minimum the line is not an offer line, so it is sold at the normal rate"
+    },
+    {
+      "ok": true,
+      "text": "The rate on the line is the normal rate (247.50)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f203_1.jpg",
+      "caption": "Two boxes: below the minimum",
+      "role": "admin",
+      "url": "/admin/counter/238"
+    }
+  ],
+  "notes": [],
+  "did": "Ordered 2 boxes through the offer, below its minimum of 3, and looked at the line in the draft."
+}

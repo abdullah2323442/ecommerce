@@ -1,0 +1,25 @@
+{
+  "n": 470,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A rule for rounding weight"
+    },
+    {
+      "ok": true,
+      "text": "One choice is round up to half a kilo"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f470_1.jpg",
+      "caption": "Weight rounding",
+      "role": "admin",
+      "url": "/admin/settings"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the weight rounding rule in settings."
+}

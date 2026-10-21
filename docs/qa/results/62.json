@@ -1,0 +1,25 @@
+{
+  "n": 62,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The cost per box counts the bonus (228 for 10 becomes 190 over 12), saw 190"
+    },
+    {
+      "ok": true,
+      "text": "The line total is for the 10 paid boxes (2,280), saw 2280"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f62_1.jpg",
+      "caption": "10 boxes plus 2 free: the cost per box is spread over all 12",
+      "role": "admin",
+      "url": "/admin/stock/receive"
+    }
+  ],
+  "notes": [],
+  "did": "Bought 10 boxes with 2 free bonus boxes and read the cost per box."
+}

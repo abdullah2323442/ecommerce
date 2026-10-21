@@ -1,0 +1,21 @@
+{
+  "n": 415,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "No commission is charged on made-to-order work"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f415_1.jpg",
+      "caption": "No commission on made-to-order work",
+      "role": "admin",
+      "url": "/admin/custom"
+    }
+  ],
+  "notes": [],
+  "did": "Read the note about commission on made-to-order work."
+}

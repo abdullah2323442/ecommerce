@@ -1,0 +1,21 @@
+{
+  "n": 472,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A product with no weight uses a flat delivery charge (80)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f472_1.jpg",
+      "caption": "A flat delivery charge",
+      "role": "guest",
+      "url": "/market/78"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the flat delivery charge on a product with no weight."
+}

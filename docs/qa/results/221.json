@@ -1,0 +1,27 @@
+{
+  "n": 221,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "MPOs are grouped by the area they cover"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f221_1.jpg",
+      "caption": "The account form filled in, with an area and companies",
+      "role": "admin",
+      "url": "/admin/mpo"
+    },
+    {
+      "file": "f221_2.jpg",
+      "caption": "The list, grouped by area",
+      "role": "admin",
+      "url": "/admin/mpo"
+    }
+  ],
+  "notes": [],
+  "did": "Opened a second MPO account in the area \"Mirpur\" and looked at how the list groups MPOs by area."
+}

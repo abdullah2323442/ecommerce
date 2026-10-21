@@ -1,0 +1,25 @@
+{
+  "n": 359,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The seller has a rank"
+    },
+    {
+      "ok": true,
+      "text": "The rank rewards fast sending and few returns"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f359_1.jpg",
+      "caption": "Supplier rank",
+      "role": "wholesale",
+      "url": "/wholesale/sell/reports"
+    }
+  ],
+  "notes": [],
+  "did": "Read the seller's rank and what it depends on."
+}

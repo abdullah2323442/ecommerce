@@ -1,0 +1,37 @@
+{
+  "n": 134,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The chosen medicine appears under \"Your order\""
+    },
+    {
+      "ok": true,
+      "text": "The order is sent and shows as \"Checking…\""
+    }
+  ],
+  "shots": [
+    {
+      "file": "f134_1.jpg",
+      "caption": "Search results with a price for each unit",
+      "role": "paikari",
+      "url": "/paikari"
+    },
+    {
+      "file": "f134_2.jpg",
+      "caption": "The box is on \"Your order\"",
+      "role": "paikari",
+      "url": "/paikari"
+    },
+    {
+      "file": "f134_3.jpg",
+      "caption": "The order has been sent and is being checked",
+      "role": "paikari",
+      "url": "/paikari/orders/168"
+    }
+  ],
+  "notes": [],
+  "did": "Searched for Napa, put a box on the order and sent it."
+}

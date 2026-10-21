@@ -1,0 +1,31 @@
+{
+  "n": 345,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "On a finished order, the buyer's phone shows as stars"
+    },
+    {
+      "ok": true,
+      "text": "And the address shows as stars"
+    },
+    {
+      "ok": true,
+      "text": "The page says why: the details are hidden once an order is finished"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f345_1.jpg",
+      "caption": "The order just sent: still \"On the way\", so the buyer's details are still shown",
+      "role": "wholesale",
+      "url": "/wholesale/sell/orders"
+    }
+  ],
+  "notes": [
+    "While an order is still on its way, the seller needs the phone and address, so they are shown in full. They are masked only when the order is finished."
+  ],
+  "did": "Accepted an order and marked it sent, then looked at the buyer's phone and address again."
+}

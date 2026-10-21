@@ -1,0 +1,31 @@
+{
+  "n": 95,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The stock list shows how many lots a medicine is spread over"
+    },
+    {
+      "ok": true,
+      "text": "The medicine page warns when stock is split across many lots, and says what to do"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f95_1.jpg",
+      "caption": "The stock page after lowering the lot limit",
+      "role": "admin",
+      "url": "/admin/stock"
+    },
+    {
+      "file": "f95_2.jpg",
+      "caption": "The medicine page warns: \"This medicine is spread over 5 lots. Sell the old small ones first.\"",
+      "role": "admin",
+      "url": "/admin/stock/medicines/1"
+    }
+  ],
+  "notes": [],
+  "did": "Lowered \"Warn when one medicine has this many lots\" to 2 in Settings, then looked at the stock page and the medicine page. Napa has several lots."
+}

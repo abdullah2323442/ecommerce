@@ -1,0 +1,27 @@
+{
+  "n": 75,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A sale forced through at a loss is counted as a loss in the reports"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f75_1.jpg",
+      "caption": "The monthly report",
+      "role": "admin",
+      "url": "/admin/reports"
+    },
+    {
+      "file": "f75_2.jpg",
+      "caption": "The stock profit report",
+      "role": "admin",
+      "url": "/admin/stock/reports"
+    }
+  ],
+  "notes": [],
+  "did": "Looked in the reports for the sale the owner made at a loss earlier (a box sold at 210 that cost 240)."
+}

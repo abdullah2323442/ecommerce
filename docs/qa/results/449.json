@@ -1,0 +1,21 @@
+{
+  "n": 449,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Top-ups are paid online only"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f449_1.jpg",
+      "caption": "Online payment only",
+      "role": "admin",
+      "url": "/admin/gaming"
+    }
+  ],
+  "notes": [],
+  "did": "Read the payment rule for game top-ups."
+}

@@ -1,0 +1,37 @@
+{
+  "n": 468,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A zone: Own area"
+    },
+    {
+      "ok": true,
+      "text": "A zone: Inside the district"
+    },
+    {
+      "ok": true,
+      "text": "A zone: Outside the district"
+    },
+    {
+      "ok": true,
+      "text": "A price for the first kilo"
+    },
+    {
+      "ok": true,
+      "text": "And for each extra kilo"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f468_1.jpg",
+      "caption": "Zone, first kilo and extra kilo",
+      "role": "admin",
+      "url": "/admin/couriers"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the zones, first kilo and extra kilo for a courier."
+}

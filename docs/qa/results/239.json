@@ -1,0 +1,18 @@
+{
+  "n": 239,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f239_1.jpg",
+      "caption": "Stock",
+      "role": "admin",
+      "url": "/admin/stock"
+    }
+  ],
+  "notes": [
+    "MPO goods entering stock was not carried through end to end."
+  ],
+  "did": "Looked at the stock page for goods that came from an MPO."
+}

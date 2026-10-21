@@ -1,0 +1,29 @@
+{
+  "n": 13,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The page confirms a reset link is on its way"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f13_1.jpg",
+      "caption": "The forgot-password form",
+      "role": "newguest",
+      "url": "/forgot-password"
+    },
+    {
+      "file": "f13_2.jpg",
+      "caption": "The confirmation after asking for the reset link",
+      "role": "newguest",
+      "url": "/forgot-password"
+    }
+  ],
+  "notes": [
+    "Reset by email works. Reset by phone code is waiting for the text-message service."
+  ],
+  "did": "Chose \"Forgot password\" and asked for a reset link."
+}

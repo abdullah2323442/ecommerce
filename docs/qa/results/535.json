@@ -1,0 +1,27 @@
+{
+  "n": 535,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Central lists (ingredients, product catalog, companies) are managed in one place each"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f535_1.jpg",
+      "caption": "The ingredient list",
+      "role": "admin",
+      "url": "/admin/food-ingredients"
+    },
+    {
+      "file": "f535_2.jpg",
+      "caption": "The product catalog",
+      "role": "admin",
+      "url": "/admin/catalog"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the central lists the owner manages."
+}

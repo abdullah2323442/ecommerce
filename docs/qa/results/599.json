@@ -1,0 +1,23 @@
+{
+  "n": 599,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Uploads are limited in size"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f599_1.jpg",
+      "caption": "Site design",
+      "role": "admin",
+      "url": "/admin/site"
+    }
+  ],
+  "notes": [
+    "Automatic compression of uploaded images was not measured."
+  ],
+  "did": "Looked for image compression."
+}

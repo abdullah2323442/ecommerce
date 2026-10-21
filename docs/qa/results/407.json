@@ -1,0 +1,18 @@
+{
+  "n": 407,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f407_1.jpg",
+      "caption": "Chats",
+      "role": "admin",
+      "url": "/admin/chats"
+    }
+  ],
+  "notes": [
+    "Needs a chat on a job. Not carried through."
+  ],
+  "did": "Looked for measurements and offers as cards in chat."
+}

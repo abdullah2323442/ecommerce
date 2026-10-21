@@ -1,0 +1,21 @@
+{
+  "n": 390,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Craftsmen are the shop's own people and see only their own jobs and wages"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f390_1.jpg",
+      "caption": "Craftsmen",
+      "role": "admin",
+      "url": "/admin/craftsmen"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the Craftsmen page."
+}

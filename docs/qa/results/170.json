@@ -1,0 +1,21 @@
+{
+  "n": 170,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The page shows how many prescriptions are waiting to be seen"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f170_1.jpg",
+      "caption": "Prescriptions, with the count of unseen ones",
+      "role": "admin",
+      "url": "/admin/prescriptions"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the owner's menu and Prescriptions page for the count of prescriptions not yet seen."
+}

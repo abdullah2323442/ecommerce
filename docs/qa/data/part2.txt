@@ -1,0 +1,111 @@
+109|a_counter|-|A draft invoice stays open while items are added, so a long order can be built up slowly.
+110|a_counter|-|The moment an item is added to a draft, it comes out of stock so nobody else sells it.
+111|a_counter|-|If an item is removed, it returns to stock and the removal stays in the history.
+112|a_counter|-|A shop can have several drafts open at once, each with its own invoice number.
+113|a_counter|-|At the end, all the drafts add up into one memo.
+114|a_counter|-|Two drafts for the same shop can be merged into one.
+115|a_counter|-|Walk-in retail customers can have as many drafts as needed.
+116|a_counter|-|If two staff touch the same draft, the first click wins and the other is told.
+117|a_counter|-|A timer on each draft turns red as it gets old, so forgotten drafts stand out.
+118|a_counter|-|The screen shows how many drafts are open right now.
+119|a_counter|-|After one or two days, the system reminds staff about old drafts, with two buttons to act on them.
+120|a_counter|-|Open drafts are listed under the name of the staff member working on them.
+121|a_counter|-|Any staff member can open and continue any draft.
+122|a_counter|-|The screen shows "Robiul is working" so two people do not collide.
+123|a_counter|-|A three-dot menu has "Move to another draft" to shift an item.
+124|a_counter|-|If the same medicine is added twice, the system warns.
+125|a_counter|-|The screen says "This shop has 2 drafts open" before starting a third.
+126|a_counter|-|Every item is saved the instant it is added. Nothing is lost if the page closes.
+127|a_counter|-|An item the shop does not hold can be marked "bring from outside".
+128|a_invoices|-|The owner can correct a finished invoice. The old one is kept in the history.
+129|a_invoices|-|The customer on an invoice can be changed by the owner.
+130|a_eod|-|An "End of day" button closes the day's drafts and totals.
+131|a_counter|-|A draft uses the rate that applied on the day it was started.
+132|a_reports|-|Profit is worked out from the cost of the batch actually used.
+133|-|k_home|Paikari buyers never see how much stock the shop has. This is permanent.
+134|-|k_home|A paikari buyer searches for a medicine and orders it, choosing the unit.
+135|-|k_home|A medicine can be ordered by piece, strip or box.
+136|-|k_home|A free short list lets a shop save the medicines it buys often.
+137|-|k_home|An order can be placed straight from the short list.
+138|a_requests|k_home|Medicines that are not available are sent to the PharmaTrack list.
+139|a_orders|k_orders|An initial memo is shown at the printed price right after ordering.
+140|a_orders|-|Staff check an order with three choices. Checking works like a draft.
+141|a_orders|-|Items on offer are marked with a colour or label on the staff list.
+142|a_orders|-|Several staff can work on orders at once, and the screen updates live.
+143|-|k_orders|The buyer sees the change instantly, without refreshing.
+144|a_orders|k_orders|The order status updates in real time for both sides.
+145|a_invoices|k_orders|The final memo is made at the buyer's own price.
+146|a_orders|-|Staff can edit prices before the memo is sent.
+147|-|k_orders|The buyer can add more items after the memo was sent.
+148|-|k_orders|The buyer has three ways to collect the goods.
+149|a_orders|-|The delivery charge is entered by hand by staff.
+150|-|k_orders|The buyer sees how far they are from free delivery.
+151|a_orders|-|A warning shows when the order passes a set limit.
+152|a_counter|-|Staff can place orders on behalf of a customer who phones in.
+153|a_counter|-|A quick note can be added at the counter.
+154|-|k_home|The system suggests medicines the shop usually buys.
+155|-|k_home|It reminds the shop when it usually reorders.
+156|-|k_home|The shop can turn those reminders off.
+157|-|k_orders|A note explains that orders sent at night are handled the next morning.
+158|-|k_orders|There is no cut-off hour. Orders can be placed at any time.
+159|-|k_orders|On holidays the buyer is told the order goes out on the next working day.
+160|a_orders|-|An order can be cancelled in three different ways, depending on how far it got.
+161|a_orders|-|If goods were packed but not collected, the money is refunded and stock returns.
+162|a_customers|-|Customers who often cause problems are flagged automatically.
+163|a_settings|-|The number of problems before a flag appears can be set in settings.
+164|a_customer|k_orders|A buyer's monthly business total is shown on their account.
+165|a_customer|-|The owner decides which customers can see their own monthly total.
+166|a_customers|-|Moving to a higher tier is handled like a task for the owner to approve.
+167|a_customer|-|The owner checks the total and upgrades the tier.
+168|a_customer|k_inbox|The buyer gets a congratulations message on being upgraded.
+169|a_presc|k_orders|A buyer uploads a prescription. Only the shop can see it.
+170|a_presc|-|The shop sees how many prescriptions are still unseen.
+171|a_counter|-|The counter has three sections: retail, paikari and wholesale.
+172|a_counter|-|Rates are picked in order: the medicine's rate, then the invoice's, then the tier's.
+173|a_counter|-|Staff search for a customer and select them.
+174|a_counter|-|A counter sale also appears on the customer's own online profile.
+175|a_counter|-|A shop owner does not see their own purchase total at the counter.
+176|a_counter|-|A new customer can be created quickly at the counter.
+177|a_counter|-|Area and phone are shown in the customer search to tell people apart.
+178|a_counter|-|The search shows if the customer already has an active order.
+179|a_counter|-|Retail sells at the printed price, with a discount taken off the total at the end.
+180|a_counter|-|Items already specially discounted are left out of the end discount.
+181|a_counter|a_offers|Offers can also be used at the counter, but not for retail customers.
+182|a_counter|-|Both the normal price and the offer price show in the search.
+183|a_counter|-|A counter offer goes into the customer's offer section.
+184|a_counter|-|One invoice can carry two kinds of rate.
+185|a_invoices|-|On the invoice, the offer section comes first, then regular items, then one combined total.
+186|a_counter|-|Medicines with similar names trigger a warning, with the strength shown in bold.
+187|a_counter|-|Keyboard shortcuts make the counter fast for busy staff.
+188|a_counter|-|The most-used medicines are one click away.
+189|s_counter|-|Staff get a simple, cut-down counter screen.
+190|a_counter_off|-|The counter keeps working when the internet drops. Sales sync later.
+191|a_counter_off|-|Sales made offline get temporary memo numbers. Any clash shows an alert when syncing.
+192|a_offers|p_offers|An offer product needs a minimum number of boxes to qualify.
+193|a_offers|-|Offers are sold in boxes only, with no printed-price memo.
+194|a_offers|-|An offer is turned on by hand or when the system notifies the owner.
+195|a_offers|-|The owner sets a minimum profit margin for each offer.
+196|a_offers|-|Only the batch with the higher buying percentage goes on offer.
+197|a_offers|-|An offer can be shown to the public, to paikari or to wholesale.
+198|a_offers|-|Stock can be shown to buyers in two different ways.
+199|a_offers|p_offers|A buyer cannot order more than the offer stock.
+200|a_offers|-|An offer can also give a discount for larger quantities.
+201|a_offers|-|A weight can be stored on each offer to work out courier cost.
+202|a_offers|-|Each offer product can have a minimum delivery charge.
+203|a_offers|-|If the minimum quantity is not met, the normal rate applies.
+204|a_offers|-|The profit is then worked out at the normal rate too.
+205|a_counter|-|A pop-up in search tells staff when an offer exists.
+206|a_invoices|-|One memo can hold both offer items and regular items.
+207|a_offers|-|An alert warns the owner before offer stock runs out.
+208|a_offers|-|When offer stock runs out, the offer goes grey for 1 to 1.5 hours.
+209|a_offers|p_offers|During that time it cannot be added to a cart.
+210|a_offers|-|If a draft is cancelled, the listing goes back to normal.
+211|a_offers|-|A tier offer has no minimum quantity.
+212|a_offers|-|There is a list of offers per company.
+213|a_offers|-|One click puts an offer to the paikari tier.
+214|a_offers|-|An offer has a duration field.
+215|a_offers|-|At the end of the month the offer ends by itself.
+216|a_offers|-|After the month passes, the system asks the owner what to do.
+217|a_offers|-|An offer switches off when stock ends and on again with new stock.
+218|a_offers|-|A hand-set rate beats any offer.
+219|a_stock_recv|-|If the buying price is corrected, the system warns about any loss.

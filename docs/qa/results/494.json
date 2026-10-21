@@ -1,0 +1,21 @@
+{
+  "n": 494,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Delivery can be \"I send it myself\""
+    }
+  ],
+  "shots": [
+    {
+      "file": "f494_1.jpg",
+      "caption": "\"Nobody: I send it myself\"",
+      "role": "admin",
+      "url": "/admin/couriers"
+    }
+  ],
+  "notes": [],
+  "did": "Looked for \"delivery by arrangement\"."
+}

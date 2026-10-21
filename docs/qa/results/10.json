@@ -1,0 +1,81 @@
+{
+  "n": 10,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "admin lands on /dashboard (landed on /dashboard)"
+    },
+    {
+      "ok": true,
+      "text": "staff lands on /dashboard (landed on /dashboard)"
+    },
+    {
+      "ok": true,
+      "text": "paikari lands on /paikari (landed on /paikari)"
+    },
+    {
+      "ok": true,
+      "text": "wholesale lands on /wholesale (landed on /wholesale)"
+    },
+    {
+      "ok": true,
+      "text": "vendor lands on /food/vendor (landed on /food/vendor)"
+    },
+    {
+      "ok": true,
+      "text": "craftsman lands on /craftsman (landed on /craftsman)"
+    },
+    {
+      "ok": true,
+      "text": "mpo lands on /mpo (landed on /mpo)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f10_1.jpg",
+      "caption": "Signed in as admin: the first screen they see",
+      "role": "admin",
+      "url": "/dashboard"
+    },
+    {
+      "file": "f10_2.jpg",
+      "caption": "Signed in as staff: the first screen they see",
+      "role": "staff",
+      "url": "/dashboard"
+    },
+    {
+      "file": "f10_3.jpg",
+      "caption": "Signed in as paikari: the first screen they see",
+      "role": "paikari",
+      "url": "/paikari"
+    },
+    {
+      "file": "f10_4.jpg",
+      "caption": "Signed in as wholesale: the first screen they see",
+      "role": "wholesale",
+      "url": "/wholesale"
+    },
+    {
+      "file": "f10_5.jpg",
+      "caption": "Signed in as vendor: the first screen they see",
+      "role": "vendor",
+      "url": "/food/vendor"
+    },
+    {
+      "file": "f10_6.jpg",
+      "caption": "Signed in as craftsman: the first screen they see",
+      "role": "craftsman",
+      "url": "/craftsman"
+    },
+    {
+      "file": "f10_7.jpg",
+      "caption": "Signed in as mpo: the first screen they see",
+      "role": "mpo",
+      "url": "/mpo"
+    }
+  ],
+  "notes": [],
+  "did": "Signed in as each kind of person and noted where they land."
+}

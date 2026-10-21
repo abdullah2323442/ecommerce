@@ -1,0 +1,23 @@
+{
+  "n": 44,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The craftsman's screen shows no profit, margin or commission"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f44_1.jpg",
+      "caption": "The craftsman's screen",
+      "role": "craftsman",
+      "url": "/craftsman"
+    }
+  ],
+  "notes": [
+    "There was no job assigned in the test data, so the job list itself was empty. Prices on a real job were not shown."
+  ],
+  "did": "Signed in as a craftsman and looked at everything on their screen for prices or profit."
+}

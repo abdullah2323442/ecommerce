@@ -1,0 +1,21 @@
+{
+  "n": 580,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A help centre with questions and answers"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f580_1.jpg",
+      "caption": "FAQ",
+      "role": "guest",
+      "url": "/faq"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the FAQ."
+}

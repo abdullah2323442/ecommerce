@@ -1,0 +1,25 @@
+{
+  "n": 154,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The ordering screen has a \"You often order\" list built from the shop's own orders"
+    },
+    {
+      "ok": true,
+      "text": "It suggests Napa 500 mg, which the shop has ordered before"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f154_1.jpg",
+      "caption": "\"You often order\": suggestions from what the shop has bought",
+      "role": "paikari",
+      "url": "/paikari"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the shop's orders page for suggestions based on what the shop buys often."
+}

@@ -1,0 +1,18 @@
+{
+  "n": 587,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f587_1.jpg",
+      "caption": "The web version",
+      "role": "guest",
+      "url": "/"
+    }
+  ],
+  "notes": [
+    "The checklist marks \"everything works on the web\" as partly built. Not every feature was compared with the app."
+  ],
+  "did": "Looked at the web version."
+}

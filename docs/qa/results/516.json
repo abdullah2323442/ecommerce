@@ -1,0 +1,21 @@
+{
+  "n": 516,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A memo has a Print button and a plain printing layout"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f516_1.jpg",
+      "caption": "Print",
+      "role": "admin",
+      "url": "/memo/213"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the print-friendly format."
+}

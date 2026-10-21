@@ -1,0 +1,21 @@
+{
+  "n": 265,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The medicine's movements show the return"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f265_1.jpg",
+      "caption": "The lots and movements after a return",
+      "role": "admin",
+      "url": "/admin/stock/medicines/1"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the medicine's lots after a return was approved to see where the returned goods went."
+}

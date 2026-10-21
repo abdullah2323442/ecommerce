@@ -1,0 +1,29 @@
+{
+  "n": 382,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The buyer chooses the fabric"
+    },
+    {
+      "ok": true,
+      "text": "Or brings their own"
+    },
+    {
+      "ok": true,
+      "text": "Or the shop supplies it"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f382_1.jpg",
+      "caption": "Fabric choices",
+      "role": "visitor",
+      "url": "/custom/new/clothing"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the fabric choices on the clothing form."
+}

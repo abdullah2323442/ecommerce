@@ -1,0 +1,21 @@
+{
+  "n": 304,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner sees what shoppers asked for"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f304_1.jpg",
+      "caption": "Requests grouped by what shoppers asked for",
+      "role": "admin",
+      "url": "/admin/requests"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the owner's requests page, where \"looking for\" requests are grouped."
+}

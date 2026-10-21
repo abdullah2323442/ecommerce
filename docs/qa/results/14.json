@@ -1,0 +1,27 @@
+{
+  "n": 14,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The system refuses a number that is already in use"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f14_1.jpg",
+      "caption": "Typing a number that another account already uses",
+      "role": "visitor",
+      "url": "/settings/phone"
+    },
+    {
+      "file": "f14_2.jpg",
+      "caption": "The system says the number is taken",
+      "role": "visitor",
+      "url": "/settings/phone"
+    }
+  ],
+  "notes": [],
+  "did": "Tried to save a mobile number that already belongs to another account (the paikari shop)."
+}

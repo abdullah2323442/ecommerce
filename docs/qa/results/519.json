@@ -1,0 +1,21 @@
+{
+  "n": 519,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Each message has an importance"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f519_1.jpg",
+      "caption": "Controlled from admin",
+      "role": "admin",
+      "url": "/admin/messages"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the table that controls each message."
+}

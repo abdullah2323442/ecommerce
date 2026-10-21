@@ -1,0 +1,21 @@
+{
+  "n": 324,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The account says how this buyer may pay (on arrival, in advance)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f324_1.jpg",
+      "caption": "Payment choices set by the owner for this buyer",
+      "role": "wholesale",
+      "url": "/wholesale/account"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at how this wholesaler may pay."
+}

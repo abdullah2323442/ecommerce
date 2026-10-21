@@ -1,0 +1,18 @@
+{
+  "n": 300,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f300_1.jpg",
+      "caption": "A medicine page",
+      "role": "guest",
+      "url": "/medicines/1"
+    }
+  ],
+  "notes": [
+    "The \"bought together\" row is built into the medicine page, but it shows only after at least five memos carry both medicines. The test data does not have that many, so the row stayed hidden (it did not appear)."
+  ],
+  "did": "Opened a medicine page and looked for \"bought together\"."
+}

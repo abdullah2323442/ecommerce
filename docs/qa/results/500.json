@@ -1,0 +1,25 @@
+{
+  "n": 500,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Pre-orders waiting for the owner are gathered in one list"
+    },
+    {
+      "ok": true,
+      "text": "And accepted ones waiting for the goods"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f500_1.jpg",
+      "caption": "Pre-orders gathered together",
+      "role": "admin",
+      "url": "/admin/preorders"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the buying list that gathers pre-orders together."
+}

@@ -1,0 +1,21 @@
+{
+  "n": 505,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The shop is told its pre-order was accepted and when to expect it"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f505_1.jpg",
+      "caption": "The acceptance notice",
+      "role": "paikari",
+      "url": "/preorders"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the notice the shop gets about its pre-order."
+}

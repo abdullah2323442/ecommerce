@@ -1,0 +1,18 @@
+{
+  "n": 271,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f271_1.jpg",
+      "caption": "Returns",
+      "role": "admin",
+      "url": "/admin/returns"
+    }
+  ],
+  "notes": [
+    "The optional \"will receive return money\" field was not found on the return screens."
+  ],
+  "did": "Looked for the optional \"will receive return money\" field."
+}

@@ -1,0 +1,37 @@
+{
+  "n": 509,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The accepted pre-order waits for the goods"
+    },
+    {
+      "ok": true,
+      "text": "The shop is told what came"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f509_1.jpg",
+      "caption": "The pre-order is accepted and waits for the goods",
+      "role": "admin",
+      "url": "/admin/preorders"
+    },
+    {
+      "file": "f509_2.jpg",
+      "caption": "After the goods came and were shared out",
+      "role": "admin",
+      "url": "/admin/preorders"
+    },
+    {
+      "file": "f509_3.jpg",
+      "caption": "The shop sees the result",
+      "role": "paikari",
+      "url": "/preorders"
+    }
+  ],
+  "notes": [],
+  "did": "Accepted the shop's pre-order, then wrote in fewer boxes than were ordered (\"Boxes that came\") and pressed \"Share out\"."
+}

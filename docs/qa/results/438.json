@@ -1,0 +1,25 @@
+{
+  "n": 438,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The memo is in the restaurant's own name"
+    },
+    {
+      "ok": true,
+      "text": "With the total the buyer pays"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f438_1.jpg",
+      "caption": "The memo",
+      "role": "vendor",
+      "url": "/food/vendor/orders/1/print/memo"
+    }
+  ],
+  "notes": [],
+  "did": "As the restaurant, opened the memo of the order."
+}

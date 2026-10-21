@@ -1,0 +1,21 @@
+{
+  "n": 119,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The counter asks what to do with a draft nobody has touched: return its goods to stock, or keep it"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f119_1.jpg",
+      "caption": "The counter, with old drafts",
+      "role": "admin",
+      "url": "/admin/counter"
+    }
+  ],
+  "notes": [],
+  "did": "Set \"Ask about a draft nobody touched for\" to a very short time in Settings, then opened the counter where many drafts have been left."
+}

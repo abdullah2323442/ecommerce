@@ -1,0 +1,21 @@
+{
+  "n": 165,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner decides, shop by shop, who sees their monthly total"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f165_1.jpg",
+      "caption": "The \"Monthly total\" switch on a customer",
+      "role": "admin",
+      "url": "/admin/customers/4"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the switch the owner uses to decide which shops see their monthly total."
+}

@@ -1,0 +1,25 @@
+{
+  "n": 147,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The shop can add more after the memo, and the new items are checked the same way"
+    },
+    {
+      "ok": true,
+      "text": "The search box is still on the order page for adding more"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f147_1.jpg",
+      "caption": "\"Need more? New items are checked the same way.\"",
+      "role": "paikari",
+      "url": "/paikari/orders/174"
+    }
+  ],
+  "notes": [],
+  "did": "On an order that was already sent, read the note about adding more items."
+}

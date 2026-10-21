@@ -1,0 +1,18 @@
+{
+  "n": 485,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f485_1.jpg",
+      "caption": "My deliveries",
+      "role": "admin",
+      "url": "/admin/deliveries"
+    }
+  ],
+  "notes": [
+    "Needs a delivery. Not carried through."
+  ],
+  "did": "Looked for the \"Arrived\" mark."
+}

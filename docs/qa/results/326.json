@@ -1,0 +1,23 @@
+{
+  "n": 326,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner sets the share asked up front on a pre-order"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f326_1.jpg",
+      "caption": "The pre-order setting",
+      "role": "admin",
+      "url": "/admin/settings"
+    }
+  ],
+  "notes": [
+    "A time window for wholesale pre-orders was not found as a separate setting."
+  ],
+  "did": "Looked at the Pre-orders page and the pre-order setting."
+}

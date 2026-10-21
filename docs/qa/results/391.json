@@ -1,0 +1,23 @@
+{
+  "n": 391,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A job can be shifted to another craftsman"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f391_1.jpg",
+      "caption": "\"Give it to someone else\"",
+      "role": "admin",
+      "url": "/admin/custom"
+    }
+  ],
+  "notes": [
+    "Sharing a job between two craftsmen was not found as a separate control. Only moving it to one other person."
+  ],
+  "did": "Looked at the choice to give a job to someone else."
+}

@@ -1,0 +1,18 @@
+{
+  "n": 268,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f268_1.jpg",
+      "caption": "The owner's return page",
+      "role": "admin",
+      "url": "/admin/returns"
+    }
+  ],
+  "notes": [
+    "A retail refund with no profile was not carried through."
+  ],
+  "did": "Looked at the return screen for a retail sale with no customer profile."
+}

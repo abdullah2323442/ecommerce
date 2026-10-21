@@ -1,0 +1,25 @@
+{
+  "n": 325,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The wholesaler sees their own grade"
+    },
+    {
+      "ok": true,
+      "text": "And a month-by-month record of their buying"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f325_1.jpg",
+      "caption": "The wholesale dashboard",
+      "role": "wholesale",
+      "url": "/wholesale/account"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the wholesaler's account page and looked for their grade and month-by-month buying."
+}

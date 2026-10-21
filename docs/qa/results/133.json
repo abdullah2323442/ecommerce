@@ -1,0 +1,25 @@
+{
+  "n": 133,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The results show prices and units, never how many the shop holds"
+    },
+    {
+      "ok": true,
+      "text": "The medicine itself is listed"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f133_1.jpg",
+      "caption": "The search results a paikari shop sees",
+      "role": "paikari",
+      "url": "/paikari"
+    }
+  ],
+  "notes": [],
+  "did": "Signed in as a paikari shop, searched for Napa and read the results looking for any mention of how much stock the shop holds."
+}

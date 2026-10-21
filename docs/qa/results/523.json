@@ -1,0 +1,25 @@
+{
+  "n": 523,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Buyers ask under a product and everyone reads the answer"
+    },
+    {
+      "ok": true,
+      "text": "Unanswered questions come to the owner"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f523_1.jpg",
+      "caption": "Questions waiting for an answer",
+      "role": "admin",
+      "url": "/admin/questions"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the owner's Questions page."
+}

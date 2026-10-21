@@ -1,0 +1,25 @@
+{
+  "n": 544,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The report has a list of shops that have gone quiet"
+    },
+    {
+      "ok": true,
+      "text": "It names each shop and how long ago it last bought, or says nobody has stopped buying"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f544_1.jpg",
+      "caption": "The report: shops that have gone quiet",
+      "role": "admin",
+      "url": "/admin/reports"
+    }
+  ],
+  "notes": [],
+  "did": "Looked on the monthly report for the list of shops that stopped buying."
+}

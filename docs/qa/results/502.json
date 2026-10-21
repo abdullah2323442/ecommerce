@@ -1,0 +1,21 @@
+{
+  "n": 502,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The shop is told after the goods arrive"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f502_1.jpg",
+      "caption": "The shop's messages",
+      "role": "paikari",
+      "url": "/inbox"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the shop's messages for a note that the goods arrived."
+}

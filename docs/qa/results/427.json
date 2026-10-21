@@ -1,0 +1,21 @@
+{
+  "n": 427,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Each restaurant sets its own price"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f427_1.jpg",
+      "caption": "Your own price for each ingredient",
+      "role": "vendor",
+      "url": "/food/vendor/custom"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the price box beside each ingredient."
+}

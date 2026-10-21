@@ -1,0 +1,25 @@
+{
+  "n": 206,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The memo is made with both kinds of line: the offer box line and the ordinary strip line"
+    },
+    {
+      "ok": true,
+      "text": "The memo tells the buyer how offer items are returned"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f206_1.jpg",
+      "caption": "After pressing Finish sale",
+      "role": "admin",
+      "url": "/admin/counter/241"
+    }
+  ],
+  "notes": [],
+  "did": "Finished the shop sale that held an offer line and an ordinary line, paying on credit, and opened the memo."
+}

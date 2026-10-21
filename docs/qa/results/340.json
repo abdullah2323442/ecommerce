@@ -1,0 +1,21 @@
+{
+  "n": 340,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The page says what happens if a seller does not answer within 10 days"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f340_1.jpg",
+      "caption": "The rule on unanswered statements",
+      "role": "wholesale",
+      "url": "/wholesale/sell/statements"
+    }
+  ],
+  "notes": [],
+  "did": "Read the rule about a seller who does not answer a statement."
+}

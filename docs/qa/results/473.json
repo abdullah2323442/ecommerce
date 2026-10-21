@@ -1,0 +1,21 @@
+{
+  "n": 473,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner is shown how many products still have no weight"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f473_1.jpg",
+      "caption": "Products with no weight",
+      "role": "admin",
+      "url": "/admin/weights"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the list of products with no weight."
+}

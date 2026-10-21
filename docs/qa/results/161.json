@@ -1,0 +1,23 @@
+{
+  "n": 161,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner sets how long a buyer may cancel alone"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f161_1.jpg",
+      "caption": "The cancelling settings",
+      "role": "admin",
+      "url": "/admin/settings"
+    }
+  ],
+  "notes": [
+    "Packing an order, not collecting it, and seeing the refund and stock return was not carried through."
+  ],
+  "did": "Looked at the settings that govern cancelling and packed orders that are not collected."
+}

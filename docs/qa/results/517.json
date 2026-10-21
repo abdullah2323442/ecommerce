@@ -1,0 +1,25 @@
+{
+  "n": 517,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Customers are told about their order automatically"
+    },
+    {
+      "ok": true,
+      "text": "For example when the order is received"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f517_1.jpg",
+      "caption": "Automatic status messages",
+      "role": "admin",
+      "url": "/admin/messages"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the Messages page, where the owner controls the automatic status messages."
+}

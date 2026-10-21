@@ -1,0 +1,25 @@
+{
+  "n": 417,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The restaurant owner has a Menu"
+    },
+    {
+      "ok": true,
+      "text": "Each dish has its own price"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f417_1.jpg",
+      "caption": "The restaurant's menu: price, Save, Remove",
+      "role": "vendor",
+      "url": "/food/vendor"
+    }
+  ],
+  "notes": [],
+  "did": "Signed in as a restaurant owner and opened the menu."
+}

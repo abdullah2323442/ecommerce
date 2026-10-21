@@ -1,0 +1,21 @@
+{
+  "n": 315,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner sets how many minutes a buyer can cancel alone"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f315_1.jpg",
+      "caption": "The cancel window setting",
+      "role": "admin",
+      "url": "/admin/settings"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the setting for how long a buyer can cancel an order alone."
+}

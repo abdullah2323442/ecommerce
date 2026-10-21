@@ -1,0 +1,21 @@
+{
+  "n": 173,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The shop appears as the owner types, to be chosen"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f173_1.jpg",
+      "caption": "Suggestions as the owner types",
+      "role": "admin",
+      "url": "/admin/counter"
+    }
+  ],
+  "notes": [],
+  "did": "Typed part of a shop's name in the customer box and chose the shop from the suggestions."
+}

@@ -1,0 +1,31 @@
+{
+  "n": 429,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Each ingredient the restaurant offers has a \"Sold out today\" tick"
+    },
+    {
+      "ok": true,
+      "text": "The tick stays after the page is reloaded, so the ingredient is marked sold out for today"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f429_1.jpg",
+      "caption": "An ingredient the restaurant has: price, On, Sold out today",
+      "role": "vendor",
+      "url": "/food/vendor/custom"
+    },
+    {
+      "file": "f429_2.jpg",
+      "caption": "After ticking it and reloading",
+      "role": "vendor",
+      "url": "/food/vendor/custom"
+    }
+  ],
+  "notes": [],
+  "did": "As the restaurant, switched on one ingredient (\"Bacon\") at a price, then ticked \"Sold out today\" on it and reloaded the page."
+}

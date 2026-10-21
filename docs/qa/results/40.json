@@ -1,0 +1,33 @@
+{
+  "n": 40,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Switching changes who the shopper sees as the seller (off: \"Siam's AquaTrusted seller\", on: \"Rahim TradersTrusted seller\")"
+    },
+    {
+      "ok": true,
+      "text": "With the switch off, the real seller's name is not shown (it showed \"Siam's AquaTrusted seller\")"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f40_1.jpg",
+      "caption": "The product page with the seller's own name switched off",
+      "role": "guest",
+      "url": "/market/78"
+    },
+    {
+      "file": "f40_2.jpg",
+      "caption": "The product page with the seller's own name switched on",
+      "role": "guest",
+      "url": "/market/78"
+    }
+  ],
+  "notes": [
+    "With the switch off the page said \"Sold by Siam's AquaTrusted seller\". With it on it said \"Sold by Rahim TradersTrusted seller\"."
+  ],
+  "did": "As a stranger, looked at who the seller of a product is, with the seller's own name switched off and then on."
+}

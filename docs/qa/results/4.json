@@ -1,0 +1,31 @@
+{
+  "n": 4,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner has an Applications page"
+    },
+    {
+      "ok": true,
+      "text": "It lists applications that are waiting for a decision"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f4_1.jpg",
+      "caption": "The wholesale buyer's screen",
+      "role": "wholesale",
+      "url": "/wholesale"
+    },
+    {
+      "file": "f4_2.jpg",
+      "caption": "The owner's Applications page: wholesale requests wait here to be approved",
+      "role": "admin",
+      "url": "/admin/applications"
+    }
+  ],
+  "notes": [],
+  "did": "Signed in as a wholesaler to see the wholesale screen, then opened the owner's Applications page where new wholesale applications wait for review."
+}

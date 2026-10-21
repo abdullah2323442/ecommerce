@@ -1,0 +1,21 @@
+{
+  "n": 329,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A wholesaler can add products to sell"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f329_1.jpg",
+      "caption": "The seller screen",
+      "role": "wholesale",
+      "url": "/wholesale/sell"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the seller screen a wholesaler uses to sell to the public."
+}

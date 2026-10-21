@@ -1,0 +1,29 @@
+{
+  "n": 122,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Staff see \"Siam (Admin) is working on this order\""
+    }
+  ],
+  "shots": [
+    {
+      "file": "f122_1.jpg",
+      "caption": "The owner has the order open",
+      "role": "admin",
+      "url": "/admin/orders/259"
+    },
+    {
+      "file": "f122_2.jpg",
+      "caption": "Staff open the same order: a note says who else is working on it",
+      "role": "staff",
+      "url": "/admin/orders/259"
+    }
+  ],
+  "notes": [
+    "The same note was not found on counter drafts (see feature 116)."
+  ],
+  "did": "Sent an online order. The owner opened it to check it. While it was open, staff opened the same order."
+}

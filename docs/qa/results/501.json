@@ -1,0 +1,21 @@
+{
+  "n": 501,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A pre-order is not tied to stock; when the goods are received, the real order is made"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f501_1.jpg",
+      "caption": "Not linked to stock",
+      "role": "admin",
+      "url": "/admin/preorders"
+    }
+  ],
+  "notes": [],
+  "did": "Read how pre-orders relate to stock."
+}

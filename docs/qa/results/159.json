@@ -1,0 +1,27 @@
+{
+  "n": 159,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The shop sees a message about the closed day and the next working day"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f159_1.jpg",
+      "caption": "Today added as a closed day",
+      "role": "admin",
+      "url": "/admin/settings"
+    },
+    {
+      "file": "f159_2.jpg",
+      "caption": "The shop is told the shop is closed and when the order will be looked at",
+      "role": "paikari",
+      "url": "/paikari"
+    }
+  ],
+  "notes": [],
+  "did": "Marked today as a closed day in the owner's settings and opened the shop's ordering screen."
+}

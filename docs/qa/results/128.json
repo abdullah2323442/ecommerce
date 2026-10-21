@@ -1,0 +1,21 @@
+{
+  "n": 128,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner can correct a finished memo"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f128_1.jpg",
+      "caption": "The correction screen",
+      "role": "admin",
+      "url": "/admin/counter/161"
+    }
+  ],
+  "notes": [],
+  "did": "Finished a sale, then pressed \"Correct this memo\"."
+}

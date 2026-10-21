@@ -1,0 +1,21 @@
+{
+  "n": 168,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The shop gets a congratulations message naming its new tier"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f168_1.jpg",
+      "caption": "The shop is congratulated",
+      "role": "paikari",
+      "url": "/paikari"
+    }
+  ],
+  "notes": [],
+  "did": "After the owner moved the shop up a tier, looked at what the shop saw."
+}

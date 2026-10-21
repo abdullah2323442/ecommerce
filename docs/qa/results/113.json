@@ -1,0 +1,21 @@
+{
+  "n": 113,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The finished sale gets one memo number"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f113_1.jpg",
+      "caption": "One memo for the whole sale",
+      "role": "admin",
+      "url": "/admin/counter/149"
+    }
+  ],
+  "notes": [],
+  "did": "Finished a sale and looked at the one memo that comes out, with its year-based number."
+}

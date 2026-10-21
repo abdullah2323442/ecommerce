@@ -1,0 +1,21 @@
+{
+  "n": 258,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Public shoppers have a return page: apply, wait for approval, then be called"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f258_1.jpg",
+      "caption": "A public shopper's return page",
+      "role": "visitor",
+      "url": "/my-orders/returns"
+    }
+  ],
+  "notes": [],
+  "did": "As an ordinary shopper, opened the page for asking to return something."
+}

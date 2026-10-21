@@ -1,0 +1,37 @@
+{
+  "n": 111,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The removed box is back in stock (31 then 31)"
+    },
+    {
+      "ok": true,
+      "text": "The removal is kept in the medicine's movement history as a return"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f111_1.jpg",
+      "caption": "A draft with a box",
+      "role": "admin",
+      "url": "/admin/counter/146"
+    },
+    {
+      "file": "f111_2.jpg",
+      "caption": "After removing the box from the draft",
+      "role": "admin",
+      "url": "/admin/counter/146"
+    },
+    {
+      "file": "f111_3.jpg",
+      "caption": "The movement history keeps the removal",
+      "role": "admin",
+      "url": "/admin/stock/medicines/1"
+    }
+  ],
+  "notes": [],
+  "did": "Added a box to a draft, then pressed the bin icon to remove it, and looked at the stock and the history."
+}

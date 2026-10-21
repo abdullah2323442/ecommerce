@@ -1,0 +1,21 @@
+{
+  "n": 370,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A listing can carry a grid of colours and sizes"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f370_1.jpg",
+      "caption": "The \"Add colours and sizes\" grid on a listing",
+      "role": "wholesale",
+      "url": "/wholesale/sell"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the seller's \"Add a listing\" form and looked for the colour and size grid."
+}

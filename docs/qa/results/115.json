@@ -1,0 +1,21 @@
+{
+  "n": 115,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "There is no small limit on retail drafts (9 open)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f115_1.jpg",
+      "caption": "9 retail drafts are open at the same time",
+      "role": "admin",
+      "url": "/admin/counter"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the number of retail drafts open at once."
+}

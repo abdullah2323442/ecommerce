@@ -1,0 +1,21 @@
+{
+  "n": 448,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A failed top-up is listed with its refund"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f448_1.jpg",
+      "caption": "Failed and refunds",
+      "role": "admin",
+      "url": "/admin/gaming"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the failed and refunds list."
+}

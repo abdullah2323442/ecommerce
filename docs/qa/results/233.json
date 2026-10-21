@@ -1,0 +1,31 @@
+{
+  "n": 233,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The MPO product is listed as \"Other offers\", under an anonymous name"
+    },
+    {
+      "ok": true,
+      "text": "The wholesaler sees that the offer was sent"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f233_1.jpg",
+      "caption": "A wholesaler asks for a 12% discount",
+      "role": "wholesale",
+      "url": "/wholesale"
+    },
+    {
+      "file": "f233_2.jpg",
+      "caption": "After sending the offer",
+      "role": "wholesale",
+      "url": "/wholesale"
+    }
+  ],
+  "notes": [],
+  "did": "As a wholesaler, found the MPO product among \"Other offers\", asked for a 12% discount on it and sent the offer."
+}

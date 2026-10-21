@@ -1,0 +1,21 @@
+{
+  "n": 61,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The line says the total percentage the goods were bought at, below the printed price"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f61_1.jpg",
+      "caption": "The total purchase percentage is shown in words under the line",
+      "role": "admin",
+      "url": "/admin/stock/receive"
+    }
+  ],
+  "notes": [],
+  "did": "Filled a purchase line and read the sentence under it."
+}

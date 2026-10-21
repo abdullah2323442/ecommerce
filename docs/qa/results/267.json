@@ -1,0 +1,18 @@
+{
+  "n": 267,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f267_1.jpg",
+      "caption": "Lots",
+      "role": "admin",
+      "url": "/admin/stock/medicines/1"
+    }
+  ],
+  "notes": [
+    "Not reproduced."
+  ],
+  "did": "Looked for returned goods being sold again."
+}

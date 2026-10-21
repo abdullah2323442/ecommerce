@@ -1,0 +1,21 @@
+{
+  "n": 63,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The Bonus box starts empty: a bonus only counts when the owner types one"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f63_1.jpg",
+      "caption": "The Bonus box, empty until the owner turns it on by typing",
+      "role": "admin",
+      "url": "/admin/stock/receive"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the Bonus box on the purchase line, which stays empty until the owner types a number."
+}

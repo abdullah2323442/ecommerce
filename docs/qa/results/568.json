@@ -1,0 +1,51 @@
+{
+  "n": 568,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The address is listed as blocked"
+    },
+    {
+      "ok": true,
+      "text": "With the day the block ends"
+    },
+    {
+      "ok": true,
+      "text": "After unblocking the address is gone from the list"
+    },
+    {
+      "ok": true,
+      "text": "The owner cannot block the address they are using"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f568_1.jpg",
+      "caption": "Blocked addresses",
+      "role": "admin",
+      "url": "/admin/blocked-ips"
+    },
+    {
+      "file": "f568_2.jpg",
+      "caption": "An address, a reason and 2 days",
+      "role": "admin",
+      "url": "/admin/blocked-ips"
+    },
+    {
+      "file": "f568_3.jpg",
+      "caption": "The address is blocked",
+      "role": "admin",
+      "url": "/admin/blocked-ips"
+    },
+    {
+      "file": "f568_4.jpg",
+      "caption": "The block is lifted",
+      "role": "admin",
+      "url": "/admin/blocked-ips"
+    }
+  ],
+  "notes": [],
+  "did": "Opened \"Blocked addresses\" in the owner's menu, blocked the address 203.0.113.7 for 2 days with a reason, then lifted the block."
+}

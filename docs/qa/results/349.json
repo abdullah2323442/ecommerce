@@ -1,0 +1,18 @@
+{
+  "n": 349,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f349_1.jpg",
+      "caption": "Returns",
+      "role": "wholesale",
+      "url": "/wholesale/returns"
+    }
+  ],
+  "notes": [
+    "Return money for cash on delivery versus online was not reproduced."
+  ],
+  "did": "Looked at the return page for money handling."
+}

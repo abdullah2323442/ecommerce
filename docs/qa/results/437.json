@@ -1,0 +1,27 @@
+{
+  "n": 437,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The restaurant can ask for an advance on orders above an amount"
+    },
+    {
+      "ok": true,
+      "text": "And choose what percentage"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f437_1.jpg",
+      "caption": "Advance for big orders",
+      "role": "vendor",
+      "url": "/food/vendor"
+    }
+  ],
+  "notes": [
+    "A big order with an advance was not placed, so the shopper side of paying the advance was not seen."
+  ],
+  "did": "On the restaurant's page, looked at the advance payment setting."
+}

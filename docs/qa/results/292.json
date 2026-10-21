@@ -1,0 +1,21 @@
+{
+  "n": 292,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The shop has a page of its own"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f292_1.jpg",
+      "caption": "The seller's own page",
+      "role": "guest",
+      "url": "/shop/5"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the seller's own page from a product."
+}

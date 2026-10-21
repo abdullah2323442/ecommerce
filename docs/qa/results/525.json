@@ -1,0 +1,23 @@
+{
+  "n": 525,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner gives tokens that work once, in any sector"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f525_1.jpg",
+      "caption": "Aqua Tokens",
+      "role": "admin",
+      "url": "/admin/tokens"
+    }
+  ],
+  "notes": [
+    "The two levels (the shop's tokens and a seller's tokens) were seen on separate screens, but giving a token and using it was not carried through."
+  ],
+  "did": "Opened the owner's Aqua Tokens page."
+}

@@ -1,0 +1,21 @@
+{
+  "n": 285,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Price ranges are offered as buttons"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f285_1.jpg",
+      "caption": "Budget ranges as buttons",
+      "role": "guest",
+      "url": "/market?all=1"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the budget buttons that let a shopper start from what they want to spend."
+}

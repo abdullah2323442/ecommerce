@@ -1,0 +1,23 @@
+{
+  "n": 230,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "An MPO appears as \"Anonymous\" with a number"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f230_1.jpg",
+      "caption": "Anonymous 0, 1, 2...",
+      "role": "admin",
+      "url": "/admin/mpo"
+    }
+  ],
+  "notes": [
+    "The \"Anonymous 1 (my name)\" wording on the MPO's own side was not found."
+  ],
+  "did": "Looked at how an MPO is named on screens other than the owner's."
+}

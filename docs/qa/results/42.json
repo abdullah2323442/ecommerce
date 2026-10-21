@@ -1,0 +1,45 @@
+{
+  "n": 42,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The counter shows no profit figures"
+    },
+    {
+      "ok": true,
+      "text": "Staff cannot open /admin/reports"
+    },
+    {
+      "ok": true,
+      "text": "Staff cannot open /admin/stock/reports"
+    },
+    {
+      "ok": true,
+      "text": "Staff cannot see what stock cost the shop"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f42_1.jpg",
+      "caption": "The counter, as staff see it",
+      "role": "staff",
+      "url": "/admin/counter"
+    },
+    {
+      "file": "f42_2.jpg",
+      "caption": "Reports are closed to staff",
+      "role": "staff",
+      "url": "/"
+    },
+    {
+      "file": "f42_3.jpg",
+      "caption": "The stock page, as staff see it",
+      "role": "staff",
+      "url": "/"
+    }
+  ],
+  "notes": [],
+  "did": "Signed in as counter staff and tried to open the reports and the stock-value pages, and looked at the counter for profit figures."
+}

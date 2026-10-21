@@ -1,0 +1,37 @@
+{
+  "n": 263,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner approves the return"
+    },
+    {
+      "ok": true,
+      "text": "The shop has credit, shown in taka, that comes off its next memo"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f263_1.jpg",
+      "caption": "A return waiting for the owner",
+      "role": "admin",
+      "url": "/admin/returns"
+    },
+    {
+      "file": "f263_2.jpg",
+      "caption": "After approving: \"Return approved.\"",
+      "role": "admin",
+      "url": "/admin/returns"
+    },
+    {
+      "file": "f263_3.jpg",
+      "caption": "The shop sees its credit",
+      "role": "paikari",
+      "url": "/paikari/returns"
+    }
+  ],
+  "notes": [],
+  "did": "Approved the waiting return as credit and looked at what the shop sees."
+}

@@ -1,0 +1,21 @@
+{
+  "n": 127,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "There is a \"Bring from outside\" box for goods the shop does not hold"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f127_1.jpg",
+      "caption": "The \"Bring from outside\" tick box",
+      "role": "admin",
+      "url": "/admin/counter/159"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the \"Bring from outside\" tick box beside the medicine search."
+}

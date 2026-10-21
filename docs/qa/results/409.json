@@ -1,0 +1,25 @@
+{
+  "n": 409,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The buyer is told the advance: 30%, 6,600"
+    },
+    {
+      "ok": true,
+      "text": "And that it was received"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f409_1.jpg",
+      "caption": "The advance, on the buyer's page",
+      "role": "visitor",
+      "url": "/custom/YWqp5Mw964YyEaqPGFkNVXFzqoPOexRqu8CRvOea"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the advance on the job."
+}

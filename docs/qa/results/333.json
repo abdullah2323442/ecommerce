@@ -1,0 +1,23 @@
+{
+  "n": 333,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A commission can be a percent or a fixed taka amount"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f333_1.jpg",
+      "caption": "Percent or taka",
+      "role": "admin",
+      "url": "/admin/market"
+    }
+  ],
+  "notes": [
+    "The choices are: percent / taka"
+  ],
+  "did": "Looked at the choice between percent and taka on the commission."
+}

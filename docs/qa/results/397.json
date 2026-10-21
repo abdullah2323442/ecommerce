@@ -1,0 +1,21 @@
+{
+  "n": 397,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Jobs move through stages; the owner assigns a craftsman"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f397_1.jpg",
+      "caption": "Made to order",
+      "role": "admin",
+      "url": "/admin/custom"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at where the owner assigns jobs."
+}

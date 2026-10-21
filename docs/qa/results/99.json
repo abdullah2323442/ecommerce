@@ -1,0 +1,23 @@
+{
+  "n": 99,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A purchase can hold many lines"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f99_1.jpg",
+      "caption": "A second line added to the same purchase",
+      "role": "admin",
+      "url": "/admin/stock/receive"
+    }
+  ],
+  "notes": [
+    "Adding all of one company's medicines in one go was not found as a separate control. Lines are added one at a time."
+  ],
+  "did": "Pressed \"Add a line\" to enter several medicines in one purchase."
+}

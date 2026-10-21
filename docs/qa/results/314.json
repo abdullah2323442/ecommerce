@@ -1,0 +1,21 @@
+{
+  "n": 314,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A \"Buy again\" reminder exists"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f314_1.jpg",
+      "caption": "The Buy again reminder",
+      "role": "paikari",
+      "url": "/my-orders"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the \"Buy again\" reminder on the shop's orders page."
+}

@@ -1,0 +1,21 @@
+{
+  "n": 301,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A form asks why, and lets the shopper offer a price"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f301_1.jpg",
+      "caption": "Tell us why you are not buying, and offer a price",
+      "role": "visitor",
+      "url": "/market/78"
+    }
+  ],
+  "notes": [],
+  "did": "Pressed \"Not buying? Tell us why\" on a product."
+}

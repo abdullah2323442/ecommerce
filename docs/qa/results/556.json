@@ -1,0 +1,21 @@
+{
+  "n": 556,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A VAT switch exists from the start"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f556_1.jpg",
+      "caption": "VAT setting",
+      "role": "admin",
+      "url": "/admin/settings"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the VAT setting."
+}

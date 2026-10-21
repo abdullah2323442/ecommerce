@@ -1,0 +1,18 @@
+{
+  "n": 375,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f375_1.jpg",
+      "caption": "The catalog",
+      "role": "admin",
+      "url": "/admin/catalog"
+    }
+  ],
+  "notes": [
+    "Not carried through."
+  ],
+  "did": "Looked for one product in many categories."
+}

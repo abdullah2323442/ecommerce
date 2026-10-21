@@ -1,0 +1,33 @@
+{
+  "n": 50,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Pre-orders have their own screen, apart from counter drafts"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f50_1.jpg",
+      "caption": "Counter drafts",
+      "role": "admin",
+      "url": "/admin/counter"
+    },
+    {
+      "file": "f50_2.jpg",
+      "caption": "Stock-entry drafts (the \"Save as draft\" button)",
+      "role": "admin",
+      "url": "/admin/stock/receive"
+    },
+    {
+      "file": "f50_3.jpg",
+      "caption": "Pre-orders",
+      "role": "admin",
+      "url": "/admin/preorders"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the screens that hold the different kinds of draft: counter drafts, stock-entry drafts and pre-orders."
+}

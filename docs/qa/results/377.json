@@ -1,0 +1,18 @@
+{
+  "n": 377,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f377_1.jpg",
+      "caption": "Returns",
+      "role": "admin",
+      "url": "/admin/returns"
+    }
+  ],
+  "notes": [
+    "Not carried through."
+  ],
+  "did": "Looked for wood and clothing returns in the same Return section."
+}

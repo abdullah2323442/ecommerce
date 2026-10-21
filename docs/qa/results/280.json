@@ -1,0 +1,21 @@
+{
+  "n": 280,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A finished memo has a \"Print memo\" button, so it can be printed again"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f280_1.jpg",
+      "caption": "A memo with its print button",
+      "role": "admin",
+      "url": "/admin/counter/213"
+    }
+  ],
+  "notes": [],
+  "did": "Opened a finished memo and looked for a print or reprint button."
+}

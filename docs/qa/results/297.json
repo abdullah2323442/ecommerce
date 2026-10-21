@@ -1,0 +1,21 @@
+{
+  "n": 297,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Only people who bought the product may review it"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f297_1.jpg",
+      "caption": "Only buyers can review",
+      "role": "guest",
+      "url": "/market/78"
+    }
+  ],
+  "notes": [],
+  "did": "Read who may write a review."
+}

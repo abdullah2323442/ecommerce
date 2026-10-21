@@ -1,0 +1,18 @@
+{
+  "n": 592,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f592_1.jpg",
+      "caption": "Settings",
+      "role": "admin",
+      "url": "/admin/settings"
+    }
+  ],
+  "notes": [
+    "Not found on a screen."
+  ],
+  "did": "Looked for the monthly backup test."
+}

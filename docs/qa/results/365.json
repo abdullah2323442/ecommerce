@@ -1,0 +1,23 @@
+{
+  "n": 365,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The tab shows how many orders there are"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f365_1.jpg",
+      "caption": "The seller screen with its orders count",
+      "role": "wholesale",
+      "url": "/wholesale/sell"
+    }
+  ],
+  "notes": [
+    "The checklist marks the text-message alert as partly built. No text message was sent."
+  ],
+  "did": "Looked at the seller's orders for a count of orders not yet seen."
+}

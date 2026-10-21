@@ -1,0 +1,21 @@
+{
+  "n": 479,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Large orders can ask for the delivery charge first"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f479_1.jpg",
+      "caption": "Delivery charge paid first",
+      "role": "admin",
+      "url": "/admin/settings"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the setting for an advance delivery charge."
+}

@@ -1,0 +1,25 @@
+{
+  "n": 231,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The MPO sees orders as coming from the owner's account, never from a buyer"
+    },
+    {
+      "ok": true,
+      "text": "The owner's screen states identity is hidden both ways"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f231_1.jpg",
+      "caption": "The MPO sees our account, not the buyer",
+      "role": "mpo",
+      "url": "/mpo"
+    }
+  ],
+  "notes": [],
+  "did": "Read the notes on the MPO's page about who can see whom."
+}

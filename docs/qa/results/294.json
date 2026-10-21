@@ -1,0 +1,29 @@
+{
+  "n": 294,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Pressing the photo opens it large, so the buyer can look closer"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f294_1.jpg",
+      "caption": "The product photo",
+      "role": "guest",
+      "url": "/market/78"
+    },
+    {
+      "file": "f294_2.jpg",
+      "caption": "The photo opened large",
+      "role": "guest",
+      "url": "/market/78"
+    }
+  ],
+  "notes": [
+    "Only one photo exists on this product, so the row of thumbnails to look through was not shown. The seller adds more with \"More photos\"."
+  ],
+  "did": "Looked at the product photo and pressed it to look closer."
+}

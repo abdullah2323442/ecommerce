@@ -1,0 +1,18 @@
+{
+  "n": 266,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f266_1.jpg",
+      "caption": "Lots",
+      "role": "admin",
+      "url": "/admin/stock/medicines/1"
+    }
+  ],
+  "notes": [
+    "Needs a lot that is completely sold and then returned. Not reproduced."
+  ],
+  "did": "Looked for a finished lot reopening."
+}

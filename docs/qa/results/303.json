@@ -1,0 +1,33 @@
+{
+  "n": 303,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A medicine search with no result offers an \"I was looking for this\" button"
+    },
+    {
+      "ok": true,
+      "text": "Pressing it tells the owner what the shopper could not find"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f303_1.jpg",
+      "caption": "A medicine search with no result",
+      "role": "visitor",
+      "url": "/medicines?q=zzzunobtainium"
+    },
+    {
+      "file": "f303_2.jpg",
+      "caption": "After pressing it",
+      "role": "visitor",
+      "url": "/medicines?q=zzzunobtainium"
+    }
+  ],
+  "notes": [
+    "The button is on the medicine search and the home page search. The market list for other goods shows only \"Nothing here yet.\""
+  ],
+  "did": "Searched for something the market does not sell and looked for the \"I was looking for this\" button."
+}

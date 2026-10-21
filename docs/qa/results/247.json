@@ -1,0 +1,23 @@
+{
+  "n": 247,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "An inactive medicine is either hidden or clearly marked as inactive"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f247_1.jpg",
+      "caption": "Napa search: the inactive medicine",
+      "role": "guest",
+      "url": "/medicines?q=napa"
+    }
+  ],
+  "notes": [
+    "No screen lets the owner switch a medicine to inactive. It was done in the test database."
+  ],
+  "did": "Looked for Napa 80 mg, which was switched to inactive in the test data."
+}

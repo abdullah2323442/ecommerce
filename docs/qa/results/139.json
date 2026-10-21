@@ -1,0 +1,21 @@
+{
+  "n": 139,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The shop gets a first memo at the printed prices straight away"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f139_1.jpg",
+      "caption": "Right after sending: a memo at the printed price",
+      "role": "paikari",
+      "url": "/paikari/orders/169"
+    }
+  ],
+  "notes": [],
+  "did": "After sending an order, read what the shop sees straight away."
+}

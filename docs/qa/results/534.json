@@ -1,0 +1,21 @@
+{
+  "n": 534,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner manages the sectors"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f534_1.jpg",
+      "caption": "Sector management",
+      "role": "admin",
+      "url": "/admin/market"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at sector management on the owner's Market page."
+}

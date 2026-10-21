@@ -1,0 +1,27 @@
+{
+  "n": 141,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The order with an offer item is marked on the owner's list"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f141_1.jpg",
+      "caption": "The offer boxes are in the shop's order",
+      "role": "paikari",
+      "url": "/paikari"
+    },
+    {
+      "file": "f141_2.jpg",
+      "caption": "The owner's list of online orders",
+      "role": "admin",
+      "url": "/admin/orders"
+    }
+  ],
+  "notes": [],
+  "did": "As a paikari shop, ordered 3 boxes through the offer and sent the order. Then the owner opened the online orders list."
+}

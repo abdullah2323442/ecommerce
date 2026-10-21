@@ -1,0 +1,41 @@
+{
+  "n": 296,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "After delivery the buyer is asked \"How was it?\""
+    },
+    {
+      "ok": true,
+      "text": "The review shows on the product page"
+    },
+    {
+      "ok": true,
+      "text": "Marked as a verified buyer, with no name"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f296_1.jpg",
+      "caption": "A four-star review with a photo, ready to send",
+      "role": "visitor",
+      "url": "/market/orders/MWOP9Rd1CCx7CnkWHLrsUwFijMJ3qEPJqjLpnJZk"
+    },
+    {
+      "file": "f296_2.jpg",
+      "caption": "After sending the review",
+      "role": "visitor",
+      "url": "/market/orders/MWOP9Rd1CCx7CnkWHLrsUwFijMJ3qEPJqjLpnJZk"
+    },
+    {
+      "file": "f296_3.jpg",
+      "caption": "The review on the product page",
+      "role": "visitor",
+      "url": "/market/78"
+    }
+  ],
+  "notes": [],
+  "did": "On the delivered order, gave four stars, wrote a few words, attached a photo and pressed Send my review. Then looked at the product page."
+}

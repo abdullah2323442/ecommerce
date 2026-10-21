@@ -1,0 +1,21 @@
+{
+  "n": 227,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "An MPO can give a bonus, for example 10 boxes plus 2 free"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f227_1.jpg",
+      "caption": "The bonus box",
+      "role": "mpo2",
+      "url": "/mpo"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the bonus box on the product form."
+}

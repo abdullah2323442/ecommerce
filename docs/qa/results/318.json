@@ -1,0 +1,21 @@
+{
+  "n": 318,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Old unanswered orders cancel themselves after a time the owner sets"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f318_1.jpg",
+      "caption": "The auto-cancel setting",
+      "role": "admin",
+      "url": "/admin/settings"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the setting that cancels old orders nobody answered."
+}

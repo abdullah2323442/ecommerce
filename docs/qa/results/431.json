@@ -1,0 +1,25 @@
+{
+  "n": 431,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The restaurant can list ingredients that do not go together"
+    },
+    {
+      "ok": true,
+      "text": "By picking a first and a second ingredient"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f431_1.jpg",
+      "caption": "Ingredients that do not go together",
+      "role": "vendor",
+      "url": "/food/vendor/custom"
+    }
+  ],
+  "notes": [],
+  "did": "On the restaurant's custom food page, looked at the rules for ingredients that do not go together."
+}

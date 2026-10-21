@@ -1,0 +1,21 @@
+{
+  "n": 520,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The order page lets the shop add a note, a voice note or a photo"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f520_1.jpg",
+      "caption": "Add a note, voice note or photo",
+      "role": "paikari",
+      "url": "/paikari/orders/214"
+    }
+  ],
+  "notes": [],
+  "did": "Sent an order and looked at the order page for a way to add a note, a voice note or a photo."
+}

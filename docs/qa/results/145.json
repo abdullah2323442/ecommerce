@@ -1,0 +1,25 @@
+{
+  "n": 145,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Each box is priced at the shop's own price (255 for a box printed at 300)"
+    },
+    {
+      "ok": true,
+      "text": "The memo link says it is the first, preliminary memo"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f145_1.jpg",
+      "caption": "The shop's order page: the total is at the shop's own price",
+      "role": "paikari",
+      "url": "/paikari/orders/175"
+    }
+  ],
+  "notes": [],
+  "did": "Sent an order and read the memo total on the shop's order page."
+}

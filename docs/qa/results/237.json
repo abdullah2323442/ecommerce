@@ -1,0 +1,18 @@
+{
+  "n": 237,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f237_1.jpg",
+      "caption": "The MPO list",
+      "role": "admin",
+      "url": "/admin/mpo"
+    }
+  ],
+  "notes": [
+    "Not carried through."
+  ],
+  "did": "Looked for a count of failed deliveries."
+}

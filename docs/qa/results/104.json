@@ -1,0 +1,29 @@
+{
+  "n": 104,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A count can be the whole shop"
+    },
+    {
+      "ok": true,
+      "text": "Or one company"
+    },
+    {
+      "ok": true,
+      "text": "Or one shelf"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f104_1.jpg",
+      "caption": "Choosing how to count",
+      "role": "admin",
+      "url": "/admin/stock/counts"
+    }
+  ],
+  "notes": [],
+  "did": "Opened Stock count and looked at the ways to count: whole shop, one company or one shelf."
+}

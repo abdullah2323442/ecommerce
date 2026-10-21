@@ -1,0 +1,25 @@
+{
+  "n": 83,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Each near-expiry lot shows the lowest price it can be sold at without a loss"
+    },
+    {
+      "ok": true,
+      "text": "It suggests a discount for an offer"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f83_1.jpg",
+      "caption": "Near expiry: each lot shows its lowest safe price and a suggested discount",
+      "role": "admin",
+      "url": "/admin/stock/expiry"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the \"Near expiry\" list and looked at what it suggests for each lot."
+}

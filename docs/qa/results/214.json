@@ -1,0 +1,21 @@
+{
+  "n": 214,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "An offer has an end date"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f214_1.jpg",
+      "caption": "The offer's date box",
+      "role": "admin",
+      "url": "/admin/offers"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the date box for how long an offer runs."
+}

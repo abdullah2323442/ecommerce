@@ -1,0 +1,37 @@
+{
+  "n": 48,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A sale that is only a draft is not counted (5977.5 before, 5977.5 with the draft open)"
+    },
+    {
+      "ok": true,
+      "text": "Once finished the sale is counted: 5977.5 became 6277.5"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f48_1.jpg",
+      "caption": "\"Sales today\" before: 5977.5",
+      "role": "admin",
+      "url": "/admin/reports"
+    },
+    {
+      "file": "f48_2.jpg",
+      "caption": "\"Sales today\" while the sale is only a draft: 5977.5",
+      "role": "admin",
+      "url": "/admin/reports"
+    },
+    {
+      "file": "f48_3.jpg",
+      "caption": "\"Sales today\" after the sale is finished: 6277.5",
+      "role": "admin",
+      "url": "/admin/reports"
+    }
+  ],
+  "notes": [],
+  "did": "Read \"Sales today\" in the report, then started a retail sale with one box in it and read it again, then finished the sale and read it a third time."
+}

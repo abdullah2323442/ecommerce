@@ -1,0 +1,23 @@
+{
+  "n": 157,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "At night the shop is told its order will be checked in the morning"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f157_1.jpg",
+      "caption": "At night: the shop is told when the order will be looked at",
+      "role": "paikari",
+      "url": "/paikari"
+    }
+  ],
+  "notes": [
+    "The night hours follow the app's own clock, which is set to UTC, six hours behind Bangladesh. To make the message appear I set the night hours to match the app's clock. With the clock left on UTC, a Dhaka shop would be told \"night\" at the wrong time of day."
+  ],
+  "did": "Made the owner's night hours cover the present time, then opened the shop's ordering screen."
+}

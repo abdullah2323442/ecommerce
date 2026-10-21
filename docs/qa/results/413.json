@@ -1,0 +1,21 @@
+{
+  "n": 413,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "An urgent job costs an extra 20%, and the buyer is told so"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f413_1.jpg",
+      "caption": "Urgent order: extra 20%",
+      "role": "visitor",
+      "url": "/custom/new/wood"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the urgent box on the wood order form."
+}

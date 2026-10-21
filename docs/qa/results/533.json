@@ -1,0 +1,21 @@
+{
+  "n": 533,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner manages every online order from one place"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f533_1.jpg",
+      "caption": "Order management",
+      "role": "admin",
+      "url": "/admin/orders"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the owner's Online orders."
+}

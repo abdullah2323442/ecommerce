@@ -1,0 +1,25 @@
+{
+  "n": 450,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Every post is read before it is shown"
+    },
+    {
+      "ok": true,
+      "text": "There is a \"Waiting to be read\" list"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f450_1.jpg",
+      "caption": "Help posts wait for approval",
+      "role": "admin",
+      "url": "/admin/help"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the owner's Help posts page."
+}

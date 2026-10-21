@@ -1,0 +1,21 @@
+{
+  "n": 547,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A list shows what ran out today"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f547_1.jpg",
+      "caption": "Finished today",
+      "role": "admin",
+      "url": "/admin/stock/reports"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at \"Finished today\"."
+}

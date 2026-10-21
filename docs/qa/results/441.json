@@ -1,0 +1,29 @@
+{
+  "n": 441,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Today's sales"
+    },
+    {
+      "ok": true,
+      "text": "This month's sales"
+    },
+    {
+      "ok": true,
+      "text": "The commission the restaurant pays"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f441_1.jpg",
+      "caption": "The restaurant dashboard",
+      "role": "vendor",
+      "url": "/food/vendor"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the restaurant owner's dashboard."
+}

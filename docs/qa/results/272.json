@@ -1,0 +1,21 @@
+{
+  "n": 272,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The retail memo prints the return policy"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f272_1.jpg",
+      "caption": "The memo carries the return policy",
+      "role": "admin",
+      "url": "/admin/counter/213"
+    }
+  ],
+  "notes": [],
+  "did": "Finished a retail sale and read the policy printed on the memo."
+}

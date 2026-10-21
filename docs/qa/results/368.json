@@ -1,0 +1,21 @@
+{
+  "n": 368,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A sector can allow fractional quantities, such as 2.5 metres"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f368_1.jpg",
+      "caption": "Fractions allowed",
+      "role": "admin",
+      "url": "/admin/market"
+    }
+  ],
+  "notes": [],
+  "did": "Looked for the \"Fractions allowed\" switch on a sector."
+}

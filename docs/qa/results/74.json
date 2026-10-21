@@ -1,0 +1,23 @@
+{
+  "n": 74,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Each staff member has a discount limit box (\"Limit %\")"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f74_1.jpg",
+      "caption": "Each staff member has a \"Limit %\" box",
+      "role": "admin",
+      "url": "/admin/staff"
+    }
+  ],
+  "notes": [
+    "Above the limit, staff cannot apply the discount themselves. They must ask the owner (see feature 72)."
+  ],
+  "did": "Opened the Staff page and looked at the box for each staff member's own discount limit."
+}

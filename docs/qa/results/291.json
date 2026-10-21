@@ -1,0 +1,21 @@
+{
+  "n": 291,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The catalog keeps one name per product"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f291_1.jpg",
+      "caption": "The Product catalog",
+      "role": "admin",
+      "url": "/admin/catalog"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the Product catalog, where each product has one name for every seller."
+}

@@ -1,0 +1,18 @@
+{
+  "n": 414,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f414_1.jpg",
+      "caption": "Made to order",
+      "role": "admin",
+      "url": "/admin/custom"
+    }
+  ],
+  "notes": [
+    "Needs a finished job. Not carried through."
+  ],
+  "did": "Looked for wood being taken from stock."
+}

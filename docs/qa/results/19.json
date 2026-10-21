@@ -1,0 +1,33 @@
+{
+  "n": 19,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The back office has stock, orders, customers and reports"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f19_1.jpg",
+      "caption": "The owner's back office home",
+      "role": "admin",
+      "url": "/dashboard"
+    },
+    {
+      "file": "f19_2.jpg",
+      "caption": "Orders in the back office",
+      "role": "admin",
+      "url": "/admin/orders"
+    },
+    {
+      "file": "f19_3.jpg",
+      "caption": "Stock in the back office",
+      "role": "admin",
+      "url": "/admin/stock"
+    }
+  ],
+  "notes": [],
+  "did": "Signed in as the owner and opened the back office."
+}

@@ -1,0 +1,27 @@
+{
+  "n": 90,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The old lot is on the shelf with its old date"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f90_1.jpg",
+      "caption": "An old stock lot typed in by hand with an old date",
+      "role": "admin",
+      "url": "/admin/stock/receive"
+    },
+    {
+      "file": "f90_2.jpg",
+      "caption": "The old lot in the Lots table",
+      "role": "admin",
+      "url": "/admin/stock/medicines/1"
+    }
+  ],
+  "notes": [],
+  "did": "Entered an old lot by hand, with an earlier invoice date, as a shop does when it first starts using the system."
+}

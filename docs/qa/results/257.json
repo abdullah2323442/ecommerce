@@ -1,0 +1,21 @@
+{
+  "n": 257,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Memos from that day are listed"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f257_1.jpg",
+      "caption": "Memos searched by date",
+      "role": "paikari",
+      "url": "/paikari/returns?from=2026-10-21&to=2026-10-21"
+    }
+  ],
+  "notes": [],
+  "did": "Used the From and To boxes to search the memos by date."
+}

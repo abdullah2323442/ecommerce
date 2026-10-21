@@ -1,0 +1,23 @@
+{
+  "n": 446,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Top-ups are done by hand until a provider does it"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f446_1.jpg",
+      "caption": "Game top-ups",
+      "role": "admin",
+      "url": "/admin/gaming"
+    }
+  ],
+  "notes": [
+    "The checklist marks automatic top-up as partly built: it is manual for now."
+  ],
+  "did": "Looked at the automatic top-up."
+}

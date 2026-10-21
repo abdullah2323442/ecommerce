@@ -1,0 +1,29 @@
+{
+  "n": 538,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The medicine that earns the most"
+    },
+    {
+      "ok": true,
+      "text": "The companies that move most"
+    },
+    {
+      "ok": true,
+      "text": "The best customers"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f538_1.jpg",
+      "caption": "Rankings",
+      "role": "admin",
+      "url": "/admin/reports"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the ranking lists on the monthly report."
+}

@@ -1,0 +1,33 @@
+{
+  "n": 106,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "At the counter, scanning a known barcode adds that medicine to the sale"
+    },
+    {
+      "ok": true,
+      "text": "On the purchase form, scanning a known barcode adds a line for that medicine"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f106_1.jpg",
+      "caption": "At the counter: the scanned barcode",
+      "role": "admin",
+      "url": "/admin/counter/252"
+    },
+    {
+      "file": "f106_2.jpg",
+      "caption": "On the purchase form: the same barcode",
+      "role": "admin",
+      "url": "/admin/stock/receive"
+    }
+  ],
+  "notes": [
+    "The scan box on the purchase form sits inside the purchase form. The browser console reports \"a form cannot be a descendant of a form\", and pressing Enter reloads the page instead of looking the barcode up."
+  ],
+  "did": "Typed a known barcode the way a scanner does (the digits, then Enter), first at the counter and then on the purchase form."
+}

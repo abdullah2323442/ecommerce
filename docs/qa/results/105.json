@@ -1,0 +1,23 @@
+{
+  "n": 105,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A count compares what is on the shelf with the system"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f105_1.jpg",
+      "caption": "A count in progress",
+      "role": "admin",
+      "url": "/admin/stock/counts/1"
+    }
+  ],
+  "notes": [
+    "Approving the differences needs counted numbers typed against each medicine, which was not taken further here."
+  ],
+  "did": "Started a count of one company and looked at how differences are approved."
+}

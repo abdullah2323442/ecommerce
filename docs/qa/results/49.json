@@ -1,0 +1,18 @@
+{
+  "n": 49,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f49_1.jpg",
+      "caption": "Returns",
+      "role": "admin",
+      "url": "/admin/returns"
+    }
+  ],
+  "notes": [
+    "The return window starting from receipt is covered with the Returns features later in this report."
+  ],
+  "did": "Opened the Returns screen, where the return window is counted."
+}

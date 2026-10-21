@@ -1,0 +1,33 @@
+{
+  "n": 146,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner changed the price and the total is 250"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f146_1.jpg",
+      "caption": "The order before the price is changed",
+      "role": "admin",
+      "url": "/admin/orders/173"
+    },
+    {
+      "file": "f146_2.jpg",
+      "caption": "After \"Set price\": the total is now 250",
+      "role": "admin",
+      "url": "/admin/orders/173"
+    },
+    {
+      "file": "f146_3.jpg",
+      "caption": "The shop's side shows the price the owner set",
+      "role": "paikari",
+      "url": "/paikari"
+    }
+  ],
+  "notes": [],
+  "did": "Opened a new order being checked, typed a different price for the item (250 instead of 255), pressed \"Set price\", then looked at the order from the shop's side."
+}

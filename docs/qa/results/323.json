@@ -1,0 +1,21 @@
+{
+  "n": 323,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The wholesaler has a minimum quantity per item"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f323_1.jpg",
+      "caption": "Minimum per item",
+      "role": "wholesale",
+      "url": "/wholesale/account"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the wholesaler's account page for their minimum order."
+}

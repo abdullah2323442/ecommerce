@@ -1,0 +1,18 @@
+{
+  "n": 453,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f453_1.jpg",
+      "caption": "The Help board",
+      "role": "guest",
+      "url": "/help"
+    }
+  ],
+  "notes": [
+    "Needs an approved post with a comment. Not carried through."
+  ],
+  "did": "Looked for a product card inside a comment."
+}

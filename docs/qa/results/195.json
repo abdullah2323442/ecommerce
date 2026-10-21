@@ -1,0 +1,31 @@
+{
+  "n": 195,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The system refuses an offer that leaves less than the smallest profit allowed"
+    },
+    {
+      "ok": true,
+      "text": "The page states the smallest profit an offer must keep, set by the owner in Settings"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f195_1.jpg",
+      "caption": "An offer at 20% off a box that cost 240",
+      "role": "admin",
+      "url": "/admin/offers"
+    },
+    {
+      "file": "f195_2.jpg",
+      "caption": "What the system says",
+      "role": "admin",
+      "url": "/admin/offers"
+    }
+  ],
+  "notes": [],
+  "did": "Tried to start an offer at 20% off, which leaves almost no profit on a box that cost 240."
+}

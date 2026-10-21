@@ -1,0 +1,31 @@
+{
+  "n": 150,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The order shows how much more to add for free delivery"
+    },
+    {
+      "ok": true,
+      "text": "Once the level is passed it says delivery is free"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f150_1.jpg",
+      "caption": "One box with delivery to the shop: how far from free delivery",
+      "role": "paikari",
+      "url": "/paikari"
+    },
+    {
+      "file": "f150_2.jpg",
+      "caption": "Two boxes: the free delivery level is passed",
+      "role": "paikari",
+      "url": "/paikari"
+    }
+  ],
+  "notes": [],
+  "did": "Set free delivery to start at 300 taka and looked at the shop's order with one box (255) and with two boxes (510)."
+}

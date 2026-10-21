@@ -1,0 +1,31 @@
+{
+  "n": 603,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The wallet offers \"Invite a friend\""
+    },
+    {
+      "ok": true,
+      "text": "It says what the shopper earns when the friend orders"
+    },
+    {
+      "ok": true,
+      "text": "And counts the friends who joined by the shopper's link"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f603_1.jpg",
+      "caption": "The wallet with the referral switched on",
+      "role": "visitor",
+      "url": "/wallet"
+    }
+  ],
+  "notes": [
+    "Points earned on the shopper's own purchases are not built. The checklist marks this feature as partly built: the referral token works, the purchase points do not exist yet."
+  ],
+  "did": "The owner set the token for a referral to 50 taka. A shopper then opened the wallet. The owner switched it off again afterwards."
+}

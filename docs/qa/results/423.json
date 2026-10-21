@@ -1,0 +1,21 @@
+{
+  "n": 423,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The shopper can choose to eat at the restaurant"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f423_1.jpg",
+      "caption": "Eat there, or have it delivered",
+      "role": "guest",
+      "url": "/food"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the \"Eat there\" choice on the Food page."
+}

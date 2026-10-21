@@ -1,0 +1,21 @@
+{
+  "n": 180,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The end discount is not applied on top of an item that already has a special discount (total 285, not 273)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f180_1.jpg",
+      "caption": "An item with its own special discount, plus an end discount",
+      "role": "admin",
+      "url": "/admin/counter/205"
+    }
+  ],
+  "notes": [],
+  "did": "Gave one item a special discount, then added an end discount, and looked at the total."
+}

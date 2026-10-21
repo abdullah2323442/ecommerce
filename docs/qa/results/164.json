@@ -1,0 +1,27 @@
+{
+  "n": 164,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The shop can see its own total for the month"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f164_1.jpg",
+      "caption": "The owner switches the monthly total on for this shop",
+      "role": "admin",
+      "url": "/admin/customers/4"
+    },
+    {
+      "file": "f164_2.jpg",
+      "caption": "The shop's page",
+      "role": "paikari",
+      "url": "/my-orders"
+    }
+  ],
+  "notes": [],
+  "did": "Switched on \"Show the monthly total\" for Karim Pharmacy and looked at what the shop sees."
+}

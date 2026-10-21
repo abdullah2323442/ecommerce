@@ -1,0 +1,31 @@
+{
+  "n": 29,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The form can be set to percent"
+    },
+    {
+      "ok": true,
+      "text": "The same form can be switched to a fixed taka price"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f29_1.jpg",
+      "caption": "Percent mode of the rate form",
+      "role": "admin",
+      "url": "/admin/customers/4"
+    },
+    {
+      "file": "f29_2.jpg",
+      "caption": "Taka mode of the rate form",
+      "role": "admin",
+      "url": "/admin/customers/4"
+    }
+  ],
+  "notes": [],
+  "did": "On the rate form, flipped the switch between \"Percent off\" and \"Taka price\"."
+}

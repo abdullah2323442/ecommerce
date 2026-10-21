@@ -1,0 +1,21 @@
+{
+  "n": 497,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A medicine setting beats its company's"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f497_1.jpg",
+      "caption": "By company or by medicine",
+      "role": "admin",
+      "url": "/admin/preorders"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the choices for a whole company or one medicine."
+}

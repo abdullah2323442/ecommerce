@@ -1,0 +1,18 @@
+{
+  "n": 461,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f461_1.jpg",
+      "caption": "The order form",
+      "role": "guest",
+      "url": "/market/78"
+    }
+  ],
+  "notes": [
+    "The checklist marks the map pin as partly built. No map was found on the order form."
+  ],
+  "did": "Looked for a map pin on the order form."
+}

@@ -1,0 +1,21 @@
+{
+  "n": 207,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner sets how many boxes left should trigger a warning"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f207_1.jpg",
+      "caption": "The setting",
+      "role": "admin",
+      "url": "/admin/settings"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the setting for the warning before an offer runs out."
+}

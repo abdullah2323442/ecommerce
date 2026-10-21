@@ -1,0 +1,21 @@
+{
+  "n": 358,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Each product shows how many people looked at it, how many ordered and how many sold, so \"looked but did not buy\" can be seen"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f358_1.jpg",
+      "caption": "Seller reports",
+      "role": "wholesale",
+      "url": "/wholesale/sell/reports"
+    }
+  ],
+  "notes": [],
+  "did": "Looked on the reports for \"viewed but not bought\"."
+}

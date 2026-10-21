@@ -1,0 +1,21 @@
+{
+  "n": 243,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A name that is not in the database cannot be chosen, so no stray medicine names get in"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f243_1.jpg",
+      "caption": "A made-up name finds nothing to choose",
+      "role": "admin",
+      "url": "/admin/stock/receive"
+    }
+  ],
+  "notes": [],
+  "did": "On the purchase form, typed a medicine name that is not in the database."
+}

@@ -1,0 +1,27 @@
+{
+  "n": 71,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The staff attempt shows up for the owner"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f71_1.jpg",
+      "caption": "Approvals waiting for the owner",
+      "role": "admin",
+      "url": "/admin/approvals"
+    },
+    {
+      "file": "f71_2.jpg",
+      "caption": "The activity log",
+      "role": "admin",
+      "url": "/admin/activity"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the Approvals and Activity pages to see whether the owner was told about the staff attempt."
+}

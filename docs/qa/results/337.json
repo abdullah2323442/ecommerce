@@ -1,0 +1,21 @@
+{
+  "n": 337,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner sees how many products are waiting"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f337_1.jpg",
+      "caption": "The pending count",
+      "role": "admin",
+      "url": "/admin/market"
+    }
+  ],
+  "notes": [],
+  "did": "Read the number beside \"Waiting to be read\"."
+}

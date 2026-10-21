@@ -1,0 +1,21 @@
+{
+  "n": 218,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The shop pays its own hand-set price (246), not the offer"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f218_1.jpg",
+      "caption": "Karim keeps the hand-set rate while an offer runs",
+      "role": "paikari",
+      "url": "/paikari"
+    }
+  ],
+  "notes": [],
+  "did": "Gave Karim Pharmacy a hand-set 18% price while a tier offer is running, and looked at what the shop pays."
+}

@@ -1,0 +1,18 @@
+{
+  "n": 514,
+  "status": "skipped",
+  "error": null,
+  "checks": [],
+  "shots": [
+    {
+      "file": "f514_1.jpg",
+      "caption": "A memo",
+      "role": "admin",
+      "url": "/memo/213"
+    }
+  ],
+  "notes": [
+    "Making a correction and seeing the old number cancelled was not carried through."
+  ],
+  "did": "Looked at the correction screen for a new memo number."
+}

@@ -1,0 +1,21 @@
+{
+  "n": 543,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The report looks at the same days last year"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f543_1.jpg",
+      "caption": "Seasonal forecast",
+      "role": "admin",
+      "url": "/admin/reports"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the seasonal forecast on the report."
+}

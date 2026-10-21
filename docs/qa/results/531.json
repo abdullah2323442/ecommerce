@@ -1,0 +1,25 @@
+{
+  "n": 531,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "All a customer's transactions are on one page"
+    },
+    {
+      "ok": true,
+      "text": "Orders, returns, pre-orders and credit sit together, newest first"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f531_1.jpg",
+      "caption": "All transactions",
+      "role": "admin",
+      "url": "/admin/customers/4"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the \"All transactions\" block on a customer's page."
+}

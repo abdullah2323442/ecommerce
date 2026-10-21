@@ -1,0 +1,21 @@
+{
+  "n": 116,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Staff are told that another person has the draft open"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f116_1.jpg",
+      "caption": "Staff open the owner's draft while the owner has it open",
+      "role": "staff",
+      "url": "/admin/counter/260"
+    }
+  ],
+  "notes": [],
+  "did": "Opened one draft as the owner and, at the same time, as staff, and looked for any sign on the screen that someone else is working on it."
+}

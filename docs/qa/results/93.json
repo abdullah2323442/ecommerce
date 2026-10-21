@@ -1,0 +1,25 @@
+{
+  "n": 93,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The medicine page keeps a movement list"
+    },
+    {
+      "ok": true,
+      "text": "The reason for the correction is kept"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f93_1.jpg",
+      "caption": "Recent movements: the correction and its reason",
+      "role": "admin",
+      "url": "/admin/stock/medicines/1"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the movement list after a correction to see its record and reason."
+}

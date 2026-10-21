@@ -1,0 +1,25 @@
+{
+  "n": 486,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The owner sees what each delivery person holds"
+    },
+    {
+      "ok": true,
+      "text": "The owner counts it and presses Received"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f486_1.jpg",
+      "caption": "Delivery money",
+      "role": "admin",
+      "url": "/admin/delivery-cash"
+    }
+  ],
+  "notes": [],
+  "did": "Opened Delivery money."
+}

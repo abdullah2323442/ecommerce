@@ -1,0 +1,27 @@
+{
+  "n": 174,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The counter sale is on the shop's profile under All transactions"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f174_1.jpg",
+      "caption": "The counter sale is finished",
+      "role": "admin",
+      "url": "/admin/counter/203"
+    },
+    {
+      "file": "f174_2.jpg",
+      "caption": "The shop's profile lists its transactions",
+      "role": "admin",
+      "url": "/admin/customers/4"
+    }
+  ],
+  "notes": [],
+  "did": "Sold a box to Karim Pharmacy at the counter, then opened the shop's profile."
+}

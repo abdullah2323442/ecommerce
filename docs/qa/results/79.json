@@ -1,0 +1,21 @@
+{
+  "n": 79,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The new limit is kept after saving (it shows 2)"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f79_1.jpg",
+      "caption": "The three limits can be changed here",
+      "role": "admin",
+      "url": "/admin/stock/expiry"
+    }
+  ],
+  "notes": [],
+  "did": "Changed \"Stagnant after (months)\" in the settings at the bottom of the Expiry page, saved, and checked it was kept. Then put it back."
+}

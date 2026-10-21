@@ -1,0 +1,29 @@
+{
+  "n": 444,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A list of games"
+    },
+    {
+      "ok": true,
+      "text": "Mobile Legends is listed"
+    },
+    {
+      "ok": true,
+      "text": "Each game shows its cheapest package"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f444_1.jpg",
+      "caption": "Games and their prices",
+      "role": "guest",
+      "url": "/gaming"
+    }
+  ],
+  "notes": [],
+  "did": "Opened Game top-up and looked at the games and their packages."
+}

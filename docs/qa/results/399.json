@@ -1,0 +1,27 @@
+{
+  "n": 399,
+  "status": "skipped",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A wage is set for the job"
+    },
+    {
+      "ok": true,
+      "text": "The owner sets it"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f399_1.jpg",
+      "caption": "Wage, then craftsman, then advance, then start",
+      "role": "admin",
+      "url": "/admin/custom"
+    }
+  ],
+  "notes": [
+    "The checklist says no job goes out before the wage is agreed. On this screen \"Give the job\" was available before a wage had been set, so the rule was not enforced here."
+  ],
+  "did": "Looked at the owner's page for the order of steps: the wage is set before the job is given and started."
+}

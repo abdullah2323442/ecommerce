@@ -1,0 +1,21 @@
+{
+  "n": 332,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Each product has its own commission box"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f332_1.jpg",
+      "caption": "Each product has its own commission",
+      "role": "admin",
+      "url": "/admin/market"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the commission box on each product in the owner's Market page."
+}

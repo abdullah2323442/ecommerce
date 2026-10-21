@@ -1,0 +1,31 @@
+{
+  "n": 181,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "The sale to a shop shows the offer"
+    },
+    {
+      "ok": true,
+      "text": "A retail sale does not show the offer"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f181_1.jpg",
+      "caption": "Sale to a shop: the offer card appears in the search",
+      "role": "admin",
+      "url": "/admin/counter/234"
+    },
+    {
+      "file": "f181_2.jpg",
+      "caption": "Retail sale: no offer in the search",
+      "role": "admin",
+      "url": "/admin/counter/235"
+    }
+  ],
+  "notes": [],
+  "did": "Started a sale to a shop and searched for Napa 500 mg, then started a retail sale and searched again."
+}

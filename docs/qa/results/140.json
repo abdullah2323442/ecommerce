@@ -1,0 +1,29 @@
+{
+  "n": 140,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Choice one: Full"
+    },
+    {
+      "ok": true,
+      "text": "Choice two: Partial"
+    },
+    {
+      "ok": true,
+      "text": "Choice three: Not available"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f140_1.jpg",
+      "caption": "Full, Partial or Not available for each item",
+      "role": "admin",
+      "url": "/admin/orders/169"
+    }
+  ],
+  "notes": [],
+  "did": "Opened the newest order and looked at the three choices staff have for each item."
+}

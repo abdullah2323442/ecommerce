@@ -1,0 +1,25 @@
+{
+  "n": 491,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Ratings are kept for delivery people"
+    },
+    {
+      "ok": true,
+      "text": "And for staff"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f491_1.jpg",
+      "caption": "Ratings per person",
+      "role": "admin",
+      "url": "/admin/delivery-ratings"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at ratings kept per delivery person and per staff."
+}

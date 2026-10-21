@@ -1,0 +1,27 @@
+{
+  "n": 307,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A stranger can order without making an account"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f307_1.jpg",
+      "caption": "A guest order filled in: name, phone and address only",
+      "role": "guest",
+      "url": "/market/78"
+    },
+    {
+      "file": "f307_2.jpg",
+      "caption": "After sending the order",
+      "role": "guest",
+      "url": "/market/orders/K5VodWBgZl27EoEe5qvsGgaPoTapummYNsRysRfc"
+    }
+  ],
+  "notes": [],
+  "did": "As a stranger, ordered a phone case with just a name, phone number and address."
+}

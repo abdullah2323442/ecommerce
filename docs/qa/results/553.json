@@ -1,0 +1,25 @@
+{
+  "n": 553,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Sales can be downloaded for Excel"
+    },
+    {
+      "ok": true,
+      "text": "And the controlled register as CSV"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f553_1.jpg",
+      "caption": "Export",
+      "role": "admin",
+      "url": "/admin/controlled"
+    }
+  ],
+  "notes": [],
+  "did": "Looked for the export buttons."
+}

@@ -1,0 +1,21 @@
+{
+  "n": 360,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "A \"not received\" figure is kept"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f360_1.jpg",
+      "caption": "The \"did not arrive\" figure",
+      "role": "wholesale",
+      "url": "/wholesale/sell/reports"
+    }
+  ],
+  "notes": [],
+  "did": "Looked at the seller reports for \"Buyer said it did not arrive\"."
+}

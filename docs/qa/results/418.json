@@ -1,0 +1,21 @@
+{
+  "n": 418,
+  "status": "pass",
+  "error": null,
+  "checks": [
+    {
+      "ok": true,
+      "text": "Each dish has a \"Sold out today\" button"
+    }
+  ],
+  "shots": [
+    {
+      "file": "f418_1.jpg",
+      "caption": "After pressing \"Sold out today\"",
+      "role": "vendor",
+      "url": "/food/vendor"
+    }
+  ],
+  "notes": [],
+  "did": "Looked for the \"Sold out today\" button on each dish."
+}
