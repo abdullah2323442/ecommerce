@@ -245,7 +245,7 @@ function Notes({ notes }: { notes: Note[] }) {
     );
 }
 
-export default function CounterIndex({ drafts, notes, byStaff }: { drafts: Draft[]; notes: Note[]; byStaff: { name: string; drafts: number }[] }) {
+export default function CounterIndex({ drafts, notes, byStaff, warnings = [] }: { drafts: Draft[]; notes: Note[]; byStaff: { name: string; drafts: number }[]; warnings?: { id: number; memo: string; when: string }[] }) {
     const { t, num, dateTime } = useI18n();
     const offline = useOfflineReady();
 
@@ -254,6 +254,21 @@ export default function CounterIndex({ drafts, notes, byStaff }: { drafts: Draft
             <Head title={t('Counter')} />
             <div className="mx-auto w-full max-w-4xl space-y-6 p-4">
                 <Flash />
+                {warnings.length > 0 && (
+                    <section role="alert" aria-labelledby="warn-h" className="space-y-2 rounded-md border border-warning/50 bg-warning/10 p-3 text-sm">
+                        <h2 id="warn-h" className="font-semibold">
+                            {t('A warning for you')}
+                        </h2>
+                        <ul className="space-y-1">
+                            {warnings.map((w) => (
+                                <li key={w.id}>{t('A return on memo {memo} was counted as your mistake. Please check each sale carefully.', { memo: w.memo })}</li>
+                            ))}
+                        </ul>
+                        <Button size="sm" variant="outline" onClick={() => router.post('/admin/counter-warnings/read', {}, { preserveScroll: true })}>
+                            {t('Got it')}
+                        </Button>
+                    </section>
+                )}
                 <p className="text-xs text-muted-foreground">
                     {offline.ready ? t('If the internet goes down, sales can go on without it. Prices copied {when}.', { when: dateTime(offline.takenAt!) }) : t('Getting this device ready to sell without internet…')}{' '}
                     <a href="/admin/counter/offline" className="underline underline-offset-4">

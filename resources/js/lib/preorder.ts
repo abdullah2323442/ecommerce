@@ -26,6 +26,7 @@ interface Body {
     until?: string;
     given?: number;
     asked?: number;
+    memo?: string;
 }
 
 export function noticeText(n: PreorderNotice, t: T): string {
@@ -62,6 +63,12 @@ export function noticeText(n: PreorderNotice, t: T): string {
             return t('Your offer for {name} was not taken.', { name });
         case 'mpo_bid_new':
             return t('A new offer came for {name}.', { name });
+        case 'shop_mistake':
+            return t('A return was counted as your own mistake: {reason}. Please check the goods before you order.', { reason: b.reason ?? '' });
+        case 'repeat_mistake':
+            return t('The same mistake ({reason}) has now happened three times in 90 days. Please take more care.', { reason: b.reason ?? '' });
+        case 'staff_mistake':
+            return t('A return on memo {memo} was counted as your mistake. Please check each sale carefully.', { memo: b.memo ?? '' });
         case 'mpo_stale':
             return t('Your product {name} is not selling. Would you like to raise the percentage yourself?', { name });
         case 'listing_question_new':

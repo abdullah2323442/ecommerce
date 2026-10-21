@@ -9,6 +9,7 @@ use App\Models\Invoice;
 use App\Models\InvoiceLine;
 use App\Models\Medicine;
 use App\Models\MedicineBarcode;
+use App\Models\Notice;
 use App\Models\OfferProduct;
 use App\Models\QuickNote;
 use App\Models\Setting;
@@ -51,11 +52,23 @@ class CounterController extends Controller
         $drafts = $open->map(fn (Invoice $i) => $this->summary($i) + ['same_customer' => $i->customer_id ? (int) $perShop[$i->customer_id] : 1]);
 
         return Inertia::render('admin/counter/index', [
+            // Warnings for the person at the counter: a return that was counted as their mistake. They stay until read.
+            'warnings' => Notice::where('user_id', request()->user()->id)->where('kind', 'staff_mistake')->whereNull('read_at')->latest('id')->limit(5)->get()
+                ->map(fn (Notice $n) => ['id' => $n->id, 'memo' => (string) (json_decode($n->body, true)['memo'] ?? ''), 'when' => $n->created_at?->toIso8601String()])->values(),
             'drafts' => $drafts,
             'byStaff' => $open->groupBy(fn (Invoice $i) => $i->openedBy?->name ?? '—')->map->count()->sortDesc()->map(fn ($n, $name) => ['name' => $name, 'drafts' => $n])->values(),
             'notes' => QuickNote::whereNull('done_at')->with('customer:id,name,phone')->latest('id')->get()
                 ->map(fn (QuickNote $n) => ['id' => $n->id, 'note' => $n->note, 'customer' => $n->customer?->name, 'phone' => $n->customer?->phone, 'minutes' => (int) $n->created_at->diffInMinutes(now())]),
         ]);
+    }
+
+    /** "Got it": the person at the counter has read their warnings. */
+    public function warningsRead(Request $request): RedirectResponse
+    {
+        $this->authorize('use-counter');
+        Notice::where('user_id', $request->user()->id)->where('kind', 'staff_mistake')->whereNull('read_at')->update(['read_at' => now()]);
+
+        return back();
     }
 
     public function open(Request $request): RedirectResponse

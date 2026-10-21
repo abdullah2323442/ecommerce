@@ -12,6 +12,7 @@ use App\Models\SaleReturn;
 use App\Models\SaleReturnLine;
 use App\Models\Setting;
 use App\Models\User;
+use App\Services\Messages\Messenger;
 use App\Services\Stock\StockException;
 use App\Services\Stock\StockService;
 use Illuminate\Support\Carbon;
@@ -267,18 +268,26 @@ class ReturnService
      */
     private function warnAboutMistakes(SaleReturn $return): void
     {
+        $messenger = app(Messenger::class);
+        $why = [
+            'wrong_item' => __('Wrong item'), 'damaged' => __('Damaged'), 'near_expiry' => __('Near expiry'),
+            'ordered_by_mistake' => __('Ordered by mistake'), 'staff_error' => __('Our mistake'), 'other' => __('Other'),
+        ][$return->reason_code] ?? (string) $return->reason_code;
+
         if ($return->fault === 'staff' && $return->invoice?->finalised_by) {
-            Notice::create(['user_id' => $return->invoice->finalised_by, 'kind' => 'staff_mistake', 'body' => 'Return '.$return->id]);
+            if ($staff = User::find($return->invoice->finalised_by)) {
+                $messenger->send($staff, 'staff_mistake', ['memo' => (string) $return->invoice->number]);
+            }
         }
 
-        if ($return->fault === 'shop' && $return->customer_id) {
-            Notice::create(['user_id' => $return->customer_id, 'kind' => 'shop_mistake', 'body' => $return->reason_code]);
+        if ($return->fault === 'shop' && $return->customer_id && ($shop = User::find($return->customer_id))) {
+            $messenger->send($shop, 'shop_mistake', ['reason' => $why]);
 
             $times = SaleReturn::where('customer_id', $return->customer_id)->where('status', 'approved')->where('fault', 'shop')
                 ->where('reason_code', $return->reason_code)->where('decided_at', '>=', now()->subDays(90))->count();
 
             if ($times >= 3) {
-                Notice::create(['user_id' => $return->customer_id, 'kind' => 'repeat_mistake', 'body' => $return->reason_code]);
+                $messenger->send($shop, 'repeat_mistake', ['reason' => $why]);
             }
         }
     }

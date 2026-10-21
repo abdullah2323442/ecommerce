@@ -344,6 +344,26 @@ class ReturnsTest extends TestCase
         $this->assertSame(1, Notice::where('user_id', $this->staff->id)->where('kind', 'staff_mistake')->count());
     }
 
+    public function test_the_warnings_are_worded_and_staff_can_read_theirs(): void
+    {
+        $svc = app(ReturnService::class);
+        $inv = $this->sale(1);
+        $r = $svc->request($inv, $this->items($inv, 'box', 1), 'ordered_by_mistake', 'x', 'credit', $this->staff);
+        $svc->approve($r, $this->admin, 'shop');
+        $inv2 = $this->sale(1);
+        $r2 = $svc->request($inv2, $this->items($inv2, 'box', 1), 'staff_error', 'x', 'credit', $this->staff);
+        $svc->approve($r2, $this->admin, 'staff');
+
+        $shop = Notice::where('user_id', $this->shop->id)->where('kind', 'shop_mistake')->firstOrFail();
+        $this->assertStringContainsString('Ordered by mistake', app(\App\Services\Messages\Messenger::class)->text('shop_mistake', json_decode($shop->body, true), 'en'));
+        $this->actingAs($this->shop)->get('/inbox')->assertOk();
+
+        // The staff member has no inbox: the warning waits on the counter screen until they say they have read it.
+        $this->actingAs($this->staff)->get('/admin/counter')->assertInertia(fn (\Inertia\Testing\AssertableInertia $p) => $p->has('warnings', 1)->where('warnings.0.memo', $inv2->number));
+        $this->post('/admin/counter-warnings/read')->assertRedirect();
+        $this->get('/admin/counter')->assertInertia(fn (\Inertia\Testing\AssertableInertia $p) => $p->has('warnings', 0));
+    }
+
     public function test_the_return_policy_and_credit_show_on_the_memo_and_a_reprint_is_counted(): void
     {
         $inv = $this->sale(1);

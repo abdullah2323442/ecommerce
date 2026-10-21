@@ -266,7 +266,7 @@ class MessagesTest extends TestCase
     public function test_the_owner_chooses_the_channels_the_inbox_stays_on_and_push_is_not_available(): void
     {
         $this->actingAs($this->admin)->get('/admin/messages')->assertOk()->assertInertia(fn (Assert $p) => $p
-            ->component('admin/messages')->has('kinds', 79)->where('available', ['inbox', 'email', 'sms']));
+            ->component('admin/messages')->has('kinds', 82)->where('available', ['inbox', 'email', 'sms']));
 
         $this->put('/admin/messages', ['channels' => ['order_cancelled' => ['email', 'sms'], 'order_done' => []]])->assertSessionHasNoErrors();
         $this->assertSame(['inbox', 'email', 'sms'], app(Messenger::class)->channelsFor('order_cancelled'));

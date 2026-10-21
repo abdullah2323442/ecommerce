@@ -790,6 +790,7 @@ Route::middleware(['auth', 'section:admin_panel', 'two-factor.required'])->prefi
     Route::get('counter/offline/snapshot', [OfflineCounterController::class, 'snapshot'])->name('counter.offline.snapshot');
     Route::post('counter/offline/sync', [OfflineCounterController::class, 'sync'])->middleware('throttle:30,1,offline-sync')->name('counter.offline.sync');
     Route::get('counter/{invoice}', [CounterController::class, 'show'])->name('counter.show');
+    Route::post('counter-warnings/read', [CounterController::class, 'warningsRead'])->name('counter.warnings.read');
     Route::post('counter/{invoice}/working', [CounterController::class, 'working'])->name('counter.working');
     Route::post('counter/{invoice}/share', [CounterController::class, 'share'])->name('counter.share');
     Route::get('counter/{invoice}/search', [CounterController::class, 'search'])->name('counter.search');

@@ -294,6 +294,9 @@ function Pending({ r, canApprove }: { r: Card; canApprove: boolean }) {
                 {t(r.resolution === 'cash' ? 'Cash back' : r.resolution === 'exchange' ? 'Exchange for another medicine' : 'Credit on the next memo')}
                 {r.resolution === 'cash' && ` · ${t('pays {amount}', { amount: money(r.amount / 2) })}`}
             </p>
+            {r.expected_money !== null && (
+                <p className="text-muted-foreground text-sm">{t('The buyer expects to receive {amount}.', { amount: money(r.expected_money) })}</p>
+            )}
             {canApprove ? (
                 <div className="flex flex-wrap items-center gap-2">
                     <select
