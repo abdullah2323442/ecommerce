@@ -85,9 +85,14 @@ export default function Invoices({ rows, filters, owed, canSettle }: Props) {
                         <p className="text-muted-foreground text-sm">{t('Every memo and order, counter and online. Find one by number, name or phone.')}</p>
                     </div>
                     {canSettle && owed > 0 && (
-                        <button type="button" onClick={() => go({ due: '1' })} className="rounded-md border px-3 py-1.5 text-sm font-semibold">
-                            {t('Owed to us')}: {money(owed)}
-                        </button>
+                        <span className="flex flex-wrap items-center gap-3">
+                            <button type="button" onClick={() => go({ due: '1' })} className="rounded-md border px-3 py-1.5 text-sm font-semibold">
+                                {t('Owed to us')}: {money(owed)}
+                            </button>
+                            <Link href="/admin/ledger" className="text-sm font-medium underline underline-offset-4">
+                                {t('Open the credit ledger')}
+                            </Link>
+                        </span>
                     )}
                 </header>
 

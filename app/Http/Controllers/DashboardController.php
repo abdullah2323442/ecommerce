@@ -12,6 +12,8 @@ use App\Models\ProductRequest;
 use App\Models\User;
 use App\Services\Admin\CommerceStats;
 use App\Services\Backup\BackupService;
+use App\Services\Ledger\Payables;
+use App\Services\Ledger\Receivables;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -151,6 +153,17 @@ class DashboardController extends Controller
         // Courier rates go out of date without anyone noticing (spec ch 20): ask every three months.
         if (CourierController::isStale()) {
             $alerts[] = $alert('warning', 'Are the courier rates still correct?', 'Nobody has checked them for three months. A wrong rate loses money on every delivery without anyone noticing.', '/admin/couriers');
+        }
+
+        // The credit ledger (spec ch 28 note 12): customers who are late with what they owe us, and companies we owe past the due day.
+        $lateCustomers = app(Receivables::class)->late();
+        if ($lateCustomers['customers'] > 0) {
+            $alerts[] = $alert('warning', $lateCustomers['customers'] === 1 ? '{n} customer is late with payment' : '{n} customers are late with payment', 'They owe {amount} on memos left on credit past the limit. Open the credit ledger to see who, and take a payment.', '/admin/ledger', ['n' => $lateCustomers['customers'], 'amount' => number_format($lateCustomers['owed'], 2)]);
+        }
+
+        $lateDues = app(Payables::class)->late();
+        if ($lateDues['invoices'] > 0) {
+            $alerts[] = $alert('warning', $lateDues['invoices'] === 1 ? '{n} company invoice is past its due day' : '{n} company invoices are past their due day', 'We owe {amount} that should have been paid by now. Open the company dues to see who.', '/admin/payables', ['n' => $lateDues['invoices'], 'amount' => number_format($lateDues['owed'], 2)]);
         }
 
         if (Courier::where('is_active', true)->exists()) {

@@ -27,7 +27,7 @@ class PreorderController extends Controller
         $this->authorize('handle-orders');
 
         $row = fn (Preorder $p) => [
-            'id' => $p->id, 'mpo' => $p->mpo_listing_id !== null, 'status' => $p->status, 'late' => $p->isLate(), 'due_on' => $p->due_on?->toDateString(), 'days' => (int) $p->promised_days, 'extended' => (int) $p->extended,
+            'id' => $p->id, 'mpo' => $p->mpo_listing_id !== null, 'mpo_taken' => $p->mpo_taken_at !== null, 'status' => $p->status, 'late' => $p->isLate(), 'due_on' => $p->due_on?->toDateString(), 'days' => (int) $p->promised_days, 'extended' => (int) $p->extended,
             'customer' => $p->customer?->name, 'phone' => $p->customer?->phone, 'created_at' => $p->created_at?->toIso8601String(),
             'advance' => (float) $p->advance_amount, 'advance_state' => $p->advance_state, 'advance_refunded' => (float) $p->advance_refunded, 'total' => $this->preorders->expectedTotal($p), 'invoice_id' => $p->invoice_id,
             'cancelled_by' => $p->cancelled_by, 'reply_note' => $p->reply_note, 'cancel_note' => $p->cancel_note,

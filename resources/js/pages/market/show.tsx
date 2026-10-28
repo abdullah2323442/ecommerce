@@ -1,3 +1,5 @@
+import { track } from '@/lib/track';
+import { SaleTag, WasPrice } from '@/components/market/sale-price';
 import InputError from '@/components/input-error';
 import PageHead, { JsonLd } from '@/components/shell/page-head';
 import { Button } from '@/components/ui/button';
@@ -5,8 +7,8 @@ import { Input } from '@/components/ui/input';
 import PublicLayout from '@/layouts/public-layout';
 import { useI18n } from '@/lib/i18n';
 import { Link, router, useForm, usePage } from '@inertiajs/react';
-import { useState } from 'react';
-import { unitLabel } from './index';
+import { useEffect, useState } from 'react';
+import { unitLabel } from '@/lib/units';
 
 interface Grid {
     colors: { name: string; sold_out: boolean; photo: string | null }[];
@@ -46,6 +48,7 @@ interface Props {
     questions: { id: number; question: string; answer: string; at: string }[];
     can_ask: boolean;
     wishlisted: boolean;
+    bundles: { id: number; title: string; percent: number; was: number; save: number; now: number; items: { id: number; title: string; price: number }[] }[];
     districts: string[];
     listing: {
         id: number;
@@ -54,6 +57,9 @@ interface Props {
         seo_title: string | null;
         seo_description: string | null;
         price: number;
+        was: number | null;
+        sale_percent: number | null;
+        sale_ends_at: string | null;
         unit: string;
         sector_name: string;
         photo: string | null;
@@ -98,6 +104,7 @@ function OrderForm({
 }) {
     const { t, money, num } = useI18n();
     const errors = usePage().props.errors as Record<string, string>;
+    const flash = (usePage().props.flash as { status?: string } | undefined)?.status;
     const form = useForm({
         quantity: String(listing.min_qty > 1 ? listing.min_qty : 1),
         name: '',
@@ -134,7 +141,6 @@ function OrderForm({
             }}
         >
             <h2 className="font-display text-3xl">{t('Order this')}</h2>
-            <InputError message={errors.order} />
             {grid && (
                 <div className="space-y-3">
                     {grid.colors.some((c) => c.name !== '') && (
@@ -278,17 +284,21 @@ function OrderForm({
                         : t('It is not in stock now. Your pre-order is kept and the seller sends it when they have it again.')}
                 </p>
             )}
+            {/* Beside the buttons, so a buyer on a phone sees what happened to the click (added, or why not). */}
+            {flash && (
+                <p role="status" className="rounded-md border border-[var(--pt-ink)] bg-[var(--pt-surface)] px-3 py-2 text-sm text-[var(--pt-ink)]">
+                    {flash}
+                </p>
+            )}
+            <InputError message={errors.order} />
             <Button
                 type="button"
                 variant="outline"
                 disabled={form.processing || (!!grid && !cell) || Number(form.data.quantity) <= 0}
-                onClick={() =>
-                    router.post(
-                        '/market-cart',
-                        { listing_id: listing.id, variant_id: cell ? cell.id : null, quantity: form.data.quantity },
-                        { preserveScroll: true },
-                    )
-                }
+                onClick={() => {
+                    track('AddToCart', { id: listing.id, name: listing.title, value: listing.price, quantity: Number(form.data.quantity) || 1 });
+                    router.post('/market-cart', { listing_id: listing.id, variant_id: cell ? cell.id : null, quantity: form.data.quantity }, { preserveScroll: true });
+                }}
             >
                 {t('Add to the market cart')}
             </Button>
@@ -584,6 +594,7 @@ export default function MarketShow({
     questions,
     can_ask,
     wishlisted,
+    bundles,
     offers,
     gallery,
     reviews,
@@ -593,8 +604,8 @@ export default function MarketShow({
     digital,
 }: Props) {
     const { t, money, num, date } = useI18n();
-    const flash = (usePage().props.flash as { status?: string } | undefined)?.status;
     const [color, setColor] = useState('');
+    useEffect(() => track('ViewContent', { id: listing.id, name: listing.title, value: listing.price }), [listing.id]); // eslint-disable-line react-hooks/exhaustive-deps
     // Choosing a colour changes the photo.
     const colorPhoto = listing.grid?.colors.find((c) => c.name === color && c.photo)?.photo ?? null;
 
@@ -645,8 +656,10 @@ export default function MarketShow({
                             <Share title={listing.title} />
                         </p>
                         <p className="tabular font-display text-4xl">
+                            <WasPrice was={listing.was} className="text-2xl" />
                             {money(listing.price)} <span className="text-base font-normal text-[var(--pt-muted)]">/ {unitLabel(listing.unit)}</span>
                         </p>
+                        {listing.sale_percent != null && <SaleTag percent={listing.sale_percent} endsAt={listing.sale_ends_at} long />}
                         <dl className="divide-y divide-[var(--pt-line)] border-y border-[var(--pt-line)] text-sm [&>div]:py-2.5">
                             <div className="flex justify-between gap-3">
                                 <dt className="text-[var(--pt-muted)]">{t('Sold by')}</dt>
@@ -716,11 +729,6 @@ export default function MarketShow({
                             </div>
                         </dl>
                         {listing.description && <p className="whitespace-pre-line">{listing.description}</p>}
-                        {flash && (
-                            <p role="status" className="rounded-md border border-[var(--pt-ink)] bg-[var(--pt-surface)] px-3 py-2 text-sm text-[var(--pt-ink)]">
-                                {flash}
-                            </p>
-                        )}
                         {listing.can_report && <ReportCopy id={listing.id} />}
                         {(listing.return_note || listing.return_rule) && (
                             <p className="rounded-[1.25rem] border border-[var(--pt-line)] bg-[var(--pt-surface)] p-3 text-sm">
@@ -730,6 +738,45 @@ export default function MarketShow({
                         )}
                     </div>
                 </article>
+                {bundles.map((b) => (
+                    <section key={b.id} className="space-y-3 rounded-[1.5rem] border bg-[var(--pt-surface)] p-4">
+                        <div className="flex flex-wrap items-baseline justify-between gap-2">
+                            <h2 className="font-display text-xl font-bold">{b.title}</h2>
+                            <SaleTag percent={b.percent} endsAt={null} />
+                        </div>
+                        <ul className="divide-y text-sm">
+                            {b.items.map((i) => (
+                                <li key={i.id} className="flex justify-between gap-3 py-1.5">
+                                    {i.id === listing.id ? (
+                                        <span className="font-medium">{i.title}</span>
+                                    ) : (
+                                        <Link href={`/market/${i.id}`} className="underline underline-offset-4">
+                                            {i.title}
+                                        </Link>
+                                    )}
+                                    <span className="tabular">{money(i.price)}</span>
+                                </li>
+                            ))}
+                        </ul>
+                        <p className="flex flex-wrap items-baseline justify-between gap-2">
+                            <span className="text-sm text-[var(--pt-muted)]">{t('Buy them all together and save {amount}', { amount: money(b.save) })}</span>
+                            <span className="tabular font-display text-2xl">
+                                <WasPrice was={b.was} className="text-base" />
+                                {money(b.now)}
+                            </span>
+                        </p>
+                        <Button
+                            type="button"
+                            variant="outline"
+                            onClick={() => {
+                                b.items.forEach((i) => track('AddToCart', { id: i.id, name: i.title, value: i.price }));
+                                router.post(`/market-cart/bundle/${b.id}`, {}, { preserveScroll: true });
+                            }}
+                        >
+                            {t('Add all to the market cart')}
+                        </Button>
+                    </section>
+                ))}
                 {(listing.in_stock || listing.preorder) && (
                     <OrderForm
                         listing={listing}

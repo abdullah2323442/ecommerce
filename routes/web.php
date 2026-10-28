@@ -2,26 +2,35 @@
 
 use App\Http\Controllers\Admin\ApplicationController;
 use App\Http\Controllers\Admin\ApprovalController;
+use App\Http\Controllers\Admin\AffiliateController;
+use App\Http\Controllers\Admin\ArchiveController;
+use App\Http\Controllers\Admin\PharmaTrackController as AdminPharmaTrackController;
+use App\Http\Controllers\Admin\RxInterestController as AdminRxInterestController;
+use App\Http\Controllers\Admin\ServiceOfferController as AdminServiceOfferController;
 use App\Http\Controllers\Admin\BehaviorController;
 use App\Http\Controllers\Admin\BinController;
+use App\Http\Controllers\Admin\BlockedIpController;
 use App\Http\Controllers\Admin\CatalogController as AdminCatalogController;
 use App\Http\Controllers\Admin\ControlledController;
-use App\Http\Controllers\Admin\BlockedIpController;
 use App\Http\Controllers\Admin\CounterController;
 use App\Http\Controllers\Admin\CourierBookingController;
 use App\Http\Controllers\Admin\CourierController;
 use App\Http\Controllers\Admin\CraftsmanController as AdminCraftsmanController;
 use App\Http\Controllers\Admin\CustomChatController;
 use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\CustomerImportController;
+use App\Http\Controllers\Admin\SmsController;
 use App\Http\Controllers\Admin\CustomOrderController as AdminCustomOrderController;
 use App\Http\Controllers\Admin\DayClosingController;
 use App\Http\Controllers\Admin\DeliveryController as AdminDeliveryController;
+use App\Http\Controllers\Admin\DepositController;
 use App\Http\Controllers\Admin\ExpiryController;
 use App\Http\Controllers\Admin\FoodController as AdminFoodController;
 use App\Http\Controllers\Admin\GamingController as AdminGamingController;
 use App\Http\Controllers\Admin\HelpController as AdminHelpController;
 use App\Http\Controllers\Admin\IntegrationController as AdminIntegrationController;
 use App\Http\Controllers\Admin\InvoiceController;
+use App\Http\Controllers\Admin\LedgerController;
 use App\Http\Controllers\Admin\MarketController as AdminMarketController;
 use App\Http\Controllers\Admin\MedicineController as AdminMedicineController;
 use App\Http\Controllers\Admin\MessagesController;
@@ -30,6 +39,7 @@ use App\Http\Controllers\Admin\MpoController;
 use App\Http\Controllers\Admin\OfferController;
 use App\Http\Controllers\Admin\OfflineCounterController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\PayablesController;
 use App\Http\Controllers\Admin\PaymentController as AdminPaymentController;
 use App\Http\Controllers\Admin\PreorderController as AdminPreorderController;
 use App\Http\Controllers\Admin\PrescriptionController;
@@ -39,6 +49,7 @@ use App\Http\Controllers\Admin\QuoteController as AdminQuoteController;
 use App\Http\Controllers\Admin\ReturnController;
 use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
 use App\Http\Controllers\Admin\SalesReportController;
+use App\Http\Controllers\Admin\SellingRateController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\SiteController as AdminSiteController;
 use App\Http\Controllers\Admin\StaffController;
@@ -48,7 +59,6 @@ use App\Http\Controllers\Admin\StockReportController;
 use App\Http\Controllers\Admin\StockSourceController;
 use App\Http\Controllers\Admin\StorefrontController as AdminStorefrontController;
 use App\Http\Controllers\Admin\TestimonialController as AdminTestimonialController;
-use App\Http\Controllers\Admin\SellingRateController;
 use App\Http\Controllers\Admin\TierController;
 use App\Http\Controllers\Admin\TokenController as AdminTokenController;
 use App\Http\Controllers\Admin\TwoFactorResetController;
@@ -94,6 +104,15 @@ use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\QuoteController;
 use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\SellController;
+use App\Http\Controllers\AffiliateLinkController;
+use App\Http\Controllers\PharmaTrackController;
+use App\Http\Controllers\PushController;
+use App\Http\Controllers\RxMarketController;
+use App\Http\Controllers\SellDealsController;
+use App\Http\Controllers\SellServicesController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\StopTextsController;
+use App\Http\Controllers\SupplierAppController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\SiteSearchController;
 use App\Http\Controllers\SupportController;
@@ -148,13 +167,39 @@ Route::post('market/orders/{token}/pay', [PaymentController::class, 'startMarket
 Route::match(['get', 'post'], 'webhooks/payments/{provider}/result/{result}', [PaymentController::class, 'result'])->whereIn('provider', ['sslcommerz'])->whereIn('result', ['success', 'fail', 'cancel'])->middleware('throttle:60,1,payment-return')->name('payments.result');
 Route::post('webhooks/payments/{provider}/ipn', [PaymentController::class, 'ipn'])->whereIn('provider', ['sslcommerz'])->middleware('throttle:120,1,payment-ipn')->name('payments.ipn');
 // The installable app: manifest, icons, service worker and the no-line page.
+// PharmaTrack (spec item 612) writes here with its own password: the stock, its sales and its counts. No page, no session.
+Route::prefix('webhooks/pharmatrack')->middleware(['pharmatrack', 'throttle:240,1,pharmatrack'])->name('pharmatrack.')->group(function () {
+    Route::get('ping', [PharmaTrackController::class, 'ping'])->name('ping');
+    Route::get('stock', [PharmaTrackController::class, 'stock'])->name('stock');
+    Route::post('sales', [PharmaTrackController::class, 'sales'])->name('sales');
+    Route::post('counts', [PharmaTrackController::class, 'counts'])->name('counts');
+    Route::post('adjustments', [PharmaTrackController::class, 'adjustments'])->name('adjustments');
+});
+// The prescription marketplace (item 577), a placeholder: what it will be, and a list of people who want it.
+Route::get('prescription-market', [RxMarketController::class, 'show'])->name('rx-market');
+Route::post('prescription-market/interest', [RxMarketController::class, 'interest'])->middleware('throttle:10,1,rx-interest')->name('rx-market.interest');
+// Services anyone can book (item 613): a provider lists times, a buyer asks for one, the provider answers.
+Route::get('services', [ServiceController::class, 'index'])->name('services.index');
+Route::get('services/booking/{token}', [ServiceController::class, 'booking'])->where('token', '[A-Za-z0-9]{40}')->name('services.booking');
+Route::post('services/booking/{token}/cancel', [ServiceController::class, 'cancel'])->where('token', '[A-Za-z0-9]{40}')->middleware('throttle:20,1,service-cancel')->name('services.cancel');
+Route::get('services/{offer}', [ServiceController::class, 'show'])->whereNumber('offer')->name('services.show');
+Route::post('services/{offer}/book', [ServiceController::class, 'book'])->whereNumber('offer')->middleware('throttle:10,1,service-book')->name('services.book');
+// An affiliate's link: keeps their code on the visitor for a while, then sends them on.
+Route::get('a/{code}', [AffiliateLinkController::class, 'visit'])->where('code', '[A-Za-z0-9]{3,24}')->middleware('throttle:60,1,affiliate-click')->name('affiliate.visit');
+Route::get('affiliate', [AffiliateLinkController::class, 'mine'])->middleware('auth')->name('affiliate.mine');
+// The link at the end of a promotional text: stop these messages (a button first, so a link preview cannot do it).
+Route::get('u/{user}/{token}', [StopTextsController::class, 'show'])->whereNumber('user')->where('token', '[a-f0-9]{12}')->name('texts.stop');
+Route::post('u/{user}/{token}', [StopTextsController::class, 'stop'])->whereNumber('user')->where('token', '[a-f0-9]{12}')->middleware('throttle:20,1,texts-stop')->name('texts.stop.do');
 Route::get('manifest.webmanifest', [PwaController::class, 'manifest'])->name('pwa.manifest');
+// The supplier app (spec ch 3): the same website installed a second time, for people who sell. Same login as the customer app.
+Route::get('supplier/manifest.webmanifest', [SupplierAppController::class, 'manifest'])->name('pwa.supplier.manifest');
+Route::get('supplier', [SupplierAppController::class, 'home'])->middleware('auth')->name('supplier.home');
 Route::get('pwa/icon/{name}.png', [PwaController::class, 'icon'])->whereIn('name', ['192', '512', 'maskable-512', 'apple-180'])->name('pwa.icon');
 Route::get('sw.js', [PwaController::class, 'worker'])->name('pwa.worker');
 Route::get('offline', [PwaController::class, 'offline'])->name('pwa.offline');
 Route::get('sector-hero/{slug}', [MarketController::class, 'hero'])->where('slug', '[a-z0-9_]+')->name('market.hero');
 Route::get('storefront-image/{block}', [MarketController::class, 'storefrontImage'])->whereNumber('block')->name('market.storefront-image');
-Route::get('storefront-item-image/{block}/{index}', [\App\Http\Controllers\MarketController::class, 'storefrontItemImage'])->whereNumber(['block', 'index'])->name('market.storefront-item-image');
+Route::get('storefront-item-image/{block}/{index}', [MarketController::class, 'storefrontItemImage'])->whereNumber(['block', 'index'])->name('market.storefront-item-image');
 Route::get('site-image/{name}', [BrandImageController::class, 'block'])->where('name', '[A-Za-z0-9_.-]+')->name('site.block-image');
 Route::get('brand/{which}', [BrandImageController::class, 'show'])->whereIn('which', ['logo', 'favicon'])->name('brand.image');
 Route::get('shop/{seller}', [MarketController::class, 'shop'])->whereNumber('seller')->name('shop.show');
@@ -169,6 +214,7 @@ Route::get('r/{code}', function (Request $request, string $code) {
 Route::get('history', [OrderHistoryController::class, 'index'])->middleware('auth')->name('history');
 Route::get('market-cart', [MarketCartController::class, 'show'])->name('market.cart');
 Route::post('market-cart', [MarketCartController::class, 'add'])->middleware('throttle:60,1,market-cart')->name('market.cart.add');
+Route::post('market-cart/bundle/{bundle}', [MarketCartController::class, 'addBundle'])->whereNumber('bundle')->middleware('throttle:30,1,market-cart')->name('market.cart.bundle');
 Route::post('market-cart/checkout', [MarketCartController::class, 'checkout'])->middleware('throttle:10,1,market-checkout')->name('market.cart.checkout');
 Route::put('market-cart/{key}', [MarketCartController::class, 'update'])->where('key', '[0-9]+:[0-9]+')->name('market.cart.update');
 Route::delete('market-cart/{key}', [MarketCartController::class, 'remove'])->where('key', '[0-9]+:[0-9]+')->name('market.cart.remove');
@@ -268,7 +314,10 @@ Route::middleware('auth')->group(function () {
     Route::post('notices/{notice}/read', [PreorderController::class, 'readNotice'])->name('notices.read');
     Route::get('inbox', [InboxController::class, 'index'])->name('inbox.index');
     Route::post('inbox/read-all', [InboxController::class, 'readAll'])->name('inbox.read-all');
+    Route::post('push/subscribe', [PushController::class, 'subscribe'])->middleware('throttle:20,1,push')->name('push.subscribe');
+    Route::delete('push/subscribe', [PushController::class, 'unsubscribe'])->middleware('throttle:20,1,push')->name('push.unsubscribe');
     Route::get('wallet', [WalletController::class, 'index'])->name('wallet');
+    Route::post('wallet/points', [WalletController::class, 'points'])->middleware('throttle:10,1,reward-points')->name('wallet.points');
     Route::get('market-offers', [MarketOfferController::class, 'index'])->name('market.offers');
     Route::post('market-offers/{offer}/order', [MarketOfferController::class, 'order'])->whereNumber('offer')->middleware('throttle:10,1,offer-order')->name('market.offers.order');
     Route::post('market-offers/{offer}/withdraw', [MarketOfferController::class, 'withdraw'])->whereNumber('offer')->name('market.offers.withdraw');
@@ -311,15 +360,29 @@ foreach (['paikari', 'wholesale'] as $portal) {
             Route::post('sell/{listing}/photos', [SellController::class, 'addPhoto'])->whereNumber('listing')->name('sell.photos.add');
             Route::delete('sell/photos/{photo}', [SellController::class, 'removePhoto'])->whereNumber('photo')->name('sell.photos.remove');
             Route::put('sell/photos/{photo}/main', [SellController::class, 'mainPhoto'])->whereNumber('photo')->name('sell.photos.main');
-            Route::post('sell/{listing}', [SellController::class, 'update'])->name('sell.update');
-            Route::put('sell/{listing}/pause', [SellController::class, 'pause'])->name('sell.pause');
-            Route::delete('sell/{listing}', [SellController::class, 'destroy'])->name('sell.destroy');
+            Route::post('sell/{listing}', [SellController::class, 'update'])->whereNumber('listing')->name('sell.update');
+            Route::put('sell/{listing}/pause', [SellController::class, 'pause'])->whereNumber('listing')->name('sell.pause');
+            Route::delete('sell/{listing}', [SellController::class, 'destroy'])->whereNumber('listing')->name('sell.destroy');
             Route::put('vacation', [SellController::class, 'vacation'])->name('sell.vacation');
             Route::put('sell-token', [SellController::class, 'token'])->name('sell.token');
             Route::put('sell/{listing}/variants', [SellController::class, 'variants'])->whereNumber('listing')->name('sell.variants');
             Route::post('sell/{listing}/color-photo', [SellController::class, 'colorPhoto'])->whereNumber('listing')->name('sell.color-photo');
             Route::get('sell/offers', [SellController::class, 'offers'])->name('sell.offers');
             Route::post('sell/offers/{offer}', [SellController::class, 'answerOffer'])->whereNumber('offer')->name('sell.offers.answer');
+            // Services people give and others book (item 613).
+            Route::get('sell/services', [SellServicesController::class, 'index'])->name('sell.services');
+            Route::post('sell/services', [SellServicesController::class, 'store'])->middleware('throttle:30,1,sell-services')->name('sell.services.store');
+            Route::put('sell/services/{offer}', [SellServicesController::class, 'update'])->whereNumber('offer')->middleware('throttle:30,1,sell-services')->name('sell.services.update');
+            Route::post('sell/services/{offer}/slots', [SellServicesController::class, 'addSlots'])->whereNumber('offer')->middleware('throttle:30,1,sell-services')->name('sell.services.slots');
+            Route::delete('sell/services/slots/{slot}', [SellServicesController::class, 'removeSlot'])->whereNumber('slot')->name('sell.services.slots.remove');
+            Route::post('sell/services/bookings/{booking}/confirm', [SellServicesController::class, 'confirm'])->whereNumber('booking')->name('sell.services.confirm');
+            Route::post('sell/services/bookings/{booking}/decline', [SellServicesController::class, 'decline'])->whereNumber('booking')->name('sell.services.decline');
+            Route::post('sell/services/bookings/{booking}/done', [SellServicesController::class, 'done'])->whereNumber('booking')->name('sell.services.done');
+            Route::get('sell/deals', [SellDealsController::class, 'index'])->name('sell.deals');
+            Route::post('sell/deals/sale/{listing}', [SellDealsController::class, 'startSale'])->whereNumber('listing')->middleware('throttle:30,1,sell-deals')->name('sell.deals.sale');
+            Route::delete('sell/deals/sale/{listing}', [SellDealsController::class, 'endSale'])->whereNumber('listing')->name('sell.deals.sale.end');
+            Route::post('sell/deals/bundles', [SellDealsController::class, 'createBundle'])->middleware('throttle:30,1,sell-deals')->name('sell.deals.bundle');
+            Route::delete('sell/deals/bundles/{bundle}', [SellDealsController::class, 'removeBundle'])->whereNumber('bundle')->name('sell.deals.bundle.remove');
             Route::get('sell/questions', [SellController::class, 'questions'])->name('sell.questions');
             Route::put('sell/questions/{question}', [SellController::class, 'answerQuestion'])->whereNumber('question')->name('sell.questions.answer');
         }
@@ -393,6 +456,7 @@ Route::get('gaming/{game:slug}', [GamingController::class, 'show'])->name('gamin
 
 Route::middleware('auth')->prefix('food/vendor')->name('food.vendor.')->group(function () {
     Route::get('/', [FoodVendorController::class, 'index'])->name('index');
+    Route::get('locate', [FoodVendorController::class, 'locate'])->middleware('throttle:15,1,food-locate')->name('locate');
     Route::get('custom', [FoodVendorController::class, 'custom'])->name('custom');
     Route::post('custom/tick', [FoodVendorController::class, 'tick'])->name('custom.tick');
     Route::delete('custom/ingredients/{ingredient}', [FoodVendorController::class, 'untick'])->whereNumber('ingredient')->name('custom.untick');
@@ -453,6 +517,23 @@ Route::middleware('auth')->group(function () {
 // gate then limits customer, tier and pricing controls to the admin account.
 Route::middleware(['auth', 'section:admin_panel', 'two-factor.required'])->prefix('admin')->name('admin.')->group(function () {
     Route::post('users/{user}/two-factor/reset', [TwoFactorResetController::class, 'reset'])->whereNumber('user')->name('users.two-factor.reset');
+    // Bulk texts (spec ch 27): one message to many, a test to your own phone first.
+    // Affiliates (spec ch 27): the owner opens them, sets their share and pays what they earned.
+    Route::get('affiliates', [AffiliateController::class, 'index'])->name('affiliates.index');
+    Route::post('affiliates', [AffiliateController::class, 'store'])->middleware('throttle:30,1,affiliate-store')->name('affiliates.store');
+    Route::put('affiliates/{affiliate}', [AffiliateController::class, 'update'])->whereNumber('affiliate')->name('affiliates.update');
+    Route::post('affiliates/{affiliate}/pay', [AffiliateController::class, 'pay'])->whereNumber('affiliate')->middleware('throttle:20,1,affiliate-pay')->name('affiliates.pay');
+    Route::get('sms', [SmsController::class, 'index'])->name('sms.index');
+    Route::get('sms/audience', [SmsController::class, 'audience'])->middleware('throttle:60,1,sms-audience')->name('sms.audience');
+    Route::post('sms', [SmsController::class, 'store'])->middleware('throttle:20,1,sms-store')->name('sms.store');
+    Route::get('sms/{campaign}', [SmsController::class, 'show'])->whereNumber('campaign')->name('sms.show');
+    Route::post('sms/{campaign}/test', [SmsController::class, 'test'])->whereNumber('campaign')->middleware('throttle:10,1,sms-test')->name('sms.test');
+    Route::post('sms/{campaign}/start', [SmsController::class, 'start'])->whereNumber('campaign')->middleware('throttle:10,1,sms-start')->name('sms.start');
+    Route::post('sms/{campaign}/cancel', [SmsController::class, 'cancel'])->whereNumber('campaign')->name('sms.cancel');
+    Route::get('customers/import', [CustomerImportController::class, 'index'])->name('customers.import');
+    Route::get('customers/import/template', [CustomerImportController::class, 'template'])->name('customers.import.template');
+    Route::post('customers/import/preview', [CustomerImportController::class, 'preview'])->middleware('throttle:20,1,customer-import')->name('customers.import.preview');
+    Route::post('customers/import/{token}', [CustomerImportController::class, 'commit'])->where('token', '[A-Za-z0-9]{40}')->middleware('throttle:10,1,customer-import')->name('customers.import.commit');
     Route::get('customers', [CustomerController::class, 'index'])->name('customers.index');
     Route::get('customers/{user}', [CustomerController::class, 'show'])->name('customers.show');
     Route::patch('customers/{user}/tier', [CustomerController::class, 'updateTier'])->name('customers.tier');
@@ -495,6 +576,8 @@ Route::middleware(['auth', 'section:admin_panel', 'two-factor.required'])->prefi
     Route::get('stock/receive', [StockController::class, 'create'])->name('stock.create');
     Route::post('stock/receive', [StockController::class, 'store'])->name('stock.store');
     Route::get('stock/quote', [StockController::class, 'quote'])->name('stock.quote');
+    Route::get('stock/companies', [StockController::class, 'companies'])->name('stock.companies');
+    Route::get('stock/companies/{company}/medicines', [StockController::class, 'companyMedicines'])->whereNumber('company')->name('stock.companies.medicines');
     Route::put('stock/draft', [StockController::class, 'saveDraft'])->name('stock.draft');
     Route::delete('stock/draft', [StockController::class, 'clearDraft'])->name('stock.draft.clear');
     Route::get('stock/mismatches', [MismatchController::class, 'index'])->name('stock.mismatches');
@@ -538,6 +621,14 @@ Route::middleware(['auth', 'section:admin_panel', 'two-factor.required'])->prefi
     Route::get('invoices', [InvoiceController::class, 'index'])->name('invoices.index');
     Route::post('invoices/{invoice}/payment', [InvoiceController::class, 'pay'])->name('invoices.pay');
 
+    // The credit ledger (baki khata, spec ch 28 note 12): customers who owe us, and what we owe each company with its due day.
+    Route::get('ledger', [LedgerController::class, 'index'])->name('ledger.index');
+    Route::get('ledger/{user}', [LedgerController::class, 'show'])->whereNumber('user')->name('ledger.show');
+    Route::post('ledger/{user}/payment', [LedgerController::class, 'pay'])->whereNumber('user')->name('ledger.pay');
+    Route::get('payables', [PayablesController::class, 'index'])->name('payables.index');
+    Route::get('payables/{source}', [PayablesController::class, 'show'])->whereNumber('source')->name('payables.show');
+    Route::post('payables/{source}/payment', [PayablesController::class, 'pay'])->whereNumber('source')->name('payables.pay');
+
     // Online orders from shops (spec 4.4): staff check each line.
     Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('orders/{invoice}', [OrderController::class, 'show'])->name('orders.show');
@@ -567,6 +658,7 @@ Route::middleware(['auth', 'section:admin_panel', 'two-factor.required'])->prefi
 
     // Couriers with charges by zone and weight, and weights on medicines (spec ch 20).
     Route::get('market', [AdminMarketController::class, 'index'])->name('market.index');
+    Route::post('market/prohibited', [AdminMarketController::class, 'saveProhibited'])->name('market.prohibited');
     Route::get('market/commissions', [AdminMarketController::class, 'commissions'])->name('market.commissions');
     Route::get('market/statements', [AdminMarketController::class, 'statements'])->name('market.statements');
     Route::get('custom', [AdminCustomOrderController::class, 'index'])->name('custom.index');
@@ -631,9 +723,15 @@ Route::middleware(['auth', 'section:admin_panel', 'two-factor.required'])->prefi
     Route::put('site/{group}', [AdminSiteController::class, 'save'])->whereIn('group', ['brand', 'contact', 'social', 'footer', 'home', 'announcement', 'seo'])->name('site.save');
     Route::post('site/image/{which}', [AdminSiteController::class, 'image'])->whereIn('which', ['logo', 'favicon'])->name('site.image');
     Route::delete('site/image/{which}', [AdminSiteController::class, 'removeImage'])->whereIn('which', ['logo', 'favicon'])->name('site.image.remove');
+    Route::get('rx-market', [AdminRxInterestController::class, 'index'])->name('rx-market.index');
+    Route::get('services', [AdminServiceOfferController::class, 'index'])->name('services.index');
+    Route::put('services/{offer}/hide', [AdminServiceOfferController::class, 'hide'])->whereNumber('offer')->name('services.hide');
+    Route::get('pharmatrack', [AdminPharmaTrackController::class, 'index'])->name('pharmatrack.index');
+    Route::post('pharmatrack/token', [AdminPharmaTrackController::class, 'newToken'])->middleware(['password.confirm', 'throttle:5,1,pharmatrack-token'])->name('pharmatrack.token');
+    Route::post('pharmatrack/retry', [AdminPharmaTrackController::class, 'retry'])->middleware('throttle:5,1,pharmatrack-retry')->name('pharmatrack.retry');
     Route::get('connections', [AdminIntegrationController::class, 'index'])->name('connections.index');
-    Route::put('connections/{key}', [AdminIntegrationController::class, 'save'])->where('key', '[a-z]+:[a-z_]+')->name('connections.save');
-    Route::post('connections/{key}/test', [AdminIntegrationController::class, 'test'])->where('key', '[a-z]+:[a-z_]+')->middleware('throttle:10,1,connection-test')->name('connections.test');
+    Route::put('connections/{key}', [AdminIntegrationController::class, 'save'])->where('key', '[a-z]+:[a-z0-9_]+')->name('connections.save');
+    Route::post('connections/{key}/test', [AdminIntegrationController::class, 'test'])->where('key', '[a-z]+:[a-z0-9_]+')->middleware('throttle:10,1,connection-test')->name('connections.test');
     Route::post('orders/{invoice}/book-courier', [CourierBookingController::class, 'book'])->whereNumber('invoice')->middleware('throttle:20,1,courier-book')->name('orders.book-courier');
     Route::get('orders/{invoice}/courier-places', [CourierBookingController::class, 'places'])->whereNumber('invoice')->middleware('throttle:60,1,courier-places')->name('orders.courier-places');
     Route::post('orders/{invoice}/courier-status', [CourierBookingController::class, 'refresh'])->whereNumber('invoice')->middleware('throttle:30,1,courier-status')->name('orders.courier-status');
@@ -682,6 +780,12 @@ Route::middleware(['auth', 'section:admin_panel', 'two-factor.required'])->prefi
     Route::post('market/{listing}/approve', [AdminMarketController::class, 'approve'])->name('market.approve');
     Route::post('market/{listing}/reject', [AdminMarketController::class, 'reject'])->name('market.reject');
     Route::put('market/{listing}/commission', [AdminMarketController::class, 'commission'])->name('market.commission');
+    // Sellers' security deposits (spec ch 14): kept with us against returns and unpaid commission; off until the owner turns it on in Settings.
+    Route::get('market/deposits', [DepositController::class, 'index'])->name('market.deposits');
+    Route::post('market/deposits/{user}/receive', [DepositController::class, 'receive'])->whereNumber('user')->name('market.deposits.receive');
+    Route::post('market/deposits/{user}/give-back', [DepositController::class, 'giveBack'])->whereNumber('user')->name('market.deposits.give-back');
+    Route::post('market/deposits/{user}/deduct', [DepositController::class, 'deduct'])->whereNumber('user')->name('market.deposits.deduct');
+    Route::put('market/deposits/{user}/required', [DepositController::class, 'required'])->whereNumber('user')->name('market.deposits.required');
     Route::post('market/sectors', [AdminMarketController::class, 'storeSector'])->name('market.sectors.store');
     Route::put('market/sectors/{sector}', [AdminMarketController::class, 'updateSector'])->name('market.sectors.update');
     Route::post('market/sectors/{sector}/hero', [AdminMarketController::class, 'sectorHero'])->whereNumber('sector')->middleware('throttle:20,1,sector-hero')->name('market.sectors.hero');
@@ -723,6 +827,8 @@ Route::middleware(['auth', 'section:admin_panel', 'two-factor.required'])->prefi
     // Staff, roles and the activity log (spec ch 26). Changes ask for the password again.
     Route::get('staff', [StaffController::class, 'index'])->name('staff.index');
     Route::get('activity', [StaffController::class, 'activity'])->name('activity.index');
+    Route::get('archive', [ArchiveController::class, 'index'])->name('archive.index');
+    Route::post('archive/run', [ArchiveController::class, 'run'])->middleware('throttle:6,1,archive-run')->name('archive.run');
     Route::middleware('password.confirm')->group(function () {
         Route::post('staff', [StaffController::class, 'store'])->name('staff.store');
         Route::put('staff/{user}', [StaffController::class, 'update'])->name('staff.update');
@@ -741,6 +847,7 @@ Route::middleware(['auth', 'section:admin_panel', 'two-factor.required'])->prefi
     // Sales and ranking reports (spec 6.9, ch 25): admin only, they carry profit.
     Route::get('reports', [SalesReportController::class, 'index'])->name('reports.index');
     Route::get('reports/export', [SalesReportController::class, 'export'])->name('reports.export');
+    Route::post('reports/prepare', [SalesReportController::class, 'prepare'])->name('reports.prepare');
     Route::get('reports/vat', [VatReportController::class, 'index'])->name('reports.vat');
     Route::get('reports/vat/export', [VatReportController::class, 'export'])->name('reports.vat.export');
 

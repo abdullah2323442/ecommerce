@@ -31,6 +31,10 @@ interface Props {
         eat_there: boolean;
         address: string | null;
         manual_charge: boolean;
+        by_distance: boolean;
+        needs_location: boolean;
+        max_km: number | null;
+        per_km: number;
         advance_over: number | null;
         advance_percent: number;
     };
@@ -38,6 +42,9 @@ interface Props {
     area: string;
     serves: boolean;
     charge: number | null;
+    distance: number | null;
+    by_road: boolean;
+    too_far: boolean;
     eatOptions: number[];
     me: { name: string; phone: string | null } | null;
     custom: CustomMenu;
@@ -48,13 +55,42 @@ const DISPLAY = { fontFamily: "'Changa One', 'Noto Serif Bengali', Georgia, seri
 const slug = (g: string) => encodeURIComponent(g.toLowerCase().replace(/\s+/g, '-'));
 
 /** A restaurant's menu: only what can be ordered now. The cart and the checkout are on this one page. */
-export default function FoodShow({ restaurant, items, area, serves, charge, eatOptions, me, custom, favorites }: Props) {
+export default function FoodShow({ restaurant, items, area, serves, charge, distance, by_road, too_far, eatOptions, me, custom, favorites }: Props) {
     const { t, money, num } = useI18n();
     const errors = usePage().props.errors as Record<string, string>;
     const [cart, setCart] = useState<Record<number, { quantity: number; note: string }>>({});
     const [mode, setMode] = useState<'delivery' | 'eat_there'>('delivery');
     const [f, setF] = useState({ name: me?.name ?? '', phone: me?.phone ?? '', area, address: '', how_to_find: '', eat_time: '', note: '' });
     const [built, setBuilt] = useState<CustomLine[]>([]);
+    // The phone's own position, sent to work out the distance; it is not kept.
+    const [pos, setPos] = useState<{ lat: number; lng: number } | null>(null);
+    const [locating, setLocating] = useState(false);
+    const [geoError, setGeoError] = useState<string | null>(null);
+    const needsPos = mode === 'delivery' && restaurant.needs_location;
+    const blocked = needsPos && (pos === null || too_far);
+
+    const locate = () => {
+        if (!navigator.geolocation) {
+            setGeoError(t('This phone cannot share its position.'));
+
+            return;
+        }
+
+        setLocating(true);
+        setGeoError(null);
+        navigator.geolocation.getCurrentPosition(
+            (p) => {
+                const here = { lat: Math.round(p.coords.latitude * 1e5) / 1e5, lng: Math.round(p.coords.longitude * 1e5) / 1e5 };
+                setPos(here);
+                router.get(window.location.pathname, { ...here, ...(area ? { area } : {}) }, { preserveState: true, preserveScroll: true, replace: true, only: ['charge', 'distance', 'too_far'], onFinish: () => setLocating(false) });
+            },
+            () => {
+                setLocating(false);
+                setGeoError(t('We could not get your position. Allow location for this site and try again.'));
+            },
+            { enableHighAccuracy: false, timeout: 15000, maximumAge: 60000 },
+        );
+    };
     const lines = items.filter((i) => cart[i.id]?.quantity > 0);
     // The menu in its own groups, in the order they first appear; a dish with no group sits under "Menu".
     const groups = Object.entries(items.reduce<Record<string, Item[]>>((all, i) => ((all[i.category || t('Menu')] ??= []).push(i), all), {}));
@@ -85,7 +121,7 @@ export default function FoodShow({ restaurant, items, area, serves, charge, eatO
                 ...built.map((b) => ({ base_id: b.base_id, ingredient_ids: b.ingredient_ids, quantity: b.quantity, note: b.note })),
             ],
             ...f,
-            ...(mode === 'eat_there' ? { area: '', address: '' } : {}),
+            ...(mode === 'eat_there' ? { area: '', address: '' } : pos ? pos : {}),
         });
     };
 
@@ -327,6 +363,31 @@ export default function FoodShow({ restaurant, items, area, serves, charge, eatO
                                         {t('How to find you (optional)')}
                                         <Input className="mt-1" value={f.how_to_find} onChange={set('how_to_find')} />
                                     </label>
+                                    {needsPos && (
+                                        <div className="space-y-2 rounded-xl border p-3 text-sm sm:col-span-2">
+                                            <p>
+                                                {restaurant.by_distance
+                                                    ? t('This restaurant charges {amount} for each kilometre.', { amount: money(restaurant.per_km) })
+                                                    : t('This restaurant delivers within {n} km.', { n: num(restaurant.max_km ?? 0) })}
+                                                {restaurant.by_distance && restaurant.max_km !== null && ` ${t('It delivers within {n} km.', { n: num(restaurant.max_km) })}`}
+                                            </p>
+                                            <Button type="button" variant="outline" size="sm" disabled={locating} aria-busy={locating} onClick={locate}>
+                                                {locating ? t('Finding you…') : pos ? t('Use my position again') : t('Use my position')}
+                                            </Button>
+                                            {pos && distance !== null && !too_far && <p role="status">{by_road ? t('You are about {km} km away by road.', { km: num(distance) }) : t('You are about {km} km away (an estimate).', { km: num(distance) })}</p>}
+                                            {too_far && distance !== null && (
+                                                <p role="alert" className="font-semibold text-destructive">
+                                                    {t('You are about {km} km away, which is further than this restaurant delivers.', { km: num(distance) })}
+                                                </p>
+                                            )}
+                                            {geoError && (
+                                                <p role="alert" className="text-destructive">
+                                                    {geoError}
+                                                </p>
+                                            )}
+                                            {!pos && !geoError && <p className="text-[var(--pt-muted)]">{t('Share your position once so we can work out the distance. It is not kept.')}</p>}
+                                        </div>
+                                    )}
                                 </>
                             )}
                         </div>
@@ -375,7 +436,7 @@ export default function FoodShow({ restaurant, items, area, serves, charge, eatO
                             {mode === 'delivery' && (
                                 <div className="flex justify-between">
                                     <dt>{t('Delivery charge')}</dt>
-                                    <dd>{delivery === null ? t('The restaurant will tell you') : money(delivery)}</dd>
+                                    <dd>{delivery === null ? (restaurant.by_distance ? t('Shown when we know where you are') : t('The restaurant will tell you')) : money(delivery)}</dd>
                                 </div>
                             )}
                             <div className="font-display flex justify-between border-t pt-2 text-lg font-bold">
@@ -396,7 +457,7 @@ export default function FoodShow({ restaurant, items, area, serves, charge, eatO
                             </p>
                         )}
                         <InputError message={errors.order} />
-                        <Button type="submit" className="h-12 w-full text-base">
+                        <Button type="submit" disabled={blocked} className="h-12 w-full text-base">
                             {t('Place the order')}
                         </Button>
                     </form>

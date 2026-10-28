@@ -1,3 +1,6 @@
+import { track } from '@/lib/track';
+import { unitLabel } from '@/lib/units';
+import { SaleTag, WasPrice } from '@/components/market/sale-price';
 import SectionHero from '@/components/home/section-hero';
 import { Breadcrumb, type CategoryNode, SubTiles, TreeNav, type TreeNode } from '@/components/market/category-nav';
 import { FashionGrid, FashionTop, TechGrid } from '@/components/market/layouts';
@@ -6,11 +9,15 @@ import { Button } from '@/components/ui/button';
 import PublicLayout from '@/layouts/public-layout';
 import { useI18n } from '@/lib/i18n';
 import { Head, Link, router } from '@inertiajs/react';
+import { useEffect } from 'react';
 
 interface Item {
     id: number;
     title: string;
     price: number;
+    was?: number | null;
+    sale_percent?: number | null;
+    sale_ends_at?: string | null;
     premium: boolean;
     near: boolean;
     unit: string;
@@ -40,6 +47,7 @@ interface Props {
     category: CategoryNode | null;
     tree: TreeNode[];
     storefront: StoreFront | null;
+    picked: Item[];
     hero: Hero | null;
     sectors: { slug: string; name: string; count: number }[];
     ranges: { from: number; to: number | null }[];
@@ -61,10 +69,11 @@ interface Props {
     };
 }
 
-export const unitLabel = (u: string) => u.charAt(0).toUpperCase() + u.slice(1);
-
-export default function MarketIndex({ category, tree, storefront, hero, sectors, ranges, hasPremium, items, total, page, perPage, filters }: Props) {
+export default function MarketIndex({ category, tree, storefront, picked, hero, sectors, ranges, hasPremium, items, total, page, perPage, filters }: Props) {
     const { t, num, money, isBn } = useI18n();
+    useEffect(() => {
+        if (filters.q) track('Search', { query: filters.q });
+    }, [filters.q]);
     const go = (next: Record<string, string | number | boolean | null>) => {
         const merged: Record<string, string | number | boolean | null> = { ...filters, page: 1, ...next };
         router.get(
@@ -94,6 +103,33 @@ export default function MarketIndex({ category, tree, storefront, hero, sectors,
         <PublicLayout>
             <Head title={t('Market')} />
             <div className="mx-auto max-w-5xl space-y-6">
+                {picked.length > 0 && (
+                    <section aria-labelledby="picked-h" className="space-y-3">
+                        <div>
+                            <h2 id="picked-h" className="font-display text-2xl font-bold">
+                                {t('Picked for you')}
+                            </h2>
+                            <p className="text-sm text-[var(--pt-muted)]">{t('Because of what you have ordered or saved.')}</p>
+                        </div>
+                        <ul className="-mx-4 flex snap-x scroll-px-4 gap-4 overflow-x-auto px-4 pb-2">
+                            {picked.map((i) => (
+                                <li key={i.id} className="w-40 shrink-0 snap-start">
+                                    <Link href={route('market.show', i.id)} className="block">
+                                        <div className="aspect-square rounded-2xl bg-[var(--pt-line)]">
+                                            {i.photo && <img src={i.photo} alt="" loading="lazy" decoding="async" className="size-full rounded-2xl object-cover" />}
+                                        </div>
+                                        <p className="mt-2 line-clamp-2 text-sm leading-snug">{i.title}</p>
+                                        <p className="tabular text-sm font-semibold">
+                                            <WasPrice was={i.was} className="text-xs" />
+                                            {money(i.price)}
+                                        </p>
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </section>
+                )}
+
                 {storefront && <Storefront data={storefront} />}
                 {layout === 'fashion' && !category && !storefront && (
                     <FashionTop
@@ -238,8 +274,10 @@ export default function MarketIndex({ category, tree, storefront, hero, sectors,
                                                 style={{ fontFamily: "'Changa One', 'Noto Serif Bengali', Georgia, serif" }}
                                                 className="tabular mt-1 text-xl"
                                             >
+                                                <WasPrice was={i.was} className="text-sm" />
                                                 {money(i.price)} <span className="text-xs text-[var(--pt-muted)]">/ {unitLabel(i.unit)}</span>
                                             </p>
+                                            {i.sale_percent != null && <SaleTag percent={i.sale_percent} endsAt={i.sale_ends_at} />}
                                             <p className="mt-1 flex flex-wrap items-center gap-x-2 text-xs text-[var(--pt-muted)]">
                                                 <span>{i.seller}</span>
                                                 {i.stars && (

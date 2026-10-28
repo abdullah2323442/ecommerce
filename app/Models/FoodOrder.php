@@ -15,7 +15,7 @@ class FoodOrder extends Model
     protected $fillable = [
         'public_token', 'restaurant_id', 'buyer_id', 'mode', 'status', 'ship_to', 'eat_time', 'note', 'subtotal', 'delivery_charge', 'charge_open', 'total', 'commission', 'advance_due', 'advance_paid',
         'cook_minutes', 'confirmed_at', 'ready_at', 'packing_at', 'out_at', 'delivered_at', 'cancelled_at', 'cancelled_by', 'cancel_reason', 'refund_amount', 'nudged_at', 'complaint',
-        'complaint_photo', 'complaint_reply',
+        'complaint_photo', 'complaint_reply', 'distance_km', 'distance_by_road',
     ];
 
     protected function casts(): array

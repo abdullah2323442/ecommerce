@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Storage;
  */
 class Marketplace
 {
-    public function __construct(private Messenger $messages, private ImageCompressor $images, private SellerTrust $trust) {}
+    public function __construct(private Messenger $messages, private ImageCompressor $images, private SellerTrust $trust, private SellerDeposits $deposits) {}
 
     // ------------------------------------------------------------------ who may sell
 
@@ -54,6 +54,9 @@ class Marketplace
      */
     public function submit(User $seller, array $data, ?UploadedFile $photo = null): Listing
     {
+        // When the owner has switched the deposit on, a seller who has not kept enough with us cannot send in new products (spec ch 14).
+        $this->deposits->guard($seller);
+
         $sector = $this->sectorFor($seller, (int) $data['sector_id']);
         $this->checkPrices($data, $sector, $seller);
         $data = $this->forSector($sector, $data, true);
@@ -254,7 +257,21 @@ class Marketplace
             return null;
         }
 
-        return ['seller_price' => $base, 'price' => $listing->withCommission($base), 'audience' => $audience, 'min_qty' => $audience === 'wholesale' ? (float) $listing->min_qty : 1.0];
+        // A flash sale takes a percent off the seller's price for a while; it is for the public price, and the buyer is shown what it was.
+        $was = $saleEnds = $percent = null;
+        $sale = $audience === 'public' ? $listing->liveSale() : null;
+
+        if ($sale !== null) {
+            $was = $listing->withCommission($base);
+            $base = round($base * (100 - $sale->percent) / 100, 2);
+            $saleEnds = $sale->ends_at->toIso8601String();
+            $percent = $sale->percent;
+        }
+
+        return [
+            'seller_price' => $base, 'price' => $listing->withCommission($base), 'audience' => $audience, 'min_qty' => $audience === 'wholesale' ? (float) $listing->min_qty : 1.0,
+            'was' => $was, 'sale_ends_at' => $saleEnds, 'sale_percent' => $percent,
+        ];
     }
 
     public function isPremium(Listing $listing, float $price): bool
@@ -294,7 +311,7 @@ class Marketplace
      */
     public function visible(?User $viewer, ?string $sector = null): Collection
     {
-        return Listing::shown()->with(['sector', 'seller'])
+        return Listing::shown()->with(['sector', 'seller', 'sale'])
             ->when($sector, fn ($q) => $q->where(fn ($w) => $w->whereHas('sector', fn ($s) => $s->where('slug', $sector))->orWhereHas('extraSectors', fn ($s) => $s->where('slug', $sector))))
             ->get()
             ->map(function (Listing $l) use ($viewer) {
@@ -404,7 +421,7 @@ class Marketplace
     private function fields(array $data): array
     {
         $out = [];
-        foreach (['title', 'description', 'public_price', 'wholesale_price', 'min_qty', 'delivery_charge', 'stock', 'commission_request', 'cost_price', 'low_stock_at', 'item_height', 'item_length', 'item_width', 'item_size_unit', 'item_weight', 'expires_on', 'warranty_months', 'seo_title', 'seo_description', 'return_days', 'return_note', 'preorder_days', 'alt_names', 'catalog_product_id', 'pickup'] as $key) {
+        foreach (['title', 'description', 'public_price', 'wholesale_price', 'min_qty', 'delivery_charge', 'stock', 'commission_request', 'cost_price', 'low_stock_at', 'item_height', 'item_length', 'item_width', 'item_size_unit', 'item_weight', 'expires_on', 'warranty_months', 'seo_title', 'seo_description', 'return_days', 'return_note', 'preorder_days', 'alt_names', 'catalog_product_id', 'pickup', 'cod_allowed'] as $key) {
             if (array_key_exists($key, $data)) {
                 $value = $data[$key];
                 $out[$key] = is_string($value) ? (trim($value) === '' ? null : trim($value)) : $value;

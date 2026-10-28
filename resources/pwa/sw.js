@@ -108,6 +108,47 @@ self.addEventListener('fetch', (event) => {
 });
 
 // The page asks for its own page to be kept while the line is up.
+// A notification from the site (spec ch 23): show it, and open the page it points to when it is tapped.
+self.addEventListener('push', (event) => {
+    let data = {};
+    try {
+        data = event.data ? event.data.json() : {};
+    } catch {
+        data = { title: 'Notification', body: event.data ? event.data.text() : '' };
+    }
+
+    event.waitUntil(
+        self.registration.showNotification(data.title || 'Notification', {
+            body: data.body || '',
+            icon: '/pwa/icon/192.png',
+            badge: '/pwa/icon/192.png',
+            data: { url: typeof data.url === 'string' && data.url.startsWith('/') ? data.url : '/inbox' },
+        }),
+    );
+});
+
+self.addEventListener('notificationclick', (event) => {
+    event.notification.close();
+    const url = (event.notification.data && event.notification.data.url) || '/inbox';
+
+    event.waitUntil(
+        (async () => {
+            const open = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+
+            for (const client of open) {
+                if ('focus' in client) {
+                    await client.focus();
+                    if ('navigate' in client) await client.navigate(url);
+
+                    return;
+                }
+            }
+
+            await self.clients.openWindow(url);
+        })(),
+    );
+});
+
 self.addEventListener('message', (event) => {
     if (event.data === 'skip-waiting') {
         self.skipWaiting();

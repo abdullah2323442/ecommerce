@@ -6,7 +6,7 @@ import PublicLayout from '@/layouts/public-layout';
 import { useI18n } from '@/lib/i18n';
 import { Head, Link, router, usePage } from '@inertiajs/react';
 import { useState } from 'react';
-import { unitLabel } from './index';
+import { unitLabel } from '@/lib/units';
 
 interface Order {
     id: number;

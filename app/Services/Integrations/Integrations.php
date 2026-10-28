@@ -7,9 +7,12 @@ use App\Models\User;
 use App\Services\Audit\ActivityLogger;
 use App\Services\Couriers\CourierBooking;
 use App\Services\Couriers\CourierException;
+use App\Services\Food\RoadDistance;
 use App\Services\Location\Locator;
 use App\Services\Messages\HttpSmsGateway;
+use App\Services\Push\Notifications;
 use App\Services\Stock\StockException;
+use App\Services\Sync\PharmaTrack;
 use Illuminate\Support\Facades\Cache;
 
 /**
@@ -99,12 +102,16 @@ class Integrations
             }
 
             if ($given !== null && ($plain[$name] ?? null) !== $given) {
-                if (($f['type'] ?? '') === 'url' && $given !== '' && ! preg_match('~^https://[^\s<>"\']+$~', $given)) {
+                if (($f['type'] ?? '') === 'url' && $given !== '' && ! preg_match(app()->environment('local') ? '~^https?://[^\s<>"\']+$~' : '~^https://[^\s<>"\']+$~', $given)) {
                     throw new StockException('Addresses must start with https://');
                 }
 
                 if (($f['type'] ?? '') === 'select' && ! in_array($given, $f['options'], true)) {
                     throw new StockException('Pick one of the choices.');
+                }
+
+                if (! empty($f['pattern']) && $given !== '' && ! preg_match($f['pattern'], $given)) {
+                    throw new StockException(__($f['pattern_hint'] ?? 'That does not look right.'));
                 }
 
                 $plain[$name] = mb_substr($given, 0, 300);
@@ -129,6 +136,21 @@ class Integrations
             }
         }
 
+        // Notifications by Web Push need a pair of signing keys, so the site makes them when the owner has none (nothing to buy or paste).
+        if ($key === 'push:webpush' && $enabled && (empty($plain['public_key']) || empty($creds['private_key']))) {
+            $pair = Notifications::makeKeys();
+            $plain['public_key'] = $pair['public_key'];
+            $creds['private_key'] = $pair['private_key'];
+            $changed[] = 'public_key';
+            $changed[] = 'private_key';
+        }
+
+        // The password PharmaTrack sends to us is made when the link is first switched on; the PharmaTrack screen shows it once and can make a new one.
+        if ($key === PharmaTrack::KEY && $enabled && empty($creds['inbound_token'])) {
+            $creds['inbound_token'] = PharmaTrack::newToken();
+            $changed[] = 'inbound_token';
+        }
+
         $type = explode(':', $key)[0];
 
         // Only one text service and one map at a time.
@@ -143,6 +165,15 @@ class Integrations
         return $row;
     }
 
+    /** Google Maps does two jobs (naming a place, and road distance for restaurants), so the test tries both and says which one failed. */
+    private function tryGoogle(array $values): array
+    {
+        $place = app(Locator::class)->probe('map:google', $values);
+        $road = app(RoadDistance::class)->probe($values);
+
+        return ['ok' => $place['ok'] && $road['ok'], 'note' => trim($place['note'].' '.$road['note'])];
+    }
+
     /** A harmless call to prove the keys. */
     private function tryCourier(string $key): array
     {
@@ -153,6 +184,12 @@ class Integrations
         }
 
         return ['ok' => true, 'note' => 'Connected.'];
+    }
+
+    /** Forget what is remembered about which services are on (after a change made outside save()). */
+    public function forget(): void
+    {
+        Cache::forget(self::CACHE);
     }
 
     /** The saved values of an on service, for the code that uses it: ['mode', 'settings', 'credentials']. Null when it is off. */
@@ -198,7 +235,11 @@ class Integrations
         $result = match ($key) {
             'sms:http' => app(HttpSmsGateway::class)->probe($values, (string) ($args['to'] ?? '')),
             'courier:steadfast', 'courier:pathao' => $this->tryCourier($key),
-            'map:nominatim', 'map:google' => app(Locator::class)->probe($key, $values),
+            'push:webpush' => app(Notifications::class)->probe($values),
+            'erp:pharmatrack' => app(PharmaTrack::class)->probe($values),
+            'analytics:meta_pixel', 'analytics:ga4' => ['ok' => true, 'note' => __('The number is written correctly. Open the site as a visitor and watch the live view in the tool to see it arrive.')],
+            'map:nominatim' => app(Locator::class)->probe($key, $values),
+            'map:google' => $this->tryGoogle($values),
             default => throw new StockException(str_starts_with($key, 'social:') ? 'There is no test button for this one. Try signing in with it.' : (str_starts_with($key, 'payment:') ? 'There is no test button for this one. Switch on Testing and make a practice payment.' : 'This service is not built into the site yet.')),
         };
 

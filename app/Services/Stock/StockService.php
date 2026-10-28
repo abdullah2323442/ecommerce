@@ -10,6 +10,7 @@ use App\Models\StockLot;
 use App\Models\StockMovement;
 use App\Models\StockSource;
 use App\Models\User;
+use App\Services\Sync\PharmaTrack;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -20,6 +21,9 @@ use Illuminate\Support\Facades\DB;
 class StockService
 {
     public const SALE_OFFER = 'offer';
+
+    /** A sale made in PharmaTrack, which already happened and only has to be written down here. */
+    public const SALE_EXTERNAL = 'external';
 
     public const SALE_PAIKARI = 'paikari';
 
@@ -55,7 +59,7 @@ class StockService
             throw StockException::duplicateInvoice($number);
         }
 
-        return DB::transaction(function () use ($source, $data, $by, $number) {
+        $invoice = DB::transaction(function () use ($source, $data, $by, $number) {
             $invoice = PurchaseInvoice::create([
                 'stock_source_id' => $source->id,
                 'invoice_number' => $number,
@@ -107,10 +111,28 @@ class StockService
                 $total += $math['total_paid'];
             }
 
-            $invoice->update(['total_cost' => round($total, 2)]);
+            $total = round($total, 2);
+            // Paid in full when it is entered, unless the buyer says how much is paid now; what is left is owed to the company on a day (spec ch 28 note 12).
+            $paid = isset($data['paid_now']) && $data['paid_now'] !== '' ? round((float) $data['paid_now'], 2) : $total;
+            if ($paid < 0 || $paid > $total) {
+                throw new StockException('The amount paid cannot be more than the purchase total.');
+            }
+
+            $due = $paid < $total ? ($data['due_date'] ?? null) : null;
+            if ($paid < $total && ! $due) {
+                throw new StockException('Write the day the rest is due.');
+            }
+
+            $invoice->update(['total_cost' => $total, 'paid_amount' => $paid, 'due_date' => $due]);
 
             return $invoice->load('lots');
         });
+
+        foreach ($invoice->lots as $lot) {
+            $this->tell(fn () => app(PharmaTrack::class)->announceChange(Medicine::findOrFail($lot->medicine_id), (float) $lot->units_received, 'Purchase received', 'receipt:lot'.$lot->id.':'.now()->timestamp));
+        }
+
+        return $invoice;
     }
 
     // ------------------------------------------------------------------ reading
@@ -179,11 +201,11 @@ class StockService
      */
     public function sell(Medicine $medicine, float $units, float $unitPrice, string $kind, ?User $by = null, ?int $invoiceLineId = null, ?array $onlyLots = null): ?Collection
     {
-        if ($kind !== self::SALE_OFFER && ! $this->masterSyncEnabled()) {
+        if ($kind !== self::SALE_OFFER && $kind !== self::SALE_EXTERNAL && ! $this->masterSyncEnabled()) {
             return null;
         }
 
-        return DB::transaction(function () use ($medicine, $units, $unitPrice, $by, $invoiceLineId, $onlyLots) {
+        return DB::transaction(function () use ($medicine, $units, $unitPrice, $by, $invoiceLineId, $onlyLots, $kind) {
             $lots = StockLot::where('medicine_id', $medicine->id)->where('units_remaining', '>', 0)
                 ->when($onlyLots !== null, fn ($q) => $q->whereIn('id', $onlyLots))->lockForUpdate()->get();
 
@@ -203,7 +225,8 @@ class StockService
                     : $available->sortBy(fn (StockLot $l) => [(float) $l->unit_cost, $l->id])->first();
 
                 $isLoss = (float) $lot->unit_cost > $unitPrice;
-                if ($isLoss && $by?->account_type !== AccountType::Admin) {
+                // A sale PharmaTrack already made cannot be refused: it is recorded, loss and all, and the owner sees it.
+                if ($isLoss && $kind !== self::SALE_EXTERNAL && $by?->account_type !== AccountType::Admin) {
                     throw StockException::loss($medicine->brand_name);
                 }
 
@@ -268,7 +291,8 @@ class StockService
      */
     public function returnUnits(int $invoiceLineId, float $units, ?User $by = null): float
     {
-        return DB::transaction(function () use ($invoiceLineId, $units, $by) {
+        $medicineId = null;
+        $back = DB::transaction(function () use ($invoiceLineId, $units, $by, &$medicineId) {
             $left = $units;
             $back = 0.0;
             $movements = StockMovement::where('invoice_line_id', $invoiceLineId)->where('type', 'sale')->where('reversed', false)->orderByDesc('id')->lockForUpdate()->get();
@@ -300,10 +324,17 @@ class StockService
 
                 $left = round($left - $take, 4);
                 $back += $take;
+                $medicineId = $movement->medicine_id;
             }
 
             return round($back, 4);
         });
+
+        if ($back > 0 && $medicineId !== null) {
+            $this->tell(fn () => app(PharmaTrack::class)->announceChange(Medicine::findOrFail($medicineId), $back, 'Customer return', 'return:line'.$invoiceLineId.':'.now()->format('YmdHisu')));
+        }
+
+        return $back;
     }
 
     // -------------------------------------------------------------- corrections
@@ -319,7 +350,7 @@ class StockService
             throw StockException::adminOnly();
         }
 
-        return DB::transaction(function () use ($medicine, $newOnHand, $reason, $by, $note) {
+        $delta = DB::transaction(function () use ($medicine, $newOnHand, $reason, $by, $note) {
             $lots = StockLot::where('medicine_id', $medicine->id)->orderBy('id')->lockForUpdate()->get();
             $delta = round($newOnHand - (float) $lots->sum('units_remaining'), 4);
 
@@ -351,6 +382,22 @@ class StockService
 
             return $delta;
         });
+
+        if ($delta !== 0.0) {
+            $this->tell(fn () => app(PharmaTrack::class)->announceChange($medicine, $delta, 'Correction: '.$reason, 'fix:'.$medicine->id.':'.now()->format('YmdHisu')));
+        }
+
+        return $delta;
+    }
+
+    /** Telling PharmaTrack must never undo or hold up a change that has already been made here. */
+    private function tell(callable $do): void
+    {
+        try {
+            $do();
+        } catch (\Throwable $e) {
+            report($e);
+        }
     }
 
     private function logCorrection(Medicine $medicine, StockLot $lot, float $units, string $reason, User $by, ?string $note): void

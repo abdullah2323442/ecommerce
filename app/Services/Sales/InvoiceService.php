@@ -17,6 +17,7 @@ use App\Services\Pricing\PriceResolver;
 use App\Services\Pricing\PriceRounding;
 use App\Services\Stock\StockException;
 use App\Services\Stock\StockService;
+use App\Services\Sync\PharmaTrack;
 use App\Services\Wallet\Tokens;
 use Illuminate\Support\Facades\DB;
 
@@ -792,6 +793,15 @@ class InvoiceService
 
         if ($firstCheck) {
             $this->messages->orderPicking($invoice);
+        }
+
+        if ($status === 'unavailable') {
+            // Spec ch 7, step 5: what could not be supplied goes to the short list in PharmaTrack. The check itself must never fail over it.
+            try {
+                app(PharmaTrack::class)->announceMissed($checked, $requested);
+            } catch (\Throwable $e) {
+                report($e);
+            }
         }
 
         return $checked;

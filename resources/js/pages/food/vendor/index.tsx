@@ -53,7 +53,11 @@ interface Settings {
     closes_at: string;
     closed_days: number[];
     delivery_by: 'own' | 'platform';
-    charge_mode: 'area' | 'manual';
+    charge_mode: 'area' | 'distance' | 'manual';
+    per_km: number;
+    max_km: number | null;
+    lat: number | null;
+    lng: number | null;
     charge_inside: number;
     charge_outside: number;
     min_charge: number;
@@ -94,6 +98,8 @@ interface Props {
     sales: { today: Sums; month: Sums; all: Sums };
     items: Item[];
     days: number[];
+    roadByGoogle: boolean;
+    mapOn: boolean;
 }
 
 const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -257,11 +263,34 @@ function ItemRow({ i }: { i: Item }) {
     );
 }
 
-export default function VendorHome({ restaurant: r, openNow, orders, together, recent, sales, items }: Props) {
+export default function VendorHome({ restaurant: r, openNow, orders, together, recent, sales, items, roadByGoogle, mapOn }: Props) {
     const { t, money, num } = useI18n();
     const errors = usePage().props.errors as Record<string, string>;
     const flash = (usePage().props.flash as { status?: string } | undefined)?.status;
-    const [s, setS] = useState({ ...r, areas: r.areas.join(', '), advance_over: r.advance_over !== null ? String(r.advance_over) : '' });
+    const [s, setS] = useState({ ...r, areas: r.areas.join(', '), advance_over: r.advance_over !== null ? String(r.advance_over) : '', max_km: r.max_km !== null ? String(r.max_km) : '' });
+    const [here, setHere] = useState<string | null>(null);
+    const [finding, setFinding] = useState(false);
+    const findAddress = async () => {
+        setFinding(true);
+        setHere(null);
+        try {
+            const res = await fetch(`/food/vendor/locate?address=${encodeURIComponent(`${s.address ?? ''}, ${r.area}`)}`, { headers: { Accept: 'application/json' } });
+            const body = await res.json();
+            if (!res.ok) setHere(body.message ?? t('We could not find that address. Try adding the area and the district.'));
+            else setS((cur) => ({ ...cur, lat: body.lat, lng: body.lng }));
+        } catch {
+            setHere(t('Could not reach the map service. Please try again.'));
+        } finally {
+            setFinding(false);
+        }
+    };
+    const useHere = () =>
+        navigator.geolocation
+            ? navigator.geolocation.getCurrentPosition(
+                  (p) => setS((cur) => ({ ...cur, lat: Math.round(p.coords.latitude * 1e6) / 1e6, lng: Math.round(p.coords.longitude * 1e6) / 1e6 })),
+                  () => setHere(t('We could not get the position of this device. Allow location for this site and try again.')),
+              )
+            : setHere(t('This device cannot share its position.'));
     const [fresh, setFresh] = useState({ name: '', price: '', cook_minutes: '15', description: '', category: '', ready_made: false });
     const [photo, setPhoto] = useState<File | null>(null);
 
@@ -273,7 +302,7 @@ export default function VendorHome({ restaurant: r, openNow, orders, together, r
     }, []);
 
     const save = () =>
-        router.post('/food/vendor/settings', { ...s, areas: s.areas.split(',').map((a) => a.trim()).filter(Boolean), eat_there: s.eat_there ? 1 : 0, advance_over: s.advance_over === '' ? null : s.advance_over }, { preserveScroll: true });
+        router.post('/food/vendor/settings', { ...s, areas: s.areas.split(',').map((a) => a.trim()).filter(Boolean), eat_there: s.eat_there ? 1 : 0, advance_over: s.advance_over === '' ? null : s.advance_over, max_km: s.max_km === '' ? null : s.max_km }, { preserveScroll: true });
     const sum = (label: string, x: Sums) => (
         <div className="rounded-[1.25rem] border bg-[var(--pt-surface)] p-3">
             <p className="text-xs text-[var(--pt-muted)]">{label}</p>
@@ -369,8 +398,9 @@ export default function VendorHome({ restaurant: r, openNow, orders, together, r
                     <div className="grid gap-3 sm:grid-cols-4">
                         <label className="text-sm sm:col-span-2">
                             {t('Delivery charge')}
-                            <select value={s.charge_mode} onChange={(e) => setS({ ...s, charge_mode: e.target.value as 'area' | 'manual' })} className="mt-1 block h-9 w-full rounded-md border bg-background px-2 text-sm">
+                            <select value={s.charge_mode} onChange={(e) => setS({ ...s, charge_mode: e.target.value as 'area' | 'distance' | 'manual' })} className="mt-1 block h-9 w-full rounded-md border bg-background px-2 text-sm">
                                 <option value="area">{t('By area: one price inside, another outside')}</option>
+                                <option value="distance">{t('By distance: so much for each kilometre')}</option>
                                 <option value="manual">{t('I write it on each order')}</option>
                             </select>
                         </label>
@@ -402,9 +432,46 @@ export default function VendorHome({ restaurant: r, openNow, orders, together, r
                             <Input className="mt-1" inputMode="numeric" value={s.advance_percent} onChange={(e) => setS({ ...s, advance_percent: Number(e.target.value) })} />
                         </label>
                     </div>
+                    <div className="grid gap-3 rounded-xl border p-3 sm:grid-cols-3">
+                        <label className="text-sm sm:col-span-3">
+                            {t('Address of the restaurant')}
+                            <Input className="mt-1" maxLength={250} value={s.address ?? ''} onChange={(e) => setS({ ...s, address: e.target.value })} />
+                        </label>
+                        <label className="text-sm">
+                            {t('Charge for each kilometre')}
+                            <Input className="mt-1" inputMode="decimal" value={s.per_km} onChange={(e) => setS({ ...s, per_km: Number(e.target.value) })} />
+                        </label>
+                        <label className="text-sm">
+                            {t('Longest distance you deliver, in km')}
+                            <Input className="mt-1" inputMode="decimal" placeholder={t('No limit')} value={s.max_km} onChange={(e) => setS({ ...s, max_km: e.target.value })} />
+                        </label>
+                        <div className="text-sm">
+                            <p>{t('Where the restaurant is')}</p>
+                            <p className="tabular mt-1 text-xs text-[var(--pt-muted)]">{s.lat !== null && s.lng !== null ? `${s.lat}, ${s.lng}` : t('Not set yet')}</p>
+                            <div className="mt-1 flex flex-wrap gap-2">
+                                <Button type="button" size="sm" variant="outline" onClick={useHere}>
+                                    {t('Use the position of this device')}
+                                </Button>
+                                {mapOn && (
+                                    <Button type="button" size="sm" variant="outline" disabled={finding || !(s.address ?? '').trim()} aria-busy={finding} onClick={findAddress}>
+                                        {finding ? t('Finding…') : t('Find it from the address above')}
+                                    </Button>
+                                )}
+                            </div>
+                        </div>
+                        <p className="text-xs text-[var(--pt-muted)] sm:col-span-3">
+                            {roadByGoogle ? t('The distance is the real road distance from Google Maps. A buyer further than your longest distance cannot order.') : t('The distance is worked out from the straight line and a road allowance, so it is an estimate. A buyer further than your longest distance cannot order. Stand in the restaurant when you set its position.')}
+                        </p>
+                        {here && (
+                            <p role="alert" className="text-sm text-destructive sm:col-span-3">
+                                {here}
+                            </p>
+                        )}
+                    </div>
                     <label className="flex items-center gap-2 text-sm">
                         <input type="checkbox" checked={s.eat_there} onChange={(e) => setS({ ...s, eat_there: e.target.checked })} /> {t("Offer \"I'll eat there\"")}
                     </label>
+                    <InputError message={errors.vendor} />
                     <Button onClick={save}>{t('Save')}</Button>
                 </section>
 

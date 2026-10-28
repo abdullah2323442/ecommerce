@@ -22,7 +22,7 @@ use Illuminate\Support\Str;
  */
 class FoodOrders
 {
-    public function __construct(private Restaurants $restaurants, private Messenger $messages, private ImageCompressor $images, private CustomFood $custom) {}
+    public function __construct(private Restaurants $restaurants, private Messenger $messages, private ImageCompressor $images, private CustomFood $custom, private RoadDistance $roads) {}
 
     public function confirmMinutes(): int
     {
@@ -98,15 +98,15 @@ class FoodOrders
             $subtotal += (float) $item->price * $qty;
         }
 
-        [$charge, $open] = $mode === 'delivery' ? $this->charge($restaurant, (string) $ship['area']) : [0.0, false];
+        [$charge, $open, $km] = $mode === 'delivery' ? $this->charge($restaurant, (string) $ship['area'], $ship['lat'] ?? null, $ship['lng'] ?? null, true) : [0.0, false, null];
         $total = round($subtotal + $charge, 2);
         $advance = $restaurant->advance_over !== null && $restaurant->advance_percent > 0 && $total >= (float) $restaurant->advance_over ? round($total * $restaurant->advance_percent / 100, 2) : 0.0;
 
-        $order = DB::transaction(function () use ($restaurant, $buyer, $rows, $mode, $ship, $eatTime, $note, $subtotal, $charge, $open, $total, $advance) {
+        $order = DB::transaction(function () use ($restaurant, $buyer, $rows, $mode, $ship, $eatTime, $note, $subtotal, $charge, $open, $total, $advance, $km) {
             $order = FoodOrder::create([
                 'public_token' => Str::random(40), 'restaurant_id' => $restaurant->id, 'buyer_id' => $buyer?->id, 'mode' => $mode, 'status' => 'pending',
                 'ship_to' => collect($ship)->only(['name', 'phone', 'area', 'address', 'how_to_find'])->all(), 'eat_time' => $mode === 'eat_there' && $eatTime ? mb_substr(trim($eatTime), 0, 30) : null,
-                'note' => $note ? mb_substr(trim($note), 0, 300) : null, 'subtotal' => round($subtotal, 2), 'delivery_charge' => $charge, 'charge_open' => $open, 'total' => $total, 'advance_due' => $advance,
+                'note' => $note ? mb_substr(trim($note), 0, 300) : null, 'subtotal' => round($subtotal, 2), 'delivery_charge' => $charge, 'charge_open' => $open, 'total' => $total, 'advance_due' => $advance, 'distance_km' => $km, 'distance_by_road' => $km !== null && $this->distanceInfo($restaurant, $ship['lat'] ?? null, $ship['lng'] ?? null)['by_road'],
             ]);
             $order->lines()->createMany($rows);
 
@@ -119,20 +119,70 @@ class FoodOrders
     }
 
     /**
-     * The delivery charge for an address, and whether the owner types it in when confirming. "Area-based": one price inside the restaurant's own
-     * area, another outside; never less than the minimum. Charging by road distance needs a map service, which is not connected yet.
+     * The delivery charge for an address, whether the owner types it in when confirming, and how far it is. Three ways (spec ch 17): one price inside the
+     * restaurant's own area and another outside; so much for each kilometre; or written by hand on each order. Never less than the least charge, and, if the
+     * restaurant set a longest distance, never beyond it. The distance is the straight line between the two places times a road factor, a stand-in: real road
+     * distance needs a map service, which is not connected yet.
      *
-     * @return array{0: float, 1: bool}
+     * With $strict the buyer's position is required where the restaurant needs it and a buyer who is too far is refused; without it (a preview on the menu page)
+     * nothing is thrown and an unknown distance gives no charge.
+     *
+     * @return array{0: float, 1: bool, 2: ?float}
+     *
+     * @throws StockException
      */
-    public function charge(Restaurant $r, string $area): array
+    public function charge(Restaurant $r, string $area, mixed $lat = null, mixed $lng = null, bool $strict = false): array
     {
+        $km = $this->distance($r, $lat, $lng);
+        $needsDistance = $r->charge_mode === 'distance' || $r->max_km !== null;
+
+        if ($needsDistance && $km === null && $r->lat !== null && $strict) {
+            throw new StockException('Share your location so we can check how far you are.');
+        }
+
+        if ($km !== null && $r->max_km !== null && $km > (float) $r->max_km + 0.0001) {
+            if ($strict) {
+                throw new StockException(__('This restaurant delivers up to {max} km. You are about {km} km away.', ['max' => rtrim(rtrim(number_format((float) $r->max_km, 1, '.', ''), '0'), '.'), 'km' => number_format($km, 1, '.', '')]));
+            }
+        }
+
         if ($r->charge_mode === 'manual') {
-            return [0.0, true];
+            return [0.0, true, $km];
+        }
+
+        if ($r->charge_mode === 'distance') {
+            return [$km === null ? 0.0 : max((float) $r->min_charge, round($km * (float) $r->per_km)), false, $km];
         }
 
         $inside = mb_strtolower(trim($area)) === mb_strtolower(trim($r->area));
 
-        return [max((float) $r->min_charge, (float) ($inside ? $r->charge_inside : $r->charge_outside)), false];
+        return [max((float) $r->min_charge, (float) ($inside ? $r->charge_inside : $r->charge_outside)), false, $km];
+    }
+
+    /** How far, in kilometres by road, from the restaurant to a point; nothing if either place is not known. */
+    public function distance(Restaurant $r, mixed $lat, mixed $lng): ?float
+    {
+        return $this->distanceInfo($r, $lat, $lng)['km'] ?? null;
+    }
+
+    /**
+     * The distance and whether it is the real road distance (Google Maps is on and answered) or the estimate that stands in.
+     *
+     * @return array{km: float, by_road: bool}|null
+     */
+    public function distanceInfo(Restaurant $r, mixed $lat, mixed $lng): ?array
+    {
+        if ($r->lat === null || $r->lng === null || ! is_numeric($lat) || ! is_numeric($lng)) {
+            return null;
+        }
+
+        return $this->roads->between((float) $r->lat, (float) $r->lng, (float) $lat, (float) $lng);
+    }
+
+    /** Is a buyer at this point too far away? Used by the menu page, so it can say so before anything is typed. */
+    public function tooFar(Restaurant $r, ?float $km): bool
+    {
+        return $km !== null && $r->max_km !== null && $km > (float) $r->max_km + 0.0001;
     }
 
     // ------------------------------------------------------------------ the restaurant's steps
@@ -353,7 +403,7 @@ class FoodOrders
         return [
             'token' => $o->public_token, 'number' => $o->number(), 'status' => $o->status, 'mode' => $o->mode, 'restaurant' => $o->restaurant->name, 'restaurant_phone' => $o->restaurant->phone,
             'lines' => $o->lines->map(fn ($l) => ['name' => $l->name, 'price' => (float) $l->price, 'quantity' => $l->quantity, 'note' => $l->note, 'ingredients' => $l->ingredients])->values(), 'custom' => $o->lines->contains(fn ($l) => $l->ingredients !== null),
-            'subtotal' => (float) $o->subtotal, 'delivery_charge' => (float) $o->delivery_charge, 'charge_open' => $o->charge_open, 'total' => (float) $o->total,
+            'subtotal' => (float) $o->subtotal, 'delivery_charge' => (float) $o->delivery_charge, 'distance_km' => $o->distance_km !== null ? (float) $o->distance_km : null, 'distance_by_road' => (bool) $o->distance_by_road, 'charge_open' => $o->charge_open, 'total' => (float) $o->total,
             'advance_due' => (float) $o->advance_due, 'advance_paid' => (float) $o->advance_paid, 'minutes' => $o->cook_minutes, 'ready_at' => $o->ready_at?->toIso8601String(), 'seconds_left' => $seconds,
             'ship_to' => $o->ship_to, 'eat_time' => $o->eat_time, 'note' => $o->note, 'placed_at' => $o->created_at->toIso8601String(), 'cancel_reason' => $o->cancel_reason, 'refund' => (float) $o->refund_amount,
             'ask_cancel' => $this->unconfirmedTooLong($o), 'can_cancel' => in_array($o->status, ['pending', 'confirmed', 'packing'], true), 'cancel_no_refund' => $o->cookingStarted() && (float) $o->advance_paid > 0,

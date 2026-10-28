@@ -16,6 +16,10 @@ use App\Services\Food\FoodOrders;
 use App\Services\Food\Restaurants;
 use App\Services\Stock\StockException;
 use Illuminate\Auth\Access\AuthorizationException;
+use App\Services\Food\RoadDistance;
+use App\Services\Location\LocationException;
+use App\Services\Location\Locator;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -40,6 +44,8 @@ class FoodVendorController extends Controller
 
         return Inertia::render('food/vendor/index', [
             'restaurant' => $this->settings($r), 'openNow' => $this->restaurants->isOpenNow($r),
+            // Whether real road distance (Google Maps) is on, and whether an address can be turned into a place.
+            'roadByGoogle' => app(RoadDistance::class)->viaGoogle(), 'mapOn' => app(Locator::class)->enabled(),
             'orders' => $open->map($row)->values(),
             // Two orders to nearby houses show together, so one rider can take both and share the charge (spec ch 17).
             'together' => $delivery->groupBy(fn (FoodOrder $o) => mb_strtolower(trim((string) ($o->ship_to['area'] ?? ''))))->filter(fn ($g) => $g->count() > 1)->map(fn ($g, $area) => ['area' => $area, 'numbers' => $g->map->number()->values()])->values(),
@@ -205,13 +211,26 @@ class FoodVendorController extends Controller
         return back()->with('status', $data['open'] ? __('You are open.') : __('You are closed.'));
     }
 
+    /** Where an address typed in words is on the map, for the owner setting where the restaurant is. Nothing is saved here. */
+    public function locate(Request $request, Locator $locator): JsonResponse
+    {
+        $this->mine($request);
+        $data = $request->validate(['address' => ['required', 'string', 'max:200']]);
+
+        try {
+            return response()->json($locator->forward($data['address']));
+        } catch (LocationException $e) {
+            return response()->json(['message' => __($e->getMessage())], 422);
+        }
+    }
+
     public function update(Request $request): RedirectResponse
     {
         $r = $this->mine($request);
         $data = $request->validate([
             'name' => ['sometimes', 'string', 'min:2', 'max:120'], 'description' => ['nullable', 'string', 'max:300'], 'phone' => ['nullable', 'string', 'max:30'], 'address' => ['nullable', 'string', 'max:250'],
             'opens_at' => ['sometimes', 'string'], 'closes_at' => ['sometimes', 'string'], 'closed_days' => ['nullable', 'array'], 'delivery_by' => ['sometimes', 'in:own,platform'],
-            'charge_mode' => ['sometimes', 'in:area,manual'], 'charge_inside' => ['sometimes', 'numeric', 'min:0', 'max:5000'], 'charge_outside' => ['sometimes', 'numeric', 'min:0', 'max:5000'], 'min_charge' => ['sometimes', 'numeric', 'min:0', 'max:5000'],
+            'charge_mode' => ['sometimes', 'in:area,distance,manual'], 'per_km' => ['sometimes', 'numeric', 'min:0', 'max:1000'], 'max_km' => ['nullable', 'numeric', 'gt:0', 'max:200'], 'lat' => ['nullable', 'numeric', 'between:-90,90'], 'lng' => ['nullable', 'numeric', 'between:-180,180'], 'charge_inside' => ['sometimes', 'numeric', 'min:0', 'max:5000'], 'charge_outside' => ['sometimes', 'numeric', 'min:0', 'max:5000'], 'min_charge' => ['sometimes', 'numeric', 'min:0', 'max:5000'],
             'eat_there' => ['sometimes', 'boolean'], 'advance_over' => ['nullable', 'numeric', 'min:0', 'max:1000000'], 'advance_percent' => ['sometimes', 'integer', 'min:0', 'max:100'],
             'areas' => ['nullable', 'array', 'max:40'], 'areas.*' => ['string', 'max:80'], 'photo' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
         ]);
@@ -351,7 +370,7 @@ class FoodVendorController extends Controller
         return [
             'name' => $r->name, 'description' => $r->description, 'phone' => $r->phone, 'address' => $r->address, 'area' => $r->area, 'areas' => $r->areas, 'is_open' => $r->is_open, 'opens_at' => $r->opens_at, 'closes_at' => $r->closes_at,
             'closed_days' => $r->closed_days ?? [], 'delivery_by' => $r->delivery_by, 'charge_mode' => $r->charge_mode, 'charge_inside' => (float) $r->charge_inside, 'charge_outside' => (float) $r->charge_outside,
-            'min_charge' => (float) $r->min_charge, 'eat_there' => $r->eat_there, 'advance_over' => $r->advance_over !== null ? (float) $r->advance_over : null, 'advance_percent' => $r->advance_percent, 'status' => $r->status,
+            'min_charge' => (float) $r->min_charge, 'per_km' => (float) $r->per_km, 'max_km' => $r->max_km !== null ? (float) $r->max_km : null, 'lat' => $r->lat, 'lng' => $r->lng, 'eat_there' => $r->eat_there, 'advance_over' => $r->advance_over !== null ? (float) $r->advance_over : null, 'advance_percent' => $r->advance_percent, 'status' => $r->status,
             // What we take is theirs to know: they see their commission, and what they will receive after it.
             'commission_kind' => $r->commission_kind, 'commission_value' => (float) $r->commission_value,
         ];

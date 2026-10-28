@@ -107,6 +107,20 @@ export function Search({ url, saveable = true, companies = [] }: { url?: string;
         return () => clearTimeout(timer);
     }, [q]);
 
+    // Read the shown results again, for example after an offer was sent, so the row says so.
+    const reload = () => {
+        const get = (url: string) => fetch(url, { headers: { Accept: 'application/json' } }).then((r) => r.json());
+        if (company !== '') {
+            Promise.all(Array.from({ length: page }, (_, i) => get(`${base}/search?company=${encodeURIComponent(company)}&page=${i + 1}`)))
+                .then((all) => setResults(all.flatMap((d) => d.results)))
+                .catch(() => undefined);
+        } else if (q.trim().length >= 2) {
+            get(`${base}/search?q=${encodeURIComponent(q)}`)
+                .then((d) => setResults(d.results))
+                .catch(() => undefined);
+        }
+    };
+
     const add = (m: Result, unit: string) =>
         router.post(target, { medicine_id: m.id, unit, quantity: qty }, { preserveScroll: true, onSuccess: () => { if (company === '') { setQ(''); setResults([]); } } });
 
@@ -220,7 +234,7 @@ export function Search({ url, saveable = true, companies = [] }: { url?: string;
                             )}
                             {saveable && m.mpo_offers && m.mpo_offers.length > 0 && (
                                 <div className="w-full">
-                                    <MpoOffers offers={m.mpo_offers} signedIn />
+                                    <MpoOffers offers={m.mpo_offers} signedIn onChanged={reload} />
                                 </div>
                             )}
                             {saveable && m.offer && (

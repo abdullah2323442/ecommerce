@@ -7,6 +7,7 @@ use App\Http\Middleware\SetLocale;
 use App\Mail\StatusMessage;
 use App\Models\Invoice;
 use App\Models\Notice;
+use App\Services\Push\Notifications;
 use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
@@ -88,6 +89,10 @@ class Messenger
             if (in_array('sms', $channels, true) && filled($user->phone)) {
                 $this->sms->send((string) $user->phone, $text);
             }
+
+            if (in_array('push', $channels, true)) {
+                app(Notifications::class)->notify($user, (string) config('brand.name', config('app.name')), $text, $link);
+            }
         } catch (\Throwable $e) {
             report($e);
         }
@@ -165,6 +170,18 @@ class Messenger
             'market_suspended' => __('Selling is switched off because the statement for {name} was not answered. Answer it and it comes back.', ['name' => $name], $locale),
             'market_case_new' => __('A buyer has a complaint or a return for "{name}". Open your orders to answer it.', ['name' => $name], $locale),
             'market_case_answered' => __('There is an answer about "{name}". Open it to read.', ['name' => $name], $locale),
+            'booking_new' => __('Someone asked to book "{name}" on {when}. Open Services to answer.', ['name' => $name, 'when' => (string) ($d['when'] ?? '')], $locale),
+            'booking_answer' => match ($d['state'] ?? '') {
+                'confirmed' => __('Your booking for "{name}" on {when} is confirmed.', ['name' => $name, 'when' => (string) ($d['when'] ?? '')], $locale),
+                'declined' => __('Your booking for "{name}" on {when} was declined. {note}', ['name' => $name, 'when' => (string) ($d['when'] ?? ''), 'note' => (string) ($d['note'] ?? '')], $locale),
+                'cancelled' => __('The booking for "{name}" on {when} was cancelled.', ['name' => $name, 'when' => (string) ($d['when'] ?? '')], $locale),
+                default => __('A reminder: "{name}" is on {when}.', ['name' => $name, 'when' => (string) ($d['when'] ?? '')], $locale),
+            },
+            'market_deposit' => match ($d['name'] ?? '') {
+                'returned' => __('We gave back {amount} of your deposit.', ['amount' => (string) ($d['amount'] ?? '')], $locale),
+                'deducted' => __('{amount} was taken from your deposit: {note}', ['amount' => (string) ($d['amount'] ?? ''), 'note' => (string) ($d['note'] ?? '')], $locale),
+                default => __('We received {amount} as your deposit.', ['amount' => (string) ($d['amount'] ?? '')], $locale),
+            },
             'market_penalty' => match ($d['name'] ?? '') {
                 'listing_removed' => __('One of your listings was taken down: {note}', ['note' => (string) ($d['note'] ?? '')], $locale),
                 'suspended' => __('Your selling is switched off: {note}', ['note' => (string) ($d['note'] ?? '')], $locale),

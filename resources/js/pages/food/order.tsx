@@ -1,3 +1,4 @@
+import { trackOnce } from '@/lib/track';
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -17,6 +18,8 @@ interface Order {
     custom: boolean;
     subtotal: number;
     delivery_charge: number;
+    distance_km: number | null;
+    distance_by_road: boolean;
     charge_open: boolean;
     total: number;
     advance_due: number;
@@ -59,6 +62,7 @@ function Timer({ readyAt }: { readyAt: string }) {
 }
 
 export default function FoodOrder({ order }: { order: Order }) {
+    useEffect(() => trackOnce(order.number, 'Purchase', { transaction: order.number, value: order.total }), [order.number, order.total]);
     const { t, money, num, dateTime } = useI18n();
     const errors = usePage().props.errors as Record<string, string>;
     const flash = (usePage().props.flash as { status?: string } | undefined)?.status;
@@ -166,7 +170,10 @@ export default function FoodOrder({ order }: { order: Order }) {
                     {order.mode === 'delivery' && (
                         <div className="flex justify-between">
                             <dt>{t('Delivery charge')}</dt>
-                            <dd>{order.charge_open ? t('The restaurant will tell you') : money(order.delivery_charge)}</dd>
+                            <dd>
+                                {order.charge_open ? t('The restaurant will tell you') : money(order.delivery_charge)}
+                                {order.distance_km !== null && <span className="text-[var(--pt-muted)]"> · {order.distance_by_road ? t('{km} km', { km: num(order.distance_km) }) : t('{km} km (estimate)', { km: num(order.distance_km) })}</span>}
+                            </dd>
                         </div>
                     )}
                     <div className="flex justify-between border-t pt-2 font-display text-lg font-bold">

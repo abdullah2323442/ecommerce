@@ -1,10 +1,11 @@
 import '../css/app.css';
 
-import { createInertiaApp } from '@inertiajs/react';
+import { createInertiaApp, router } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
 import { route as routeFn } from 'ziggy-js';
 import { initializeTheme } from './hooks/use-appearance';
+import { type AnalyticsIds, setAnalytics, track } from './lib/track';
 
 declare global {
     const route: typeof routeFn;
@@ -27,3 +28,9 @@ createInertiaApp({
 
 // This will set light / dark mode on load...
 initializeTheme();
+
+// Visitor statistics: every page the visitor opens, whether the browser loaded it or the app moved to it (only when the owner switched them on).
+router.on('navigate', (event) => {
+    setAnalytics((event.detail.page.props as { analytics?: AnalyticsIds }).analytics);
+    track('PageView');
+});

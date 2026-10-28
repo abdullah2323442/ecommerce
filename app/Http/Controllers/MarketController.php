@@ -15,12 +15,14 @@ use App\Models\Testimonial;
 use App\Models\User;
 use App\Services\Analytics\Behavior;
 use App\Services\Market\Catalog;
+use App\Services\Market\Deals;
 use App\Services\Market\ListingPhotos;
 use App\Services\Market\ListingQuestions;
 use App\Services\Market\ListingReports;
 use App\Services\Market\ListingVariants;
 use App\Services\Market\MarketCases;
 use App\Services\Market\Marketplace;
+use App\Services\Market\Recommendations;
 use App\Services\Market\Reviews;
 use App\Services\Market\SellerReports;
 use App\Services\Market\SellerTrust;
@@ -125,6 +127,8 @@ class MarketController extends Controller
             'sectors' => $sectors,
             'ranges' => $ranges,
             'hasPremium' => $all->contains(fn ($r) => $r['premium']),
+            // Only on the plain market page, and only for a signed-in buyer who has ordered or saved something.
+            'picked' => $plain && $sector === null ? $this->withStars(app(Recommendations::class)->for($viewer, $all)->map(fn ($r) => $this->card($r))->values()) : [],
             'items' => $this->withStars($rows->forPage($page, self::PER_PAGE)->map(fn ($r) => $this->card($r) + ['sellers' => (int) ($sellers[$r['listing']->catalog_product_id] ?? 1)])->values()),
             'total' => $total, 'page' => $page, 'perPage' => self::PER_PAGE,
             'filters' => ['category' => $category?->slug, 'sector' => is_string($sector) ? $sector : null, 'premium' => $premium, 'q' => $q, 'from' => $from, 'to' => $to, 'sort' => $sort, 'stars' => $minStars, 'all' => $request->query('all') !== null],
@@ -162,6 +166,7 @@ class MarketController extends Controller
             'offers' => $this->offersFor($listing, $viewer),
             'can_ask' => $viewer !== null && $viewer->id !== $listing->seller_id,
             'wishlisted' => $viewer !== null && app(Wishlist::class)->has($viewer, $listing),
+            'bundles' => app(Deals::class)->offeredFor($listing, $viewer),
             'districts' => config('bd.districts'),
             'listing' => $this->card(['listing' => $listing] + $p + ['premium' => $this->market->isPremium($listing, $p['price'])]) + [
                 'description' => $listing->description, 'preorder_days' => $listing->preorder_days, 'return_days' => $listing->return_days ?? app(MarketCases::class)->returnDays(), 'return_note' => $listing->return_note, 'seo_title' => $listing->seo_title, 'seo_description' => $listing->seo_description, 'delivery_charge' => (float) $listing->delivery_charge, 'min_qty' => $p['min_qty'],
@@ -711,7 +716,7 @@ class MarketController extends Controller
         $l = $r['listing'];
 
         return [
-            'id' => $l->id, 'title' => $l->title, 'price' => $r['price'], 'premium' => $r['premium'] ?? false, 'near' => $r['near'] ?? false,
+            'id' => $l->id, 'title' => $l->title, 'price' => $r['price'], 'was' => $r['was'] ?? null, 'sale_ends_at' => $r['sale_ends_at'] ?? null, 'sale_percent' => $r['sale_percent'] ?? null, 'premium' => $r['premium'] ?? false, 'near' => $r['near'] ?? false,
             'category' => $l->category?->name, 'category' => $l->category?->name, 'unit' => $l->sector->unit, 'sector' => $l->sector->slug, 'sector_name' => $l->sector->name,
             'blurb' => Str::limit(trim(strip_tags((string) $l->description)), 150), 'warranty' => $l->warranty_months, 'cod' => (bool) $l->cod_allowed,
             'photo' => $l->photo_path !== null ? route('market.photo', ['listing' => $l->id, 'v' => substr(md5($l->photo_path.$l->updated_at), 0, 8)]) : null, 'seller' => $this->market->sellerName($l),

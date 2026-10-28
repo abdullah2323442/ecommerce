@@ -103,6 +103,26 @@ class CashOnDeliveryTest extends TestCase
         $this->actingAs($this->seller)->get('/wholesale/sell')->assertOk();
     }
 
+    public function test_the_seller_can_switch_it_off_when_changing_a_listing_and_when_sending_a_new_one(): void
+    {
+        $this->actingAs($this->seller)->post("/wholesale/sell/{$this->cash->id}", ['cod_allowed' => false])->assertSessionHasNoErrors();
+        $this->assertFalse((bool) Listing::find($this->cash->id)->cod_allowed);
+
+        $this->actingAs($this->seller)->post("/wholesale/sell/{$this->cash->id}", ['cod_allowed' => true])->assertSessionHasNoErrors();
+        $this->assertTrue((bool) Listing::find($this->cash->id)->cod_allowed);
+
+        $sector = Sector::where('slug', 'wood')->firstOrFail();
+        $this->actingAs($this->seller)->post('/wholesale/sell', [
+            'sector_id' => $sector->id, 'title' => 'Prepaid stool', 'public_price' => 500, 'min_qty' => 1, 'delivery_charge' => 0, 'stock' => 3, 'cod_allowed' => false,
+        ])->assertSessionHasNoErrors();
+        $this->assertFalse((bool) Listing::where('title', 'Prepaid stool')->firstOrFail()->cod_allowed);
+
+        $this->actingAs($this->seller)->post('/wholesale/sell', [
+            'sector_id' => $sector->id, 'title' => 'Plain stool', 'public_price' => 500, 'min_qty' => 1, 'delivery_charge' => 0, 'stock' => 3,
+        ])->assertSessionHasNoErrors();
+        $this->assertTrue((bool) Listing::where('title', 'Plain stool')->firstOrFail()->cod_allowed);
+    }
+
     public function test_the_product_page_says_which_way_it_is_paid(): void
     {
         $this->actingAs($this->buyer);

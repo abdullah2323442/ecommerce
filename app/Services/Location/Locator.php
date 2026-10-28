@@ -62,6 +62,55 @@ class Locator
     }
 
     /**
+     * The other way: an address typed in words becomes a point on the map (a restaurant owner setting where the restaurant is, from the desktop).
+     *
+     * @return array{lat: float, lng: float, line: string}
+     *
+     * @throws LocationException
+     */
+    public function forward(string $address): array
+    {
+        $address = trim(mb_substr($address, 0, 200));
+
+        if (mb_strlen($address) < 5) {
+            throw new LocationException('Write the address in more words.');
+        }
+
+        $on = $this->integrations->activeOfType('map') ?? throw new LocationException('Finding a place is not switched on.');
+        [$key, $cfg] = $on;
+        $cacheKey = 'geo-fwd:'.$key.':'.md5(mb_strtolower($address));
+
+        if (is_array($hit = Cache::get($cacheKey))) {
+            return $hit;
+        }
+
+        if ($key === 'map:google') {
+            $j = $this->get('https://maps.googleapis.com/maps/api/geocode/json', ['address' => $address, 'components' => 'country:BD', 'language' => 'en', 'key' => (string) ($cfg['credentials']['api_key'] ?? '')], []);
+            $hitPoint = $j['results'][0]['geometry']['location'] ?? null;
+            $line = (string) ($j['results'][0]['formatted_address'] ?? '');
+        } else {
+            $base = rtrim((string) ($cfg['settings']['base_url'] ?? 'https://nominatim.openstreetmap.org'), '/');
+
+            if (! SafeUrl::ok($base)) {
+                throw new LocationException('The map service address is not safe to use.');
+            }
+
+            $j = $this->get($base.'/search', ['format' => 'jsonv2', 'q' => $address, 'countrycodes' => 'bd', 'limit' => 1, 'email' => (string) ($cfg['settings']['contact_email'] ?? '')], ['User-Agent' => 'SiamsAqua/1.0']);
+            $hitPoint = isset($j[0]['lat'], $j[0]['lon']) ? ['lat' => $j[0]['lat'], 'lng' => $j[0]['lon']] : null;
+            $line = (string) ($j[0]['display_name'] ?? '');
+        }
+
+        if (! is_array($hitPoint) || ! is_numeric($hitPoint['lat'] ?? null) || ! is_numeric($hitPoint['lng'] ?? null) || ! self::inBangladesh((float) $hitPoint['lat'], (float) $hitPoint['lng'])) {
+            throw new LocationException('We could not find that address. Try adding the area and the district.');
+        }
+
+        $found = ['lat' => round((float) $hitPoint['lat'], 6), 'lng' => round((float) $hitPoint['lng'], 6), 'line' => $this->clean($line)];
+        Cache::put($cacheKey, $found, 86400);
+
+        return $found;
+    }
+
+    /**
      * The test button: ask about a known place (central Dhaka) and say whether the answer made sense.
      *
      * @param  array<string, mixed>  $cfg

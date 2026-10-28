@@ -10,6 +10,7 @@ use App\Models\MpoListing;
 use App\Models\Notice;
 use App\Models\Preorder;
 use App\Models\Setting;
+use App\Models\StockLot;
 use App\Models\Tier;
 use App\Models\User;
 use App\Services\Mpo\MpoBidding;
@@ -273,6 +274,29 @@ class MpoBidTest extends TestCase
         Setting::write('mpo.grace_days', 0);
         $pre->update(['status' => 'fulfilled']);
         $this->assertSame(0, app(MpoBidding::class)->expireOrders());
+        $this->assertSame(0, $this->mpo->fresh()->mpo_failed);
+    }
+
+    public function test_goods_that_reached_us_are_not_late_and_cannot_be_put_into_stock_twice(): void
+    {
+        $buyer = $this->wholesaler('Rahim');
+        $this->bid($buyer);
+        $this->actingAs($this->mpo)->post('/mpo/bids/'.MpoBid::firstOrFail()->id.'/accept');
+        $pre = Preorder::firstOrFail();
+
+        $this->actingAs($this->admin)->post("/admin/preorders/{$pre->id}/take-from-mpo", ['percent' => 12])->assertSessionHasNoErrors();
+        $this->assertNotNull($pre->fresh()->mpo_taken_at);
+        $received = StockLot::sum('units_received');
+
+        // A second press adds nothing: the stock was entered once.
+        $this->post("/admin/preorders/{$pre->id}/take-from-mpo", ['percent' => 12])->assertSessionHasErrors('preorder');
+        $this->assertEquals($received, StockLot::sum('units_received'));
+        $this->get('/admin/preorders')->assertInertia(fn (Assert $p) => $p->where('accepted.0.mpo_taken', true));
+
+        // Late by days, but the goods did come: the MPO is not counted as failing.
+        $pre->update(['due_on' => today()->subDays(10)]);
+        $this->assertSame(0, app(MpoBidding::class)->expireOrders());
+        $this->assertSame('accepted', $pre->fresh()->status);
         $this->assertSame(0, $this->mpo->fresh()->mpo_failed);
     }
 

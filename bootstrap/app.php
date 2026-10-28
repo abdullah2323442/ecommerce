@@ -44,6 +44,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->alias([
             'section' => EnsureSectionAccess::class,
+            'pharmatrack' => \App\Http\Middleware\VerifyPharmaTrackToken::class,
             'two-factor.required' => \App\Http\Middleware\RequireTwoFactorForStaff::class,
         ]);
     })

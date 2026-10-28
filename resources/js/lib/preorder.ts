@@ -13,6 +13,9 @@ type T = (key: string, params?: Record<string, string | number>) => string;
 
 interface Body {
     name?: string;
+    amount?: string;
+    when?: string;
+    state?: string;
     days?: number;
     note?: string;
     short?: boolean;
@@ -119,6 +122,26 @@ export function noticeText(n: PreorderNotice, t: T): string {
             return t('A buyer has a complaint or a return for "{name}". Open your orders to answer it.', { name });
         case 'market_case_answered':
             return t('There is an answer about "{name}". Open it to read.', { name });
+        case 'booking_new':
+            return t('Someone asked to book "{name}" on {when}. Open Services to answer.', { name, when: String(b.when ?? '') });
+        case 'booking_answer': {
+            const when = String(b.when ?? '');
+            return b.state === 'confirmed'
+                ? t('Your booking for "{name}" on {when} is confirmed.', { name, when })
+                : b.state === 'declined'
+                  ? t('Your booking for "{name}" on {when} was declined. {note}', { name, when, note: String(b.note ?? '') })
+                  : b.state === 'cancelled'
+                    ? t('The booking for "{name}" on {when} was cancelled.', { name, when })
+                    : t('A reminder: "{name}" is on {when}.', { name, when });
+        }
+        case 'market_deposit': {
+            const amount = String(b.amount ?? '');
+            return b.name === 'returned'
+                ? t('We gave back {amount} of your deposit.', { amount })
+                : b.name === 'deducted'
+                  ? t('{amount} was taken from your deposit: {note}', { amount, note: String(b.note ?? '') })
+                  : t('We received {amount} as your deposit.', { amount });
+        }
         case 'market_penalty': {
             const note = String(b.note ?? '');
             return b.name === 'listing_removed'

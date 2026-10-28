@@ -56,7 +56,7 @@ class ConnectionsTest extends TestCase
 
     public function test_the_page_lists_every_kind_of_service_and_says_which_are_built(): void
     {
-        $this->actingAs($this->admin)->get('/admin/connections')->assertInertia(fn (Assert $p) => $p->component('admin/connections')->has('types', 5)
+        $this->actingAs($this->admin)->get('/admin/connections')->assertInertia(fn (Assert $p) => $p->component('admin/connections')->has('types', 8)
             ->where('types.0.type', 'sms')->where('types.0.providers.0.ready', true)->where('types.2.providers.0.ready', false));
     }
 

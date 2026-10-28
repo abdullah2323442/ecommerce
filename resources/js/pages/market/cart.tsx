@@ -1,10 +1,11 @@
+import { WasPrice } from '@/components/market/sale-price';
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import PublicLayout from '@/layouts/public-layout';
 import { useI18n } from '@/lib/i18n';
 import { Head, Link, router, useForm, usePage } from '@inertiajs/react';
-import { unitLabel } from './index';
+import { unitLabel } from '@/lib/units';
 
 interface Line {
     key: string;
@@ -15,6 +16,9 @@ interface Line {
     quantity: number;
     price: number;
     total: number;
+    was?: number | null;
+    bundle?: string | null;
+    saved?: number;
 }
 
 interface Pack {
@@ -71,8 +75,14 @@ export default function MarketCart({ cart, districts, defaults, signedIn }: Prop
                                                 </Link>
                                                 {l.variant && <span className="text-[var(--pt-muted)]"> · {l.variant}</span>}
                                                 <span className="block text-xs text-[var(--pt-muted)]">
+                                                    <WasPrice was={l.was} className="text-xs" />
                                                     {money(l.price)} / {unitLabel(l.unit)}
                                                 </span>
+                                                {l.bundle && l.saved ? (
+                                                    <span className="block text-xs font-semibold">
+                                                        {t('{bundle}: you save {amount}', { bundle: l.bundle, amount: money(l.saved) })}
+                                                    </span>
+                                                ) : null}
                                             </span>
                                             <Input
                                                 aria-label={t('Amount')}

@@ -23,7 +23,7 @@ class MarketCart
 
     public const MAX_LINES = 30;
 
-    public function __construct(private Marketplace $market, private MarketOrders $orders) {}
+    public function __construct(private Marketplace $market, private MarketOrders $orders, private Deals $deals) {}
 
     /** @return array<int, array{l: int, v: ?int, q: float}> */
     public function raw(): array
@@ -128,8 +128,11 @@ class MarketCart
             $lines[] = [
                 'key' => self::key($listing->id, $variant?->id), 'listing' => $listing, 'id' => $listing->id, 'title' => $listing->title, 'variant' => $variant?->label() ?: null, 'unit' => $listing->sector->unit,
                 'quantity' => (float) $i['q'], 'price' => (float) $price['price'], 'total' => round((float) $i['q'] * (float) $price['price'], 2),
+                'was' => $price['was'] ?? null, 'plain' => $variant === null && $price['audience'] === 'public',
             ];
         }
+
+        $lines = $this->withBundles($lines);
 
         $packages = collect($lines)->groupBy(fn ($l) => $l['listing']->seller_id)->values()->map(function ($rows, int $n) {
             $first = $rows->first()['listing'];
@@ -139,7 +142,7 @@ class MarketCart
 
             return [
                 'n' => $n + 1, 'seller' => $this->market->sellerName($first), 'delivery_charge' => $delivery, 'goods' => $goods, 'total' => round($goods + $delivery, 2),
-                'lines' => $rows->map(fn ($r) => collect($r)->except(['listing'])->all())->values()->all(),
+                'lines' => $rows->map(fn ($r) => collect($r)->except(['listing', 'plain'])->all())->values()->all(),
             ];
         })->all();
 
@@ -147,6 +150,32 @@ class MarketCart
         $cod = collect($lines)->every(fn ($l) => (bool) $l['listing']->cod_allowed);
 
         return ['packages' => $packages, 'total' => round((float) collect($packages)->sum('total'), 2), 'cod' => $cod, 'online_open' => app(Payments::class)->enabled()];
+    }
+
+    /**
+     * Take what bundles save off the lines (see Deals::cartDiscounts). A line that is part of a bundle gets a lower price for every unit: the saving is shared
+     * over the whole quantity and rounded to the sen, so what the cart shows is exactly what the order is placed for.
+     *
+     * @param  array<int, array<string, mixed>>  $lines
+     * @return array<int, array<string, mixed>>
+     */
+    private function withBundles(array $lines): array
+    {
+        $plain = collect($lines)->filter(fn ($l) => $l['plain'])->map(fn ($l) => ['listing' => $l['listing'], 'quantity' => $l['quantity']]);
+        $found = $this->deals->cartDiscounts($plain);
+
+        return array_map(function (array $l) use ($found) {
+            $d = $l['plain'] ? ($found[$l['id']] ?? null) : null;
+
+            if ($d === null || $l['quantity'] <= 0) {
+                return $l + ['bundle' => null, 'agreed' => null, 'saved' => 0.0];
+            }
+
+            $off = round($l['price'] * $d['weighted'] / 100, 2);
+            $each = round($l['price'] - $off / $l['quantity'], 2);
+
+            return [...$l, 'price' => $each, 'total' => round($l['quantity'] * $each, 2), 'bundle' => $d['bundle'], 'agreed' => $each, 'saved' => round($l['quantity'] * $l['price'] - $l['quantity'] * $each, 2)];
+        }, $lines);
     }
 
     /**
@@ -172,12 +201,15 @@ class MarketCart
         // Cash on delivery is all or nothing for the cart (spec ch 13).
         $payBy = $lines->every(fn ($i) => (bool) (Listing::find($i['l'])?->cod_allowed ?? true)) ? 'cod' : 'online';
 
-        DB::transaction(function () use ($lines, $buyer, $ship, $note, $useToken, $group, $payBy, &$orders) {
+        // What a bundle takes off a line comes in as a price the seller agreed to, the same one the cart showed.
+        $agreed = collect($this->packages($buyer)['packages'])->flatMap(fn ($p) => $p['lines'])->filter(fn ($l) => $l['agreed'] !== null)->pluck('agreed', 'key')->all();
+
+        DB::transaction(function () use ($lines, $buyer, $ship, $note, $useToken, $group, $payBy, $agreed, &$orders) {
             foreach ($lines as $n => $i) {
                 $listing = Listing::with(['sector', 'seller'])->find($i['l']) ?? throw new StockException('This product is not available.');
 
                 try {
-                    $order = $this->orders->place($listing, $buyer, $ship, (float) $i['q'], $note, $useToken && $n === 0, null, $i['v'], false, $payBy);
+                    $order = $this->orders->place($listing, $buyer, $ship, (float) $i['q'], $note, $useToken && $n === 0, $agreed[self::key($i['l'], $i['v'])] ?? null, $i['v'], false, $payBy);
                 } catch (StockException $e) {
                     throw new StockException($listing->title.': '.__($e->getMessage()));
                 }

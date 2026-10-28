@@ -58,7 +58,9 @@ return [
     'reports' => [
         'title' => 'Reports and tiers',
         'items' => [
+            'report.month_start_day' => ['type' => 'number', 'label' => 'The monthly report starts on this day of the month (1 to 28)', 'default' => 1, 'min' => 1, 'max' => 28, 'step' => 1],
             'report.month_end_days' => ['type' => 'number', 'label' => 'Month-end window for tier tasks (last days of the month)', 'default' => 3, 'min' => 1, 'max' => 10, 'step' => 1],
+            'ledger.overdue_days' => ['type' => 'number', 'label' => 'A customer is late when their oldest unpaid memo is older than (days)', 'default' => 30, 'min' => 1, 'max' => 365, 'step' => 1],
             'reports.lead_days' => ['type' => 'number', 'label' => 'Days it takes to get goods (for reorder advice)', 'default' => 7, 'min' => 0, 'max' => 90, 'step' => 1],
             'reports.cushion_days' => ['type' => 'number', 'label' => 'Spare days of stock to keep', 'default' => 3, 'min' => 0, 'max' => 90, 'step' => 1],
             'prices.warn_drop_percent' => ['type' => 'number', 'label' => 'Ask "are you sure?" when a new price is this many percent lower than the one before', 'default' => 70, 'min' => 10, 'max' => 99, 'step' => 5],
@@ -77,6 +79,12 @@ return [
         'hint' => 'A staff account signed in on too many devices signs the oldest one out.',
         'items' => [
             'security.require_2fa_staff' => ['type' => 'toggle', 'label' => 'Staff and the owner must use two-step sign-in', 'default' => false],
+            'services.cancel_hours' => ['type' => 'number', 'label' => 'Hours before a booked service after which a buyer can no longer cancel by themselves', 'default' => 12, 'min' => 0, 'max' => 168, 'step' => 1],
+            'services.confirm_hours' => ['type' => 'number', 'label' => 'Hours a provider has to answer a booking request before it is declined by itself', 'default' => 24, 'min' => 1, 'max' => 168, 'step' => 1],
+            'affiliate.days' => ['type' => 'number', 'label' => 'Days an affiliate link keeps its code on a visitor', 'default' => 30, 'min' => 1, 'max' => 365, 'step' => 1],
+            'sms.bulk_daily_limit' => ['type' => 'number', 'label' => 'Most bulk texts that may go out in one day (0 for no limit)', 'default' => 2000, 'min' => 0, 'max' => 1000000, 'step' => 1],
+            'sms.bulk_per_second' => ['type' => 'number', 'label' => 'Bulk texts sent each second', 'default' => 5, 'min' => 1, 'max' => 50, 'step' => 1],
+            'archive.after_months' => ['type' => 'number', 'label' => 'Months after which old activity, sign-in records and read notices move to the archive (0 for never)', 'default' => 12, 'min' => 0, 'max' => 120, 'step' => 1],
             'security.session_limit' => ['type' => 'number', 'label' => 'Devices one staff account can be signed in on at once', 'default' => 3, 'min' => 1, 'max' => 20, 'step' => 1],
         ],
     ],
@@ -127,6 +135,8 @@ return [
         'title' => 'Market',
         'hint' => 'The price steps buyers can pick as a budget, and words that are not allowed on a listing.',
         'items' => [
+            'deposit.enabled' => ['type' => 'toggle', 'label' => 'Ask sellers to keep a security deposit with us (off until trust is built)', 'default' => false],
+            'deposit.amount' => ['type' => 'number', 'label' => 'The usual deposit a seller keeps with us (taka)', 'default' => 0, 'min' => 0, 'max' => 100000000, 'step' => 1],
             'market.reply_days' => ['type' => 'number', 'label' => 'Days a seller has to answer a commission statement', 'default' => 10, 'min' => 1, 'max' => 60, 'step' => 1],
             'market.auto_confirm_days' => ['type' => 'number', 'label' => 'Take a sent order as received after (days)', 'default' => 7, 'min' => 1, 'max' => 60, 'step' => 1],
             'market.return_days' => ['type' => 'number', 'label' => 'Days a buyer has to send a delivered order back', 'default' => 7, 'min' => 1, 'max' => 60, 'step' => 1],
@@ -160,6 +170,7 @@ return [
         'hint' => 'Fast food from local restaurants.',
         'items' => [
             'food.confirm_minutes' => ['type' => 'number', 'label' => 'Minutes a restaurant has to confirm before the buyer is asked whether to cancel', 'default' => 10, 'min' => 1, 'max' => 120, 'step' => 1],
+            'food.road_factor' => ['type' => 'number', 'label' => 'When Google Maps is not connected, or does not answer, road distance is the straight line times this number', 'default' => 1.3, 'min' => 1, 'max' => 3, 'step' => 0.05],
             'food.eat_options' => ['type' => 'text', 'label' => 'Times offered for "I will eat there", in minutes, with commas', 'default' => '15,30,45,60', 'max' => 60],
         ],
     ],
@@ -178,6 +189,9 @@ return [
             'habits.enabled' => ['type' => 'toggle', 'label' => 'Remind each shop at the time it usually orders', 'default' => true],
             'buyagain.enabled' => ['type' => 'toggle', 'label' => 'Remind a buyer who takes the same medicine about every month', 'default' => true],
             'buyagain.min_buys' => ['type' => 'number', 'label' => 'Times a medicine must be bought before that reminder', 'default' => 3, 'min' => 3, 'max' => 12, 'step' => 1],
+            'points.per_100' => ['type' => 'number', 'label' => 'Reward points a buyer earns for every 100 taka spent (0 for off)', 'default' => 0, 'min' => 0, 'max' => 1000, 'step' => 1],
+            'points.worth' => ['type' => 'number', 'label' => 'What 100 reward points are worth as a token (taka)', 'default' => 10, 'min' => 1, 'max' => 10000, 'step' => 1],
+            'points.min_redeem' => ['type' => 'number', 'label' => 'The least points that can be turned into a token', 'default' => 100, 'min' => 1, 'max' => 100000, 'step' => 1],
             'referral.reward' => ['type' => 'number', 'label' => 'Token for a friend who joins by a referral and orders (taka, 0 for off)', 'default' => 0, 'min' => 0, 'max' => 100000, 'step' => 1],
             'habits.min_orders' => ['type' => 'number', 'label' => 'Orders a shop needs before it gets that reminder', 'default' => 3, 'min' => 2, 'max' => 50, 'step' => 1],
         ],

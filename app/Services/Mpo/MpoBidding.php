@@ -187,14 +187,14 @@ class MpoBidding
 
     /**
      * An order from an MPO's product that did not arrive in time is cancelled, the buyer is told, and a failure is counted on the
-     * MPO. The time allowed beyond the promised day is a setting.
+     * MPO. The time allowed beyond the promised day is a setting. Goods that did reach us (already taken into stock) are not late.
      */
     public function expireOrders(): int
     {
         $grace = max(0, (int) Setting::read('mpo.grace_days', 2));
         $count = 0;
 
-        Preorder::whereNotNull('mpo_listing_id')->where('status', 'accepted')->whereDate('due_on', '<', today()->subDays($grace))->with('listing.mpo')->get()
+        Preorder::whereNotNull('mpo_listing_id')->whereNull('mpo_taken_at')->where('status', 'accepted')->whereDate('due_on', '<', today()->subDays($grace))->with('listing.mpo')->get()
             ->each(function (Preorder $p) use (&$count) {
                 $this->preorders->cancelBySeller($p, __('It did not arrive in time.'), null);
                 $p->listing?->mpo?->increment('mpo_failed');

@@ -30,7 +30,7 @@ class PaymentController extends Controller
             'refunds' => Payment::where('status', 'refund_due')->latest('id')->get()->map($row),
             'recent' => Payment::whereIn('status', ['paid', 'refunded'])->latest('id')->limit(80)->get()->map($row),
             'failed' => Payment::whereIn('status', ['failed', 'cancelled'])->where('created_at', '>=', now()->subDays(7))->latest('id')->limit(30)->get()->map($row),
-            'today' => round((float) Payment::where('status', 'paid')->where('live', true)->where('paid_at', '>=', now('Asia/Dhaka')->startOfDay())->sum('amount'), 2),
+            'today' => round((float) Payment::where('status', 'paid')->where('live', true)->where('paid_at', '>=', now('Asia/Dhaka')->startOfDay()->setTimezone(config('app.timezone')))->sum('amount'), 2),
             'enabled' => $this->payments->enabled(),
             'payouts' => app(MarketOrders::class)->payouts(),
         ]);

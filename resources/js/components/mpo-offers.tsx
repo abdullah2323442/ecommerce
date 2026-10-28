@@ -16,7 +16,7 @@ export interface MpoOffer {
     my_bid?: { id: number; percent: number; boxes: number } | null;
 }
 
-function Row({ o }: { o: MpoOffer }) {
+function Row({ o, onChanged }: { o: MpoOffer; onChanged?: () => void }) {
     const { t, money, num } = useI18n();
     const [boxes, setBoxes] = useState('1');
     const [bidding, setBidding] = useState(false);
@@ -46,7 +46,7 @@ function Row({ o }: { o: MpoOffer }) {
             {o.my_bid && (
                 <p className="flex w-full items-center gap-3 text-sm">
                     <span className="flex-1">{t('Your offer: {p}% off, {n} boxes. Waiting.', { p: num(o.my_bid.percent), n: num(o.my_bid.boxes) })}</span>
-                    <Button size="sm" variant="ghost" onClick={() => router.delete(`/mpo-bids/${o.my_bid!.id}`, { preserveScroll: true })}>
+                    <Button size="sm" variant="ghost" onClick={() => router.delete(`/mpo-bids/${o.my_bid!.id}`, { preserveScroll: true, onSuccess: () => onChanged?.() })}>
                         {t('Withdraw')}
                     </Button>
                 </p>
@@ -57,7 +57,7 @@ function Row({ o }: { o: MpoOffer }) {
                         {t('Discount I ask for (%)')}
                         <Input className="h-9 w-24" type="number" min="1" max="90" step="any" value={percent} onChange={(e) => setPercent(e.target.value)} />
                     </label>
-                    <Button size="sm" disabled={percent === ''} onClick={() => router.post(`/mpo-offers/${o.id}/bid`, { percent, boxes: Math.max(1, Math.round(Number(boxes))) }, { preserveScroll: true, onSuccess: () => setBidding(false) })}>
+                    <Button size="sm" disabled={percent === ''} onClick={() => router.post(`/mpo-offers/${o.id}/bid`, { percent, boxes: Math.max(1, Math.round(Number(boxes))) }, { preserveScroll: true, onSuccess: () => { setBidding(false); onChanged?.(); } })}>
                         {t('Send my offer')}
                     </Button>
                     <span className="text-[var(--pt-muted)]">{t('Nobody else sees your offer.')}</span>
@@ -67,8 +67,8 @@ function Row({ o }: { o: MpoOffer }) {
     );
 }
 
-/** Other sellers of the same medicine, always shown as "Anonymous N (store)". The price is the viewer's own market's. */
-export default function MpoOffers({ offers, signedIn }: { offers: MpoOffer[]; signedIn: boolean }) {
+/** Other sellers of the same medicine, always shown as "Anonymous N (store)". The price is the viewer's own market's. `onChanged` lets a page that holds its own search results read them again after an offer is sent or taken back. */
+export default function MpoOffers({ offers, signedIn, onChanged }: { offers: MpoOffer[]; signedIn: boolean; onChanged?: () => void }) {
     const { t } = useI18n();
 
     if (offers.length === 0) return null;
@@ -81,7 +81,7 @@ export default function MpoOffers({ offers, signedIn }: { offers: MpoOffer[]; si
             {signedIn ? (
                 <ul className="divide-y">
                     {offers.map((o) => (
-                        <Row key={o.id} o={o} />
+                        <Row key={o.id} o={o} onChanged={onChanged} />
                     ))}
                 </ul>
             ) : (

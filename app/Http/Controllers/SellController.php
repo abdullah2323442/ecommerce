@@ -22,6 +22,7 @@ use App\Services\Market\MarketOrders;
 use App\Services\Market\Marketplace;
 use App\Services\Market\Penalties;
 use App\Services\Market\PriceOffers;
+use App\Services\Market\SellerDeposits;
 use App\Services\Market\SellerReports;
 use App\Services\Market\SellerTrust;
 use App\Services\Market\Statements;
@@ -54,6 +55,7 @@ class SellController extends Controller
             'paused' => (bool) $seller->seller_paused,
             'shop' => ['address' => $seller->shop_address, 'name_shown' => (bool) $seller->show_shop_name],
             'trust' => $this->trust->status($seller),
+            'deposit' => app(SellerDeposits::class)->status($seller),
             'token' => ($t = $this->tokens->sellerToken($seller)) ? ['amount' => (float) $t->amount, 'min_order' => (float) $t->min_order, 'per_buyer' => $t->per_buyer, 'active' => $t->active, 'ends_at' => $t->ends_at?->toDateString()] : null,
         ]);
     }

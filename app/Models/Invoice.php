@@ -2,7 +2,10 @@
 
 namespace App\Models;
 
+use App\Services\Marketing\Affiliates;
+use App\Services\Sync\PharmaTrack;
 use App\Services\Wallet\Referrals;
+use App\Services\Wallet\RewardPoints;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -11,10 +14,38 @@ class Invoice extends Model
 {
     protected static function booted(): void
     {
+        // An order from the website that came by an affiliate's link is the affiliate's (spec ch 27).
+        static::creating(function (Invoice $invoice) {
+            if ($invoice->channel === 'online' && $invoice->affiliate_id === null) {
+                $invoice->affiliate_id = app(Affiliates::class)->current($invoice->customer_id)?->id;
+            }
+        });
+
+        static::saved(function (Invoice $invoice) {
+            // A finished online order is told to PharmaTrack, so it takes the same goods off its shelf (spec item 612).
+            if ($invoice->channel === 'online' && $invoice->completed_at !== null && ($invoice->wasRecentlyCreated || $invoice->wasChanged('completed_at'))) {
+                app(PharmaTrack::class)->announceOnlineSale($invoice);
+            }
+
+            if ($invoice->affiliate_id !== null && $invoice->completed_at !== null && ($invoice->wasRecentlyCreated || $invoice->wasChanged('completed_at'))) {
+                app(Affiliates::class)->earnOnInvoice($invoice);
+            }
+
+            if ($invoice->affiliate_id !== null && $invoice->status === 'cancelled' && $invoice->wasChanged('status')) {
+                app(Affiliates::class)->cancelOnInvoice($invoice);
+            }
+        });
+
         // A completed sale to an account that was sent by a friend's referral earns the friend a token (spec ch 24).
         static::saved(function (Invoice $invoice) {
             if ($invoice->completed_at !== null && ($invoice->wasRecentlyCreated || $invoice->wasChanged('completed_at')) && $invoice->customer_id !== null) {
                 app(Referrals::class)->qualify(User::find($invoice->customer_id));
+                app(RewardPoints::class)->earnOnInvoice($invoice);
+            }
+
+            // A memo that was cancelled (or corrected, which cancels the old one) takes its points back.
+            if ($invoice->status === 'cancelled' && $invoice->wasChanged('status') && $invoice->customer_id !== null) {
+                app(RewardPoints::class)->reverseInvoice($invoice);
             }
         });
     }

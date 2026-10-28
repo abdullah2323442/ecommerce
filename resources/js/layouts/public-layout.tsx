@@ -23,7 +23,7 @@ interface Props {
 }
 
 export default function PublicLayout({ children, bleed = false }: PropsWithChildren<Props>) {
-    const { auth, brand, cartCount, canCart, site } = usePage<SharedData>().props;
+    const { auth, brand, cartCount, canCart, site, supplierApp } = usePage<SharedData>().props as SharedData & { supplierApp?: boolean };
     const { url } = usePage();
     const { t } = useI18n();
 
@@ -141,6 +141,11 @@ export default function PublicLayout({ children, bleed = false }: PropsWithChild
                                 )}
                             </Link>
                         )}
+                        {supplierApp && (
+                            <Link href="/supplier" className="hidden h-11 items-center rounded-full border border-[var(--pt-ink)] px-5 font-semibold md:inline-flex">
+                                {t('Supplier app')}
+                            </Link>
+                        )}
                         <Link
                             href={account.href}
                             className="hidden h-11 items-center rounded-full bg-[var(--pt-ink)] px-5 font-semibold text-[var(--pt-paper)] transition-opacity hover:opacity-90 md:inline-flex"
@@ -227,6 +232,13 @@ export default function PublicLayout({ children, bleed = false }: PropsWithChild
                                     {account.label}
                                 </Link>
                             </li>
+                            {supplierApp && (
+                                <li>
+                                    <Link href="/supplier" className="hover:text-white">
+                                        {t('Go to the supplier app')}
+                                    </Link>
+                                </li>
+                            )}
                             {auth.canApply && (
                                 <li>
                                     <Link href="/business" className="hover:text-white">

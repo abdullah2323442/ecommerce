@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Services\Sales\ReportPeriod;
+use App\Services\Sales\ReportSnapshots;
 use App\Services\Sales\SalesReports;
-use App\Services\Stock\ExpiryService;
-use App\Services\Stock\ReportService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Inertia\Inertia;
@@ -15,41 +16,30 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 /** The admin's sales and ranking reports. Admin only: they carry profit (spec ch 26: staff do not see sales and profit). */
 class SalesReportController extends Controller
 {
-    public function __construct(private SalesReports $reports) {}
+    public function __construct(private SalesReports $reports, private ReportPeriod $period, private ReportSnapshots $snapshots) {}
 
     public function index(Request $request): Response
     {
         $this->authorize('view-reports');
         $month = $this->month($request);
-        [$from, $to] = [$month->copy()->startOfMonth(), $month->copy()->endOfMonth()];
-        $prev = $month->copy()->subMonthNoOverflow();
-        $lastYear = $month->copy()->subYearNoOverflow();
-        $ordering = $this->reports->ordering($from, $to);
+        $snapshot = $this->snapshots->monthly($month);
 
-        return Inertia::render('admin/reports/monthly', [
-            'month' => $month->format('Y-m'),
-            'totals' => $this->reports->totals($from, $to),
-            'previous' => $this->reports->totals($prev->copy()->startOfMonth(), $prev->copy()->endOfMonth()),
-            'lastYear' => $this->reports->totals($lastYear->copy()->startOfMonth(), $lastYear->copy()->endOfMonth()),
-            'sectors' => $this->reports->bySector($from, $to),
-            'days' => $this->reports->days($from, $to),
-            'ordering' => $ordering->take(40)->values(),
-            'byProfit' => $ordering->sortByDesc('profit')->take(10)->values(),
-            'fast' => $ordering->take(10)->values(),
-            'slow' => $ordering->filter(fn (array $r) => $r['advice'] === 'less')->take(10)->values(),
-            'notMoving' => $this->reports->notMoving($from, $to),
-            'companies' => $this->reports->companies($from, $to)->take(10)->values(),
-            'customers' => $this->reports->customers($from, $to),
-            'inactive' => $this->reports->inactive(),
+        // The report itself is the same for everyone who may see it, so it is read ready-made; only tonight's summary is worked out as it is opened.
+        return Inertia::render('admin/reports/monthly', $snapshot->payload + [
             'tonight' => $this->reports->nightly(),
-            // Money lost that the profit line alone hides: sales made below cost this month, and expired goods the company would not take back.
-            'losses' => [
-                'below_cost' => app(ReportService::class)->gross($month)['loss_sales_value'],
-                'expired_not_taken' => round((float) app(ExpiryService::class)->expiredByCompany()->sum('lost'), 2),
-            ],
-            // "Last year this sold a lot at this time" (spec 6.9).
-            'season' => $this->reports->seasonal()->take(15)->values(),
+            'prepared_at' => $snapshot->prepared_at->toIso8601String(),
+            'startDay' => $this->period->startDay(),
         ]);
+    }
+
+    /** Make this month's report again now, instead of waiting for the night. */
+    public function prepare(Request $request): RedirectResponse
+    {
+        $this->authorize('view-reports');
+        $month = $this->month($request);
+        $this->snapshots->prepare($month, $request->user());
+
+        return to_route('admin.reports.index', ['month' => $month->format('Y-m')])->with('status', __('The report is prepared again.'));
     }
 
     /** Every sale line of the month as a spreadsheet file (opens in Excel; the BOM keeps Bangla names right). */
@@ -57,7 +47,8 @@ class SalesReportController extends Controller
     {
         $this->authorize('view-reports');
         $month = $this->month($request);
-        $rows = $this->reports->exportRows($month->copy()->startOfMonth(), $month->copy()->endOfMonth());
+        [$from, $to] = $this->period->range($month);
+        $rows = $this->reports->exportRows($from, $to);
 
         return response()->streamDownload(function () use ($rows) {
             $out = fopen('php://output', 'w');
@@ -74,9 +65,9 @@ class SalesReportController extends Controller
     private function month(Request $request): Carbon
     {
         try {
-            return $request->query('month') ? Carbon::createFromFormat('Y-m', (string) $request->query('month'))->startOfMonth() : now()->startOfMonth();
+            return $request->query('month') ? Carbon::createFromFormat('Y-m', (string) $request->query('month'))->startOfMonth() : $this->period->labelFor();
         } catch (\Throwable) {
-            return now()->startOfMonth();
+            return $this->period->labelFor();
         }
     }
 }

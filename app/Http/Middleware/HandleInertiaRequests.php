@@ -54,6 +54,14 @@ class HandleInertiaRequests extends Middleware
             // The ways of signing in with an outside account that the owner switched on (the buttons on the sign-in page).
             'socialProviders' => fn () => $request->user() ? [] : app(SocialLogin::class)->enabled(),
             'site' => fn () => app(Site::class)->forViewer()['site'],
+            // Someone who sells gets a way across to the supplier app (one login for both apps).
+            'supplierApp' => fn () => app(\App\Services\Supplier\SupplierApp::class)->isSupplier($request->user()),
+            // An affiliate with an account is shown a link to their own page.
+            'isAffiliate' => fn () => $request->user() ? \App\Models\Affiliate::where('user_id', $request->user()->id)->exists() : false,
+            // The public key a browser needs to say yes to notifications; only for a signed-in person, and only when the owner switched it on.
+            'push' => fn () => $request->user() ? ['key' => app(\App\Services\Push\Notifications::class)->publicKey()] : null,
+            // The visitor-statistics ids the owner switched on, or nothing (staff and the admin screens are never counted).
+            'analytics' => fn () => app(\App\Services\Analytics\Tags::class)->forRequest($request),
             'locale' => fn () => app()->getLocale(),
             // English is the source text, so only Bangla needs a dictionary sent to the browser.
             'translations' => fn () => app()->getLocale() === 'bn' ? self::dictionaryFor($request) : (object) [],

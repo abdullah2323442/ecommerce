@@ -1,3 +1,4 @@
+import Flash from '@/components/admin/flash';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import AppLayout from '@/layouts/app-layout';
@@ -54,6 +55,10 @@ interface Props {
     inactive: { name: string | null; phone: string | null; last: string; days: number; total: number; memos: number }[];
     season: { id: number; name: string; strength: string | null; units: number; then_per_day: number; now_per_day: number; on_hand: number; rise: number | null; order: number }[];
     losses: { below_cost: number; expired_not_taken: number };
+    range: { from: string; to: string };
+    prepared_at: string;
+    startDay: number;
+    corrected: { count: number; difference: number; items: { number: string | null; replaces: string | null; was: number; now: number; when: string }[] };
     tonight: Totals & { cash_expected: number; open_drafts: number; returns: number; finished: number; low_stock: number; pending_approvals: number };
 }
 
@@ -83,13 +88,14 @@ function Block({ title, children }: { title: string; children: React.ReactNode }
 const kindName = (k: string) => (k === 'paikari' ? 'Shop' : k === 'wholesale' ? 'Wholesale' : 'Retail');
 
 export default function MonthlyReport(p: Props) {
-    const { t, num, money, date } = useI18n();
+    const { t, num, money, date, dateTime } = useI18n();
     const name = (r: { name: string | null; strength?: string | null }) => `${r.name ?? ''} ${r.strength ?? ''}`.trim();
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={t('Reports')} />
             <div className="mx-auto w-full max-w-6xl space-y-8 p-4">
+                <Flash />
                 <div className="flex flex-wrap items-center justify-between gap-3">
                     <h1 className="font-display text-2xl font-extrabold">{t('Monthly report')}</h1>
                     <div className="flex items-center gap-2">
@@ -106,6 +112,34 @@ export default function MonthlyReport(p: Props) {
                         </Button>
                     </div>
                 </div>
+
+                <div className="text-muted-foreground flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+                    <span>{t('{from} to {to}', { from: date(p.range.from), to: date(p.range.to) })}</span>
+                    <span>{t('Prepared {when}', { when: dateTime(p.prepared_at) })}</span>
+                    <Button size="sm" variant="outline" onClick={() => router.post(`/admin/reports/prepare?month=${p.month}`, {}, { preserveScroll: true })}>
+                        {t('Prepare it again now')}
+                    </Button>
+                </div>
+
+                {p.corrected.count > 0 && (
+                    <section aria-labelledby="corrected-h" className="rounded-md border p-4">
+                        <h2 id="corrected-h" className="mb-1 font-medium">
+                            {t('Corrected memos')}
+                        </h2>
+                        <p className="text-muted-foreground mb-2 text-sm">
+                            {t('{n} memos were corrected in this period. The old memo is cancelled and the new one counts, so the totals above already use the new amounts.', { n: num(p.corrected.count) })}
+                        </p>
+                        <ul className="divide-y text-sm">
+                            {p.corrected.items.map((c) => (
+                                <li key={`${c.number}-${c.when}`} className="flex flex-wrap items-center gap-x-4 gap-y-1 py-1.5">
+                                    <span className="w-24 font-mono text-xs">{c.number}</span>
+                                    <span className="text-muted-foreground text-xs">{t('replaces {memo}', { memo: c.replaces ?? '-' })}</span>
+                                    <span className="tabular-nums ms-auto">{t('{was} to {now}', { was: money(c.was), now: money(c.now) })}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </section>
+                )}
 
                 {(p.losses.below_cost > 0 || p.losses.expired_not_taken > 0) && (
                     <section aria-labelledby="losses-h" className="border-destructive/40 bg-destructive/5 rounded-md border p-4">

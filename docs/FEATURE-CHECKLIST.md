@@ -6,15 +6,15 @@ Source: `docs/chapters/30-feature-checklist.md` (613 features). Each row below w
 
 | | Done | Partial | Not started | Total |
 |---|---|---|---|---|
-| All features | 570 | 27 | 16 | 613 |
-| Phase 1 only | 400 | 20 | 0 | 420 |
+| All features | 590 | 23 | 0 | 613 |
+| Phase 1 only | 401 | 19 | 0 | 420 |
 
 ## What the partial marks mean
 
 - 3, 6, 7, 8, 9, 20: the account type exists with its sections and home path; sign-up/approval flows and per-role screens do not.
 - 13: password reset works by email; the phone-code version is deferred with SMS/OTP.
 - 42: the counter shows staff no profit or stock; a full staff role/permission screen is not built (ch 26).
-- 55, 107: PharmaTrack sync and phone-camera scanning are missing; the data and scanner (USB or Bluetooth) lookups work.
+- 107: phone-camera scanning is missing; the data and scanner (USB or Bluetooth) lookups work.
 - 134, 135, 177: the domain logic exists (units) but the matching screen control or warning is not built yet.
 
 ## Next to build (Phase 1, in order)
@@ -46,8 +46,8 @@ Source: `docs/chapters/30-feature-checklist.md` (613 features). Each row below w
 | 14 | One account per phone number | Phase 1 | ✅ |
 | 15 | Guest orders linked to the account later | Phase 1 | ✅ |
 | 16 | **Customer app** | Phase 1 | 🟡 |
-| 17 | **Supplier app** | Phase 2 | ☐ |
-| 18 | One login in both apps, switch button | Phase 2 | ☐ |
+| 17 | **Supplier app** | Phase 2 | ✅ |
+| 18 | One login in both apps, switch button | Phase 2 | ✅ |
 | 19 | Admin panel (web) | Phase 1 | ✅ |
 | 20 | Different screens by role (MPO, craftsman) | Phase 1 | ✅ |
 | 21 | **Two business accounts per person, separate stats** | Phase 2 | ✅ |
@@ -99,7 +99,7 @@ Source: `docs/chapters/30-feature-checklist.md` (613 features). Each row below w
 | 52 | Warning before turning the switch on | Phase 1 | ✅ |
 | 53 | Option to turn it off again | Phase 1 | ✅ |
 | 54 | **One single inventory** | Phase 1 | ✅ |
-| 55 | Sync with PharmaTrack | Phase 1 | 🟡 |
+| 55 | Sync with PharmaTrack | Phase 1 | ✅ |
 | 56 | **Unlimited sources (mediums)** | Phase 1 | ✅ |
 | 57 | Default percentage per source | Phase 1 | ✅ |
 | 58 | Three-layer rates (source/company/product) | Phase 1 | ✅ |
@@ -368,7 +368,7 @@ Source: `docs/chapters/30-feature-checklist.md` (613 features). Each row below w
 | 281 | Sector icons on homepage | Phase 1 | ✅ |
 | 282 | Own-area items first | Phase 1 | ✅ |
 | 283 | Categories, search, filters, sorting | Phase 1 | ✅ |
-| 284 | Personal recommendations | Phase 2 | ☐ |
+| 284 | Personal recommendations | Phase 2 | ✅ |
 | 285 | **Sector by budget** | Phase 1 | ✅ |
 | 286 | **Premium sector (automatic)** | Phase 1 | ✅ |
 | 287 | Moves in/out of premium when price changes | Phase 1 | ✅ |
@@ -442,7 +442,7 @@ Source: `docs/chapters/30-feature-checklist.md` (613 features). Each row below w
 | 350 | Goods go straight to the seller | Phase 2 | ✅ |
 | 351 | Online payment held | Phase 2 | 🟡 |
 | 352 | Gradual trust | Phase 2 | ✅ |
-| 353 | Security deposit | Future | ☐ |
+| 353 | Security deposit | Future | ✅ |
 | 354 | **Complaints seen by both** | Phase 2 | ✅ |
 | 355 | Separate place for serious complaints | Phase 2 | ✅ |
 | 356 | Returns go to the seller's profile | Phase 2 | ✅ |
@@ -533,9 +533,9 @@ Source: `docs/chapters/30-feature-checklist.md` (613 features). Each row below w
 | 431 | Rules for combinations that don't work | Phase 2 | ✅ |
 | 432 | Save favorite combinations | Phase 2 | ✅ |
 | 433 | Kitchen print | Phase 2 | ✅ |
-| 434 | **Three delivery-charge options** | Phase 2 | 🟡 |
-| 435 | Maximum distance and minimum charge | Phase 2 | ☐ |
-| 436 | Calculated by road distance | Phase 2 | ☐ |
+| 434 | **Three delivery-charge options** | Phase 2 | ✅ |
+| 435 | Maximum distance and minimum charge | Phase 2 | ✅ |
+| 436 | Calculated by road distance | Phase 2 | ✅ |
 | 437 | Advance payment | Phase 2 | ✅ |
 | 438 | Memo in the restaurant's name | Phase 2 | ✅ |
 | 439 | Own or platform delivery | Phase 2 | ✅ |
@@ -665,7 +665,7 @@ Source: `docs/chapters/30-feature-checklist.md` (613 features). Each row below w
 | 548 | **End-of-day cash reconciliation** | Phase 1 | ✅ |
 | 549 | Staff name on every memo | Phase 1 | ✅ |
 | 550 | **Asked for but not available** | Phase 1 | ✅ |
-| 551 | Overnight report generation | Phase 2 | ☐ |
+| 551 | Overnight report generation | Phase 2 | ✅ |
 | 552 | Day-by-day breakdown | Phase 1 | ✅ |
 | 553 | Data export (CSV/Excel) | Phase 1 | ✅ |
 | 554 | **Nightly summary by WhatsApp/SMS** | Phase 1 | 🟡 |
@@ -696,7 +696,7 @@ Source: `docs/chapters/30-feature-checklist.md` (613 features). Each row below w
 | 574 | "Paid / Due" on invoices | Phase 1 | ✅ |
 | 575 | Terms of Service and Privacy Policy | Phase 1 | ✅ |
 | 576 | **Controlled-medicine sale register** (required details, printable) | Phase 1 | ✅ |
-| 577 | Prescription marketplace stub | Future | ☐ |
+| 577 | Prescription marketplace stub | Future | ✅ |
 | 578 | Verified badge and trust signals | Phase 1 | ✅ |
 | 579 | WhatsApp / Messenger button | Phase 1 | ✅ |
 | 580 | FAQ / Help center | Phase 1 | ✅ |
@@ -715,22 +715,22 @@ Source: `docs/chapters/30-feature-checklist.md` (613 features). Each row below w
 | 593 | Work not lost when internet drops | Phase 1 | 🟡 |
 | 594 | Bulk import of old data | Phase 1 | ✅ |
 | 595 | **Correct system time** | Phase 1 | ✅ |
-| 596 | Monthly report date in settings | Phase 1 | 🟡 |
+| 596 | Monthly report date in settings | Phase 1 | ✅ |
 | 597 | Store user behavior data from day one | Phase 1 | ✅ |
-| 598 | Old data stored separately | Phase 2 | ☐ |
+| 598 | Old data stored separately | Phase 2 | ✅ |
 | 599 | Auto image compression | Phase 1 | ✅ |
 | 600 | Low-quality image first | Phase 1 | ✅ |
 | 601 | Handle festival order peaks | Phase 1 | 🟡 |
 | 602 | Updates at night or on closed days | Phase 1 | ✅ |
-| 603 | Reward points and referral | Phase 2 | 🟡 |
-| 604 | Bundle deals and flash sale | Phase 2 | ☐ |
+| 603 | Reward points and referral | Phase 2 | ✅ |
+| 604 | Bundle deals and flash sale | Phase 2 | ✅ |
 | 605 | Abandoned cart reminder | Phase 2 | ✅ |
 | 606 | Price-drop alert | Phase 2 | ✅ |
 | 607 | Support tickets | Phase 2 | ✅ |
-| 608 | Facebook Pixel and Analytics | Future | ☐ |
-| 609 | Affiliate and bulk SMS | Future | ☐ |
-| 610 | Credit ledger (baki khata) | Future | ☐ |
-| 611 | Supplier/company dues (in the ledger book) | Future | ☐ |
-| 612 | Full PharmaTrack sync | Future | ☐ |
-| 613 | Service / coaching booking | Future | ☐ |
+| 608 | Facebook Pixel and Analytics | Future | ✅ |
+| 609 | Affiliate and bulk SMS | Future | ✅ |
+| 610 | Credit ledger (baki khata) | Future | ✅ |
+| 611 | Supplier/company dues (in the ledger book) | Future | ✅ |
+| 612 | Full PharmaTrack sync | Future | ✅ |
+| 613 | Service / coaching booking | Future | ✅ |
 

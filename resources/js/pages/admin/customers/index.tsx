@@ -48,6 +48,9 @@ export default function CustomersIndex({ customers, filters, types, upgrades }: 
                 <div>
                     <h1 className="font-display text-3xl font-extrabold tracking-tight">{t('Customers')}</h1>
                     <p className="text-sm text-muted-foreground">{customers.total === 1 ? t('1 customer') : t('{n} customers', { n: num(customers.total) })}</p>
+                    <Link href="/admin/customers/import" className="text-sm font-semibold underline underline-offset-4">
+                        {t('Bring in shops from a file')}
+                    </Link>
                 </div>
 
                 <Flash />

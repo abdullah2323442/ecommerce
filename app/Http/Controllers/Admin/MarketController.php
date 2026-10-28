@@ -11,6 +11,7 @@ use App\Models\MarketOrder;
 use App\Models\MarketStatement;
 use App\Models\Sector;
 use App\Models\SellerPenalty;
+use App\Models\Setting;
 use App\Models\User;
 use App\Services\Audit\ActivityLogger;
 use App\Services\Market\ListingQuestions;
@@ -57,7 +58,21 @@ class MarketController extends Controller
             'published' => Listing::where('status', 'published')->with(['sector', 'seller'])->latest('approved_at')->limit(40)->get()->map($row),
             'sectors' => Sector::orderBy('sort')->orderBy('name')->get(),
             'categories' => Categories::all(),
+            'prohibited' => (string) Setting::read('market.prohibited_words', ''),
         ]);
+    }
+
+    /** The words that mark a listing for a second look at once: weapons, drugs and the like (spec ch 15). A listing that holds one is shown with it, never hidden by itself. */
+    public function saveProhibited(Request $request): RedirectResponse
+    {
+        $this->authorize('manage-customers');
+        $data = $request->validate(['words' => ['nullable', 'string', 'max:2000']]);
+        $words = collect(preg_split('/[,\n]+/u', (string) ($data['words'] ?? '')))->map(fn ($w) => trim($w))->filter()->unique(fn ($w) => mb_strtolower($w))->values();
+
+        Setting::write('market.prohibited_words', $words->implode(', '));
+        $this->activity->record('market.prohibited_saved', null, ['count' => $words->count()], $request->user());
+
+        return back()->with('status', __('The list is saved.'));
     }
 
     /** Who owes how much, and how many of each product sold (spec ch 14). Only complete sales. */

@@ -29,6 +29,8 @@ class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
+        // Notifications by the Web Push standard; tests put a fake in its place.
+        $this->app->bind(\App\Services\Push\PushSender::class, \App\Services\Push\MinishlinkSender::class);
         // Fill `{n}` placeholders as well as `:name` ones, on the server just as t() does in the browser.
         $this->app->extend('translator', function ($translator, $app) {
             $new = new BraceTranslator($app['translation.loader'], $app->getLocale());

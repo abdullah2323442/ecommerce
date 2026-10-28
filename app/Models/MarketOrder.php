@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Services\Marketing\Affiliates;
 use App\Services\Wallet\Referrals;
+use App\Services\Wallet\RewardPoints;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -15,9 +17,32 @@ class MarketOrder extends Model
 {
     protected static function booted(): void
     {
+        // An order that came by an affiliate's link is the affiliate's (spec ch 27).
+        static::creating(function (MarketOrder $order) {
+            if ($order->affiliate_id === null) {
+                $order->affiliate_id = app(Affiliates::class)->current($order->buyer_id)?->id;
+            }
+        });
+
+        static::saved(function (MarketOrder $order) {
+            if ($order->affiliate_id !== null && $order->status === 'delivered' && $order->wasChanged('status')) {
+                app(Affiliates::class)->earnOnMarketOrder($order);
+            }
+
+            if ($order->affiliate_id !== null && in_array($order->status, ['cancelled', 'returned', 'not_received'], true) && $order->wasChanged('status')) {
+                app(Affiliates::class)->cancelOnMarketOrder($order);
+            }
+        });
+
         static::saved(function (MarketOrder $order) {
             if ($order->status === 'delivered' && $order->wasChanged('status') && $order->buyer_id !== null) {
                 app(Referrals::class)->qualify(User::find($order->buyer_id));
+                app(RewardPoints::class)->earnOnMarketOrder($order);
+            }
+
+            // An order that did not stay a sale (cancelled, sent back, or not received) takes its points back.
+            if (in_array($order->status, ['cancelled', 'returned', 'not_received'], true) && $order->wasChanged('status') && $order->buyer_id !== null) {
+                app(RewardPoints::class)->reverseMarketOrder($order);
             }
         });
     }

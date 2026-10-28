@@ -74,6 +74,8 @@ interface Props {
     categoryOptions?: { key: string; label: string }[];
     transactions?: { type: string; id: number; when: string; title: string; status: string; amount: number | null; link: string | null; detail: string }[];
     offersTaken?: { name: string; boxes: number; price: number; memo: string | null; status: string }[];
+    /** What they owe us on memos left on credit; null when this viewer may not see money. */
+    owed?: number | null;
 }
 
 function Section({ title, hint, children }: { title: string; hint?: string; children: React.ReactNode }) {
@@ -387,7 +389,7 @@ function Transactions({ items }: { items: NonNullable<Props['transactions']> }) 
     );
 }
 
-export default function CustomerShow({ customer, tiers, manualRates, tierHistory, activity, logins, offersTaken, categoryOptions = [], transactions = [] }: Props) {
+export default function CustomerShow({ customer, tiers, manualRates, tierHistory, activity, logins, offersTaken, categoryOptions = [], transactions = [], owed = null }: Props) {
     const { t, dateTime, money } = useI18n();
     const breadcrumbs: BreadcrumbItem[] = [
         { title: 'Customers', href: '/admin/customers' },
@@ -428,6 +430,16 @@ export default function CustomerShow({ customer, tiers, manualRates, tierHistory
                     </p>
                 )}
 
+                {owed !== null && owed > 0 && (
+                    <Section title={t('Owes us')} hint={t('On memos left on credit. Open the account to see them and take a payment.')}>
+                        <div className="flex flex-wrap items-center justify-between gap-3">
+                            <p className="font-display text-3xl font-extrabold tabular">{money(owed)}</p>
+                            <Link href={`/admin/ledger/${customer.id}`} className="text-sm font-medium underline underline-offset-4">
+                                {t('Open the account')}
+                            </Link>
+                        </div>
+                    </Section>
+                )}
                 <TierSection customer={customer} tiers={tiers} />
                 <TradeSection customer={customer} options={categoryOptions} />
                 <RatesSection customer={customer} rates={manualRates} />

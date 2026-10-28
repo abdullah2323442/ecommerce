@@ -46,6 +46,7 @@ interface Invoice {
     finalised_at: string | null;
     note: string | null;
     credit_applied: number;
+    token_applied: number;
     corrects: string | null;
     can_correct: boolean;
     print_count: number;
@@ -395,6 +396,8 @@ export default function CounterShow({ invoice, working, otherDrafts, limit, poli
     const [simple, setSimple] = useSimpleCounter();
     const retail = invoice.kind === 'retail';
     const closing = draft || invoice.status === 'verified'; // a checked online order is finished here too
+    // A finished memo has had the token and the credit taken off; the lines alone still add up to the full amount.
+    const owed = invoice.status === 'final' ? invoice.totals.total - invoice.credit_applied - invoice.token_applied : invoice.totals.total;
     const [method, setMethod] = useState('cash');
     const [paid, setPaid] = useState('');
     const [pct, setPct] = useState(String((retail ? invoice.end_discount_percent : invoice.invoice_percent) ?? ''));
@@ -590,6 +593,12 @@ export default function CounterShow({ invoice, working, otherDrafts, limit, poli
                             </div>
                         </div>
                     ) : null}
+                    {invoice.token_applied > 0 && (
+                        <div className="flex justify-between">
+                            <span>{t('Aqua Token')}</span>
+                            <span className="tabular">−{money(invoice.token_applied)}</span>
+                        </div>
+                    )}
                     {invoice.credit_applied > 0 && (
                         <div className="flex justify-between">
                             <span>{t('Return product')}</span>
@@ -618,7 +627,7 @@ export default function CounterShow({ invoice, working, otherDrafts, limit, poli
                     )}
                     <div className="font-display flex justify-between border-t pt-2 text-xl font-extrabold">
                         <span>{t('Total')}</span>
-                        <span className="tabular">{money(invoice.totals.total)}</span>
+                        <span className="tabular">{money(owed)}</span>
                     </div>
                 </section>
 
@@ -682,16 +691,16 @@ export default function CounterShow({ invoice, working, otherDrafts, limit, poli
                         )}
                     </p>
                 )}
-                {!closing && (
+                {!closing && invoice.status !== 'cancelled' && (
                     <p className="text-sm">
                         <span
                             className={
-                                invoice.paid_amount >= invoice.totals.total ? 'font-semibold text-success' : 'font-semibold text-warning'
+                                invoice.paid_amount >= owed ? 'font-semibold text-success' : 'font-semibold text-warning'
                             }
                         >
-                            {invoice.paid_amount >= invoice.totals.total
+                            {invoice.paid_amount >= owed
                                 ? t('Paid')
-                                : t('Due {amount}', { amount: money(invoice.totals.total - invoice.paid_amount) })}
+                                : t('Due {amount}', { amount: money(owed - invoice.paid_amount) })}
                         </span>
                     </p>
                 )}

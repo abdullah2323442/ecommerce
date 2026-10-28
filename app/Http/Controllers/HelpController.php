@@ -106,7 +106,7 @@ class HelpController extends Controller
         abort_unless($post->isShown(), 404);
         $data = $request->validate(['comment' => ['required', 'string', 'max:600']]);
 
-        return $this->attempt(fn () => $this->board->comment($post, $request->user(), $data['comment'], $request->getHost()), 'Added.');
+        return $this->attempt(fn () => $this->board->comment($post, $request->user(), $data['comment'], $request->getHost()), 'Added.', 'comment');
     }
 
     public function report(Request $request, HelpPost $post): RedirectResponse
@@ -117,12 +117,12 @@ class HelpController extends Controller
         return $this->attempt(fn () => $this->board->report($post, $request->user(), $data['reason'] ?? null), 'Thank you. We will look at it.');
     }
 
-    private function attempt(callable $do, string $done): RedirectResponse
+    private function attempt(callable $do, string $done, string $key = 'post'): RedirectResponse
     {
         try {
             $do();
         } catch (StockException $e) {
-            return back()->withErrors(['post' => __($e->getMessage(), ['n' => $this->board->activeLimit()])]);
+            return back()->withErrors([$key => __($e->getMessage(), ['n' => $this->board->activeLimit()])]);
         }
 
         return back()->with('status', __($done));

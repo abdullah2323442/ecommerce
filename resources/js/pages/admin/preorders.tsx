@@ -22,6 +22,7 @@ interface Line {
 interface Row {
     id: number;
     mpo?: boolean;
+    mpo_taken?: boolean;
     status: string;
     late: boolean;
     due_on: string | null;
@@ -157,7 +158,8 @@ function Card({ p, days }: { p: Row; days: number[] }) {
                 </div>
             )}
 
-            {p.status === 'accepted' && p.mpo && (
+            {p.status === 'accepted' && p.mpo && p.mpo_taken && <p className="rounded-md border border-dashed p-2 text-sm">{t('The goods from the MPO are already in stock. Receive the order when you are ready.')}</p>}
+            {p.status === 'accepted' && p.mpo && !p.mpo_taken && (
                 <div className="flex flex-wrap items-end gap-2 rounded-md border border-dashed p-2 text-sm">
                     <span className="flex-1">{t('From an MPO. When the goods reach you, put them into stock at the discount you paid.')}</span>
                     <label>

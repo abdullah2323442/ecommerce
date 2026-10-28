@@ -31,6 +31,8 @@ return [
             ['label' => 'Made to order', 'label_bn' => null, 'url' => '/custom', 'enabled' => true],
             ['label' => 'Food', 'label_bn' => null, 'url' => '/food', 'enabled' => true],
             ['label' => 'Game top-up', 'label_bn' => null, 'url' => '/gaming', 'enabled' => true],
+            ['label' => 'Book a service', 'label_bn' => null, 'url' => '/services', 'enabled' => true],
+            ['label' => 'Prescription marketplace', 'label_bn' => null, 'url' => '/prescription-market', 'enabled' => true],
             ['label' => 'Wallet', 'label_bn' => null, 'url' => '/wallet', 'enabled' => true],
             ['label' => 'Help board', 'label_bn' => null, 'url' => '/help', 'enabled' => true],
             ['label' => 'Questions and answers', 'label_bn' => null, 'url' => '/faq', 'enabled' => true],

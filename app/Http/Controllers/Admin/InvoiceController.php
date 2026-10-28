@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Invoice;
-use App\Services\Audit\ActivityLogger;
+use App\Services\Ledger\Receivables;
 use App\Services\Sales\InvoiceService;
+use App\Services\Stock\StockException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -14,7 +15,7 @@ use Inertia\Response;
 /** Every order and memo in one list with filters (spec ch 25: order management), and settling what a customer still owes. */
 class InvoiceController extends Controller
 {
-    public function __construct(private InvoiceService $invoices, private ActivityLogger $activity) {}
+    public function __construct(private InvoiceService $invoices) {}
 
     public function index(Request $request): Response
     {
@@ -55,27 +56,17 @@ class InvoiceController extends Controller
         ]);
     }
 
-    /** What a customer paid later on a memo that was left due. The money only goes up, never past the total, and every payment is logged. */
-    public function pay(Request $request, Invoice $invoice): RedirectResponse
+    /** What a customer paid later on a memo that was left Due. The money only goes up, never past the total, and every payment is logged and kept as a row. */
+    public function pay(Request $request, Invoice $invoice, Receivables $ledger): RedirectResponse
     {
         $this->authorize('view-reports');
-        $data = $request->validate(['amount' => ['required', 'numeric', 'gt:0', 'max:100000000'], 'method' => ['required', 'in:cash,bkash,nagad,rocket,bank,card']]);
+        $data = $request->validate(['amount' => ['required', 'numeric', 'gt:0', 'max:100000000'], 'method' => ['required', 'in:'.implode(',', Receivables::METHODS)]]);
 
-        if ($invoice->status !== 'final') {
-            return back()->withErrors(['payment' => __('Only a finished memo can take a payment.')]);
+        try {
+            $ledger->receiveOnInvoice($invoice, (float) $data['amount'], $data['method'], null, $request->user());
+        } catch (StockException $e) {
+            return back()->withErrors(['payment' => __($e->getMessage())]);
         }
-
-        $owed = round((float) $invoice->total - (float) $invoice->paid_amount, 2);
-        if ($owed <= 0) {
-            return back()->withErrors(['payment' => __('This memo is already paid.')]);
-        }
-
-        if ((float) $data['amount'] > $owed + 0.001) {
-            return back()->withErrors(['payment' => __('That is more than is owed.')]);
-        }
-
-        $invoice->update(['paid_amount' => round((float) $invoice->paid_amount + (float) $data['amount'], 2)]);
-        $this->activity->record('invoice.payment', $invoice, ['amount' => (float) $data['amount'], 'method' => $data['method'], 'owed_before' => $owed], $request->user());
 
         return back()->with('status', __('Payment saved.'));
     }

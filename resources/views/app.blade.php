@@ -9,7 +9,7 @@
         @if ($brandMeta['brand']['favicon'])
             <link rel="icon" href="{{ $brandMeta['brand']['favicon'] }}">
         @endif
-        <link rel="manifest" href="{{ route('pwa.manifest', [], false) }}">
+        <link rel="manifest" href="{{ request()->is('supplier', 'supplier/*') ? route('pwa.supplier.manifest', [], false) : route('pwa.manifest', [], false) }}">
         <meta name="theme-color" content="{{ $brandMeta['brand']['theme_color'] }}">
         <meta name="mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-capable" content="yes">
@@ -22,6 +22,7 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=hind-siliguri:400,500,600,700|baloo-da-2:600,700,800|cormorant-garamond:500,600|noto-serif-bengali:500,700,800|changa-one:400&display=swap" rel="stylesheet" />
 
+        @include('partials.analytics')
         @routes
         @viteReactRefresh
         @vite(['resources/js/app.tsx', "resources/js/pages/{$page['component']}.tsx"])

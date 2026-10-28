@@ -10,12 +10,12 @@ class Preorder extends Model
 {
     protected $fillable = [
         'customer_id', 'status', 'promised_days', 'due_on', 'advance_amount', 'advance_refunded', 'advance_state', 'reply_note', 'cancelled_by', 'cancel_note',
-        'extended', 'accepted_at', 'told_at', 'invoice_id', 'mpo_listing_id', 'box_price', 'bonus_free',
+        'extended', 'accepted_at', 'told_at', 'invoice_id', 'mpo_listing_id', 'box_price', 'bonus_free', 'mpo_taken_at',
     ];
 
     protected function casts(): array
     {
-        return ['due_on' => 'date', 'accepted_at' => 'datetime', 'told_at' => 'datetime', 'advance_amount' => 'decimal:2', 'box_price' => 'decimal:2'];
+        return ['due_on' => 'date', 'accepted_at' => 'datetime', 'told_at' => 'datetime', 'mpo_taken_at' => 'datetime', 'advance_amount' => 'decimal:2', 'box_price' => 'decimal:2'];
     }
 
     public function customer(): BelongsTo

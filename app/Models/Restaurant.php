@@ -12,13 +12,14 @@ class Restaurant extends Model
     protected $fillable = [
         'owner_id', 'name', 'description', 'photo_path', 'phone', 'address', 'area', 'areas', 'status', 'commission_kind', 'commission_value', 'is_open', 'opens_at', 'closes_at', 'closed_days',
         'delivery_by', 'charge_mode', 'charge_inside', 'charge_outside', 'min_charge', 'eat_there', 'advance_over', 'advance_percent', 'max_ingredients', 'custom_extra_minutes',
+        'lat', 'lng', 'per_km', 'max_km',
     ];
 
     protected function casts(): array
     {
         return [
             'areas' => 'array', 'closed_days' => 'array', 'is_open' => 'boolean', 'eat_there' => 'boolean', 'commission_value' => 'decimal:2', 'charge_inside' => 'decimal:2',
-            'charge_outside' => 'decimal:2', 'min_charge' => 'decimal:2', 'advance_over' => 'decimal:2',
+            'charge_outside' => 'decimal:2', 'min_charge' => 'decimal:2', 'advance_over' => 'decimal:2', 'lat' => 'float', 'lng' => 'float', 'per_km' => 'decimal:2', 'max_km' => 'decimal:1',
         ];
     }
 

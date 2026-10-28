@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * Something a seller offers. The seller's price is theirs; what a buyer pays is that price plus our commission (spec ch 14), and
@@ -62,6 +63,24 @@ class Listing extends Model
     public function variants(): HasMany
     {
         return $this->hasMany(ListingVariant::class);
+    }
+
+    public function sale(): HasOne
+    {
+        return $this->hasOne(ListingSale::class);
+    }
+
+    /** The flash sale that is on right now, if any. */
+    public function liveSale(): ?ListingSale
+    {
+        $sale = $this->sale;
+
+        return $sale && $sale->isLive() ? $sale : null;
+    }
+
+    public function bundles(): BelongsToMany
+    {
+        return $this->belongsToMany(Bundle::class, 'bundle_items');
     }
 
     /** What anyone may see: approved, and the seller is not away. */

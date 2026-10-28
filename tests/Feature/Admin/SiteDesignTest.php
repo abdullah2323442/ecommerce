@@ -43,7 +43,7 @@ class SiteDesignTest extends TestCase
 
         $this->assertCount(6, $site['home']['sections']);
         $this->assertTrue(collect($site['home']['sections'])->every(fn ($s) => $s['open'] && $s['href']));
-        $this->assertCount(11, $site['footer']['links']);
+        $this->assertCount(13, $site['footer']['links']);
         $this->assertNull($site['announcement']);
         $this->assertSame([], $site['social']);
     }

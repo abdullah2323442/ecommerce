@@ -52,6 +52,7 @@ interface Props {
     asked: { id: number; name: string; status: string; note: string | null }[];
     paused: boolean;
     trust: { trusted: boolean; clean: number; needed: number; limit: number | null };
+    deposit: { on: boolean; required: number; held: number; short: number };
     token: { amount: number; min_order: number; per_buyer: number; active: boolean; ends_at: string | null } | null;
 }
 
@@ -552,7 +553,7 @@ function TokenForm({ token }: { token: Props['token'] }) {
     );
 }
 
-export default function Sell({ listings, sectors, paused, trust, token, asked, shop }: Props) {
+export default function Sell({ listings, sectors, paused, trust, token, asked, shop, deposit }: Props) {
     const { t, money, num } = useI18n();
     const flash = (usePage().props.flash as { status?: string } | undefined)?.status;
     const sellerOrders = (usePage().props.auth as { sellerOrders?: number }).sellerOrders ?? 0;
@@ -574,6 +575,12 @@ export default function Sell({ listings, sectors, paused, trust, token, asked, s
                         <Link href="/wholesale/sell/offers" className="text-sm font-semibold underline underline-offset-4">
                             {t('Price offers')}
                         </Link>
+                        <Link href="/wholesale/sell/deals" className="text-sm font-semibold underline underline-offset-4">
+                            {t('Sales and bundles')}
+                        </Link>
+                        <Link href="/wholesale/sell/services" className="text-sm font-semibold underline underline-offset-4">
+                            {t('Services')}
+                        </Link>
                         <Link href="/wholesale/sell/questions" className="text-sm font-semibold underline underline-offset-4">
                             {t('Questions from buyers')}
                         </Link>
@@ -589,6 +596,14 @@ export default function Sell({ listings, sectors, paused, trust, token, asked, s
                     </div>
                 </div>
                 {flash && <p role="status" className="rounded-md border border-success/30 bg-success/10 px-3 py-2 text-sm text-success">{flash}</p>}
+
+                {deposit.on && deposit.required > 0 && (
+                    <p role="status" className={`rounded-[1.5rem] border px-4 py-3 text-sm ${deposit.short > 0 ? 'border-warning/40 bg-warning/10' : 'bg-[var(--pt-surface)]'}`}>
+                        {deposit.short > 0
+                            ? t('You are asked to keep {required} with us as a deposit and we hold {held}. Send {short} more before you send in new products. Tell us when you have paid it.', { required: money(deposit.required), held: money(deposit.held), short: money(deposit.short) })
+                            : t('Your deposit of {held} is with us. It is given back when you leave, or kept for a reason we write down.', { held: money(deposit.held) })}
+                    </p>
+                )}
 
                 {!trust.trusted && trust.limit !== null && (
                     <p className="rounded-[1.5rem] border border-warning/40 bg-warning/10 px-4 py-3 text-sm">

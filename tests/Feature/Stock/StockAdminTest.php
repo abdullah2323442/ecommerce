@@ -113,6 +113,24 @@ class StockAdminTest extends TestCase
             ->assertOk()->assertJson(['percent' => 12, 'mrp_unit' => 100, 'unit' => 'box']);
     }
 
+    public function test_one_company_opens_with_its_medicines_so_several_can_be_added_at_once(): void
+    {
+        $other = Medicine::create(['company_id' => $this->medicine->company_id, 'brand_name' => 'Seclo', 'strength' => '20 mg', 'form' => 'capsule', 'packaging_type' => 'box', 'mrp_box' => 80, 'mrp_piece' => 1, 'is_active' => true]);
+        Medicine::create(['company_id' => $this->medicine->company_id, 'brand_name' => 'Old stuff', 'packaging_type' => 'box', 'mrp_box' => 5, 'mrp_piece' => 1, 'is_active' => false]);
+        $elsewhere = Medicine::create(['company_id' => Company::create(['name' => 'Beximco'])->id, 'brand_name' => 'Ace', 'packaging_type' => 'box', 'mrp_box' => 9, 'mrp_piece' => 1, 'is_active' => true]);
+
+        $this->actingAs($this->admin)->getJson('/admin/stock/companies?q=Squ')->assertOk()->assertJsonPath('results.0.name', 'Square');
+        $this->getJson('/admin/stock/companies?q=S')->assertOk()->assertJsonCount(0, 'results');
+
+        $names = $this->getJson("/admin/stock/companies/{$this->medicine->company_id}/medicines")->assertOk()->json('results.*.brand_name');
+        $this->assertSame(['Napa', 'Seclo'], $names);
+        $this->assertNotContains($elsewhere->brand_name, $names);
+
+        $this->getJson("/admin/stock/companies/{$this->medicine->company_id}/medicines?q=sec")->assertJsonPath('results.0.id', $other->id)->assertJsonCount(1, 'results');
+
+        $this->actingAs(User::factory()->create(['account_type' => AccountType::Paikari]))->getJson('/admin/stock/companies?q=Square')->assertStatus(302);
+    }
+
     public function test_a_company_rate_overrides_the_source_default_for_new_stock(): void
     {
         $this->actingAs($this->admin)->put("/admin/stock/rates/company/{$this->medicine->company_id}", ['percent' => 20])->assertSessionHasNoErrors();

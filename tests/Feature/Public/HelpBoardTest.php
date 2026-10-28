@@ -290,10 +290,18 @@ class HelpBoardTest extends TestCase
         $this->actingAs($this->other);
 
         foreach (['Visit https://example.com/shop please', 'Mail me at www.shop.com', 'Call 01711 223344 now', 'Look http://127.0.0.1/medicines/1 and http://evil.test/medicines/1'] as $bad) {
-            $this->post("/help/{$post->id}/comments", ['comment' => $bad])->assertSessionHasErrors('post');
+            $this->post("/help/{$post->id}/comments", ['comment' => $bad])->assertSessionHasErrors('comment');
         }
         $this->post("/help/{$post->id}/comments", ['comment' => ''])->assertSessionHasErrors('comment');
         $this->assertSame(0, HelpComment::count());
+    }
+
+    public function test_a_link_to_our_own_site_is_fine_even_when_it_carries_a_port(): void
+    {
+        $post = $this->made();
+
+        $this->actingAs($this->other)->post("/help/{$post->id}/comments", ['comment' => "Try http://localhost:8001/medicines/{$this->napa->id}"])->assertSessionHasNoErrors();
+        $this->assertSame(1, HelpComment::count());
     }
 
     public function test_a_product_link_shows_as_a_card_with_the_viewers_own_price(): void

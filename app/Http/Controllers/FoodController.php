@@ -66,16 +66,39 @@ class FoodController extends Controller
         // A suspended restaurant does not exist for buyers.
         abort_unless($restaurant->status === 'active', 404);
         $area = (string) ($request->session()->get('food_area') ?? $request->user()?->area ?? '');
+        $preview = $this->chargePreview($request, $restaurant, $area);
 
         return Inertia::render('food/show', [
-            'restaurant' => $this->card($restaurant) + ['eat_there' => (bool) $restaurant->eat_there, 'address' => $restaurant->address, 'manual_charge' => $restaurant->charge_mode === 'manual', 'advance_over' => $restaurant->advance_over !== null ? (float) $restaurant->advance_over : null, 'advance_percent' => $restaurant->advance_percent],
+            'restaurant' => $this->card($restaurant) + ['eat_there' => (bool) $restaurant->eat_there, 'address' => $restaurant->address, 'manual_charge' => $restaurant->charge_mode === 'manual', 'by_distance' => $restaurant->charge_mode === 'distance', 'max_km' => $restaurant->max_km !== null ? (float) $restaurant->max_km : null, 'per_km' => (float) $restaurant->per_km, 'needs_location' => $restaurant->lat !== null && ($restaurant->charge_mode === 'distance' || $restaurant->max_km !== null), 'advance_over' => $restaurant->advance_over !== null ? (float) $restaurant->advance_over : null, 'advance_percent' => $restaurant->advance_percent],
             'items' => $this->restaurants->menu($restaurant)->map(fn ($i) => ['id' => $i->id, 'name' => $i->name, 'description' => $i->description, 'category' => $i->category, 'price' => (float) $i->price, 'photo' => $i->photo_path !== null ? route('food.item-photo', $i) : null, 'ready_made' => $i->ready_made, 'cook_minutes' => $i->cook_minutes])->values(),
             'area' => $area, 'serves' => $area !== '' && $this->restaurants->serves($restaurant, $area),
-            'charge' => $area !== '' ? $this->orders->charge($restaurant, $area)[0] : null,
+            'charge' => $preview['charge'], 'distance' => $preview['km'], 'by_road' => $preview['by_road'], 'too_far' => $preview['too_far'],
             // Build your own (spec ch 17): the bases, the ingredients at this restaurant's own prices, what does not go together, the limit.
             'custom' => $this->custom->menu($restaurant), 'favorites' => $request->user() ? $this->custom->favorites($request->user(), $restaurant)->values() : [],
             'eatOptions' => $this->restaurants->eatOptions(), 'me' => $request->user() ? ['name' => $request->user()->name, 'phone' => $request->user()->phone] : null,
         ]);
+    }
+
+    /**
+     * What the menu page can say about the delivery before an order is made. With the buyer's position (sent by their phone, not kept) it says how far it is,
+     * the charge for that, and whether it is beyond what the restaurant delivers.
+     *
+     * @return array{charge: ?float, km: ?float, by_road: bool, too_far: bool}
+     */
+    private function chargePreview(Request $request, Restaurant $restaurant, string $area): array
+    {
+        $lat = $request->query('lat');
+        $lng = $request->query('lng');
+        $info = $this->orders->distanceInfo($restaurant, $lat, $lng);
+        $km = $info['km'] ?? null;
+        $charge = $area !== '' || $km !== null ? $this->orders->charge($restaurant, $area, $lat, $lng)[0] : null;
+
+        // By the kilometre there is no charge to show until the buyer's position is known.
+        if ($restaurant->charge_mode === 'distance' && $km === null) {
+            $charge = null;
+        }
+
+        return ['charge' => $charge, 'km' => $km, 'by_road' => (bool) ($info['by_road'] ?? false), 'too_far' => $this->orders->tooFar($restaurant, $km)];
     }
 
     public function store(Request $request, Restaurant $restaurant): RedirectResponse
@@ -85,11 +108,11 @@ class FoodController extends Controller
         $data = $request->validate([
             'mode' => ['required', 'in:delivery,eat_there'], 'lines' => ['required', 'array', 'min:1', 'max:40'], 'lines.*.item_id' => ['nullable', 'integer'], 'lines.*.base_id' => ['nullable', 'integer'], 'lines.*.ingredient_ids' => ['nullable', 'array', 'max:30'], 'lines.*.ingredient_ids.*' => ['integer'], 'lines.*.quantity' => ['required', 'integer', 'min:1', 'max:50'],
             'lines.*.note' => ['nullable', 'string', 'max:120'], 'name' => ['required', 'string', 'max:120'], 'phone' => ['required', 'regex:/^01[3-9]\d{8}$/'],
-            'area' => ['nullable', 'string', 'max:80'], 'address' => ['nullable', 'string', 'max:250'], 'how_to_find' => ['nullable', 'string', 'max:200'], 'eat_time' => ['nullable', 'string', 'max:30'], 'note' => ['nullable', 'string', 'max:300'],
+            'area' => ['nullable', 'string', 'max:80'], 'address' => ['nullable', 'string', 'max:250'], 'how_to_find' => ['nullable', 'string', 'max:200'], 'lat' => ['nullable', 'numeric', 'between:-90,90'], 'lng' => ['nullable', 'numeric', 'between:-180,180'], 'eat_time' => ['nullable', 'string', 'max:30'], 'note' => ['nullable', 'string', 'max:300'],
         ], ['phone.regex' => __('Write a Bangladesh mobile number, like 01712345678.')]);
 
         try {
-            $order = $this->orders->place($restaurant, $request->user(), $data['lines'], $data['mode'], collect($data)->only(['name', 'phone', 'area', 'address', 'how_to_find'])->all(), $data['eat_time'] ?? null, $data['note'] ?? null);
+            $order = $this->orders->place($restaurant, $request->user(), $data['lines'], $data['mode'], collect($data)->only(['name', 'phone', 'area', 'address', 'how_to_find', 'lat', 'lng'])->all(), $data['eat_time'] ?? null, $data['note'] ?? null);
         } catch (StockException $e) {
             return back()->withErrors(['order' => __($e->getMessage())]);
         }

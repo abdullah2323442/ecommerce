@@ -1,3 +1,4 @@
+import { track } from '@/lib/track';
 import { MedicineFlagsExplained } from '@/components/medicines/medicine-flags';
 import MedicineRow, { MedicineThumb } from '@/components/medicines/medicine-row';
 import { type MedicineSummary } from '@/components/medicines/types';
@@ -103,7 +104,10 @@ function AddToCart({ medicine }: { medicine: MedicineSummary }) {
             <Button
                 className="h-11 w-full"
                 disabled={Number(qty) < 1}
-                onClick={() => router.post('/cart', { medicine_id: medicine.id, unit, quantity: Math.max(1, Math.round(Number(qty))) }, { preserveScroll: true })}
+                onClick={() => {
+                    track('AddToCart', { id: medicine.id, name: medicine.brand_name, quantity: Math.max(1, Math.round(Number(qty))) });
+                    router.post('/cart', { medicine_id: medicine.id, unit, quantity: Math.max(1, Math.round(Number(qty))) }, { preserveScroll: true });
+                }}
             >
                 {t('Add to cart')}
             </Button>

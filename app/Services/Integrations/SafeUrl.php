@@ -17,6 +17,11 @@ class SafeUrl
     {
         $parts = parse_url($url);
 
+        // Developing on one computer: this machine is allowed when the site runs in the local environment, never in production.
+        if ($parts && app()->environment('local') && in_array($parts['host'] ?? '', ['localhost', '127.0.0.1'], true) && in_array($parts['scheme'] ?? '', ['http', 'https'], true) && ! isset($parts['user'])) {
+            return true;
+        }
+
         if (! $parts || ($parts['scheme'] ?? '') !== 'https' || empty($parts['host'])) {
             return false;
         }

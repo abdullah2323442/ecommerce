@@ -505,7 +505,7 @@ class CounterController extends Controller
     private function detail(Invoice $i): array
     {
         return $this->summary($i) + [
-            'status' => $i->status, 'number' => $i->number, 'corrects' => $i->corrects_invoice_id ? Invoice::whereKey($i->corrects_invoice_id)->value('number') : null, 'can_correct' => $i->status === 'final' && request()->user()?->can('manage-stock'), 'note' => $i->note, 'credit_applied' => (float) $i->credit_applied, 'print_count' => (int) $i->print_count, 'payment_method' => $i->payment_method, 'paid_amount' => (float) $i->paid_amount, 'invoice_percent' => $i->invoice_percent, 'end_discount_percent' => $i->end_discount_percent,
+            'status' => $i->status, 'number' => $i->number, 'corrects' => $i->corrects_invoice_id ? Invoice::whereKey($i->corrects_invoice_id)->value('number') : null, 'can_correct' => $i->status === 'final' && request()->user()?->can('manage-stock'), 'note' => $i->note, 'credit_applied' => (float) $i->credit_applied, 'token_applied' => (float) $i->token_applied, 'print_count' => (int) $i->print_count, 'payment_method' => $i->payment_method, 'paid_amount' => (float) $i->paid_amount, 'invoice_percent' => $i->invoice_percent, 'end_discount_percent' => $i->end_discount_percent,
             'totals' => $totals = $this->invoices->totals($i), 'below_cost' => $this->belowCost($i, $totals), 'finalised_at' => $i->finalised_at?->toIso8601String(),
             // Offer lines first, ordinary lines after, each group in the order it was added.
             'lines_detail' => $i->lines->sortBy(fn (InvoiceLine $l) => [$l->offer_product_id === null ? 1 : 0, $l->id])->map(fn (InvoiceLine $l) => [

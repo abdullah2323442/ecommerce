@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Company;
 use App\Models\Medicine;
 use App\Models\Setting;
 use App\Models\StockEntryDraft;
@@ -121,6 +122,28 @@ class StockController extends Controller
         ]);
     }
 
+    /** Companies by the start of their name, for "add many from one company" on the entry screen. */
+    public function companies(Request $request): JsonResponse
+    {
+        $this->authorize('manage-stock');
+        $q = trim((string) $request->query('q', ''));
+
+        return response()->json(['results' => mb_strlen($q) < 2 ? [] : Company::where('name', 'like', addcslashes($q, '%_\\').'%')->orderBy('name')->limit(8)->get(['id', 'name'])]);
+    }
+
+    /** One company's medicines (a long list is cut to the first 80, narrowed by what is typed), so several can be added to the purchase at once. */
+    public function companyMedicines(Request $request, Company $company): JsonResponse
+    {
+        $this->authorize('manage-stock');
+        $q = trim((string) $request->query('q', ''));
+
+        $rows = Medicine::where('company_id', $company->id)->where('is_active', true)
+            ->when($q !== '', fn ($query) => $query->where('brand_name', 'like', '%'.addcslashes($q, '%_\\').'%'))
+            ->with('company:id,name')->orderBy('brand_name')->orderBy('strength')->limit(80)->get(['id', 'company_id', 'brand_name', 'strength', 'form']);
+
+        return response()->json(['results' => $rows->map(fn (Medicine $m) => ['id' => $m->id, 'brand_name' => $m->brand_name, 'strength' => $m->strength, 'form' => $m->form, 'company' => ['name' => $m->company?->name]])->values()]);
+    }
+
     public function store(Request $request): RedirectResponse
     {
         $this->authorize('manage-stock');
@@ -131,6 +154,9 @@ class StockController extends Controller
             'invoice_date' => ['required', 'date', 'before_or_equal:today'],
             'note' => ['nullable', 'string', 'max:300'],
             'confirm_duplicate' => ['sometimes', 'boolean'],
+            // Paid in full unless a smaller amount is typed; the rest is owed to the company by the due date (the ledger, spec ch 28).
+            'paid_now' => ['nullable', 'numeric', 'min:0', 'max:1000000000'],
+            'due_date' => ['nullable', 'date', 'after_or_equal:today'],
             'lines' => ['required', 'array', 'min:1', 'max:200'],
             'lines.*.medicine_id' => ['required', 'integer', Rule::exists('medicines', 'id')],
             'lines.*.units' => ['required', 'numeric', 'gt:0', 'max:1000000'],
@@ -150,9 +176,14 @@ class StockController extends Controller
         try {
             $invoice = $this->stock->receive(StockSource::findOrFail($data['source_id']), $data, $request->user(), (bool) ($data['confirm_duplicate'] ?? false));
         } catch (StockException $e) {
-            $field = str_contains($e->getMessage(), 'already entered') ? 'invoice_number' : 'lines';
+            $field = match (true) {
+                str_contains($e->getMessage(), 'already entered') => 'invoice_number',
+                str_contains($e->getMessage(), 'day the rest is due') => 'due_date',
+                str_contains($e->getMessage(), 'amount paid') => 'paid_now',
+                default => 'lines',
+            };
 
-            throw ValidationException::withMessages([$field => $e->getMessage()]);
+            throw ValidationException::withMessages([$field => __($e->getMessage())]);
         }
 
         StockEntryDraft::where('user_id', $request->user()->id)->delete();

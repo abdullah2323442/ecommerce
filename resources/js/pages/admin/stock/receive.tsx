@@ -1,8 +1,10 @@
+import CompanyAdder from '@/components/admin/company-adder';
 import Flash from '@/components/admin/flash';
 import MedicinePicker, { type PickedMedicine } from '@/components/admin/medicine-picker';
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import AppLayout from '@/layouts/app-layout';
 import { useI18n } from '@/lib/i18n';
 import { type BreadcrumbItem } from '@/types';
@@ -72,7 +74,11 @@ export default function StockReceive({ sources, today, draft }: { sources: Sourc
         invoice_date: saved?.invoice_date ?? today,
         note: saved?.note ?? '',
         confirm_duplicate: false as boolean,
+        paid_now: '',
+        due_date: '',
     });
+    // Paid in full is the usual way; the other is part or none now, and the rest owed to the company by a day (the credit ledger).
+    const [payMode, setPayMode] = useState<'full' | 'credit'>('full');
     const [lines, setLines] = useState<Line[]>(() => (saved?.lines?.length ? saved.lines.map((l) => ({ ...blank(), ...l })) : [blank()]));
     const errors = form.errors as Record<string, string>;
     const [scanCode, setScanCode] = useState('');
@@ -117,6 +123,14 @@ export default function StockReceive({ sources, today, draft }: { sources: Sourc
         }
     };
 
+    /** The medicines ticked under one company become one line each; one already on the purchase is not added twice. */
+    const addMany = (picked: PickedMedicine[]) => {
+        const fresh = picked.filter((m) => !lines.some((l) => l.medicine?.id === m.id));
+        const made = fresh.map((m) => ({ line: blank(), medicine: m }));
+        setLines((all) => [...all.filter((l) => l.medicine), ...made.map((x) => x.line)]);
+        made.forEach((x) => quote(x.line.key, x.medicine));
+    };
+
     const linkUnknown = () => {
         if (!unknownCode || !linkPick) return;
         router.post('/admin/stock/barcodes', { code: unknownCode, medicine_id: linkPick.id }, { preserveScroll: true, onSuccess: () => { setUnknownCode(null); setLinkPick(null); } });
@@ -144,6 +158,8 @@ export default function StockReceive({ sources, today, draft }: { sources: Sourc
         e.preventDefault();
         form.transform((data) => ({
             ...data,
+            paid_now: payMode === 'credit' ? data.paid_now || '0' : null,
+            due_date: payMode === 'credit' ? data.due_date || null : null,
             lines: lines
                 .filter((l) => l.medicine)
                 .map((l) => ({ medicine_id: l.medicine!.id, units: l.units, bonus: l.bonus || null, company_percent: l.company_percent || null, mpo_percent: l.mpo_percent || null, shelf: l.shelf || null, expiry_date: l.expiry_date || null })),
@@ -259,6 +275,7 @@ export default function StockReceive({ sources, today, draft }: { sources: Sourc
                                     </Button>
                                 </div>
                             )}
+                            <CompanyAdder onAdd={addMany} />
                         </div>
 
                         <InputError message={errors.lines} />
@@ -346,6 +363,31 @@ export default function StockReceive({ sources, today, draft }: { sources: Sourc
                                 );
                             })}
                         </ul>
+
+                        <fieldset className="space-y-3 rounded-lg border p-4">
+                            <legend className="px-1 text-sm font-medium">{t('How it is paid')}</legend>
+                            <ToggleGroup type="single" variant="outline" value={payMode} onValueChange={(v) => v && setPayMode(v as 'full' | 'credit')} className="flex-wrap justify-start" aria-label={t('How it is paid')}>
+                                <ToggleGroupItem value="full">{t('Paid in full')}</ToggleGroupItem>
+                                <ToggleGroupItem value="credit">{t('Part or none now')}</ToggleGroupItem>
+                            </ToggleGroup>
+                            {payMode === 'credit' && (
+                                <div className="grid gap-3 sm:grid-cols-2">
+                                    <label className="text-sm font-medium">
+                                        {t('Paid now')}
+                                        <Input className="mt-1" type="number" inputMode="decimal" min="0" step="any" max={total} placeholder="0" value={form.data.paid_now} onChange={(e) => form.setData('paid_now', e.target.value)} aria-invalid={!!errors.paid_now} />
+                                        <InputError message={errors.paid_now} />
+                                    </label>
+                                    <label className="text-sm font-medium">
+                                        {t('The rest is due on')}
+                                        <Input className="mt-1" type="date" min={today} value={form.data.due_date} onChange={(e) => form.setData('due_date', e.target.value)} aria-invalid={!!errors.due_date} />
+                                        <InputError message={errors.due_date} />
+                                    </label>
+                                    <p className="tabular text-sm text-muted-foreground sm:col-span-2">
+                                        {t('We will owe the company {amount}. It is listed under Company dues.', { amount: money(Math.max(0, total - Number(form.data.paid_now || 0))) })}
+                                    </p>
+                                </div>
+                            )}
+                        </fieldset>
 
                         <div className="flex flex-wrap items-center justify-between gap-3">
                             <Button type="button" variant="outline" onClick={() => setLines((all) => [...all, blank()])}>

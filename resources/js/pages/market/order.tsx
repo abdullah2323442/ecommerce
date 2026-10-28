@@ -5,7 +5,7 @@ import PublicLayout from '@/layouts/public-layout';
 import { useI18n } from '@/lib/i18n';
 import { Head, Link, router, usePage } from '@inertiajs/react';
 import { useState } from 'react';
-import { unitLabel } from './index';
+import { unitLabel } from '@/lib/units';
 
 interface CaseRow {
     id: number;
@@ -179,7 +179,11 @@ export default function MarketOrder({ token, order, cases, pay, digital }: Props
                         <dt>{t('Total')}</dt>
                         <dd>{money(order.total)}</dd>
                     </div>
-                    <p className="pt-1 text-xs text-[var(--pt-muted)]">{t('You pay when it arrives.')}</p>
+                    {order.status === 'returned' || order.status === 'cancelled' ? (
+                        <p className="pt-1 text-xs text-[var(--pt-muted)]">{t('Nothing to pay for this order.')}</p>
+                    ) : (
+                        !pay.online && <p className="pt-1 text-xs text-[var(--pt-muted)]">{t('You pay when it arrives.')}</p>
+                    )}
                 </dl>
 
                 {order.pickup ? (

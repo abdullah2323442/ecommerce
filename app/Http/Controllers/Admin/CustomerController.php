@@ -14,6 +14,7 @@ use App\Models\TierChange;
 use App\Models\User;
 use App\Services\Audit\ActivityLogger;
 use App\Services\Audit\Bin;
+use App\Services\Ledger\Receivables;
 use App\Services\Messages\Messenger;
 use App\Services\Pricing\TierAssigner;
 use App\Services\Sales\CustomerFlags;
@@ -116,6 +117,8 @@ class CustomerController extends Controller
                 ->latest('invoice_lines.id')->limit(15)->get(['medicines.brand_name as name', 'invoice_lines.quantity', 'invoice_lines.unit_price', 'invoices.number', 'invoices.status'])
                 ->map(fn ($r) => ['name' => $r->name, 'boxes' => (float) $r->quantity, 'price' => (float) $r->unit_price, 'memo' => $r->number, 'status' => $r->status]),
             'transactions' => app(CustomerTransactions::class)->for($user),
+            // What this customer owes us on memos left on credit; only those who may see the reports see money (the credit ledger, spec ch 28).
+            'owed' => request()->user()->can('view-reports') ? app(Receivables::class)->owedBy($user) : null,
             'tiers' => Tier::orderBy('name')->get(['id', 'name', 'discount_percent']),
             'categoryOptions' => collect(Categories::all())->map(fn ($label, $key) => ['key' => $key, 'label' => $label])->values(),
             'manualRates' => CustomerRate::query()

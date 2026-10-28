@@ -1,3 +1,5 @@
+import { trackOnce } from '@/lib/track';
+import { useEffect } from 'react';
 import PublicLayout from '@/layouts/public-layout';
 import { useI18n } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
@@ -23,6 +25,9 @@ interface Pack {
 export default function Packages({ packages, total }: { packages: Pack[]; total: number }) {
     const { t, money, num } = useI18n();
     const flash = (usePage().props.flash as { status?: string } | undefined)?.status;
+    useEffect(() => {
+        if (packages[0]) trackOnce(packages[0].token, 'Purchase', { transaction: packages[0].token, value: total });
+    }, [packages, total]);
     const state = (s: string) => t(s === 'placed' ? 'Sent' : s === 'accepted' ? 'Accepted' : s === 'shipped' ? 'On the way' : s === 'delivered' ? 'Done' : s === 'not_received' ? 'Not received' : 'Cancelled');
 
     return (

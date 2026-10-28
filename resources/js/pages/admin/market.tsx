@@ -194,7 +194,31 @@ function SectorForm({ s }: { s?: Sector }) {
     );
 }
 
-export default function AdminMarket({ queue, asking, published, sectors }: { queue: Listing[]; asking: Listing[]; published: Listing[]; sectors: Sector[] }) {
+function ProhibitedWords({ words }: { words: string }) {
+    const { t } = useI18n();
+    const errors = usePage().props.errors as Record<string, string>;
+    const [text, setText] = useState(words);
+
+    return (
+        <form
+            className="space-y-2 rounded-md border bg-card p-3"
+            onSubmit={(e) => {
+                e.preventDefault();
+                router.post('/admin/market/prohibited', { words: text }, { preserveScroll: true });
+            }}
+        >
+            <h2 className="font-medium">{t('Words we do not allow')}</h2>
+            <p className="text-xs text-muted-foreground">{t('Write them with commas or on separate lines. A listing that holds one of them is marked for you when it waits to be read. Nothing is turned down by itself.')}</p>
+            <textarea aria-label={t('Words we do not allow')} rows={3} maxLength={2000} value={text} onChange={(e) => setText(e.target.value)} className="w-full rounded-md border bg-background p-2 text-sm" />
+            <InputError message={errors.words} />
+            <Button type="submit" size="sm">
+                {t('Save')}
+            </Button>
+        </form>
+    );
+}
+
+export default function AdminMarket({ queue, asking, published, sectors, prohibited }: { queue: Listing[]; asking: Listing[]; published: Listing[]; sectors: Sector[]; prohibited: string }) {
     const { t } = useI18n();
     const section = (title: string, items: Listing[], empty: string, review?: boolean) => (
         <section className="space-y-2">
@@ -217,6 +241,8 @@ export default function AdminMarket({ queue, asking, published, sectors }: { que
                 {section(t('Waiting to be read'), queue, t('No listing is waiting.'), true)}
                 {section(t('Asking for less commission'), asking, t('Nobody is asking.'))}
                 {section(t('Published'), published, t('Nothing is published yet.'))}
+
+                <ProhibitedWords words={prohibited} />
 
                 <section className="space-y-2">
                     <h2 className="font-medium">{t('Sectors')}</h2>

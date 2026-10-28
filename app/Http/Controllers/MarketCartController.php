@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Enums\AccountType;
+use App\Models\Bundle;
 use App\Models\Listing;
 use App\Models\MarketOrder;
+use App\Services\Market\Deals;
 use App\Services\Market\MarketCart;
 use App\Services\Market\Marketplace;
 use App\Services\Stock\StockException;
@@ -18,7 +20,7 @@ use Inertia\Response;
 /** The market cart and its one checkout (spec ch 13): many sellers, one cart, one checkout, split into packages. Open to anyone who may buy in the market. */
 class MarketCartController extends Controller
 {
-    public function __construct(private MarketCart $cart, private Marketplace $market) {}
+    public function __construct(private MarketCart $cart, private Marketplace $market, private Deals $deals) {}
 
     public function show(Request $request): Response
     {
@@ -52,6 +54,25 @@ class MarketCartController extends Controller
         }
 
         return back()->with('status', __('Added to your market cart.'));
+    }
+
+    /** Every product of a bundle goes into the cart, one of each; the saving shows in the cart once they are all there. */
+    public function addBundle(Request $request, Bundle $bundle): RedirectResponse
+    {
+        $this->allowed($request);
+        $listings = $bundle->listings()->get();
+        $offered = collect($this->deals->offeredFor($listings->first(), $request->user()))->firstWhere('id', $bundle->id);
+        abort_if(! $bundle->is_active || $offered === null, 404);
+
+        try {
+            foreach ($listings as $listing) {
+                $this->cart->add($listing, null, 1, $request->user());
+            }
+        } catch (StockException $e) {
+            return back()->withErrors(['order' => __($e->getMessage())]);
+        }
+
+        return back()->with('status', __('The bundle is in your market cart.'));
     }
 
     public function update(Request $request, string $key): RedirectResponse

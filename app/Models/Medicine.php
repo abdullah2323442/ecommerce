@@ -40,6 +40,11 @@ class Medicine extends Model
         return $this->hasMany(StockLot::class);
     }
 
+    public function barcodes(): HasMany
+    {
+        return $this->hasMany(MedicineBarcode::class);
+    }
+
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);

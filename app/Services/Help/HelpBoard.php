@@ -204,7 +204,9 @@ class HelpBoard
         // A product link on some other address is not ours.
         if (preg_match_all(self::PRODUCT_LINK, $text, $m, PREG_SET_ORDER)) {
             foreach ($m as $hit) {
-                if (($hit['host'] ?? '') !== '' && strcasecmp($hit['host'], $host) !== 0) {
+                // A pasted address may carry a port (a test server); the request host never does.
+                $linked = preg_replace('/:\d+$/', '', $hit['host'] ?? '');
+                if ($linked !== '' && strcasecmp($linked, $host) !== 0) {
                     throw new StockException($refused);
                 }
             }

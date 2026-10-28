@@ -1,14 +1,16 @@
+import { WasPrice } from '@/components/market/sale-price';
 import { Button } from '@/components/ui/button';
 import PublicLayout from '@/layouts/public-layout';
 import { useI18n } from '@/lib/i18n';
 import PageHead from '@/components/shell/page-head';
 import { Link, router, usePage } from '@inertiajs/react';
-import { unitLabel } from './index';
+import { unitLabel } from '@/lib/units';
 
 interface Item {
     id: number;
     title: string;
     price: number;
+    was?: number | null;
     unit: string;
     photo: string | null;
     sector_name: string;
@@ -66,6 +68,7 @@ export default function MarketShop({ shop, items }: { shop: Shop; items: Item[] 
                                     {i.photo ? <img src={i.photo} alt="" className="aspect-square w-full rounded-[1.25rem] border border-[var(--pt-line)] object-cover" /> : <div aria-hidden className="aspect-square w-full rounded-[1.25rem] bg-[var(--pt-sage)]" />}
                                     <p className="text-sm font-semibold">{i.title}</p>
                                     <p className="tabular text-sm">
+                                        <WasPrice was={i.was} className="text-xs" />
                                         {money(i.price)} <span className="text-[var(--pt-muted)]">/ {unitLabel(i.unit)}</span>
                                     </p>
                                 </Link>

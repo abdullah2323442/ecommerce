@@ -1,3 +1,4 @@
+import PushToggle from '@/components/push-toggle';
 import { Button } from '@/components/ui/button';
 import PublicLayout from '@/layouts/public-layout';
 import { useI18n } from '@/lib/i18n';
@@ -31,6 +32,8 @@ export default function Inbox({ messages, home }: Props) {
                         </Link>
                     </div>
                 </div>
+
+                <PushToggle />
 
                 {messages.length === 0 ? (
                     <p className="rounded-2xl border border-dashed p-10 text-center text-sm text-[var(--pt-muted)]">{t('No messages yet. We will tell you here when something happens to your order.')}</p>

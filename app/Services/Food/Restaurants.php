@@ -116,7 +116,7 @@ class Restaurants
      */
     public function update(Restaurant $r, array $data, ?UploadedFile $photo = null): Restaurant
     {
-        $changes = collect($data)->only(['name', 'description', 'phone', 'address', 'opens_at', 'closes_at', 'delivery_by', 'charge_mode', 'charge_inside', 'charge_outside', 'min_charge', 'eat_there', 'advance_over', 'advance_percent'])->all();
+        $changes = collect($data)->only(['name', 'description', 'phone', 'address', 'opens_at', 'closes_at', 'delivery_by', 'charge_mode', 'charge_inside', 'charge_outside', 'min_charge', 'eat_there', 'advance_over', 'advance_percent', 'per_km', 'max_km', 'lat', 'lng'])->all();
 
         foreach (['opens_at', 'closes_at'] as $key) {
             if (isset($changes[$key]) && ! preg_match('/^([01]\d|2[0-3]):[0-5]\d$/', (string) $changes[$key])) {
@@ -126,6 +126,25 @@ class Restaurants
 
         if (isset($changes['advance_percent']) && ((int) $changes['advance_percent'] < 0 || (int) $changes['advance_percent'] > 100)) {
             throw new StockException('The advance is a percent from 0 to 100.');
+        }
+
+        // Charging by the kilometre, or stopping at a longest distance, needs to know where the restaurant is.
+        foreach (['max_km', 'lat', 'lng'] as $key) {
+            if (array_key_exists($key, $changes) && ($changes[$key] === '' || $changes[$key] === null)) {
+                $changes[$key] = null;
+            }
+        }
+
+        $mode = $changes['charge_mode'] ?? $r->charge_mode;
+        $max = array_key_exists('max_km', $changes) ? $changes['max_km'] : $r->max_km;
+        $hasPlace = (array_key_exists('lat', $changes) ? $changes['lat'] : $r->lat) !== null && (array_key_exists('lng', $changes) ? $changes['lng'] : $r->lng) !== null;
+
+        if (($mode === 'distance' || $max !== null) && ! $hasPlace) {
+            throw new StockException('Set where the restaurant is first, so the distance can be worked out.');
+        }
+
+        if ($mode === 'distance' && (float) ($changes['per_km'] ?? $r->per_km) <= 0) {
+            throw new StockException('Write what you charge for each kilometre.');
         }
 
         if (array_key_exists('areas', $data)) {

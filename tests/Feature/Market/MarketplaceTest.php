@@ -124,6 +124,21 @@ class MarketplaceTest extends TestCase
         $this->actingAs($this->reviewer)->get('/admin/market')->assertInertia(fn (Assert $p) => $p->where('queue.0.flag', 'fireworks'));
     }
 
+    public function test_the_reviewer_keeps_the_prohibited_list_on_the_market_page(): void
+    {
+        $this->actingAs($this->reviewer)->post('/admin/market/prohibited', ['words' => "Weapon,  fireworks\nweapon\n"])->assertSessionHasNoErrors();
+
+        $this->assertSame('Weapon, fireworks', Setting::read('market.prohibited_words'));
+        $this->get('/admin/market')->assertInertia(fn (Assert $p) => $p->where('prohibited', 'Weapon, fireworks'));
+        $this->assertDatabaseHas('activity_logs', ['action' => 'market.prohibited_saved']);
+
+        $this->actingAs($this->seller)->post('/admin/market/prohibited', ['words' => 'x'])->assertRedirect();
+        $this->assertSame('Weapon, fireworks', Setting::read('market.prohibited_words'));
+
+        $this->actingAs($this->reviewer)->post('/admin/market/prohibited', ['words' => ''])->assertSessionHasNoErrors();
+        $this->assertSame('', Setting::read('market.prohibited_words'));
+    }
+
     // ------------------------------------------------------------------ our side: approval and commission
 
     public function test_we_publish_it_with_our_commission_and_the_seller_is_told(): void

@@ -13,12 +13,14 @@ use App\Models\StockLot;
 use App\Models\StockSource;
 use App\Models\Tier;
 use App\Models\User;
+use App\Services\Messages\Messenger;
 use App\Services\Sales\InvoiceService;
 use App\Services\Sales\ReturnService;
 use App\Services\Stock\StockException;
 use App\Services\Stock\StockService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
+use Inertia\Testing\AssertableInertia;
 use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
 
@@ -355,13 +357,13 @@ class ReturnsTest extends TestCase
         $svc->approve($r2, $this->admin, 'staff');
 
         $shop = Notice::where('user_id', $this->shop->id)->where('kind', 'shop_mistake')->firstOrFail();
-        $this->assertStringContainsString('Ordered by mistake', app(\App\Services\Messages\Messenger::class)->text('shop_mistake', json_decode($shop->body, true), 'en'));
+        $this->assertStringContainsString('Ordered by mistake', app(Messenger::class)->text('shop_mistake', json_decode($shop->body, true), 'en'));
         $this->actingAs($this->shop)->get('/inbox')->assertOk();
 
         // The staff member has no inbox: the warning waits on the counter screen until they say they have read it.
-        $this->actingAs($this->staff)->get('/admin/counter')->assertInertia(fn (\Inertia\Testing\AssertableInertia $p) => $p->has('warnings', 1)->where('warnings.0.memo', $inv2->number));
+        $this->actingAs($this->staff)->get('/admin/counter')->assertInertia(fn (AssertableInertia $p) => $p->has('warnings', 1)->where('warnings.0.memo', $inv2->number));
         $this->post('/admin/counter-warnings/read')->assertRedirect();
-        $this->get('/admin/counter')->assertInertia(fn (\Inertia\Testing\AssertableInertia $p) => $p->has('warnings', 0));
+        $this->get('/admin/counter')->assertInertia(fn (AssertableInertia $p) => $p->has('warnings', 0));
     }
 
     public function test_the_return_policy_and_credit_show_on_the_memo_and_a_reprint_is_counted(): void

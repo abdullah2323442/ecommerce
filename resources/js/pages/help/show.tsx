@@ -114,6 +114,7 @@ export default function HelpShow({ post, comments, canComment }: Props) {
                                     {t('Write a comment, or paste a link to one of our products')}
                                 </label>
                                 <textarea id="help-comment" rows={2} maxLength={600} value={text} onChange={(e) => setText(e.target.value)} className="w-full rounded-lg border border-[var(--pt-line)] bg-[var(--pt-surface)] p-3" />
+                                <InputError message={errors.comment} />
                                 <Button type="submit" disabled={text.trim().length < 2}>
                                     {t('Comment')}
                                 </Button>

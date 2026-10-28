@@ -296,6 +296,10 @@ class PreOrders
             throw new StockException('The discount you paid is between 0 and 100 percent.');
         }
 
+        if ($pre->mpo_taken_at !== null) {
+            throw new StockException('These goods are already in stock.');
+        }
+
         $line = $pre->lines()->firstOrFail();
         $source = StockSource::firstOrCreate(['name' => 'Through MPO'], ['type' => 'mpo', 'default_percent' => 0, 'is_active' => true]);
 
@@ -304,6 +308,7 @@ class PreOrders
             'lines' => [['medicine_id' => $line->medicine_id, 'units' => (float) $line->quantity, 'bonus' => (int) $pre->bonus_free, 'company_percent' => $percentPaid]],
         ], $by);
 
+        $pre->update(['mpo_taken_at' => now()]);
         $this->activity->record('preorder.taken_from_mpo', $pre, ['percent' => $percentPaid], $by);
     }
 
