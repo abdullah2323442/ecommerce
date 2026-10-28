@@ -1,0 +1,9 @@
+from _w import w
+w(471,"Tested live in the browser pane by hand. The owner gave Napa 500 mg a weight (120 g) on the Weights screen, added a second courier (Sundarban Fast, with charges for own area, inside and outside the district) on the Couriers screen, and set the free-delivery limit above the order. A shopper then put one box of Napa in the cart and opened checkout.",
+ ["Checkout shows \"Choose a courier - Weight 0.12 kg\" with both couriers side by side: Sundarban Fast 90 taka and QA Express 94.50 taka, cheapest first",
+  "Choosing Sundarban Fast changed the order: delivery charge 90, total 390",
+  "The weight on the product is what the charge is worked from: the first kilo plus extra kilos, rounded up as the owner's rule says"],
+ [{"file":"f471_1.jpg","caption":"Owner: adding the second courier with its charges","role":"admin","url":"/admin/couriers"},
+  {"file":"f471_2.jpg","caption":"Shopper: both couriers side by side at checkout","role":"guest","url":"/checkout"},
+  {"file":"f471_3.jpg","caption":"Shopper: Sundarban Fast chosen, total 390","role":"guest","url":"/checkout"}],
+ ["Done by hand in the live browser. Set-up done on the owner's own screens: the weight, the second courier, free delivery over 1,000 (it was 300 so the order was free) and the delivery-charge-paid-first limit set to never. Without a weight on every product the flat area charge is used instead, as the screen says. The order itself was not sent."])

@@ -1,18 +1,44 @@
 {
-  "n": 327,
-  "status": "skipped",
-  "error": null,
-  "checks": [],
-  "shots": [
-    {
-      "file": "f327_1.jpg",
-      "caption": "The wholesale screen",
-      "role": "wholesale",
-      "url": "/wholesale"
-    }
-  ],
-  "notes": [
-    "No bulk upload control was found on the wholesale screen."
-  ],
-  "did": "Looked for a bulk order upload."
+ "n": 327,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. Rahim Traders (a wholesale buyer) opened the order page, found \"Order from a list\", and uploaded a small CSV of three lines (Napa 500mg 3 box, Seclo 20mg 2 box, and a made-up name) then pressed \"Add to my order\".",
+ "checks": [
+  {
+   "ok": true,
+   "text": "The wholesale order page has \"Order from a list\": a CSV with name, quantity, unit on each line, with \"Download an example\""
+  },
+  {
+   "ok": true,
+   "text": "The matching line (Seclo 20 mg, 2 boxes) went into the order to read through: \"1 lines added to your order\""
+  },
+  {
+   "ok": true,
+   "text": "Lines that do not match are listed with the reason and never guessed at: \"Line 4 ... We could not find this product\" and, for Napa, \"Several products have this name. Add the strength\""
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser, not by a script. The earlier note that no bulk upload was found was wrong: the control sits lower on the page.",
+  "Small wording point: the Napa line already carried the strength, but several Napa 500 mg products exist, so the message \"Add the strength\" does not tell the buyer what else to add."
+ ],
+ "shots": [
+  {
+   "file": "f327_1.jpg",
+   "caption": "\"Order from a list\" on the wholesale order page",
+   "role": "wholesale",
+   "url": "/wholesale"
+  },
+  {
+   "file": "f327_2.jpg",
+   "caption": "The matching line is in the order",
+   "role": "wholesale",
+   "url": "/wholesale"
+  },
+  {
+   "file": "f327_3.jpg",
+   "caption": "What was added and what was not, with the reasons",
+   "role": "wholesale",
+   "url": "/wholesale"
+  }
+ ]
 }

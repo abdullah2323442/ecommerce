@@ -1,11 +1,61 @@
 {
-  "n": 610,
-  "status": "notbuilt",
-  "error": null,
-  "checks": [],
-  "shots": [],
-  "notes": [
-    "A credit ledger (baki khata) has not been built yet."
-  ],
-  "did": "Checked the checklist."
+ "n": 610,
+ "status": "pass",
+ "error": null,
+ "did": "Built and tested live in the browser pane by hand. A shop (Karim Pharmacy) bought 612 taka of goods at the counter and paid 200 now; the memo was finished with the rest due. An older memo of 1,000 taka left on credit 45 days ago was added to the test data by a command. The owner then opened the new Credit ledger, Karim's account, and took a payment of 1,100 taka by bKash.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "The Credit ledger lists each customer who owes us, biggest first, with the total in large type (1,712 taka) and a count of customers who are late; Karim shows a Late mark with the text (45 days) and not only a colour"
+  },
+  {
+   "ok": true,
+   "text": "Memos left Due with no customer on them cannot be chased by name, so they are counted in a note instead (141,087 taka on 105 old test memos) with a link to All orders"
+  },
+  {
+   "ok": true,
+   "text": "Karim's account shows what he owes (1,412), a Take payment panel with the amount, an All-of-it shortcut, the way paid (cash, bKash, Nagad, Rocket, bank, card) and a note"
+  },
+  {
+   "ok": true,
+   "text": "A payment of 1,100 went to the oldest memo first: the 45-day-old memo was cleared and the newer one shows total 612, paid 300 (200 + 100), 312 still owed"
+  },
+  {
+   "ok": true,
+   "text": "Payments received lists each part with its memo, the way paid, who took it and the note; the customer's page in Customers now says Owes us 312 with a link to the account"
+  },
+  {
+   "ok": true,
+   "text": "A payment bigger than what is owed, a zero amount and an unknown way are all refused (automatic tests); it also works at 320 px wide and in dark mode, with no sideways scroll"
+  }
+ ],
+ "notes": [
+  "Built this round from the spec (chapter 28, note 12: the ledger is built separately and connected to the memo's Paid/Due mark). New tables invoice_payments and supplier_payments; services Receivables and Payables; the old Take payment on All orders now goes through the same service. The old memo was made by a command to show Late and the oldest-first rule. Not built: reminders to customers, interest, credit limits, and a customer's own view of what they owe. 20 new automatic tests."
+ ],
+ "shots": [
+  {
+   "file": "f610_1.jpg",
+   "caption": "The ledger: total, who is late, memos without a customer, the list",
+   "role": "admin",
+   "url": "/admin/ledger"
+  },
+  {
+   "file": "f610_2.jpg",
+   "caption": "A customer's account with the payment panel",
+   "role": "admin",
+   "url": "/admin/ledger/4"
+  },
+  {
+   "file": "f610_3.jpg",
+   "caption": "After 1,100 taka: oldest memo cleared first, 312 left, payments listed",
+   "role": "admin",
+   "url": "/admin/ledger/4"
+  },
+  {
+   "file": "f610_4.jpg",
+   "caption": "The customer page says what they owe",
+   "role": "admin",
+   "url": "/admin/customers/4"
+  }
+ ]
 }

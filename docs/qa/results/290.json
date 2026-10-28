@@ -1,18 +1,33 @@
 {
-  "n": 290,
-  "status": "skipped",
-  "error": null,
-  "checks": [],
-  "shots": [
-    {
-      "file": "f290_1.jpg",
-      "caption": "A product page",
-      "role": "guest",
-      "url": "/market/78"
-    }
-  ],
-  "notes": [
-    "Needs one product with several sellers, which the test data does not have."
-  ],
-  "did": "Looked for sellers ordered by price, charge and rating together."
+ "n": 290,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. A second electronics seller (Dhaka Gadget House) was opened by the owner and sent a matte silicone phone case. The owner made one catalogue product for it. Both sellers (Rahim Traders and Dhaka Gadget House) linked their listings to that catalogue product, and the owner read and published both again.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "The list is ordered by price + delivery + the seller's record, not by price alone: Rahim Traders (1,224 + 80, Excellent) is the \"Best choice\" above the cheaper new seller (1,173 + 70, New)"
+  },
+  {
+   "ok": true,
+   "text": "The page explains it: \"The best choice counts the price, the delivery charge and how the seller has done, not the lowest price alone.\""
+  }
+ ],
+ "notes": [
+  "Changing the catalogue product sends a published listing back to the owner to be read again (spec ch 13), so both listings waited until the owner published them. Done by hand in the live browser, not by a script."
+ ],
+ "shots": [
+  {
+   "file": "f289_2.jpg",
+   "caption": "Rahim Traders linked its listing to the catalogue product (the seller's screen)",
+   "role": "wholesale",
+   "url": "/wholesale/sell"
+  },
+  {
+   "file": "f289_1.jpg",
+   "caption": "One product page now shows the same product from 2 sellers, with price, delivery and record",
+   "role": "admin",
+   "url": "/market/79"
+  }
+ ]
 }

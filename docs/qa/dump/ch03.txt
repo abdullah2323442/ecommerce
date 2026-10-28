@@ -1,0 +1,85 @@
+# CHAPTER 3: Visibility
+
+## 36 | Wholesale section invisible to paikari | pass
+FOR: Paikari shop owners can never see the wholesale section, and wholesalers cannot see the paikari one.
+DID: Signed in as a paikari shop and tried to open the wholesale screen. Then signed in as a wholesaler and tried to open the paikari screen.
+  ok: A paikari shop cannot open /wholesale (they were sent to /)
+  ok: A paikari shop gets no scary error page, just a quiet redirect
+  ok: A wholesaler cannot open /paikari (they were sent to /)
+  ok: A wholesaler gets no scary error page, just a quiet redirect
+  SHOT f36_1.jpg | A paikari shop on its own ordering screen | paikari
+  SHOT f36_2.jpg | After typing the wholesale address, the paikari shop is sent back | paikari
+  SHOT f36_3.jpg | A wholesaler on the wholesale screen | wholesale
+  SHOT f36_4.jpg | After typing the paikari address, the wholesaler is sent back | wholesale
+
+## 37 | Category-based access | pass
+FOR: A wholesale buyer only sees the product categories the owner has opened up for them.
+DID: As the owner, took the "Medicine" category away from the wholesaler Rahim Traders. Then signed in as Rahim to see if the medicine ordering list was still there. Finally gave the category back.
+  ok: With the Medicine category removed, the list of medicine companies is gone
+  ok: Giving the category back brings the medicine list back
+  SHOT f37_1.jpg | The owner's "Categories they can see" for Rahim Traders | admin
+  SHOT f37_2.jpg | Rahim's screen without the Medicine category | wholesale
+  SHOT f37_3.jpg | The category is given back and the list returns | wholesale
+
+## 38 | Deep links | pass
+FOR: A link to a product opens correctly for people allowed to see it, and quietly redirects everyone else.
+DID: As a stranger, opened a direct link to a public product, then a direct link to a restricted page.
+  ok: A direct link to a public product opens straight to it
+  ok: A stranger cannot open /wholesale (they were sent to /login)
+  ok: A stranger gets no scary error page, just a quiet redirect
+  SHOT f38_1.jpg | A direct product link works for everyone allowed to see it | guest
+  SHOT f38_2.jpg | A direct link to a restricted page quietly goes elsewhere | guest
+
+## 39 | No permission → quietly to home | pass
+FOR: If someone opens a page they have no permission for, they are quietly sent home with no scary error.
+DID: As an ordinary shopper, typed the addresses of three restricted pages.
+  ok: A shopper cannot open /wholesale (they were sent to /)
+  ok: A shopper gets no scary error page, just a quiet redirect
+  ok: A shopper cannot open /paikari (they were sent to /)
+  ok: A shopper gets no scary error page, just a quiet redirect
+  ok: A shopper cannot open /admin/stock (they were sent to /)
+  ok: A shopper gets no scary error page, just a quiet redirect
+  SHOT f39_1.jpg | Where the shopper ends up: back on an ordinary page, with no error message | visitor
+
+## 40 | Seller identity hidden | pass
+FOR: Shoppers do not see who the seller is when the seller wants to stay private.
+DID: As a stranger, looked at who the seller of a product is, with the seller's own name switched off and then on.
+  ok: Switching changes who the shopper sees as the seller (off: "Siam's AquaTrusted seller", on: "Rahim TradersTrusted seller")
+  ok: With the switch off, the real seller's name is not shown (it showed "Siam's AquaTrusted seller")
+  NOTE: With the switch off the page said "Sold by Siam's AquaTrusted seller". With it on it said "Sold by Rahim TradersTrusted seller".
+  SHOT f40_1.jpg | The product page with the seller's own name switched off | guest
+  SHOT f40_2.jpg | The product page with the seller's own name switched on | guest
+
+## 41 | Name display toggle | pass
+FOR: The owner can switch seller names on or off on the public product pages.
+DID: Opened the owner's Market page and found the switch beside each product: "Show this seller's own name instead of ours".
+  ok: Each product has a switch for showing the seller's own name
+  SHOT f41_1.jpg | The switch on each product in the owner's Market page | admin
+
+## 42 | Staff don't see sales and profit | pass
+FOR: Counter staff can sell, but cannot see how much profit the shop makes or how much stock costs.
+DID: Signed in as counter staff and tried to open the reports and the stock-value pages, and looked at the counter for profit figures.
+  ok: The counter shows no profit figures
+  ok: Staff cannot open /admin/reports
+  ok: Staff cannot open /admin/stock/reports
+  ok: Staff cannot see what stock cost the shop
+  SHOT f42_1.jpg | The counter, as staff see it | staff
+  SHOT f42_2.jpg | Reports are closed to staff | staff
+  SHOT f42_3.jpg | The stock page, as staff see it | staff
+
+## 43 | Staff see loss warnings | pass
+FOR: Staff are warned when a sale would lose money, so they do not make a mistake by accident.
+DID: The owner raised the discount staff may give from 5% to 50%. Then, as a staff member, a retail sale was started with a Special % of 40 on a box of Napa that cost 240 and is printed at 300.
+  ok: Staff are warned that the sale would lose money
+  SHOT f43_1.jpg | A box at 40% below the printed price, which is below cost | staff
+
+## 44 | Craftsmen don't see price and profit | pass
+FOR: Craftsmen see the job, not the price or profit of the order.
+DID: Signed in as the craftsman and looked at the list of jobs and at one job for any price or profit.
+  ok: The craftsman sees the jobs given to them
+  ok: And what they earned
+  ok: No buyer price and no profit appear on the list
+  ok: No buyer price and no profit appear on the job either
+  ok: Only their own wage is shown
+  SHOT f44_1.jpg | The craftsman's jobs | craftsman
+  SHOT f44_2.jpg | One job: measurements, photos, progress and their own wage | craftsman

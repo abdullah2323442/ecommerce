@@ -1,18 +1,37 @@
 {
-  "n": 507,
-  "status": "skipped",
-  "error": null,
-  "checks": [],
-  "shots": [
-    {
-      "file": "f507_1.jpg",
-      "caption": "Pre-orders",
-      "role": "admin",
-      "url": "/admin/preorders"
-    }
-  ],
-  "notes": [
-    "A decline with a reason was not carried through, so the shop's sorry note was not seen. Acceptance was seen (see feature 505)."
-  ],
-  "did": "Looked at the Decline button and its reason box on the owner's Pre-orders page."
+ "n": 507,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. A shop had an accepted pre-order for a box of Seclo that was waiting for the goods. The owner opened the pre-orders page, wrote why it did not come, and pressed \"Did not come, cancel\". The shop opened its pre-orders page.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "The owner's card has a reason box (\"Why it did not come, the buyer will read it\") and the button \"Did not come, cancel\""
+  },
+  {
+   "ok": true,
+   "text": "The shop gets a sorry note at the top of its pre-orders: \"Sorry, your pre-order for Seclo 20 mg could not be supplied: The company has not sent it this month.\""
+  },
+  {
+   "ok": true,
+   "text": "The pre-order turns to Cancelled in the shop's list, so nothing hangs"
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser, not by a script."
+ ],
+ "shots": [
+  {
+   "file": "f507_1.jpg",
+   "caption": "The owner: the reason and \"Did not come, cancel\"",
+   "role": "admin",
+   "url": "/admin/preorders"
+  },
+  {
+   "file": "f507_2.jpg",
+   "caption": "The shop sees the sorry note and the pre-order Cancelled",
+   "role": "paikari",
+   "url": "/preorders"
+  }
+ ]
 }

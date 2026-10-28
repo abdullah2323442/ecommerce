@@ -1,0 +1,147 @@
+# CHAPTER 7: Counter Sale
+
+## 171 | Three sections (retail/paikari/wholesale) | pass
+FOR: The counter has three sections: retail, paikari and wholesale.
+DID: Started a retail sale, a sale to a paikari shop, and a sale to a wholesaler, and looked at how each is labelled.
+  ok: A walk-in sale is a Retail sale
+  ok: A sale to Karim Pharmacy is in the paikari section
+  ok: A sale to Rahim Traders is in the wholesale section
+  SHOT f171_1.jpg | Section one: Retail | admin
+  SHOT f171_2.jpg | Section two: a paikari shop | admin
+  SHOT f171_3.jpg | Section three: a wholesaler | admin
+
+## 172 | Rate priority (medicine → invoice → tier) | pass
+FOR: Rates are picked in order: the medicine's rate, then the invoice's, then the tier's.
+DID: Sold a box of Napa to Karim Pharmacy with and without a hand-set price, to see which rate the counter uses first.
+  ok: The hand-set price for this shop (246) is used first
+  ok: With no hand-set price the tier rate is used (255)
+  SHOT f172_1.jpg | With a hand-set rate of 18%, the counter offers the box at 246 | admin
+  SHOT f172_2.jpg | Without it, the shop's tier rate (255) is used | admin
+
+## 173 | Search and select customer | pass
+FOR: Staff search for a customer and select them.
+DID: Typed part of a shop's name in the customer box and chose the shop from the suggestions.
+  ok: The shop appears as the owner types, to be chosen
+  SHOT f173_1.jpg | Suggestions as the owner types | admin
+
+## 174 | Sale added to e-commerce profile | pass
+FOR: A counter sale also appears on the customer's own online profile.
+DID: Sold a box to Karim Pharmacy at the counter, then opened the shop's profile.
+  ok: The counter sale is on the shop's profile under All transactions
+  SHOT f174_1.jpg | The counter sale is finished | admin
+  SHOT f174_2.jpg | The shop's profile lists its transactions | admin
+
+## 175 | Shop owner doesn't see their own total | pass
+FOR: A shop owner does not see their own purchase total at the counter.
+DID: Looked at the shop's own pages for its monthly total when the owner has not switched it on.
+  ok: The shop does not see its own monthly total unless the owner switches it on
+  SHOT f175_1.jpg | The shop's page, with the monthly total switched off | paikari
+
+## 176 | Quick profile creation at the counter | pass
+FOR: A new customer can be created quickly at the counter.
+DID: Opened "A new shop with no profile? Add it now" at the counter and added a shop.
+  ok: A shop can be added at the counter with its name and phone
+  NOTE: The quick form has 3 boxes.
+  SHOT f176_1.jpg | The quick form for a new shop | admin
+
+## 177 | Area and phone shown in search | pass
+FOR: Area and phone are shown in the customer search to tell people apart.
+DID: Looked at what shows beside each shop in the counter search.
+  ok: The phone number shows beside the shop's name
+  SHOT f177_1.jpg | Suggestions show the shop's phone number | admin
+
+## 178 | "Active order exists" shown | pass
+FOR: The search shows if the customer already has an active order.
+DID: Looked for an "active order exists" note when choosing a shop that has an online order open.
+  ok: The counter says "An order is already open for this customer"
+  SHOT f178_1.jpg | Choosing a shop that already has an order open | admin
+
+## 179 | Retail: MRP + end discount | pass
+FOR: Retail sells at the printed price, with a discount taken off the total at the end.
+DID: Sold a retail box with an end discount of 4% (inside the staff limit).
+  ok: A retail sale is the printed price with a discount taken off the total
+  SHOT f179_1.jpg | Retail: printed price 300, end discount 4%, total 288 | admin
+
+## 180 | Specially discounted items excluded from end discount | pass
+FOR: Items already specially discounted are left out of the end discount.
+DID: Gave one item a special discount, then added an end discount, and looked at the total.
+  ok: The end discount is not applied on top of an item that already has a special discount (total 285, not 273)
+  SHOT f180_1.jpg | An item with its own special discount, plus an end discount | admin
+
+## 181 | Offers at the counter too (not retail) | pass
+FOR: Offers can also be used at the counter, but not for retail customers.
+DID: Started a sale to a shop and searched for Napa 500 mg, then started a retail sale and searched again.
+  ok: The sale to a shop shows the offer
+  ok: A retail sale does not show the offer
+  SHOT f181_1.jpg | Sale to a shop: the offer card appears in the search | admin
+  SHOT f181_2.jpg | Retail sale: no offer in the search | admin
+
+## 182 | Normal and offer both shown in search | pass
+FOR: Both the normal price and the offer price show in the search.
+DID: In a sale to a shop, searched for Napa 500 mg (Square) and read the normal price and the offer.
+  ok: The normal box rate is shown
+  ok: And the offer, with its price and minimum
+  ok: The offer shows how many boxes are left
+  SHOT f182_1.jpg | The normal rate and the offer, side by side | admin
+
+## 183 | Counter offer goes into the customer's profile offer section | pass
+FOR: A counter offer goes into the customer's offer section.
+DID: Opened the shop profile after selling it offer boxes at the counter.
+  ok: The shop profile has an offers section
+  ok: It lists the offer boxes sold at the counter with the offer price
+  ok: With the memo number
+  SHOT f183_1.jpg | The shop profile: Offers taken | admin
+
+## 184 | Two rates in one invoice | pass
+FOR: One invoice can carry two kinds of rate.
+DID: In a sale to a shop, added one strip of Napa at its normal rate first, and then 3 boxes through the offer.
+  ok: The offer line is marked OFFER
+  ok: The ordinary line keeps its own rate (a strip at 82.50)
+  ok: The offer line is priced at 3 boxes at 247.50 (742.50)
+  SHOT f184_1.jpg | One draft with two kinds of rate | admin
+
+## 185 | Invoice order: offer section first, regular next, combined total | pass
+FOR: On the invoice, the offer section comes first, then regular items, then one combined total.
+DID: Looked at the order of the lines in the draft where the ordinary strip was added first and the offer after it.
+  ok: The offer lines come first, the ordinary lines after, and one total at the bottom
+  ok: One combined total
+  SHOT f185_1.jpg | Order of the lines | admin
+
+## 186 | Warning on similar names, strength in bold | pass
+FOR: Medicines with similar names trigger a warning, with the strength shown in bold.
+DID: Searched for "napa" and looked at how similar medicine names are told apart.
+  ok: Several Napa medicines are listed with their strength and company (12 shown)
+  SHOT f186_1.jpg | Similar names listed with their strength and company | admin
+
+## 187 | Keyboard shortcuts | pass
+FOR: Keyboard shortcuts make the counter fast for busy staff.
+DID: Used the keyboard only: pressed "/" to reach the search, typed, moved down with the arrow key and pressed Enter.
+  ok: The keyboard shortcuts add a medicine without touching the mouse
+  SHOT f187_1.jpg | A medicine added with the keyboard alone | admin
+
+## 188 | Most-used medicines in one click | pass
+FOR: The most-used medicines are one click away.
+DID: Pressed the "Most sold" button on a new sale.
+  ok: The counter lists the most-sold medicines
+  ok: One click adds the medicine to the sale
+  SHOT f188_1.jpg | "Most sold" shows the favourite medicines | admin
+  SHOT f188_2.jpg | One click puts it on the sale | admin
+
+## 189 | Simple screen for staff | pass
+FOR: Staff get a simple, cut-down counter screen.
+DID: As staff, pressed "Simple screen" on a draft.
+  ok: A simpler screen is available
+  SHOT f189_1.jpg | The simple screen for staff | staff
+
+## 190 | Offline counter — sell without internet, sync later | skipped
+FOR: The counter keeps working when the internet drops. Sales sync later.
+DID: Opened the "Counter without internet" page.
+  ok: There is a counter that keeps working without internet
+  NOTE: Actually disconnecting the internet and selling was not done here.
+  SHOT f190_1.jpg | The offline counter | admin
+
+## 191 | Temporary memo numbers offline, conflict alert on sync | skipped
+FOR: Sales made offline get temporary memo numbers. Any clash shows an alert when syncing.
+DID: Looked at the offline counter for temporary memo numbers.
+  NOTE: Temporary memo numbers and the clash alert when syncing need a real offline period, which was not reproduced.
+  SHOT f191_1.jpg | The offline counter | admin

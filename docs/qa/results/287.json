@@ -1,18 +1,49 @@
 {
-  "n": 287,
-  "status": "skipped",
-  "error": null,
-  "checks": [],
-  "shots": [
-    {
-      "file": "f287_1.jpg",
-      "caption": "The owner's Market page",
-      "role": "admin",
-      "url": "/admin/market"
-    }
-  ],
-  "notes": [
-    "Changing a price and watching an item move in or out of Premium was not carried through."
-  ],
-  "did": "Looked for items moving in and out of premium when their price changes."
+ "n": 287,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. The owner set \"Premium from\" 5,000 taka on the Wood sector. A buyer opened the Premium stall and found the seller's teak table (6,630 with commission). The seller then lowered its price to 4,000 and saved; the buyer looked at the Premium stall and the normal stall. The seller then put the price back to 6,500.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "With the threshold at 5,000 the teak table at 6,630 is in the Premium stall and carries the word \"Premium\" (the stall had 8 products)"
+  },
+  {
+   "ok": true,
+   "text": "After the price was lowered to 4,000 (4,080 for buyers) it left the Premium stall (now 7 products) and sits in the normal stall without the Premium label"
+  },
+  {
+   "ok": true,
+   "text": "After the price was put back to 6,500 it returned to the Premium stall (8 products again): items move in and out by themselves when the price changes"
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser, not by a script. The Premium threshold had been empty on every sector in this copy, so the Premium stall was empty until the owner set it. The price was put back to 6,500 afterwards."
+ ],
+ "shots": [
+  {
+   "file": "f287_0.jpg",
+   "caption": "The owner sets \"Premium from\" for the Wood sector",
+   "role": "admin",
+   "url": "/admin/market"
+  },
+  {
+   "file": "f287_1.jpg",
+   "caption": "In the Premium stall at 6,630",
+   "role": "paikari",
+   "url": "/market?premium=1"
+  },
+  {
+   "file": "f287_2.jpg",
+   "caption": "After the price drop it is in the normal stall",
+   "role": "paikari",
+   "url": "/market?stall=normal&q=teak"
+  },
+  {
+   "file": "f287_3.jpg",
+   "caption": "After the price rises again it is back in Premium",
+   "role": "paikari",
+   "url": "/market?premium=1"
+  }
+ ]
 }

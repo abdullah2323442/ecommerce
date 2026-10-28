@@ -1,18 +1,50 @@
 {
-  "n": 376,
-  "status": "skipped",
-  "error": null,
-  "checks": [],
-  "shots": [
-    {
-      "file": "f376_1.jpg",
-      "caption": "The owner's Market page",
-      "role": "admin",
-      "url": "/admin/market"
-    }
-  ],
-  "notes": [
-    "No prohibited-category list was found on the owner's screens."
-  ],
-  "did": "Looked for a prohibited-category list."
+ "n": 376,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. The owner opened the Market page and wrote a list of words that are not allowed (fireworks, weapon, counterfeit) and saved it. Rahim Traders then sent a listing with the word \"fireworks\" in its description. The owner looked at the waiting list, turned it down with a reason, and Rahim looked at his listings.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "The owner keeps the list on the Market page (\"Words we do not allow\") and it saves (\"The list is saved.\")"
+  },
+  {
+   "ok": true,
+   "text": "A waiting listing that holds a listed word is marked \"Contains \\\"fireworks\\\"\" so the owner sees it at once; nothing is turned down by itself"
+  },
+  {
+   "ok": true,
+   "text": "When the owner turns it down with a reason, the seller sees \"Not published\" with the reason: \"Fireworks cannot be sold here.\""
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser, not by a script.",
+  "A gap was found and closed here: the marking of listed words worked, but the owner had no screen to write the list. The section \"Words we do not allow\" was added to the Market page (saved, logged, and covered by a new automatic test)."
+ ],
+ "shots": [
+  {
+   "file": "f376_1.jpg",
+   "caption": "The owner writes the words that are not allowed",
+   "role": "admin",
+   "url": "/admin/market"
+  },
+  {
+   "file": "f376_2.jpg",
+   "caption": "\"The list is saved.\"",
+   "role": "admin",
+   "url": "/admin/market"
+  },
+  {
+   "file": "f376_3.jpg",
+   "caption": "A listing with the word \"fireworks\" is marked for the owner",
+   "role": "admin",
+   "url": "/admin/market"
+  },
+  {
+   "file": "f376_4.jpg",
+   "caption": "The seller sees it was not published, and why",
+   "role": "wholesale",
+   "url": "/wholesale/sell"
+  }
+ ]
 }

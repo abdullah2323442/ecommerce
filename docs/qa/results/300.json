@@ -1,18 +1,33 @@
 {
-  "n": 300,
-  "status": "skipped",
-  "error": null,
-  "checks": [],
-  "shots": [
-    {
-      "file": "f300_1.jpg",
-      "caption": "A medicine page",
-      "role": "guest",
-      "url": "/medicines/1"
-    }
-  ],
-  "notes": [
-    "The \"bought together\" row is built into the medicine page, but it shows only after at least five memos carry both medicines. The test data does not have that many, so the row stayed hidden (it did not appear)."
-  ],
-  "did": "Opened a medicine page and looked for \"bought together\"."
+ "n": 300,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. There were no memos that held both Napa 500 mg and Seclo 20 mg. At the counter five retail sales (memos M2026-000036 to M2026-000040) were made, each with one box of Napa and Seclo. A shopper then opened the Napa page.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "The Napa page shows \"People who bought this also took\" with Seclo 20 mg (picture, form, price 720.00 a box)"
+  },
+  {
+   "ok": true,
+   "text": "The row only appears when enough different memos agree (5 by default), so one buyer's basket is never shown; before the five memos there was no row"
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser, not by a script. The five sales were made quickly by pressing the buttons on the counter page. The \"at least 5 memos\" rule is a setting with no screen of its own."
+ ],
+ "shots": [
+  {
+   "file": "f300_2.jpg",
+   "caption": "One of the five counter sales with both medicines",
+   "role": "admin",
+   "url": "/admin/counter/323"
+  },
+  {
+   "file": "f300_1.jpg",
+   "caption": "The Napa page: People who bought this also took Seclo 20 mg",
+   "role": "paikari",
+   "url": "/medicines/1"
+  }
+ ]
 }

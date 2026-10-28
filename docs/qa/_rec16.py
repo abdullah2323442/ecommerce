@@ -1,0 +1,8 @@
+from _w import w
+w(377,"Tested live in the browser pane by hand. A buyer had asked for a wood job to be put right (\"One drawer sticks and the top has a scratch\"). The owner opened Made to order, wrote what was found, set a refund of 1,500 taka and pressed Refund. The buyer then opened the job.",
+ ["The made-to-order page tells the buyer first: \"Returns do not apply to made-to-order work\"; a problem is raised with Work not done right on the job",
+  "The owner's Made to order screen lists it under Work not done right with two answers: We will fix it, or Refund (a note the buyer is told, and an amount)",
+  "After Refund the job shows \"We have refunded part of the price\" with the owner's note, and the record keeps 1,500 taka refunded"],
+ [{"file":"f377_1.jpg","caption":"Owner: the complaint with We will fix it or Refund","role":"admin","url":"/admin/custom"},
+  {"file":"f377_2.jpg","caption":"Buyer: the answer on the job","role":"buyer","url":"/custom/..."}],
+ ["Done by hand in the live browser. This does not go through the shop's Returns screen: made-to-order work has its own Work not done right path in its own section, because the rule is that returns do not apply to made-to-order work. So the checklist line (\"through the same Return section\") is not what is built, and this stays partly shown. The buyer's note does not say how much was refunded."],"skipped")

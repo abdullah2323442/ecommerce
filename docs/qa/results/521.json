@@ -1,18 +1,37 @@
 {
-  "n": 521,
-  "status": "skipped",
-  "error": null,
-  "checks": [],
-  "shots": [
-    {
-      "file": "f521_1.jpg",
-      "caption": "The ordering screen",
-      "role": "paikari",
-      "url": "/paikari"
-    }
-  ],
-  "notes": [
-    "Not carried through."
-  ],
-  "did": "Looked at the order page for the time and photo with orders."
+ "n": 521,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. A shopper put Napa in the cart, opened checkout, set Needed by (time) to 18:30 and added a photo (a picture of the strip), then sent the order. The buyer's order page and the owner's order screen were opened.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "Checkout has Needed by (time), a voice note and a Photo box; the order was accepted with the time and photo"
+  },
+  {
+   "ok": true,
+   "text": "The buyer's order page shows \"Needed by 18:30 - Photo sent\""
+  },
+  {
+   "ok": true,
+   "text": "The owner's order screen shows \"Needed by 18:30\" at the top and the photo itself, so staff see both before packing"
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser. The photo was made on the page (a plain picture with words) instead of picked from a phone, and the voice note was not recorded."
+ ],
+ "shots": [
+  {
+   "file": "f521_1.jpg",
+   "caption": "Owner: the needed-by time and the photo on the order",
+   "role": "admin",
+   "url": "/admin/orders/334"
+  },
+  {
+   "file": "f521_2.jpg",
+   "caption": "Buyer: the order that was sent",
+   "role": "buyer",
+   "url": "/orders/..."
+  }
+ ]
 }

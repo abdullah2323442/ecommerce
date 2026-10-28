@@ -1,27 +1,50 @@
 {
-  "n": 234,
-  "status": "skipped",
-  "error": null,
-  "checks": [
-    {
-      "ok": true,
-      "text": "The wholesaler sees their own offer and that it is waiting"
-    },
-    {
-      "ok": true,
-      "text": "No other bidder appears anywhere"
-    }
-  ],
-  "shots": [
-    {
-      "file": "f234_1.jpg",
-      "caption": "The wholesaler sees only their own offer",
-      "role": "wholesale",
-      "url": "/wholesale"
-    }
-  ],
-  "notes": [
-    "Only one wholesaler account exists in this copy, so a second bidder could not be set up to prove that bids are hidden from each other. The screen shows only the wholesaler's own offer."
-  ],
-  "did": "Looked at the offer again after sending the bid, and read what the wholesaler sees about it."
+ "n": 234,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. Two MPOs (Anwar in Uttara, Kabir in Mirpur) each had Napa 500 mg on the market, Anwar's with a 10+2 bonus. Wholesale buyer Rahim Traders searched Napa and bid 15% on one and 18% on the other. A second wholesale account then searched and bid 10%. Kabir looked at his bids and accepted the 15% one. The owner looked at the offers.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "The second wholesaler, searching the same medicine, sees the two offers with no sign of Rahim's offers"
+  },
+  {
+   "ok": true,
+   "text": "Each wholesaler sees only their own offer: \"Your offer: 10% off, 1 boxes. Waiting.\" on the second account, and Rahim's own 15% and 18% on his"
+  },
+  {
+   "ok": true,
+   "text": "The MPO sees the bids without names and accepts one; the owner alone sees which shop offered how much"
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser, not by a script.",
+  "Fault found and fixed here: after a wholesaler sent or withdrew an offer, the search result on the order page was not read again, so the row did not say \"Your offer: ... Waiting\" and had no Withdraw button until the page was reloaded. The row now updates at once."
+ ],
+ "shots": [
+  {
+   "file": "f234_1.jpg",
+   "caption": "A second wholesaler sees the offers, with no one else's bid",
+   "role": "wholesale 2",
+   "url": "/wholesale"
+  },
+  {
+   "file": "f234_2.jpg",
+   "caption": "After bidding, this account sees only its own 10%",
+   "role": "wholesale 2",
+   "url": "/wholesale"
+  },
+  {
+   "file": "f234_3.jpg",
+   "caption": "Rahim sees only his own 15% and 18%",
+   "role": "wholesale",
+   "url": "/wholesale"
+  },
+  {
+   "file": "f234_4.jpg",
+   "caption": "The owner sees the real name next to the offer",
+   "role": "admin",
+   "url": "/admin/mpo/listings"
+  }
+ ]
 }

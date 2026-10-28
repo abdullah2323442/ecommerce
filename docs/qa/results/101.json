@@ -1,18 +1,43 @@
 {
-  "n": 101,
-  "status": "skipped",
-  "error": null,
-  "checks": [],
-  "shots": [
-    {
-      "file": "f101_1.jpg",
-      "caption": "Purchase line",
-      "role": "admin",
-      "url": "/admin/stock/receive"
-    }
-  ],
-  "notes": [
-    "No unit-change warning was found on the purchase line."
-  ],
-  "did": "Looked for a warning when the unit of a purchase differs from the medicine's usual unit."
+ "n": 101,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. On the owner's \"Pack size and prices\" page for Napa 500 mg, the number of strips in a box was changed from 3 to 4 and saved. The warning was read, the change was confirmed, and the history on the page was read. Then the pack size was changed back to 3.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "Pressing Save on a changed pack size does not save it: the page says \"This will change old calculations. Confirm to go on. Stock already counted in the old pack size, and old memos, will not be changed. Everything from now on uses the new size.\" and shows the box \"I understand. Change it.\""
+  },
+  {
+   "ok": true,
+   "text": "After ticking the box and saving, the new size is kept (4 strips)"
+  },
+  {
+   "ok": true,
+   "text": "\"Who changed it\" lists \"Pack size changed, Siam (Admin), 22 Oct 2026\", so who and when are recorded"
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser, not by a script. The warning is on the medicine's pack-size page (where units are changed), not on the purchase line, which is where the earlier test looked. The size was put back to 3 afterwards."
+ ],
+ "shots": [
+  {
+   "file": "f101_1.jpg",
+   "caption": "A changed pack size is not saved until it is confirmed",
+   "role": "admin",
+   "url": "/admin/stock/medicines/1/edit"
+  },
+  {
+   "file": "f101_2.jpg",
+   "caption": "The full warning and the \"I understand. Change it.\" box",
+   "role": "admin",
+   "url": "/admin/stock/medicines/1/edit"
+  },
+  {
+   "file": "f101_3.jpg",
+   "caption": "The history: Pack size changed, by whom, when",
+   "role": "admin",
+   "url": "/admin/stock/medicines/1/edit"
+  }
+ ]
 }

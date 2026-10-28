@@ -1,11 +1,257 @@
 {
-  "n": 612,
-  "status": "notbuilt",
-  "error": null,
-  "checks": [],
-  "shots": [],
-  "notes": [
-    "A full PharmaTrack sync has not been built yet."
-  ],
-  "did": "Checked the checklist."
+ "n": 612,
+ "status": "pass",
+ "error": null,
+ "did": "Built and tested this round, with both real programs running side by side on this computer and driven by hand in the browser: this site, and the real PharmaTrack project (the folder pharmacy-stock-management-main, on a throw-away copy of its database). PharmaTrack was given what it lacked: a stock ledger, counter sales, stock counts and the link itself. The pictures below are the whole run in order, 30 steps, each taken from the owner's Chrome: joining the programs, a count, a counter sale, goods given back, goods received, a correction on the site, an online order, the site switched off and on again, the short list, and a stock difference found and put right.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "Joining: on this site the PharmaTrack card got an address and a key; on PharmaTrack the sync screen's Test button answered 'the e-commerce site answered and accepted the key'; Match medicines linked Seclo and Tuska by name, strength and company, and REFUSED to link Napa 500 mg because a box holds 30 or 510 pieces on the site and 40 in PharmaTrack (it would have been a wrong quantity)"
+  },
+  {
+   "ok": true,
+   "text": "Master Stock Sync was switched on in PharmaTrack; a stock count of 31 boxes of Seclo (12 strips of 10) was saved there and matched the site's 31"
+  },
+  {
+   "ok": true,
+   "text": "A shop sale made on PharmaTrack's counter screen (2 strips of Seclo, 120 taka) took 20 pieces off the site's stock too: 31 boxes became 30.8333 (20 of 120 pieces)"
+  },
+  {
+   "ok": true,
+   "text": "A correction made on this site's stock screen (30 boxes, broken) reached PharmaTrack as a movement of the other program; a finished online order of 1 box took 120 pieces off PharmaTrack's shelf with the price converted to a price per piece"
+  },
+  {
+   "ok": true,
+   "text": "A deliberately lost message was caught: Compare stock listed Seclo as 3575 here and 3600 on the site, with the difference, and said to count the side that is right; with nothing wrong it said both shelves agree"
+  },
+  {
+   "ok": true,
+   "text": "Run again in the owner's own Chrome with both programs open in two tabs (count, counter sale, goods given back, goods received, a correction on the site, the site switched off then on, a medicine marked Not available): every change reached the other side, once; with the site down a sale still completed, was shown as failed with the reason, and the scheduler sent it by itself on its second try (about two minutes later)"
+  },
+  {
+   "ok": true,
+   "text": "Found by that run and fixed: a restored or reset PharmaTrack database starts its sale numbers again, and the site silently dropped the repeated reference as 'already applied' (a sale was lost without any sign); references now carry the time, and a 'duplicate' answer is written on the message so it can never pass unseen"
+  },
+  {
+   "ok": true,
+   "text": "Found by that run and added: when Compare stock shows a difference there are now two buttons per medicine, 'this shelf is right: set the site to it' and 'the site is right: set this shelf to it', each tried live and each leaving the two shelves equal"
+  },
+  {
+   "ok": true,
+   "text": "A medicine marked Not available on the site appeared on PharmaTrack's own short-list page (with its notification), and the API answered 401 without or with a wrong key, 422 for a bad message, 'duplicate' for a repeated reference and 'unknown' for a name it cannot place"
+  },
+  {
+   "ok": true,
+   "text": "Found by doing it and fixed: a box that cannot hold one piece of 120 exactly made the two shelves drift by 0.004 of a piece with every change; quantities now travel as whole pieces and a figure a hair from a whole piece is that piece, and Compare ignores less than half a piece"
+  },
+  {
+   "ok": true,
+   "text": "On PharmaTrack: every change is one row in pieces (never edited), sales are never refused for lack of recorded stock (the figure may go below nothing and is flagged), goods given back go on the shelf and never more than was sold, goods received on an order go onto the shelf, and a sale made while the site is down is kept and sent again later with a growing wait"
+  },
+  {
+   "ok": true,
+   "text": "Every message both ways is applied once (the same reference again is a duplicate), a wrong key is 401, and while Master Stock Sync is off PharmaTrack answers 409 so the site keeps the message; addresses must be https on a public site (plain localhost only in the local environment)"
+  },
+  {
+   "ok": true,
+   "text": "Automatic tests: 13 new here, and 55 new in PharmaTrack (ledger 10, sync 24, short list 10, screens 11); the full suites pass (2291 here, 442 in PharmaTrack)"
+  }
+ ],
+ "notes": [
+  "Done for this site and for PharmaTrack (uncommitted in both). Honest limits: the programs were joined over http on one computer (the local environment allows that; production needs https on a public address), PharmaTrack ran on a throw-away database with three medicines, and an accepted round trip over the internet between two deployed servers was not tried. Matching about 26,000 medicines took about 20 seconds, so it now runs in the background with a progress note. A positive stock change from PharmaTrack needs the medicine to have a purchase on this site already (it needs a cost); otherwise the line is reported, not invented. Not built: linking a medicine by hand when names differ, and a screen to correct the PharmaTrack opening stock in one go."
+ ],
+ "shots": [
+  {
+   "file": "f612_live01.jpg",
+   "caption": "Before the test: the site holds 28.583 boxes of Seclo 20 mg",
+   "role": "admin",
+   "url": "/admin/stock/medicines/22873"
+  },
+  {
+   "file": "f612_live02.jpg",
+   "caption": "PharmaTrack sync screen before anything is joined (Master Stock Sync off)",
+   "role": "admin",
+   "url": "PharmaTrack /sync"
+  },
+  {
+   "file": "f612_live03.jpg",
+   "caption": "Test connection: the site answered and accepted the key",
+   "role": "admin",
+   "url": "PharmaTrack /sync"
+  },
+  {
+   "file": "f612_live04.jpg",
+   "caption": "Match medicines: 1 of 1 linked; the site medicines PharmaTrack does not have are listed",
+   "role": "admin",
+   "url": "PharmaTrack /sync"
+  },
+  {
+   "file": "f612_live05.jpg",
+   "caption": "Master Stock Sync switched on: One stock is running",
+   "role": "admin",
+   "url": "PharmaTrack /sync"
+  },
+  {
+   "file": "f612_live06.jpg",
+   "caption": "Stock count form: 28 boxes and 7 strips counted",
+   "role": "admin",
+   "url": "PharmaTrack /stock"
+  },
+  {
+   "file": "f612_live07.jpg",
+   "caption": "Count saved: PharmaTrack shows 28 boxes 7 strips (3,430 pieces)",
+   "role": "admin",
+   "url": "PharmaTrack /stock"
+  },
+  {
+   "file": "f612_live08.jpg",
+   "caption": "Counter sale: 3 strips of Seclo at 60 taka, 180 taka",
+   "role": "admin",
+   "url": "PharmaTrack /shop-sales/create"
+  },
+  {
+   "file": "f612_live09.jpg",
+   "caption": "Sale S000001 saved in PharmaTrack",
+   "role": "admin",
+   "url": "PharmaTrack /shop-sales/1"
+  },
+  {
+   "file": "f612_live10.jpg",
+   "caption": "The site now shows 28.333 boxes (30 pieces came off)",
+   "role": "admin",
+   "url": "/admin/stock/medicines/22873"
+  },
+  {
+   "file": "f612_live11.jpg",
+   "caption": "Goods given back: 10 pieces taken back on sale S000001",
+   "role": "admin",
+   "url": "PharmaTrack /shop-sales/1"
+  },
+  {
+   "file": "f612_live12.jpg",
+   "caption": "The site now shows 28.417 boxes (10 pieces came back)",
+   "role": "admin",
+   "url": "/admin/stock/medicines/22873"
+  },
+  {
+   "file": "f612_live13.jpg",
+   "caption": "Goods received: add 1 box, reason new goods arrived",
+   "role": "admin",
+   "url": "PharmaTrack /stock"
+  },
+  {
+   "file": "f612_live14.jpg",
+   "caption": "PharmaTrack now shows 29 boxes 5 strips",
+   "role": "admin",
+   "url": "PharmaTrack /stock"
+  },
+  {
+   "file": "f612_live15.jpg",
+   "caption": "The site now shows 29.417 boxes (the box was added there too)",
+   "role": "admin",
+   "url": "/admin/stock/medicines/22873"
+  },
+  {
+   "file": "f612_live16.jpg",
+   "caption": "On the site: a stock correction to 29 boxes, reason broken",
+   "role": "admin",
+   "url": "/admin/stock/medicines/22873"
+  },
+  {
+   "file": "f612_live17.jpg",
+   "caption": "The correction saved on the site (its movement list)",
+   "role": "admin",
+   "url": "/admin/stock/medicines/22873"
+  },
+  {
+   "file": "f612_live18.jpg",
+   "caption": "PharmaTrack follows: it now shows 29 boxes",
+   "role": "admin",
+   "url": "PharmaTrack /stock"
+  },
+  {
+   "file": "f612_live19.jpg",
+   "caption": "A finished online order on the site: 1 box of Seclo",
+   "role": "admin",
+   "url": "/admin/orders/339"
+  },
+  {
+   "file": "f612_live20.jpg",
+   "caption": "PharmaTrack shows 28 boxes: the online order took 1 box off its shelf too",
+   "role": "admin",
+   "url": "PharmaTrack /stock"
+  },
+  {
+   "file": "f612_live21.jpg",
+   "caption": "With the site switched off, a counter sale of 5 strips still completes (S000002)",
+   "role": "admin",
+   "url": "PharmaTrack /shop-sales/2"
+  },
+  {
+   "file": "f612_live22.jpg",
+   "caption": "The sync screen shows that sale as failed, could not reach the site, beside the messages that did arrive",
+   "role": "admin",
+   "url": "PharmaTrack /sync"
+  },
+  {
+   "file": "f612_live23.jpg",
+   "caption": "The site is back: the scheduler sent the sale again by itself (2 tries) and every row is done",
+   "role": "admin",
+   "url": "PharmaTrack /sync"
+  },
+  {
+   "file": "f612_live24.jpg",
+   "caption": "The site now shows 27.583 boxes (the delayed sale arrived)",
+   "role": "admin",
+   "url": "/admin/stock/medicines/22873"
+  },
+  {
+   "file": "f612_live25.jpg",
+   "caption": "On the site: an ordered medicine, before staff choose",
+   "role": "admin",
+   "url": "/admin/orders/169"
+  },
+  {
+   "file": "f612_live26.jpg",
+   "caption": "Staff mark the medicine Not available",
+   "role": "admin",
+   "url": "/admin/orders/169"
+  },
+  {
+   "file": "f612_live27.jpg",
+   "caption": "It appears on PharmaTrack's own short list, with a notification",
+   "role": "admin",
+   "url": "PharmaTrack /shortlist"
+  },
+  {
+   "file": "f612_live28.jpg",
+   "caption": "Compare stock finds a real difference: 3,285 here, 3,310 on the site, 25 apart",
+   "role": "admin",
+   "url": "PharmaTrack /sync"
+  },
+  {
+   "file": "f612_live29.jpg",
+   "caption": "Fix: this shelf is right, so the site is told to set itself to it",
+   "role": "admin",
+   "url": "PharmaTrack /sync"
+  },
+  {
+   "file": "f612_live30.jpg",
+   "caption": "The site now shows 27.375 boxes (3,285 pieces): the two shelves agree again",
+   "role": "admin",
+   "url": "/admin/stock/medicines/22873"
+  },
+  {
+   "file": "f612_1.jpg",
+   "caption": "This site's PharmaTrack screen: every message, a refused one kept with a retry",
+   "role": "admin",
+   "url": "/admin/pharmatrack"
+  },
+  {
+   "file": "f612_2.jpg",
+   "caption": "This site's PharmaTrack card in Connections",
+   "role": "admin",
+   "url": "/admin/connections"
+  }
+ ]
 }

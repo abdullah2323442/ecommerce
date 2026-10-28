@@ -1,18 +1,27 @@
 {
-  "n": 443,
-  "status": "skipped",
-  "error": null,
-  "checks": [],
-  "shots": [
-    {
-      "file": "f443_1.jpg",
-      "caption": "Deliveries",
-      "role": "admin",
-      "url": "/admin/deliveries"
-    }
-  ],
-  "notes": [
-    "Not carried through."
-  ],
-  "did": "Looked for two orders on one delivery."
+ "n": 443,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. Crispy House had two home-delivery orders to the same area (Mirpur): one for Hot Wings and one for a Family Combo. The restaurant confirmed the first and moved both to \"Out for delivery\" and read its orders page.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "Two delivery orders going to the same area are named together at the top of the orders list: \"Going to the same area (mirpur), one rider can take them together: F261021-000002, F261022-000003\""
+  },
+  {
+   "ok": true,
+   "text": "The grouping follows the area typed in the address, and only orders in the packing or out-for-delivery stage that are home delivery are grouped"
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser, not by a script. Only the grouping is shown on screen; sharing the delivery charge between the two is not a function of its own (the owner sets the charge by hand)."
+ ],
+ "shots": [
+  {
+   "file": "f443_1.jpg",
+   "caption": "The restaurant sees the two orders to the same area together",
+   "role": "restaurant",
+   "url": "/food/vendor"
+  }
+ ]
 }

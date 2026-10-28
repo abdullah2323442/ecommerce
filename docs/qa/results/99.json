@@ -1,23 +1,43 @@
 {
-  "n": 99,
-  "status": "skipped",
-  "error": null,
-  "checks": [
-    {
-      "ok": true,
-      "text": "A purchase can hold many lines"
-    }
-  ],
-  "shots": [
-    {
-      "file": "f99_1.jpg",
-      "caption": "A second line added to the same purchase",
-      "role": "admin",
-      "url": "/admin/stock/receive"
-    }
-  ],
-  "notes": [
-    "Adding all of one company's medicines in one go was not found as a separate control. Lines are added one at a time."
-  ],
-  "did": "Pressed \"Add a line\" to enter several medicines in one purchase."
+ "n": 99,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. On the owner's \"Enter purchase\" screen there was no way to open a company and add several of its medicines at once, so it was built (new part \"Add many from one company\"). The owner then searched Square Pharmaceuticals PLC, opened its list, ticked three medicines and pressed \"Add the ticked medicines\".",
+ "checks": [
+  {
+   "ok": true,
+   "text": "Found a gap: lines could only be added one medicine at a time. Fixed: the purchase screen now has \"Add many from one company\" with a company search, the company's medicine list (narrowed by typing), tick boxes and one button"
+  },
+  {
+   "ok": true,
+   "text": "Three ticked medicines (Ace 10 mg injection, Ace 500 mg tablet, Ace Duo 200 mg + 500 mg tablet) became three purchase lines at once, each with the source's company percent already filled in (18)"
+  },
+  {
+   "ok": true,
+   "text": "A medicine already on the purchase is not added twice, and only active medicines of that company are listed"
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser, not by a script. The purchase itself was not saved; only the adding of lines was shown. New automatic test: StockAdminTest."
+ ],
+ "shots": [
+  {
+   "file": "f99_1.jpg",
+   "caption": "The new \"Add many from one company\" part of the purchase screen",
+   "role": "admin",
+   "url": "/admin/stock/receive"
+  },
+  {
+   "file": "f99_2.jpg",
+   "caption": "Square Pharmaceuticals PLC opened, three medicines ticked",
+   "role": "admin",
+   "url": "/admin/stock/receive"
+  },
+  {
+   "file": "f99_3.jpg",
+   "caption": "A purchase line was made for each, with the company percent filled in",
+   "role": "admin",
+   "url": "/admin/stock/receive"
+  }
+ ]
 }

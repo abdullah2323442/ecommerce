@@ -1,11 +1,31 @@
 {
-  "n": 17,
-  "status": "notbuilt",
-  "error": null,
-  "checks": [],
-  "shots": [],
-  "notes": [
-    "The separate supplier app has not been built yet."
-  ],
-  "did": "Checked the checklist."
+ "n": 17,
+ "status": "pass",
+ "error": null,
+ "did": "Built and tested this round as an installable app for suppliers. A supplier (Rahim Traders) opened the Supplier app page: the count of orders waiting for them in large type, then one list of their tools (orders for their products, their products, offers and bundles, services, price requests, buyers' questions and more). The page carries its own app manifest so the phone can install it as a separate app.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "/supplier shows who the seller is, how many orders wait for them in large type, and one list of their own tools; it serves a seller, a restaurant owner, an MPO and a craftsman, each seeing only their own screens"
+  },
+  {
+   "ok": true,
+   "text": "The page has its own manifest (name, start page /supplier, its own id), so a phone installs it as a second app next to the shop, with the same icons; checked over a normal server where the manifest answers as application/manifest+json"
+  },
+  {
+   "ok": true,
+   "text": "Buyers, staff and the owner have no supplier app (a plain 404 page), a signed-out visitor is asked to sign in, and a suspended seller has none (9 automatic tests)"
+  }
+ ],
+ "notes": [
+  "The app is a web app that installs to the phone's home screen (PWA), not a store app: no Play Store or App Store listing was built, and the spec's separate store apps would be a further project. The plain PHP test server used here cannot serve a file name ending in .webmanifest, so the manifest was checked on artisan serve and is fine on a normal web server."
+ ],
+ "shots": [
+  {
+   "file": "f17_1.jpg",
+   "caption": "The supplier app's first screen",
+   "role": "wholesale",
+   "url": "/supplier"
+  }
+ ]
 }

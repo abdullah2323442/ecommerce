@@ -1,43 +1,37 @@
 {
-  "n": 367,
-  "status": "skipped",
-  "error": null,
-  "checks": [
-    {
-      "ok": true,
-      "text": "A sector can ask for \"Colour\""
-    },
-    {
-      "ok": true,
-      "text": "A sector can ask for \"Size\""
-    },
-    {
-      "ok": true,
-      "text": "A sector can ask for \"Measurements\""
-    },
-    {
-      "ok": true,
-      "text": "A sector can ask for \"Weight\""
-    },
-    {
-      "ok": true,
-      "text": "A sector can ask for \"Expiry date\""
-    },
-    {
-      "ok": true,
-      "text": "A sector can ask for \"Warranty\""
-    }
-  ],
-  "shots": [
-    {
-      "file": "f367_1.jpg",
-      "caption": "Fields a sector can ask for",
-      "role": "admin",
-      "url": "/admin/market"
-    }
-  ],
-  "notes": [
-    "A unit for each sector (piece, metre, kilo) was not found on this screen. The unit shows on product pages, such as \"/ Piece\"."
-  ],
-  "did": "Looked at the fields a sector can ask sellers for."
+ "n": 367,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. On the owner's Market screen, in the Pantry sector, the unit was changed from piece to kg, Fractions allowed was ticked, and Weight and Expiry date were added to the fields sellers are asked for. A buyer then opened a Pantry listing.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "Each sector row on the Market screen has its own Unit box (wood, clothing, electronics, home, beauty, books, pantry, jewellery all started as piece), a Fractions allowed tick and a list of fields this kind of business needs (colour, size, measurements, weight, expiry date, warranty)"
+  },
+  {
+   "ok": true,
+   "text": "After Save the sector kept unit kg, fractions on and the five fields"
+  },
+  {
+   "ok": true,
+   "text": "The buyer's Pantry listing then showed the price as \"795.60 / Kg\" and asked \"How many (kg)\", so the unit follows the sector everywhere"
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser. The unit sits in a box without a visible label on a narrow screen, which is why it was missed in the first look. The Pantry sector was put back to piece afterwards. The seller's own form for the new fields (weight, expiry date) was not opened."
+ ],
+ "shots": [
+  {
+   "file": "f367_1.jpg",
+   "caption": "Owner: Pantry sector with its own unit and fields",
+   "role": "admin",
+   "url": "/admin/market"
+  },
+  {
+   "file": "f367_2.jpg",
+   "caption": "Buyer: the price per kg on a Pantry listing",
+   "role": "buyer",
+   "url": "/market/27"
+  }
+ ]
 }

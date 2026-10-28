@@ -1,0 +1,333 @@
+# CHAPTER 13: Wholesale and Commission
+
+## 322 | Category-based access | pass
+FOR: A wholesale buyer only sees categories opened for them.
+DID: Opened the wholesaler's customer page and looked at the categories the owner gives them.
+  ok: The owner chooses which categories a wholesale buyer can see
+  SHOT f322_1.jpg | "Categories they can see" | admin
+
+## 323 | MOQ | pass
+FOR: A wholesale buyer has a minimum order quantity.
+DID: Looked at the wholesaler's account page for their minimum order.
+  ok: The wholesaler has a minimum quantity per item
+  SHOT f323_1.jpg | Minimum per item | wholesale
+
+## 324 | Payment settings per customer | pass
+FOR: Payment options can be set for each customer.
+DID: Looked at how this wholesaler may pay.
+  ok: The account says how this buyer may pay (on arrival, in advance)
+  SHOT f324_1.jpg | Payment choices set by the owner for this buyer | wholesale
+
+## 325 | Wholesale dashboard (with own grade) | pass
+FOR: The wholesale dashboard shows the buyer's own grade.
+DID: Opened the wholesaler's account page and looked for their grade and month-by-month buying.
+  ok: The wholesaler sees their own grade
+  ok: And a month-by-month record of their buying
+  SHOT f325_1.jpg | The wholesale dashboard | wholesale
+
+## 326 | Pre-order time window | pass
+FOR: Pre-orders for wholesale open within a set time window.
+DID: Tested live in the browser pane by hand. A shop pressed "Pre-order · 3 days" on Seclo 20 mg, which was out of stock. The owner opened the pre-orders page, chose a different time window (5 days) and pressed Accept. The shop read its pre-orders page.
+  ok: The shop's pre-order shows "Waiting for our answer"
+  ok: The owner's answer box has the time window to choose, 2 days, 3 days, 4 days or 5 days, with Accept, and Decline with a reason the buyer will read
+  ok: After Accept with 5 days the shop is told "Your pre-order for Seclo 20 mg is accepted. It should reach you within 5 days." and its list shows the date (27 Oct 2026)
+  NOTE: Done by hand in the live browser, not by a script. The window is chosen by the owner for each pre-order (it was not found earlier because it is part of the answer box, not a separate setting). Wholesale buyers use the same pre-orders page.
+  SHOT f326_1.jpg | The shop: waiting for our answer | paikari
+  SHOT f326_2.jpg | The owner chooses 2, 3, 4 or 5 days, then Accept or Decline | admin
+  SHOT f326_3.jpg | The shop is told: within 5 days | paikari
+
+## 327 | Bulk order upload | pass
+FOR: Wholesalers can upload orders in bulk.
+DID: Tested live in the browser pane by hand. Rahim Traders (a wholesale buyer) opened the order page, found "Order from a list", and uploaded a small CSV of three lines (Napa 500mg 3 box, Seclo 20mg 2 box, and a made-up name) then pressed "Add to my order".
+  ok: The wholesale order page has "Order from a list": a CSV with name, quantity, unit on each line, with "Download an example"
+  ok: The matching line (Seclo 20 mg, 2 boxes) went into the order to read through: "1 lines added to your order"
+  ok: Lines that do not match are listed with the reason and never guessed at: "Line 4 ... We could not find this product" and, for Napa, "Several products have this name. Add the strength"
+  NOTE: Done by hand in the live browser, not by a script. The earlier note that no bulk upload was found was wrong: the control sits lower on the page.
+  NOTE: Small wording point: the Napa line already carried the strength, but several Napa 500 mg products exist, so the message "Add the strength" does not tell the buyer what else to add.
+  SHOT f327_1.jpg | "Order from a list" on the wholesale order page | wholesale
+  SHOT f327_2.jpg | The matching line is in the order | wholesale
+  SHOT f327_3.jpg | What was added and what was not, with the reasons | wholesale
+
+## 328 | Custom quotation | pass
+FOR: A buyer can ask for a custom quotation.
+DID: Asked for a price on a bulk purchase using the quotation form, then looked at the owner's Quotes page.
+  ok: The owner sees the quotation request
+  SHOT f328_1.jpg | A custom quotation request | wholesale
+  SHOT f328_2.jpg | The request is sent | wholesale
+  SHOT f328_3.jpg | The owner sees the request | admin
+
+## 329 | Wholesalers sell too | pass
+FOR: Wholesalers can also sell to the public.
+DID: Opened the seller screen a wholesaler uses to sell to the public.
+  ok: A wholesaler can add products to sell
+  SHOT f329_1.jpg | The seller screen | wholesale
+
+## 330 | Cannot sell in paikari | pass
+FOR: Wholesalers cannot sell into the paikari section.
+DID: Looked at what a wholesaler may sell, to see if medicine for paikari shops is left out.
+  ok: Medicine for paikari shops cannot be listed from the seller screen
+  NOTE: The categories offered when adding a listing include: Wood, Clothing, Electronics, Home and living, Beauty and care, Books and stationery, Pantry, Jewellery We decide, 2 days, 3 days, 4 days, 5 days inch, foot, cm
+  SHOT f330_1.jpg | The categories a wholesaler may sell in | wholesale
+
+## 331 | Commission added on top of price | pass
+FOR: The platform's commission is added on top of the seller's price.
+DID: Compared a product's seller price in the owner's Market page with the price the public pays.
+  ok: The seller's price for the phone case is 1,200
+  ok: The public pays 1,224: the commission of 24 is added on top
+  SHOT f331_1.jpg | The public price includes the commission | admin
+
+## 332 | Separate commission per product | pass
+FOR: Each product can have its own commission.
+DID: Looked at the commission box on each product in the owner's Market page.
+  ok: Each product has its own commission box
+  SHOT f332_1.jpg | Each product has its own commission | admin
+
+## 333 | Percentage and taka | pass
+FOR: Commission can be a percentage or a fixed taka amount.
+DID: Looked at the choice between percent and taka on the commission.
+  ok: A commission can be a percent or a fixed taka amount
+  NOTE: The choices are: percent / taka
+  SHOT f333_1.jpg | Percent or taka | admin
+
+## 334 | Who owes how much, how many sold | pass
+FOR: The owner sees who owes how much, and how many were sold.
+DID: Opened the owner's commission page.
+  ok: The page shows commission owed
+  SHOT f334_1.jpg | Who owes how much, and how many were sold | admin
+
+## 335 | Commission reduction request and note | pass
+FOR: A seller can ask for a lower commission and add a note.
+DID: Looked at the "Asking for less commission" list on the owner's Market page.
+  ok: Sellers can ask for less commission, and the owner sees the requests
+  SHOT f335_1.jpg | Requests for less commission | admin
+
+## 336 | My approval before publishing | pass
+FOR: The owner approves a product before it goes live.
+DID: Looked at the "Waiting to be read" list, where a new product waits before it is published.
+  ok: New products wait for the owner before they go live
+  SHOT f336_1.jpg | Waiting to be read | admin
+
+## 337 | Pending product count | pass
+FOR: The owner sees how many products wait for approval.
+DID: Read the number beside "Waiting to be read".
+  ok: The owner sees how many products are waiting
+  SHOT f337_1.jpg | The pending count | admin
+
+## 338 | Products without photos flagged | pass
+FOR: Products without photos are flagged.
+DID: Tested live in the browser pane by hand. Rahim Traders sent a new listing (a braided USB-C cable) with no photo. The owner opened the Market page and looked at the list of listings waiting to be read.
+  ok: The seller is told, under the new listing, "A photo helps buyers and gets it read sooner."
+  ok: In the owner's waiting list the listing carries a "No photo" tag, so it is plain before publishing
+  NOTE: Done by hand in the live browser, not by a script. The listing is left waiting in the QA copy.
+  SHOT f338_1.jpg | The owner's list: the new listing is tagged "No photo" | admin
+
+## 339 | Monthly commission statement and reply | pass
+FOR: A monthly commission statement is sent and the seller replies.
+DID: Looked at the monthly commission statement from both sides.
+  ok: The owner can make the monthly statements
+  ok: The seller answers each statement with Paid, or Problem with a reason
+  SHOT f339_1.jpg | The owner's statements page | admin
+  SHOT f339_2.jpg | The seller's statements page: answer Paid or Problem | wholesale
+
+## 340 | Suspended if no reply | pass
+FOR: A seller who does not reply is suspended.
+DID: Read the rule about a seller who does not answer a statement.
+  ok: The page says what happens if a seller does not answer within 10 days
+  SHOT f340_1.jpg | The rule on unanswered statements | wholesale
+
+## 341 | Commission removed on cancellation | pass
+FOR: If an order is cancelled, its commission is removed.
+DID: A buyer ordered a phone case, the seller accepted it and then cancelled it. The month's commission was read before and after.
+  ok: The order now shows as cancelled
+  ok: A cancelled sale carries no commission (96 before, 96 after)
+  SHOT f341_1.jpg | The seller writes why and cancels | wholesale
+  SHOT f341_2.jpg | The seller cancelled the order | wholesale
+  SHOT f341_3.jpg | Commission after the cancel: 96 | admin
+
+## 342 | Money outside the platform | pass
+FOR: Customer money is settled outside the platform, between seller and buyer.
+DID: Read how money moves between buyer and seller.
+  ok: Buyers pay the seller directly, outside the platform
+  SHOT f342_1.jpg | Money is paid outside the platform | wholesale
+
+## 343 | White-label dashboard | pass
+FOR: A white-label dashboard shows sellers only what they need.
+DID: Looked at the seller's own dashboard.
+  ok: The seller has a dashboard of orders for their products
+  SHOT f343_1.jpg | The seller's own dashboard | wholesale
+
+## 344 | Only phone and address, name hidden | pass
+FOR: Sellers see only the buyer's phone and address, not their name.
+DID: Opened the seller's list of orders and looked at what is shown about the buyer.
+  ok: The seller sees the buyer's phone
+  ok: And the delivery address
+  ok: But not the buyer's name
+  SHOT f344_1.jpg | An order as the seller sees it | wholesale
+
+## 345 | Phone and address masked as *** after sale | pass
+FOR: After a sale, the phone and address show as stars so sellers cannot poach customers.
+DID: Accepted an order and marked it sent, then looked at the buyer's phone and address again.
+  ok: On a finished order, the buyer's phone shows as stars
+  ok: And the address shows as stars
+  ok: The page says why: the details are hidden once an order is finished
+  NOTE: While an order is still on its way, the seller needs the phone and address, so they are shown in full. They are masked only when the order is finished.
+  SHOT f345_1.jpg | The order just sent: still "On the way", so the buyer's details are still shown | wholesale
+
+## 346 | Notifications from my site | pass
+FOR: Notifications come from the owner's site, not the seller's.
+DID: Tested live in the browser pane by hand. On the owner's Settings screen the notice shown on every page was written in English and in Bangla ("We update the site tonight at 2 am. Orders are safe.") and saved. A visitor then opened the home page and the medicines page, and switched language.
+  ok: The owner has two boxes: a notice for every page and the same notice in Bangla
+  ok: As soon as it was saved, a banner with the notice appeared at the very top of the home page and the medicines page for a visitor who is not signed in
+  ok: Switching to Bangla showed the Bangla words in the same banner
+  ok: Emptying the boxes takes the banner away again (done after the test)
+  NOTE: Done by hand in the live browser. The notice is plain text for everybody; it is not sent to phones or by SMS. The boxes were emptied afterwards with a command.
+  SHOT f346_1.jpg | Owner: the notice written in two languages | admin
+  SHOT f346_2.jpg | Visitor: the notice at the top of every page | guest
+
+## 347 | No promotional material in packages | skipped
+FOR: The rule against promotional material in parcels is partly in place.
+DID: Read the package rule.
+  ok: Sellers are told not to put cards or leaflets in the package
+  NOTE: The checklist marks this rule only partly built: it is a notice, with no way to check what is in a package.
+  SHOT f347_1.jpg | The package rule | wholesale
+
+## 348 | Penalty steps | pass
+FOR: Penalty steps for rule breaking are partly in place.
+DID: Tested live in the browser pane by hand. The owner opened Market complaints, gave Rahim Traders a warning with a reason, then switched their selling off with a second reason. Then Rahim Traders signed in and the owner lifted the step.
+  ok: Step 1, Warning: it is added to the seller's list with the date and the reason ("Please answer buyers within two days.")
+  ok: Step 2, Switch selling off: the seller shows "Selling is switched off" with a Lift it button, and both steps stay listed in order
+  ok: The seller was told why: their statements page shows "Your selling is switched off: Three buyers waited more than a week for an answer." and the selling page sent them away while it was off
+  ok: While it was off, none of Rahim Traders' 80 listings showed on the market; only another seller's case stayed
+  ok: After the owner pressed Lift it the red badge went, and the seller reached their Sell page again
+  NOTE: Done by hand in the live browser. The steps Take a listing down and Hold payouts were not pressed. Online payouts do not exist yet, so Hold payouts is only recorded and shown.
+  SHOT f348_1.jpg | Owner: selling switched off, with both steps and reasons listed | admin
+  SHOT f348_2.jpg | Seller is told why selling is off | wholesaler
+  SHOT f348_3.jpg | After the lift the seller is back on the Sell page | wholesaler
+
+## 349 | Return money — COD and online separate | skipped
+FOR: Return money is handled separately for cash on delivery and online.
+DID: Tested live in the browser pane by hand. The cash-on-delivery side: a delivered order that was paid for on arrival was sent back to the seller by the owner, and the buyer's page was read afterwards.
+  ok: Cash on delivery: nothing had been paid online, so nothing is refunded and the buyer's page says "Nothing to pay for this order." (this was wrong before and was fixed)
+  ok: The seller's record counts it as sent back, so no commission is taken for it
+  NOTE: Only the cash-on-delivery half was shown. The online half (refund from the held money) needs a real card or wallet payment, and the test gateway only makes practice payments that never touch an order's money, so it was not shown. The code does mark a really paid order Refund due and tells the office; this is covered by automatic tests only.
+  SHOT f349_1.jpg | Buyer: returned cash-on-delivery order, nothing to pay | buyer
+
+## 350 | Goods go straight to the seller | pass
+FOR: Returned goods go straight to the seller.
+DID: Tested live in the browser pane by hand. The owner opened Market complaints, took the serious complaint on order M2026-000179 (a scratched phone case, paid on delivery) and pressed Send it back to the seller. Then the seller and the buyer opened their own pages.
+  ok: The order became "Sent back to you" on the seller's page, with the owner's note, and no new delivery cost was made
+  ok: The seller's record changed to Sold: 240 - Sent back: 1 (1 orders) - Complaints: 2
+  ok: The goods went back on the seller's shelf: the listing stock went from 3 to 4
+  ok: The buyer's page says "This order was sent back to the seller." and the case reads Sent back with the owner's note
+  NOTE: Done by hand in the live browser. Found and fixed: a returned or cancelled order still told the buyer "You pay when it arrives.", and an online order told them the same. It now says "Nothing to pay for this order." for returned and cancelled orders and says nothing about paying on arrival for online orders.
+  NOTE: The goods were not physically posted back; that cannot be shown in a browser. What is shown is what the system records and tells each side.
+  SHOT f350_1.jpg | Seller: record with 1 order sent back | wholesaler
+  SHOT f350_2.jpg | Seller: the order is Sent back to you, with our note | wholesaler
+  SHOT f350_3.jpg | Buyer: the order was sent back to the seller; nothing to pay | buyer
+
+## 351 | Online payment held | skipped
+FOR: Holding online payments until delivery is partly built.
+DID: Looked at online payments held until delivery.
+  NOTE: The checklist marks holding online payments as partly built. Not reproduced.
+  SHOT f351_1.jpg | Online payments | admin
+
+## 352 | Gradual trust | pass
+FOR: New sellers gain trust gradually.
+DID: Looked for sellers gaining trust over time.
+  ok: A seller with a clean record wears a "Trusted seller" mark
+  SHOT f352_1.jpg | The "Trusted seller" mark | admin
+
+## 353 | Security deposit | pass
+FOR: A security deposit has not been built yet.
+DID: Built and tested live in the browser pane by hand. The owner switched the seller deposit on in Settings (5,000 taka asked), opened Seller deposits, chose Rahim Traders and took in 3,000 taka with a note. The seller then opened the Sell page.
+  ok: Seller deposits lists every seller with what is asked, what is held and a Short mark with the amount; the owner can set a different amount for one seller
+  ok: Take it in, Give back and Deduct each keep a row with who did it and the reason; a deduction needs a reason that the seller is told; nothing larger than what is held can be given back or deducted
+  ok: The seller's Sell page says how much is asked (5,000), how much is held (3,000) and how much more is needed (2,000) before new products can be sent in
+  ok: While a seller is short, sending in a new product is refused with that reason; with the option off (the starting setting) nobody is asked for anything (automatic tests)
+  NOTE: Built this round from the spec (chapter 14, security deposit, kept off until trust is built). It holds the number only; the money itself is taken and given back outside the system and the owner writes it down here. New tables seller_deposits and deposit_entries. 8 new automatic tests.
+  SHOT f353_1.jpg | The owner took in 3,000 taka of 5,000 asked | admin
+  SHOT f353_2.jpg | The seller is told what is short | wholesale
+
+## 354 | Complaints seen by both | pass
+FOR: Both the buyer and the seller see a complaint.
+DID: Ordered again, the seller sent it and the buyer confirmed it arrived. Then the buyer wrote what went wrong and sent the complaint. Then looked at it from the seller's side and the owner's side.
+  ok: The complaint is kept on the order
+  ok: The seller's record counts the complaint
+  ok: The owner sees the same complaint in one place
+  SHOT f354_1.jpg | A complaint typed on the buyer's order | visitor
+  SHOT f354_2.jpg | After the complaint is sent | visitor
+  SHOT f354_3.jpg | The seller's orders after the complaint | wholesale
+  SHOT f354_4.jpg | The owner's cases page | admin
+
+## 355 | Separate place for serious complaints | pass
+FOR: Serious complaints go to a separate place.
+DID: After a complaint on a delivered order, the buyer pressed "Ask us to look into it". Then the owner's Complaints page was opened.
+  ok: The owner's page has a separate place for serious complaints
+  ok: The buyer's complaint is now listed there
+  SHOT f355_1.jpg | The complaint is brought to the owner | visitor
+  SHOT f355_2.jpg | Serious complaints have their own place | admin
+
+## 356 | Returns go to the seller's profile | pass
+FOR: Returns are recorded on the seller's profile.
+DID: Looked at the seller's record, which shows returns.
+  ok: The seller's record counts orders sent back
+  SHOT f356_1.jpg | The seller's record | wholesale
+
+## 357 | Reports for sellers | pass
+FOR: Sellers get their own reports.
+DID: Opened the seller's reports page.
+  ok: The seller sees their own rank
+  ok: And which products sell the most
+  SHOT f357_1.jpg | Seller reports | wholesale
+
+## 358 | Viewed but not bought | pass
+FOR: Sellers see who viewed but did not buy.
+DID: Looked on the reports for "viewed but not bought".
+  ok: Each product shows how many people looked at it, how many ordered and how many sold, so "looked but did not buy" can be seen
+  SHOT f358_1.jpg | Seller reports | wholesale
+
+## 359 | Supplier rank | pass
+FOR: Suppliers are ranked.
+DID: Read the seller's rank and what it depends on.
+  ok: The seller has a rank
+  ok: The rank rewards fast sending and few returns
+  SHOT f359_1.jpg | Supplier rank | wholesale
+
+## 360 | "Not received" option | pass
+FOR: A "not received" option is available to buyers.
+DID: Looked at the seller reports for "Buyer said it did not arrive".
+  ok: A "not received" figure is kept
+  SHOT f360_1.jpg | The "did not arrive" figure | wholesale
+
+## 361 | Block buying own product | pass
+FOR: A seller cannot buy their own product.
+DID: As the seller, tried to order the seller's own phone case.
+  ok: The seller is stopped: "You cannot buy your own product."
+  SHOT f361_1.jpg | The seller trying to buy their own product | wholesale
+
+## 362 | Vacation mode | pass
+FOR: A seller can switch on vacation mode.
+DID: Looked at the "I am going away" holiday mode.
+  ok: The seller has a Holiday mode
+  ok: It turns off new orders while the seller is away
+  SHOT f362_1.jpg | Holiday mode | wholesale
+
+## 363 | Can't delete a product with active orders | pass
+FOR: A product with active orders cannot be deleted.
+DID: On the seller's listings, pressed Remove on the phone case, which has several orders still on the way.
+  ok: The seller is told the listing has orders on the way and to pause it instead
+  ok: The product is still on sale: it was not removed
+  SHOT f363_1.jpg | After pressing Remove on a product with live orders | wholesale
+
+## 364 | Report copied products | pass
+FOR: A seller can report copied products.
+DID: Looked at the "Report this as a copy" link on a product.
+  ok: Anyone can report a copied product
+  SHOT f364_1.jpg | Report this as a copy | visitor
+
+## 365 | Unseen order count and SMS | skipped
+FOR: Sellers see how many orders are unseen. Text-message alerts are partly built.
+DID: Looked at the seller's orders for a count of orders not yet seen.
+  ok: The tab shows how many orders there are
+  NOTE: The checklist marks the text-message alert as partly built. No text message was sent.
+  SHOT f365_1.jpg | The seller screen with its orders count | wholesale

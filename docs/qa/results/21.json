@@ -1,18 +1,51 @@
 {
-  "n": 21,
-  "status": "skipped",
-  "error": null,
-  "checks": [],
-  "shots": [
-    {
-      "file": "f21_1.jpg",
-      "caption": "The customer list: each account has its own business type and its own numbers",
-      "role": "admin",
-      "url": "/admin/customers"
-    }
-  ],
-  "notes": [
-    "Running two business accounts for one person was not exercised end to end here."
-  ],
-  "did": "Looked at how one person can have two business accounts."
+ "n": 21,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. A seller who sells in several sections (Rahim Traders: wood, clothing, electronics, home, beauty, books, pantry, jewellery) opened How you are doing and used the switcher at the top: All together, then Wood, then Electronics.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "The switcher lists every section the seller sells in, with All together first"
+  },
+  {
+   "ok": true,
+   "text": "All together shows the best sellers across everything (Shea body butter 19, Leather-bound notebook 16, Sundarbans honey 16)"
+  },
+  {
+   "ok": true,
+   "text": "Wood shows only wood products as best sellers (Sheesham bookshelf 13, Handmade walnut tray 9, Carved bedside table 3), with their own sales and what is left"
+  },
+  {
+   "ok": true,
+   "text": "Electronics shows only electronics (Desk speaker 11, Wireless earbuds 9, Slim power bank 9); the two businesses never mix"
+  },
+  {
+   "ok": true,
+   "text": "The rank (99, Excellent) is the same in each view: it is one score for the person, because buyers meet the person, not the section"
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser. This is one login with a switcher, which is what the chapter's note allows, not two separate logins."
+ ],
+ "shots": [
+  {
+   "file": "f21_1.jpg",
+   "caption": "All together, with the switcher",
+   "role": "wholesaler",
+   "url": "/wholesale/sell/reports"
+  },
+  {
+   "file": "f21_2.jpg",
+   "caption": "Wood only",
+   "role": "wholesaler",
+   "url": "/wholesale/sell/reports?business=wood"
+  },
+  {
+   "file": "f21_3.jpg",
+   "caption": "Electronics only",
+   "role": "wholesaler",
+   "url": "/wholesale/sell/reports?business=electronics"
+  }
+ ]
 }

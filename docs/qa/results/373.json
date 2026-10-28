@@ -1,18 +1,33 @@
 {
-  "n": 373,
-  "status": "skipped",
-  "error": null,
-  "checks": [],
-  "shots": [
-    {
-      "file": "f373_1.jpg",
-      "caption": "Wood",
-      "role": "guest",
-      "url": "/market?sector=wood"
-    }
-  ],
-  "notes": [
-    "Needs a wooden product with sizes. Not carried through."
-  ],
-  "did": "Looked for sizes on wooden items."
+ "n": 373,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. Rahim Traders sent a new listing in Wood: a teak bedside table, price 6,500, 4 in stock, length 24, width 16, height 22 inch, and ticked \"Home and living\" under \"Also show it in\". The owner read it and published it (commission 2%). A buyer opened the product page and both category pages.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "The seller's form has \"Size of the item (optional, for wood and furniture)\" with length, width, height and a unit (inch, foot, cm)"
+  },
+  {
+   "ok": true,
+   "text": "The buyer's product page shows a \"Size\" line: Length 24 · Width 16 · Height 22 inch"
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser, not by a script."
+ ],
+ "shots": [
+  {
+   "file": "f373_1.jpg",
+   "caption": "The seller's form: size of the item, with a unit",
+   "role": "wholesale",
+   "url": "/wholesale/sell"
+  },
+  {
+   "file": "f373_2.jpg",
+   "caption": "The product page shows the size",
+   "role": "admin",
+   "url": "/market/81"
+  }
+ ]
 }

@@ -1,45 +1,57 @@
 {
-  "n": 26,
-  "status": "skipped",
-  "error": null,
-  "checks": [
-    {
-      "ok": true,
-      "text": "Hand-set rate wins over the tier rate (saw 246)"
-    },
-    {
-      "ok": true,
-      "text": "Without the hand-set rate the tier rate applies again (saw 255)"
-    }
-  ],
-  "shots": [
-    {
-      "file": "f26_1.jpg",
-      "caption": "Typing 18 percent off for this shop on Napa 500 mg",
-      "role": "admin",
-      "url": "/admin/customers/4"
-    },
-    {
-      "file": "f26_2.jpg",
-      "caption": "With the hand-set rate: 246",
-      "role": "paikari",
-      "url": "/paikari"
-    },
-    {
-      "file": "f26_3.jpg",
-      "caption": "The hand-set rate has been removed",
-      "role": "admin",
-      "url": "/admin/customers/4"
-    },
-    {
-      "file": "f26_4.jpg",
-      "caption": "After removing it the shop is back on its tier price: 255",
-      "role": "paikari",
-      "url": "/paikari"
-    }
-  ],
-  "notes": [
-    "Only two of the four layers could be shown (hand-set and tier). The company and medicine layers have no screen to set them."
-  ],
-  "did": "Set a hand-set rate, saw it beat the tier rate, then removed it and watched the price fall back to the tier rate."
+ "n": 26,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. The price a shop (Karim Pharmacy) pays for Napa 500 mg was read after each step. The owner set a rate for the whole company Square (22%), then a rate for the one medicine (27%), then a hand-set rate for this one shop (18%). Each rate was saved on the owner's screens and the shop's price was read again.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "Before any of them the shop paid 247.50 a box (17.5% off the printed 300)"
+  },
+  {
+   "ok": true,
+   "text": "Company rate 22%: the shop pays 234.00 (the company rate beats the tier price)"
+  },
+  {
+   "ok": true,
+   "text": "Medicine rate 27%: the shop pays 219.00 (the rate for one medicine beats the company rate)"
+  },
+  {
+   "ok": true,
+   "text": "Hand-set rate for this shop, 18%: the shop pays 246.00, even though it is a smaller discount (the shop's own rate beats everything)"
+  },
+  {
+   "ok": true,
+   "text": "The screens say it in words: \"A rate for one medicine beats the company rate. Both beat the tier. A shop with its own rate keeps it.\" and \"Highest priority; overrides tier, company and medicine rates.\""
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser, not by a script. Setting a rate needs the owner's password again, which is a safeguard. The test rates were removed afterwards."
+ ],
+ "shots": [
+  {
+   "file": "f26_1.jpg",
+   "caption": "A company rate: Square 22% off",
+   "role": "admin",
+   "url": "/admin/tiers"
+  },
+  {
+   "file": "f26_2.jpg",
+   "caption": "A medicine rate below cost asks to confirm: \"Raise it, or confirm to sell at a loss\"",
+   "role": "admin",
+   "url": "/admin/tiers"
+  },
+  {
+   "file": "f26_3.jpg",
+   "caption": "Company 22% and medicine 27% saved",
+   "role": "admin",
+   "url": "/admin/tiers"
+  },
+  {
+   "file": "f26_4.jpg",
+   "caption": "A hand-set rate for this shop: Napa 18% off",
+   "role": "admin",
+   "url": "/admin/customers/4"
+  }
+ ]
 }

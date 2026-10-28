@@ -1,0 +1,92 @@
+# CHAPTER 10: Medicine Database
+
+## 240 | Complete medicine database | pass
+FOR: A complete medicine database holds every brand with its details.
+DID: As a stranger, searched the public medicine database for a generic name and looked at how many brands came back.
+  ok: A large database answers: 30 brands listed for one generic name
+  SHOT f240_1.jpg | Searching the medicine database for "paracetamol" | guest
+
+## 241 | Brand, generic, company, strength, MRP | pass
+FOR: Each medicine has brand, generic name, company, strength and printed price.
+DID: Opened one medicine's page and looked for its brand, generic name, company, strength and printed price.
+  ok: The brand name
+  ok: The company
+  ok: The strength
+  ok: The printed price (MRP)
+  ok: The page says it is the printed retail price
+  ok: The form of the medicine
+  SHOT f241_1.jpg | One medicine's page | guest
+
+## 242 | Generic alternative suggestions | pass
+FOR: The search suggests other brands of the same generic medicine.
+DID: Opened a medicine page and read the list "Same medicine, other brands".
+  ok: The page offers other brands of the same medicine
+  ok: They share the generic, strength and form, with the cheapest first
+  SHOT f242_1.jpg | Cheaper brands of the same generic medicine | guest
+
+## 243 | Names only from the database | pass
+FOR: Medicine names can only be chosen from the database, never typed freely.
+DID: On the purchase form, typed a medicine name that is not in the database.
+  ok: A name that is not in the database cannot be chosen, so no stray medicine names get in
+  SHOT f243_1.jpg | A made-up name finds nothing to choose | admin
+
+## 244 | Company list preset | pass
+FOR: The list of companies is preset.
+DID: Opened the company list on the ordering screen.
+  ok: A preset list of companies is offered (292 companies)
+  SHOT f244_1.jpg | A preset list of companies | paikari
+
+## 245 | Search results for misspellings | pass
+FOR: The search still finds a medicine when its name is spelled wrongly.
+DID: Searched with a spelling mistake ("paracetmol") and with "napaa".
+  ok: "paracetmol" still finds paracetamol medicines (1 found)
+  ok: "napaa" still finds Napa (14 found)
+  SHOT f245_1.jpg | A misspelled search | guest
+
+## 246 | Alternative names linked | pass
+FOR: Other names for the same medicine are linked together.
+DID: Searched by the generic name and by the Bangla spelling of Napa.
+  ok: Searching the generic name finds the Napa brand
+  ok: The Bangla spelling finds the medicine too (28 found)
+  SHOT f246_1.jpg | Searching in Bangla | guest
+
+## 247 | "Inactive" mark | pass
+FOR: A medicine no longer sold can be marked inactive.
+DID: Looked for Napa 80 mg, which was switched to inactive in the test data.
+  ok: An inactive medicine is either hidden or clearly marked as inactive
+  NOTE: No screen lets the owner switch a medicine to inactive. It was done in the test database.
+  SHOT f247_1.jpg | Napa search: the inactive medicine | guest
+
+## 248 | "Prescription required" mark | pass
+FOR: A medicine that needs a prescription carries a "prescription required" mark.
+DID: Opened the page of a medicine flagged as needing a prescription.
+  ok: The page carries a "Prescription required" mark
+  SHOT f248_1.jpg | The "Prescription required" mark | guest
+
+## 249 | Cold-chain ("Keep refrigerated") flag | pass
+FOR: Medicines that need a fridge are flagged "keep refrigerated".
+DID: Opened the same medicine, flagged as cold-chain.
+  ok: The page says "Keep refrigerated"
+  ok: And explains it in plain words
+  SHOT f249_1.jpg | The "Keep refrigerated" mark | guest
+
+## 250 | Cold-chain items blocked from normal courier | pass
+FOR: Fridge medicines are blocked from normal couriers.
+DID: Added the cold-chain medicine to the cart and opened the cart.
+  ok: Checkout says something in the cart must stay cold
+  ok: And that it goes by our own delivery, or cannot go by courier, so no normal courier is offered
+  SHOT f250_1.jpg | Checkout with a cold-chain medicine | guest
+
+## 251 | Controlled-medicine flag | pass
+FOR: Controlled medicines are flagged and handled under stricter rules.
+DID: Opened the medicine flagged as controlled.
+  ok: The page carries a "Controlled" mark
+  SHOT f251_1.jpg | The "Controlled" mark | guest
+
+## 252 | In-stock medicines first in search | pass
+FOR: Medicines that are in stock show first in the search.
+DID: Searched for "napa" on the public site and looked at where the one medicine the shop actually holds appears.
+  ok: The medicine in stock (Napa 500 mg, Square) comes first in the results
+  NOTE: On the paikari ordering screen the first result is "Napa 500 mg".
+  SHOT f252_1.jpg | The public search for "napa" | guest
+  SHOT f252_2.jpg | The paikari search puts the in-stock one first | paikari

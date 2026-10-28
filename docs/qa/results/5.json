@@ -1,23 +1,55 @@
 {
-  "n": 5,
-  "status": "skipped",
-  "error": null,
-  "checks": [
-    {
-      "ok": true,
-      "text": "The Applications page opens"
-    }
-  ],
-  "shots": [
-    {
-      "file": "f5_1.jpg",
-      "caption": "Where the owner reviews an application and its licence",
-      "role": "admin",
-      "url": "/admin/applications"
-    }
-  ],
-  "notes": [
-    "No wholesale application was waiting in the test data, so the licence preview itself could not be shown."
-  ],
-  "did": "Opened the Applications page. A licence file is uploaded with the application and the owner checks it there."
+ "n": 5,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. A new person made an account, filled the business application (name, shop, medicine, phone, licence number, address) and attached a licence picture. The owner opened the application, opened and read the licence, and opened a shop account. The applicant came back to the site.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "The licence file is sent with the application and is kept private: the owner can open it, but the applicant opening the same staff address is sent quietly to the home page"
+  },
+  {
+   "ok": true,
+   "text": "Every look at the licence is logged: two looks were recorded as \"application.licence_viewed\" at the times the owner opened it"
+  },
+  {
+   "ok": true,
+   "text": "After approval the applicant sees \"Your business account is open. Welcome, Meherun Pharmacy.\""
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser, not by a script. The licence picture was made in the page (a sample card) because the pane cannot open a system file dialog. The test account is a throwaway one on the QA copy."
+ ],
+ "shots": [
+  {
+   "file": "f5_2.jpg",
+   "caption": "The applicant sent the form with a licence: \"We are checking your application\"",
+   "role": "applicant",
+   "url": "/business"
+  },
+  {
+   "file": "f5_3.jpg",
+   "caption": "The owner's Applications page: details, \"Open licence\", open-as and tier choices",
+   "role": "admin",
+   "url": "/admin/applications"
+  },
+  {
+   "file": "f5_4.jpg",
+   "caption": "The owner opened the licence file and read it",
+   "role": "admin",
+   "url": "/admin/applications/2/file/first"
+  },
+  {
+   "file": "f5_5.jpg",
+   "caption": "\"Account opened\": the application moves to Recently decided",
+   "role": "admin",
+   "url": "/admin/applications"
+  },
+  {
+   "file": "f5_6.jpg",
+   "caption": "The applicant now lands on the shop order screen: \"Your business account is open\"",
+   "role": "applicant",
+   "url": "/paikari"
+  }
+ ]
 }

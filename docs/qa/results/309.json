@@ -1,18 +1,37 @@
 {
-  "n": 309,
-  "status": "skipped",
-  "error": null,
-  "checks": [],
-  "shots": [
-    {
-      "file": "f309_1.jpg",
-      "caption": "The market cart",
-      "role": "visitor",
-      "url": "/market-cart"
-    }
-  ],
-  "notes": [
-    "Hiding cash on delivery when one item does not allow it needs a product that refuses it, which the test data does not have."
-  ],
-  "did": "Looked at the cart for the payment choice when every item allows cash on delivery."
+ "n": 309,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. A shop buyer put into the market cart first one product that allows cash on delivery, then a second one that does not (the one above).",
+ "checks": [
+  {
+   "ok": true,
+   "text": "With only the cash-on-delivery product in the cart, the cart says \"You pay each seller when their package arrives.\""
+  },
+  {
+   "ok": true,
+   "text": "After the online-only product is added, the cart says \"Something in your cart is paid online only, so cash on delivery is not offered. You pay for each package online after you send the orders.\""
+  },
+  {
+   "ok": true,
+   "text": "Because online payment is not switched on in this copy, the cart then also says \"Online payment is not open yet, so this cart cannot be ordered now\" and the button is greyed out"
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser, not by a script."
+ ],
+ "shots": [
+  {
+   "file": "f309_1.jpg",
+   "caption": "One cash product: pay when each package arrives",
+   "role": "paikari",
+   "url": "/market-cart"
+  },
+  {
+   "file": "f309_2.jpg",
+   "caption": "One online-only product hides cash on delivery for the whole cart",
+   "role": "paikari",
+   "url": "/market-cart"
+  }
+ ]
 }

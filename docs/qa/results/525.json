@@ -1,23 +1,57 @@
 {
-  "n": 525,
-  "status": "skipped",
-  "error": null,
-  "checks": [
-    {
-      "ok": true,
-      "text": "The owner gives tokens that work once, in any sector"
-    }
-  ],
-  "shots": [
-    {
-      "file": "f525_1.jpg",
-      "caption": "Aqua Tokens",
-      "role": "admin",
-      "url": "/admin/tokens"
-    }
-  ],
-  "notes": [
-    "The two levels (the shop's tokens and a seller's tokens) were seen on separate screens, but giving a token and using it was not carried through."
-  ],
-  "did": "Opened the owner's Aqua Tokens page."
+ "n": 525,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand, both levels. Level 1 (our token): the owner gave a 100 taka Aqua Token to a shopper; it was used at checkout and taken off the finished memo. Level 2 (a seller's own token): Rahim Traders set a 50 taka token (smallest order 500, once per buyer) on his Sell page; a shopper ordered his Fitness tracker band and used it.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "Owner gives a token: the Aqua Tokens screen lists it under Given lately as Ready to use, 100 taka, with the reason"
+  },
+  {
+   "ok": true,
+   "text": "The shopper's checkout offers \"Use my Aqua Token (100 taka off)\", ticked, with the note that it comes off when the order is finished"
+  },
+  {
+   "ok": true,
+   "text": "After the order was finished the memo shows Aqua Token minus 100 and the token is spent (it cannot be used twice)"
+  },
+  {
+   "ok": true,
+   "text": "Seller's token: the listing offered \"Use my Aqua Token (up to 50 taka off)\" and the order M2026-000186 shows Aqua Token minus 50 on the buyer's page (4,008 to pay)"
+  },
+  {
+   "ok": true,
+   "text": "It comes off what the seller is paid too: the seller's order says \"You get 3,930\" (3,900 plus 80 delivery minus the 50), so the seller bears the token on their own products"
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser. The seller's token is left switched on at 50 taka after this test. The order was placed with cash on delivery and not carried to delivery."
+ ],
+ "shots": [
+  {
+   "file": "f525_1.jpg",
+   "caption": "Owner: giving a token and the list of tokens given",
+   "role": "admin",
+   "url": "/admin/tokens"
+  },
+  {
+   "file": "f525_2.jpg",
+   "caption": "The token taken off the finished memo",
+   "role": "admin",
+   "url": "/admin/counter/333"
+  },
+  {
+   "file": "f525_3.jpg",
+   "caption": "Buyer: the seller's token on the market order",
+   "role": "buyer",
+   "url": "/market/orders/..."
+  },
+  {
+   "file": "f525_4.jpg",
+   "caption": "Seller: the order, with the token taken off what they get",
+   "role": "wholesaler",
+   "url": "/wholesale/sell/orders"
+  }
+ ]
 }

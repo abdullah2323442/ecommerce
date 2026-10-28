@@ -1,0 +1,197 @@
+# CHAPTER 8: Offers
+
+## 192 | Offer product (minimum boxes) | pass
+FOR: An offer product needs a minimum number of boxes to qualify.
+DID: Made an offer product: Napa 500 mg at 10% off, with a minimum of 3 boxes, and started it.
+  ok: The offer product is listed as running
+  ok: It has a minimum of 3 boxes
+  SHOT f192_1.jpg | The offer form filled in: 10% off, from 3 boxes | admin
+  SHOT f192_2.jpg | The offer is running | admin
+
+## 193 | Boxes only, no MRP memo | pass
+FOR: Offers are sold in boxes only, with no printed-price memo.
+DID: Looked at how the offer is sold to a paikari shop.
+  ok: The shop sees that Napa 500 mg is on offer
+  NOTE: An offer is sold in boxes only. The search shows one box price for the offer, with its minimum.
+  SHOT f193_1.jpg | The medicine search with the offer | paikari
+
+## 194 | Put on offer by hand or by notification | pass
+FOR: An offer is turned on by hand or when the system notifies the owner.
+DID: Looked at the two ways to put a medicine on offer: by hand with "New offer product", and from the "Bought at a high discount" list the system builds.
+  ok: The owner can put a medicine on offer by hand
+  ok: The system also lists medicines bought at a high discount, as suggestions
+  SHOT f194_1.jpg | Two routes: by hand, or from the suggestions | admin
+
+## 195 | Minimum profit margin set by hand | pass
+FOR: The owner sets a minimum profit margin for each offer.
+DID: Tried to start an offer at 20% off, which leaves almost no profit on a box that cost 240.
+  ok: The system refuses an offer that leaves less than the smallest profit allowed
+  ok: The page states the smallest profit an offer must keep, set by the owner in Settings
+  SHOT f195_1.jpg | An offer at 20% off a box that cost 240 | admin
+  SHOT f195_2.jpg | What the system says | admin
+
+## 196 | Only the higher-% lot goes on offer | pass
+FOR: Only the batch with the higher buying percentage goes on offer.
+DID: Looked at the list of medicines bought at a high discount.
+  ok: Each suggestion is a lot bought at a high discount, with its boxes in the shop
+  SHOT f196_1.jpg | Only lots bought at a high discount are suggested | admin
+
+## 197 | Visibility — public/paikari/wholesale | pass
+FOR: An offer can be shown to the public, to paikari or to wholesale.
+DID: Looked at who the offer can be shown to.
+  ok: The form asks who can see the offer
+  ok: Shops can be chosen
+  ok: Public can be chosen
+  ok: Wholesale can be chosen
+  SHOT f197_1.jpg | Shops, Public or Wholesale | admin
+
+## 198 | Two stock display modes | pass
+FOR: Stock can be shown to buyers in two different ways.
+DID: Looked at the choices for how the offer's stock is shown.
+  ok: There are two ways to show stock (Just "In stock", Exact number of boxes)
+  NOTE: The choices are: Just "In stock" / Exact number of boxes
+  SHOT f198_1.jpg | "Just In stock" or "Exact number of boxes" | admin
+
+## 199 | Cannot order more than the stock | pass
+FOR: A buyer cannot order more than the offer stock.
+DID: Tried to order 9 boxes of an offer that has only 8 boxes available.
+  ok: More boxes than the offer holds are not given at the offer rate
+  ok: The screen tells the owner how many boxes the offer has
+  SHOT f199_1.jpg | 9 boxes asked for, 8 available | admin
+
+## 200 | Quantity-based discount | pass
+FOR: An offer can also give a discount for larger quantities.
+DID: Looked at the "Extra % for each box above the minimum" box on the offer form.
+  ok: An offer can give a bigger discount for each extra box
+  SHOT f200_1.jpg | The extra discount per box | admin
+
+## 201 | Weight field on offers | pass
+FOR: A weight can be stored on each offer to work out courier cost.
+DID: Looked at the weight box on the offer form.
+  ok: An offer can carry a weight
+  SHOT f201_1.jpg | The weight box | admin
+
+## 202 | Minimum delivery charge per product | pass
+FOR: Each offer product can have a minimum delivery charge.
+DID: Looked at the delivery charge box on the offer form.
+  ok: An offer can carry its own minimum delivery charge
+  SHOT f202_1.jpg | A delivery charge for this product | admin
+
+## 203 | Minimum not met → normal rate | pass
+FOR: If the minimum quantity is not met, the normal rate applies.
+DID: Ordered 2 boxes through the offer, below its minimum of 3, and looked at the line in the draft.
+  ok: Below the minimum the line is not an offer line, so it is sold at the normal rate
+  ok: The rate on the line is the normal rate (247.50)
+  SHOT f203_1.jpg | Two boxes: below the minimum | admin
+
+## 204 | Then profit at the normal rate too | pass
+FOR: The profit is then worked out at the normal rate too.
+DID: Tested live in the browser pane by hand. The owner started an offer on Seclo 20 mg (25% off, minimum 5 boxes). At the counter a shop with no special rate (Meherun Pharmacy) asked for only 2 boxes of the offer. The sale was finished and the owner read "Profit today" on the reports page before and after.
+  ok: The offer line shows 540.00 a box with "minimum 5 boxes", while the normal price for this shop is 720.00 a box
+  ok: Ordering 2 boxes (below the minimum) gives no offer rate: the line is 1,440.00, which is 2 × 720.00, the normal rate
+  ok: Profit today went from 0.00 to 504.00, which is 1,440 less the 936 the 2 boxes cost (2 × 468). That is profit at the normal rate; at the offer's 540 it would have been 144
+  NOTE: Done by hand in the live browser, not by a script. Test set-up: Seclo had no stock, so 30 boxes were added through the stock service (bought at 35% off, cost 468 a box) so an offer could be made. The earlier offer on Napa could not show this because its price equals the normal rate in this data.
+  SHOT f204_1.jpg | The offer row (540, minimum 5) beside the normal price (720) | admin
+  SHOT f204_2.jpg | 2 boxes: the line is 1,440.00, the normal rate | admin
+  SHOT f204_3.jpg | Profit today: 504.00, worked out at the normal rate | admin
+
+## 205 | Offer pop-up in search | pass
+FOR: A pop-up in search tells staff when an offer exists.
+DID: At the counter, searched for the medicine that is on offer.
+  ok: The search points out that this medicine is on offer
+  ok: And has its own Order button
+  SHOT f205_1.jpg | The offer card points out the offer | admin
+
+## 206 | Mixed-order memo | pass
+FOR: One memo can hold both offer items and regular items.
+DID: Finished the shop sale that held an offer line and an ordinary line, paying on credit, and opened the memo.
+  ok: The memo is made with both kinds of line: the offer box line and the ordinary strip line
+  ok: The memo tells the buyer how offer items are returned
+  SHOT f206_1.jpg | After pressing Finish sale | admin
+
+## 207 | Alert before offer stock runs out | pass
+FOR: An alert warns the owner before offer stock runs out.
+DID: Looked at the setting for the warning before an offer runs out.
+  ok: The owner sets how many boxes left should trigger a warning
+  SHOT f207_1.jpg | The setting | admin
+
+## 208 | Grey for 1–1.5 hours when stock out | pass
+FOR: When offer stock runs out, the offer goes grey for 1 to 1.5 hours.
+DID: Looked at the setting for how long a sold-out offer stays grey.
+  ok: A sold-out offer stays grey for a time the owner sets
+  SHOT f208_1.jpg | The grey time setting | admin
+
+## 209 | Cannot add to cart during that time | pass
+FOR: During that time it cannot be added to a cart.
+DID: At the counter, ordered every box of the offer (8) into a draft, then looked at the offer as a paikari shop and tried to add it.
+  ok: The offer is greyed out and says "Was on offer a moment ago. Stock out."
+  ok: It has no order box and no price, so it cannot be added to the order
+  SHOT f209_1.jpg | All 8 offer boxes are now in a draft | admin
+  SHOT f209_2.jpg | The shop looks at the offer after it is all taken | paikari
+
+## 210 | Listing normal again when a draft is cancelled | pass
+FOR: If a draft is cancelled, the listing goes back to normal.
+DID: Cancelled the counter draft that held all 8 offer boxes, then looked at the offer again.
+  ok: The offer is on sale again with its boxes back
+  SHOT f210_1.jpg | The draft is cancelled | admin
+  SHOT f210_2.jpg | The offer is back for the shop | paikari
+
+## 211 | Tier offer (no minimum) | pass
+FOR: A tier offer has no minimum quantity.
+DID: Pressed "Upload to the shop tier" for a medicine bought at a high discount, to start a tier offer with no minimum.
+  ok: The medicine now shows under "Shop tier offers running now"
+  SHOT f211_1.jpg | A shop tier offer is running | admin
+
+## 212 | Company offer list | pass
+FOR: There is a list of offers per company.
+DID: Looked at the list of medicines grouped for offers.
+  ok: A list of offer candidates is kept
+  SHOT f212_1.jpg | Medicines bought at a high discount | admin
+
+## 213 | One click to the paikari tier | pass
+FOR: One click puts an offer to the paikari tier.
+DID: After the owner pressed one button, looked at what the paikari shop sees.
+  ok: The shop can see Napa 500 mg
+  NOTE: The tier offer is a single click for the owner and needs no minimum.
+  SHOT f213_1.jpg | The paikari search after a tier offer | paikari
+
+## 214 | Offer duration field | pass
+FOR: An offer has a duration field.
+DID: Looked at the date box for how long an offer runs.
+  ok: An offer has an end date
+  SHOT f214_1.jpg | The offer's date box | admin
+
+## 215 | Auto non-offer at month end | pass
+FOR: At the end of the month the offer ends by itself.
+DID: Opened the owner's Offers page when the clock was 35 days later, after the month the offers were meant for had ended (they were set to end on 31 October).
+  ok: The offer products that were running have ended with the month
+  ok: And so have the shop-tier offers
+  SHOT f215_1.jpg | Offers, 35 days later: the running offers have ended by themselves | admin
+
+## 216 | Ask after the month passes | pass
+FOR: After the month passes, the system asks the owner what to do.
+DID: On the same page, read what the system asks the owner once the month has passed.
+  ok: The system asks whether to keep the offers on
+  ok: The owner can run them again for the new month
+  ok: Or leave them off
+  SHOT f216_1.jpg | The question after the month | admin
+
+## 217 | Off when stock ends, on again with new stock | pass
+FOR: An offer switches off when stock ends and on again with new stock.
+DID: Watched the offer go off when its boxes were all taken, and come back when the boxes were put back.
+  ok: With no boxes left the offer goes off by itself
+  ok: When the boxes are back the offer comes on again by itself
+  SHOT f217_1.jpg | Boxes all taken: the offer is off | paikari
+  SHOT f217_2.jpg | Boxes back: the offer is on again | paikari
+
+## 218 | Manual rate above offers | pass
+FOR: A hand-set rate beats any offer.
+DID: Gave Karim Pharmacy a hand-set 18% price while a tier offer is running, and looked at what the shop pays.
+  ok: The shop pays its own hand-set price (246), not the offer
+  SHOT f218_1.jpg | Karim keeps the hand-set rate while an offer runs | paikari
+
+## 219 | Loss warning on purchase price correction | pass
+FOR: If the buying price is corrected, the system warns about any loss.
+DID: On the medicine's lot, pressed "Correct price" to raise the cost while offers are running.
+  ok: The screen warns when a corrected cost would make an offer or rate lose money
+  SHOT f219_1.jpg | Correcting a lot's cost | admin

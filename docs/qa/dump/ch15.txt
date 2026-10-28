@@ -1,0 +1,349 @@
+# CHAPTER 15: Food, Gaming, Help
+
+## 416 | Location-based restaurants | pass
+FOR: Restaurants near the shopper show first.
+DID: Opened Food as a stranger and looked at how restaurants near the shopper are found.
+  ok: Restaurants that deliver to the typed area are listed
+  SHOT f416_1.jpg | Restaurants for the area "Mirpur" | guest
+
+## 417 | Menu management | pass
+FOR: A restaurant manages its own menu.
+DID: Signed in as a restaurant owner and opened the menu.
+  ok: The restaurant owner has a Menu
+  ok: Each dish has its own price
+  SHOT f417_1.jpg | The restaurant's menu: price, Save, Remove | vendor
+
+## 418 | Per-item "Sold out today" toggle | pass
+FOR: Each dish has a "sold out today" switch.
+DID: Looked for the "Sold out today" button on each dish.
+  ok: Each dish has a "Sold out today" button
+  SHOT f418_1.jpg | After pressing "Sold out today" | vendor
+
+## 419 | Opening hours and auto-close | pass
+FOR: Opening hours are set, and the restaurant closes itself.
+DID: Tested live in the browser pane by hand. The owner of a restaurant (Crispy House) opened its settings, changed the opening hours from 10:00 to 23:30 into 06:00 to 09:00 (the time on the clock was about 10:50) and saved. The dashboard was read, and a customer opened the restaurant page.
+  ok: Before the change the restaurant says "Open now · 10:00 – 23:30"
+  ok: After it, with no other action and with "I am open" still ticked, it says "Closed now · 06:00 – 09:00": the hours close it by themselves
+  ok: The customer sees "Closed now" on the banner and "This restaurant is closed now. You can look at the menu, but you cannot order."; every Add button is disabled
+  NOTE: Done by hand in the live browser, not by a script. The hours were put back afterwards.
+  NOTE: Closing at the set time was shown by choosing hours that already do not include the time now; the page was not left open until a real closing time.
+  SHOT f419_1.jpg | Before: Open now, 10:00 to 23:30 | restaurant
+  SHOT f419_2.jpg | After changing the hours: Closed now | restaurant
+  SHOT f419_3.jpg | The customer: closed, menu readable, cannot order | admin
+
+## 420 | Cooking time given when confirming | pass
+FOR: The restaurant gives a cooking time when it confirms an order.
+DID: As the restaurant, opened the waiting order, wrote that it will take 20 minutes and pressed Confirm.
+  ok: The new order is waiting on the restaurant's screen
+  ok: The restaurant is asked how long it will take
+  ok: The order is now confirmed and being cooked
+  SHOT f420_1.jpg | A cooking time of 20 minutes typed in | vendor
+  SHOT f420_2.jpg | After pressing Confirm | vendor
+
+## 421 | Timer on the buyer's screen | pass
+FOR: The buyer sees a timer counting the cooking time.
+DID: As the shopper, opened the food order after the restaurant confirmed it.
+  ok: The shopper sees a countdown timer: "Cooking. It will be ready in about 19:51"
+  ok: And the order moves to the "Confirmed: cooking" step
+  SHOT f421_1.jpg | The shopper's order after confirmation | visitor
+
+## 422 | Notification if not confirmed | pass
+FOR: The owner is told when an order is not confirmed in time.
+DID: A shopper's food order was never confirmed. Later the shopper's messages were opened.
+  ok: The shopper is told the order has not been approved and is asked if they want to cancel it
+  SHOT f422_1.jpg | The shopper is asked about the order nobody confirmed | visitor
+
+## 423 | Home delivery / eat there | pass
+FOR: The buyer picks home delivery or eating there.
+DID: Looked at the "Eat there" choice on the Food page.
+  ok: The shopper can choose to eat at the restaurant
+  SHOT f423_1.jpg | Eat there, or have it delivered | guest
+
+## 424 | Custom food | pass
+FOR: Custom food lets a buyer build their own dish.
+DID: Opened the restaurant's Custom food page, where a buyer builds a burger, pizza, sandwich or roll.
+  ok: A buyer can build their own dish on a base
+  SHOT f424_1.jpg | Custom food bases | vendor
+
+## 425 | Central ingredient list | pass
+FOR: A central list holds every ingredient.
+DID: Opened the central ingredient list.
+  ok: One ingredient list serves every restaurant
+  ok: It holds many ingredients
+  SHOT f425_1.jpg | The one ingredient list | admin
+
+## 426 | Restaurant ticks what it has | pass
+FOR: A restaurant ticks the ingredients it has.
+DID: Looked at how a restaurant ticks the ingredients it has.
+  ok: The restaurant ticks what it has
+  ok: Each ingredient has a "We have it" tick
+  SHOT f426_1.jpg | Ticking ingredients | vendor
+
+## 427 | Restaurant sets its own prices | pass
+FOR: A restaurant sets its own price for each ingredient.
+DID: Looked at the price box beside each ingredient.
+  ok: Each restaurant sets its own price
+  SHOT f427_1.jpg | Your own price for each ingredient | vendor
+
+## 428 | Request to add to the list | pass
+FOR: A restaurant can ask to add an ingredient to the list.
+DID: Read what a restaurant does when an ingredient is not in the list.
+  ok: A restaurant can ask for a missing ingredient to be added
+  SHOT f428_1.jpg | Asking for a new ingredient | vendor
+
+## 429 | "Sold out today" on ingredients | pass
+FOR: An ingredient can be marked sold out today.
+DID: As the restaurant, switched on one ingredient ("Bacon") at a price, then ticked "Sold out today" on it and reloaded the page.
+  ok: Each ingredient the restaurant offers has a "Sold out today" tick
+  ok: The tick stays after the page is reloaded, so the ingredient is marked sold out for today
+  SHOT f429_1.jpg | An ingredient the restaurant has: price, On, Sold out today | vendor
+  SHOT f429_2.jpg | After ticking it and reloading | vendor
+
+## 430 | Maximum ingredient limit | pass
+FOR: A maximum ingredient limit applies to each dish.
+DID: On the restaurant's custom food page, looked at the limit on how many ingredients one dish can have.
+  ok: The restaurant can set the most ingredients in one dish
+  ok: And the extra cooking minutes custom food needs
+  SHOT f430_1.jpg | Limit and time | vendor
+
+## 431 | Rules for combinations that don't work | pass
+FOR: Rules block combinations that do not work.
+DID: On the restaurant's custom food page, looked at the rules for ingredients that do not go together.
+  ok: The restaurant can list ingredients that do not go together
+  ok: By picking a first and a second ingredient
+  SHOT f431_1.jpg | Ingredients that do not go together | vendor
+
+## 432 | Save favorite combinations | pass
+FOR: A buyer can save favourite combinations.
+DID: Tested live in the browser pane by hand. The restaurant added a base (Classic burger, 200) and the ingredients Beef patty (80) and Bacon (30) on its Custom food page. A signed-in shop buyer opened the restaurant, built a burger with both ingredients, named it "My double bacon burger" and saved it as a favourite. The page was reloaded and the favourite was added with one tap.
+  ok: The restaurant page has "Build your own": choose a base, tick ingredients, and the price follows (Classic burger + 2 / 10 · 310.00)
+  ok: "Name this favourite" and "Save as a favourite" keep it: "Your favourites: My double bacon burger 310.00" with Add and Remove, still there after the page is loaded again
+  ok: One tap on Add puts "1 × Classic burger (your own), Beef patty, Bacon, 310.00" into the order
+  NOTE: Done by hand in the live browser, not by a script. The base and the ingredient prices were set by the restaurant first, because the demo restaurant had none.
+  SHOT f432_1.jpg | The restaurant sets a base | restaurant
+  SHOT f432_2.jpg | The buyer builds a burger; the price follows the choices | paikari
+  SHOT f432_3.jpg | Saved: Your favourites | paikari
+  SHOT f432_4.jpg | One tap on Add: the favourite is in the order | paikari
+
+## 433 | Kitchen print | pass
+FOR: The kitchen can print the order.
+DID: As the restaurant, opened the kitchen ticket of the order.
+  ok: The ticket carries the order number
+  ok: And what to cook
+  SHOT f433_1.jpg | The kitchen ticket | vendor
+
+## 434 | Three delivery-charge options | pass
+FOR: Three delivery-charge options are partly built.
+DID: Checked together with item 435. The restaurant's delivery charge can now be written three ways: by area (one price inside, another outside), by the kilometre, or written by hand on each order.
+  ok: The settings offer all three ways: By area, By distance and I write it on each order
+  ok: By area was already built; By distance and the longest distance and least charge now work as described under item 435
+  ok: Each way is tested with the order placed and the charge kept on the order
+  NOTE: The by-the-kilometre way uses an estimated road distance (see item 435). Item 436, real road distance, still needs a map service.
+  SHOT f435_1.jpg | The three ways of charging, with the kilometre block | vendor
+
+## 435 | Maximum distance and minimum charge | pass
+FOR: A maximum distance and minimum charge have not been built yet.
+DID: Built and tested live in the browser pane by hand. The owner of Crispy House opened the restaurant settings, tried to set a longest distance of 5 km before saying where the restaurant is, then set its place and saved. The restaurant was switched to By distance (10 taka for each km, least charge 30). A buyer put a dish in the order and shared a position about 3 km away, then one about 6 km away.
+  ok: The delivery settings have a new choice By distance and a block for what is charged for each kilometre, the longest distance in km (empty means no limit) and where the restaurant is, with a button that uses the position of the device
+  ok: Setting a longest distance or charging by the kilometre before the restaurant's place is set is refused with a clear reason next to the Save button
+  ok: On the menu page the order form asks the buyer to share a position once (it is not kept); at about 3.9 km by road it says so and the charge is 39 taka, with the total (329) updated
+  ok: At about 7.8 km, beyond the 5 km limit, the form says the buyer is further than the restaurant delivers and the Place the order button is disabled; the server refuses it too
+  ok: However close, the charge is never below the least charge; the owner's own area prices and the by-hand choice work as before, and a longest distance also holds for area prices
+  NOTE: Built this round from the spec (chapter 17). The distance is the straight line between the two places times a road allowance the owner can set in Settings (1.3 to start), because real road distance needs a map service that is not connected (item 436 stays not built). So the distance and the limit are estimates, and the screen says so. New columns on restaurants and food orders; the buyer's position is not stored, only the distance. 14 new automatic tests.
+  SHOT f435_1.jpg | Restaurant settings: charge for each kilometre, longest distance, where the restaurant is | vendor
+  SHOT f435_2.jpg | About 3.9 km away: the charge is worked out | paikari
+  SHOT f435_3.jpg | About 7.8 km away: too far, the order button is off | paikari
+
+## 436 | Calculated by road distance | pass
+FOR: Charging by road distance has not been built yet.
+DID: Built and tested this round. The owner opened Connections and found one new card, Google Maps, with a single box for the API key and a Test button, and a note saying which two Google services must be on (Geocoding and Distance Matrix). The restaurant settings got a button that finds the restaurant's place from its written address. With a key pasted, the by-the-kilometre charge uses real road distance from Google; with none, or when Google does not answer, it falls back to the earlier estimate and says so.
+  ok: Connections has a Google Maps card with one required box (API key), the help text that names the Geocoding API and the Distance Matrix API, a Switch on tick, Test or Live, and a Try button; the key is stored encrypted and never shown again
+  ok: The restaurant's settings have an address box and Find it from the address above, which fills in the place; the order form and the menu page say whether the distance is by road (Google) or an estimate (straight line times the road allowance)
+  ok: Each order keeps whether its distance was by road or estimated (food_orders.distance_by_road); a road distance is kept for 7 days for the same two places, so the same trip is not asked for twice
+  ok: When Google is off, has no key, refuses the key, is slow or sends something unreadable, the order carries on with the estimate and nothing breaks (11 automatic tests with Google's replies simulated)
+  ok: The Try button on the card asks Google for one real address and one real distance and says in words which of the two worked
+  NOTE: Built this round after the owner asked that every outside service be code-complete so only a key is left to paste. Item 435's estimate stays as the fallback. NOT verified live: the call to Google itself, because there was no Google key and no network permission here; the code was checked against simulated Google answers (success, no route, denied key, timeout, bad reply). The first real key may need the Distance Matrix API switched on in the Google Cloud project, which is what the card's help text says.
+  SHOT f436_1.jpg | The Google Maps card in Connections: one key box, the two services it needs, Test and Try | admin
+
+## 437 | Advance payment | pass
+FOR: A restaurant can ask for an advance payment.
+DID: Tested live in the browser pane by hand. The restaurant set "Advance for orders over 500" at 30%. A guest ordered a Family Combo (1,850) for home delivery and placed the order. The restaurant opened its orders, recorded the advance, and confirmed. The guest read the order page at each step.
+  ok: Before ordering the guest is told: "This is a big order. The restaurant asks for an advance of 555.00 before it starts."
+  ok: After placing, the order page says: "The restaurant needs an advance of 564.00 before it starts cooking." The restaurant sees "Advance: 0.00 / 564.00" and "Confirm" is switched off
+  ok: After the restaurant records the advance (564 of 564) "Confirm" turns on; confirming starts the cooking timer, and the guest sees "Advance received: 564.00"
+  NOTE: Done by hand in the live browser, not by a script.
+  NOTE: Small difference found: the figure before ordering (555.00) is 30% of the food only, while the final advance (564.00) is 30% of the food plus the 30 delivery charge. Both are explained on screen, but the two numbers differ.
+  SHOT f437_1.jpg | The guest is told about the advance before ordering | guest
+  SHOT f437_2.jpg | After placing: the restaurant needs an advance before cooking | guest
+  SHOT f437_3.jpg | The restaurant: Advance 0 of 564, Confirm switched off | restaurant
+  SHOT f437_4.jpg | Advance recorded: Confirm is on | restaurant
+  SHOT f437_5.jpg | The guest: cooking has started, advance received | guest
+
+## 438 | Memo in the restaurant's name | pass
+FOR: The memo is made in the restaurant's name.
+DID: As the restaurant, opened the memo of the order.
+  ok: The memo is in the restaurant's own name
+  ok: With the total the buyer pays
+  SHOT f438_1.jpg | The memo | vendor
+
+## 439 | Own or platform delivery | pass
+FOR: The restaurant delivers itself or uses the platform's riders.
+DID: On the restaurant's page, looked at who delivers.
+  ok: The restaurant can deliver with its own people
+  ok: Or ask the platform's courier
+  SHOT f439_1.jpg | Who delivers: own people or the platform's courier | vendor
+
+## 440 | Commission per restaurant | pass
+FOR: Commission is set for each restaurant.
+DID: Looked at the commission each restaurant pays.
+  ok: The owner sets a commission for each restaurant, on delivered orders only
+  ok: Each restaurant has a "Set the commission" button
+  SHOT f440_1.jpg | Commission per restaurant | admin
+
+## 441 | Restaurant dashboard | pass
+FOR: The restaurant has its own dashboard.
+DID: Looked at the restaurant owner's dashboard.
+  ok: Today's sales
+  ok: This month's sales
+  ok: The commission the restaurant pays
+  SHOT f441_1.jpg | The restaurant dashboard | vendor
+
+## 442 | Complaints with photos | pass
+FOR: Complaints can include photos.
+DID: The restaurant moved the order through Packing, Out for delivery and Delivered. Then the shopper opened the order, wrote what was wrong and sent it with a photo.
+  ok: The restaurant's sales for today count the delivered order
+  ok: After delivery the shopper is asked if something was wrong with the food
+  ok: The complaint is accepted and shown on the order
+  SHOT f442_1.jpg | The restaurant has delivered the order: today's sales show | vendor
+  SHOT f442_2.jpg | A complaint with a photo, ready to send | visitor
+  SHOT f442_3.jpg | After sending the complaint | visitor
+
+## 443 | Two orders on one delivery | pass
+FOR: Two orders can go on one delivery.
+DID: Tested live in the browser pane by hand. Crispy House had two home-delivery orders to the same area (Mirpur): one for Hot Wings and one for a Family Combo. The restaurant confirmed the first and moved both to "Out for delivery" and read its orders page.
+  ok: Two delivery orders going to the same area are named together at the top of the orders list: "Going to the same area (mirpur), one rider can take them together: F261021-000002, F261022-000003"
+  ok: The grouping follows the area typed in the address, and only orders in the packing or out-for-delivery stage that are home delivery are grouped
+  NOTE: Done by hand in the live browser, not by a script. Only the grouping is shown on screen; sharing the delivery charge between the two is not a function of its own (the owner sets the charge by hand).
+  SHOT f443_1.jpg | The restaurant sees the two orders to the same area together | restaurant
+
+## 444 | Game and package list | pass
+FOR: A list of games and their top-up packages.
+DID: Opened Game top-up and looked at the games and their packages.
+  ok: A list of games
+  ok: Mobile Legends is listed
+  ok: Each game shows its cheapest package
+  SHOT f444_1.jpg | Games and their prices | guest
+
+## 445 | Game ID verification (shows name) | skipped
+FOR: The player's name shows after typing the game ID, so a wrong ID is caught.
+DID: Opened a game and looked at how the player ID is checked.
+  ok: The game page asks for the player ID
+  NOTE: The name check (showing the player's name for an ID) needs a live game connection and was not reproduced.
+  SHOT f445_1.jpg | A game page asks for the player ID | guest
+
+## 446 | Automatic top-up | skipped
+FOR: Automatic top-up is partly built.
+DID: Looked at the automatic top-up.
+  ok: Top-ups are done by hand until a provider does it
+  NOTE: The checklist marks automatic top-up as partly built: it is manual for now.
+  SHOT f446_1.jpg | Game top-ups | admin
+
+## 447 | Manual top-up backup | pass
+FOR: Top-ups can also be done by hand as a backup.
+DID: Looked at the manual top-up lists.
+  ok: A list of paid orders to top up by hand
+  SHOT f447_1.jpg | Manual top-up | admin
+
+## 448 | Auto refund on failed top-up | pass
+FOR: A failed top-up is refunded automatically.
+DID: Looked at the failed and refunds list.
+  ok: A failed top-up is listed with its refund
+  SHOT f448_1.jpg | Failed and refunds | admin
+
+## 449 | Online payment only | pass
+FOR: Game top-ups are paid online only.
+DID: Read the payment rule for game top-ups.
+  ok: Top-ups are paid online only
+  SHOT f449_1.jpg | Online payment only | admin
+
+## 450 | Help posts and approval | pass
+FOR: Help posts need approval before they appear.
+DID: Opened the owner's Help posts page.
+  ok: Every post is read before it is shown
+  ok: There is a "Waiting to be read" list
+  SHOT f450_1.jpg | Help posts wait for approval | admin
+
+## 451 | Job opportunities for unemployed young people | pass
+FOR: The Help section lists job opportunities for young unemployed people.
+DID: Opened the Help board and its post types.
+  ok: A post can be about needing a worker
+  ok: Or looking for a product
+  ok: Or needing help
+  SHOT f451_1.jpg | The Help board | guest
+
+## 452 | Page owners finding moderators | pass
+FOR: Page owners can find moderators.
+DID: Tested live in the browser pane by hand. The owner published a post from Karim Pharmacy: "Moderator needed for our Facebook page" (kind: Need a worker) with a contact line. A different signed-in person (a student) opened it, read how to reach the poster, and left a comment saying they can do it.
+  ok: The post shows its title, the words, the 'how to reach them' line ("Call 01700000003 after 6 pm") and the notice that the board is only a place to meet
+  ok: A signed-in stranger could comment ("I can do this. I am a student and free every evening after 6 pm. Please call me.") and the comment appeared at once with its date and time
+  ok: A guest sees the post but is told to log in before they can see how to reach the poster and before commenting
+  NOTE: Done by hand in the live browser. While testing, a comment that was refused showed its message at the very top of the page, away from the comment box. Fixed: the refusal now shows right above the Comment button.
+  SHOT f452_1.jpg | A student reads the moderator post and how to reach the poster | wholesaler
+  SHOT f452_2.jpg | Their comment is on the post | wholesaler
+  SHOT f452_3.jpg | A guest is asked to log in to see how to reach them | guest
+
+## 453 | Product card in comments | pass
+FOR: A product card can appear inside a comment.
+DID: On the help post, wrote a comment with a link to one of the shop's products and pressed Comment.
+  ok: The pasted medicine link is shown as a card with the medicine name and a View button
+  SHOT f453_1.jpg | A comment with a product link pasted in | wholesale
+  SHOT f453_2.jpg | After commenting: the link has become a product card | wholesale
+
+## 454 | Card shows photo, name, price, "View" button | pass
+FOR: The card shows photo, name, price and a "View" button.
+DID: Opened the help post as a visitor and looked at the product card inside the comment.
+  ok: The card shows the product name
+  ok: And its price
+  ok: And a View button that opens the product
+  NOTE: This medicine has no picture in the database, so the card shows a grey tile where the photo goes.
+  SHOT f454_1.jpg | The product card in a comment | guest
+
+## 455 | Card follows visibility rules | pass
+FOR: The card follows the visibility rules.
+DID: Tested live in the browser pane by hand. A comment with two product links was left on a help post: one to Napa and one to a medicine that does not exist. The same post was then opened by a guest, by a shop (tier C) and by a wholesaler who has no medicine category.
+  ok: A guest sees a Napa card at the retail price of 300 taka per box
+  ok: A shop in price tier C sees the same card at its own price, 240 taka per box
+  ok: A wholesaler whose account has no medicine category sees no Napa card at all, because medicine is not shown to them
+  ok: The link to a medicine that does not exist shows "This product is no longer available." for everyone
+  ok: Found and fixed: a pasted link to our own site with a port (as on a test server) was refused without any visible message; the port is now ignored when checking the address
+  NOTE: Done by hand in the live browser. New automatic test in HelpBoardTest for the link with a port; the comment refusal now uses its own message place.
+  SHOT f455_1.jpg | Wholesaler without a medicine category: no Napa card, only the gone product note | wholesaler
+  SHOT f455_2.jpg | Guest: Napa card at the retail price (300) | guest
+  SHOT f455_3.jpg | Shop in tier C: the same card at its own price (240) | shop
+
+## 456 | No photos allowed | pass
+FOR: Photos are not allowed in help posts.
+DID: Read the photo rule on the new-post form.
+  ok: The form says photos are not allowed
+  SHOT f456_1.jpg | No photos on the board | visitor
+
+## 457 | "Still needed?" after 30 days | pass
+FOR: After 30 days the post asks "still needed?".
+DID: A help post stayed up with nobody answering. Thirty-five days later the nightly sweep ran, and the poster page was opened.
+  ok: After 30 days the poster is asked "Is this still needed?" and told it will close if not answered
+  ok: And can answer yes to keep it open
+  SHOT f457_1.jpg | The poster is asked if the post is still needed | visitor
+
+## 458 | Post limit | pass
+FOR: There is a limit on how many posts one person can make.
+DID: Tested live in the browser pane by hand. Karim Pharmacy published two help posts in one day and then tried a third.
+  ok: The first two posts were accepted
+  ok: The third was refused with "That is enough posts for today. Please try again tomorrow."
+  NOTE: Done by hand in the live browser.
+  SHOT f458_1.jpg | The third post of the day is refused | shop
+
+## 459 | "Transactions not our responsibility" stated clearly | pass
+FOR: The page says clearly that deals between people are not the platform's responsibility.
+DID: Read the notice about deals between people.
+  ok: The page says plainly that deals between people are not the platform's responsibility
+  SHOT f459_1.jpg | The responsibility notice | visitor

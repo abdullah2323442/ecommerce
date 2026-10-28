@@ -1,11 +1,41 @@
 {
-  "n": 598,
-  "status": "notbuilt",
-  "error": null,
-  "checks": [],
-  "shots": [],
-  "notes": [
-    "Old data stored separately has not been built yet."
-  ],
-  "did": "Checked the checklist."
+ "n": 598,
+ "status": "pass",
+ "error": null,
+ "did": "Built and tested live in the browser pane by hand. Four old records (three staff activity lines and one sign-in record, 13 to 20 months old) were added to the test data. The owner opened the new Archive screen, pressed Move old records now, and searched for napa.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "The Archive screen says how many months old a record must be before it moves (12 to start, a setting; 0 for never), that nothing is deleted, and that orders, memos, money and stock are never moved"
+  },
+  {
+   "ok": true,
+   "text": "Move old records now moved the four old records and said so; the counts show 3 staff activity lines and 1 sign-in; the busy tables no longer hold them"
+  },
+  {
+   "ok": true,
+   "text": "Searching for napa found the one activity line that mentioned it, with its date; a search takes every word, a kind of record and a date range, and a percent sign is only a character"
+  },
+  {
+   "ok": true,
+   "text": "At night (03:00 Bangladesh time) the same move runs by itself; running it twice never copies a record twice; only records a person has already read leave the notices; only the people who may read the activity log can open it (automatic tests)"
+  }
+ ],
+ "notes": [
+  "Built this round from the spec (chapter 28, note 11). What moves is only what daily work no longer reads: the staff activity log, sign-in records and notices already read. Behaviour data, orders and money stay where they are. New table archived_records keeps each record whole. 10 new automatic tests."
+ ],
+ "shots": [
+  {
+   "file": "f598_1.jpg",
+   "caption": "Four old records moved to the archive",
+   "role": "admin",
+   "url": "/admin/archive"
+  },
+  {
+   "file": "f598_2.jpg",
+   "caption": "Searching the archive for a word",
+   "role": "admin",
+   "url": "/admin/archive?q=napa"
+  }
+ ]
 }

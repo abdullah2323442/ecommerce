@@ -1,18 +1,43 @@
 {
-  "n": 224,
-  "status": "skipped",
-  "error": null,
-  "checks": [],
-  "shots": [
-    {
-      "file": "f224_1.jpg",
-      "caption": "The MPO list",
-      "role": "admin",
-      "url": "/admin/mpo"
-    }
-  ],
-  "notes": [
-    "The one-to-many structure is how the data is stored. The screen shows MPOs and their companies, but not the structure itself."
-  ],
-  "did": "Looked at the MPO list to see one company linked to more than one MPO."
+ "n": 224,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. The owner opened an MPO who had no company, wrote his area, and gave him the company Square. The MPO signed in, searched Napa in that company's list and added it to the products he works with. Another MPO already had two companies.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "One MPO can have several companies: Kabir's own page lists Beximco Pharmaceuticals and Square, each with its own \"Choose products\""
+  },
+  {
+   "ok": true,
+   "text": "The owner adds a company at any time (\"Save companies\") and the MPO at once gets that company's medicine list to choose from"
+  },
+  {
+   "ok": true,
+   "text": "The MPO chooses the products he works with himself (Napa 500 mg was added), and only those can be sent"
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser, not by a script."
+ ],
+ "shots": [
+  {
+   "file": "f224_2.jpg",
+   "caption": "The owner's page for an MPO: area, note and the list of companies",
+   "role": "admin",
+   "url": "/admin/mpo/12"
+  },
+  {
+   "file": "f224_3.jpg",
+   "caption": "The MPO searches the company's medicines and adds the ones he works with",
+   "role": "mpo",
+   "url": "/mpo"
+  },
+  {
+   "file": "f224_1.jpg",
+   "caption": "An MPO with two companies",
+   "role": "mpo",
+   "url": "/mpo"
+  }
+ ]
 }

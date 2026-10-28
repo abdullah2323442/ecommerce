@@ -1,0 +1,220 @@
+# CHAPTER 11: Returns
+
+## 253 | Returns only for paikari | pass
+FOR: Only paikari buyers can return medicines.
+DID: As an ordinary shopper, tried the shops' return page. Then opened it as a paikari shop.
+  ok: An ordinary shopper cannot use the paikari return page
+  ok: A paikari shop sees its own memos with a return form
+  SHOT f253_1.jpg | A shopper is turned away | visitor
+  SHOT f253_2.jpg | The paikari shop's Returns page | paikari
+
+## 254 | 2–3 day limit, memo required | pass
+FOR: A return has a two to three day limit and needs the memo.
+DID: Read the return rule on the owner's Returns page and the setting behind it.
+  ok: The rule is shown: shops only, within 3 days of receiving
+  ok: The number of days is a setting
+  SHOT f254_1.jpg | The return rule | admin
+
+## 255 | Exchange, or 50% if cash | pass
+FOR: The buyer gets an exchange, or half the money back if they paid cash.
+DID: Looked at the choices the shop has for what it wants back.
+  ok: One choice: an exchange
+  ok: Another: cash back at half the price
+  ok: And: credit on the next memo
+  NOTE: The choices are: Credit on my next memo / Exchange for another medicine / Cash back (half the price)
+  SHOT f255_1.jpg | Credit, exchange or half the price in cash | paikari
+
+## 256 | "Returnable" mark | pass
+FOR: A "returnable" mark shows which medicines can come back.
+DID: Looked for the "Returnable" mark beside each memo.
+  ok: A memo that can still be returned is marked "Returnable"
+  SHOT f256_1.jpg | The "Returnable" mark | paikari
+
+## 257 | Search by date | pass
+FOR: Returns can be searched by date.
+DID: Used the From and To boxes to search the memos by date.
+  ok: Memos from that day are listed
+  SHOT f257_1.jpg | Memos searched by date | paikari
+
+## 258 | Public: apply → approve → call | pass
+FOR: Public buyers apply for a return, the shop approves, then calls them.
+DID: As an ordinary shopper, opened the page for asking to return something.
+  ok: Public shoppers have a return page: apply, wait for approval, then be called
+  SHOT f258_1.jpg | A public shopper's return page | visitor
+
+## 259 | Login required to return | pass
+FOR: A buyer must be signed in to return something.
+DID: As a stranger, opened the return page.
+  ok: A stranger must sign in before returning anything
+  SHOT f259_1.jpg | A stranger is sent to sign in | guest
+
+## 260 | Reason or voice note required | pass
+FOR: A reason or a voice note is required for a return.
+DID: Filled in a return but left the reason blank, and pressed "Ask to return".
+  ok: The "Ask to return" button stays disabled until a reason is typed (or a voice note is attached)
+  ok: A voice note can be used instead of typing a reason
+  SHOT f260_1.jpg | A return with no reason typed: the "Ask to return" button stays greyed out | paikari
+
+## 261 | Partial returns | pass
+FOR: Part of an order can be returned.
+DID: Asked to return one strip out of a box.
+  ok: The request is for a strip, not the whole box
+  SHOT f261_1.jpg | Asking to return one strip, not the whole box | paikari
+  SHOT f261_2.jpg | The request is sent | paikari
+  SHOT f261_3.jpg | The owner sees the part-return waiting | admin
+
+## 262 | At the purchase price | pass
+FOR: Returns are valued at the original buying price.
+DID: Opened a return waiting to be approved and read the amount.
+  ok: The return is valued at what the shop paid (85 for a strip)
+  SHOT f262_1.jpg | A return waiting | admin
+
+## 263 | Credit and minus on next memo | pass
+FOR: The return becomes credit, taken off the next memo.
+DID: Approved the waiting return as credit and looked at what the shop sees.
+  ok: The owner approves the return
+  ok: The shop has credit, shown in taka, that comes off its next memo
+  SHOT f263_1.jpg | A return waiting for the owner | admin
+  SHOT f263_2.jpg | After approving: "Return approved." | admin
+  SHOT f263_3.jpg | The shop sees its credit | paikari
+
+## 264 | Warning on credit after 1–2 months | pass
+FOR: If the credit sits unused for one or two months, a warning shows.
+DID: Looked at the setting for warning about credit that has sat unused.
+  ok: The owner sets how many days before unused credit is flagged
+  SHOT f264_1.jpg | The credit warning setting | admin
+
+## 265 | Return goes back to its own lot | pass
+FOR: A returned item goes back to its own batch.
+DID: Opened the medicine's lots after a return was approved to see where the returned goods went.
+  ok: The medicine's movements show the return
+  SHOT f265_1.jpg | The lots and movements after a return | admin
+
+## 266 | Lot reopens if finished | pass
+FOR: If that batch was finished, it is reopened.
+DID: Sold both boxes of a lot of Seclo at the counter, so the lot was finished. Then recorded and approved a return of one box and looked at the stock again.
+  ok: The finished lot reopens with the returned box (0 became 1)
+  NOTE: Stock page text after the return: Aqua Bazar Overview Dashboard Sales and orders Counter Online orders All orders Pre-orders Prescriptions Returns Price requests Questions Online payments Approvals Delivery My deliveries Delivery money Delivery ratings Couriers Weights Market Market Market commission Commission statements Copied products Market complaints Reviews Food, games and made to order Restaurants Ingredient list Game top-ups Made to order Craftsmen Job chats Catalogue and stock Product catalog Stock Offers Aqua Tokens Pe
+  SHOT f266_1.jpg | After selling both boxes the lot is finished (0) | admin
+  SHOT f266_2.jpg | After the return is approved the box is back in its lot (1) | admin
+
+## 267 | Returned goods resold | pass
+FOR: Returned goods can be sold again.
+DID: Sold the returned box of Seclo again at the counter and looked at the stock.
+  ok: The returned goods can be sold again like any other stock
+  ok: Selling the returned box takes it out of stock again (1 became 0)
+  SHOT f267_1.jpg | The returned box added to a new sale | admin
+  SHOT f267_2.jpg | Stock after selling it again (0) | admin
+
+## 268 | Retail refunds — no profile | pass
+FOR: Retail refunds need no customer profile.
+DID: Sold a strip of Napa at the counter to a walk-in buyer (no account). Then, on the Returns screen, found the memo and recorded a return of that strip, asking for cash back. The owner approved it.
+  ok: A retail sale cannot be credited, and the screen says so: "A retail sale has no account to credit. Use exchange or cash."
+  ok: The return is recorded against "Retail" and waits for the owner
+  ok: The approved retail return appears in "Recently decided"
+  SHOT f268_1.jpg | A walk-in sale, memo M2026-000027 | admin
+  SHOT f268_2.jpg | The retail memo opened on the Returns screen | admin
+  SHOT f268_3.jpg | Asking for credit on a retail sale: there is no account to credit | admin
+  SHOT f268_4.jpg | Cash back recorded, waiting for the owner | admin
+  SHOT f268_5.jpg | Approved: the return is decided | admin
+
+## 269 | Three kinds of search (memo/date/medicine name) | pass
+FOR: A return can be found by memo, by date or by medicine name.
+DID: Looked at the three ways to find a sale to return.
+  ok: Search by memo number
+  ok: Search by date
+  ok: Search by medicine name
+  SHOT f269_1.jpg | Memo, date or medicine name | admin
+
+## 270 | Return without invoice (rare) | pass
+FOR: In rare cases a return is allowed without an invoice.
+DID: Looked for a way to take a return with no memo.
+  ok: The owner can take a return without a memo, for rare cases
+  SHOT f270_1.jpg | Return without a memo (admin) | admin
+
+## 271 | Optional "Will receive return money" field | pass
+FOR: An optional field notes who will receive the return money.
+DID: Opened a retail memo on the Returns screen and looked for the optional "Will receive money" box. Typed an amount and recorded the return.
+  ok: A retail return has an optional "Will receive money" box
+  ok: The amount the buyer expects is kept on the return and shown to the owner when deciding
+  SHOT f271_1.jpg | An amount typed in "Will receive money" | admin
+  SHOT f271_2.jpg | The return keeps what the buyer expects to receive | admin
+
+## 272 | Return policy on retail memos | pass
+FOR: Retail memos print the return policy.
+DID: Finished a retail sale and read the policy printed on the memo.
+  ok: The retail memo prints the return policy
+  SHOT f272_1.jpg | The memo carries the return policy | admin
+
+## 273 | Offer returns at 50% of offer rate | pass
+FOR: Offer items return at half the offer rate.
+DID: Sold 3 boxes through the offer to a paikari shop. On the Returns screen, recorded a return of one offer box for cash, and approved it.
+  ok: The memo marks the offer line
+  ok: The Returns screen shows the line as an offer line
+  ok: Cash back for offer goods is 50% of the offer price (offer price 247.5, cash 123.75)
+  SHOT f273_1.jpg | The memo M2026-000034 with the offer line | admin
+  SHOT f273_2.jpg | The offer line on the Returns screen | admin
+  SHOT f273_3.jpg | The waiting return: the offer price and what is paid back in cash | admin
+  SHOT f273_4.jpg | Approved | admin
+
+## 274 | Delivery charge — after/before sending | pass
+FOR: The delivery charge rule differs if the return is before or after sending.
+DID: With "delivery charge paid first" switched on for this order size, a shopper ordered a box of Napa to be delivered. The owner saw the charge had to come first, marked it received, then cancelled the order before sending. The shopper's order page was read.
+  ok: Checkout says a big order pays the delivery charge first
+  ok: Cancelled before sending: half of the delivery charge paid goes back, and the page says the other half stays for the handling
+  NOTE: The owner's buttons: Toggle Sidebar |  | বাংলা | EN | Delivery charge received | Set price | Full | Partial | Not available | Save | Checking done
+  NOTE: Order page of the shopper: http://127.0.0.1:8001/orders/jTJzqkQzW7AOsKQAf13D7vn7QHWzvZem8teOQRUX; the owner's: /admin/orders/316
+  SHOT f274_1.jpg | The shopper's order: the delivery charge comes first | visitor
+  SHOT f274_2.jpg | The owner order page | admin
+  SHOT f274_3.jpg | The owner marks the delivery charge as received | admin
+  SHOT f274_4.jpg | The shopper cancels before it was sent | visitor
+
+## 275 | 50% on product advance | pass
+FOR: If a product advance was paid, 50 per cent applies.
+DID: Tested live in the browser pane. With a 50% pre-order advance switched on, a paikari shop pre-ordered a box of Napa (advance 123.75). The owner accepted it and marked the advance received. The shop then cancelled. The owner chose "Return half (goods not taken)".
+  ok: A pre-order carries an advance (50% of what the buyer would pay), shown to both the owner and the shop
+  ok: When the shop cancels, the owner decides about the advance: return it, return half (goods not taken), or keep it
+  ok: Returning half gives back exactly 50% of the advance: 61.88 of 123.75
+  NOTE: This test was done by hand in the live browser, not by a script. The product advance in the spec is the pre-order advance.
+  SHOT f275_1.jpg | The owner sees the pre-order with its advance: 123.75, to be paid | admin
+  SHOT f275_2.jpg | The owner pressed "Advance received": the advance now reads Received | admin
+  SHOT f275_3.jpg | The shop sees its pre-order: "Advance: 123.75, Received" | paikari
+  SHOT f275_4.jpg | The shop cancelled. The owner is asked to decide about the advance: Returned, Return half (goods not taken), Keep it | admin
+  SHOT f275_5.jpg | After "Return half": the advance of 123.75 shows Returned 61.88 | admin
+
+## 276 | Return analysis (customer and product) | pass
+FOR: Return analysis shows which customers and products come back most.
+DID: Looked for return analysis by customer and product.
+  ok: The owner sees why things come back, by reason, with counts and amounts
+  ok: And which products come back most
+  SHOT f276_1.jpg | Why things come back, and what comes back most | admin
+
+## 277 | Warnings when mistakes are found | pass
+FOR: When a mistake is found, warnings appear.
+DID: The shop asked to return a strip "Ordered by mistake". The owner approved it and named it the shop's mistake. Then the same for a return that was the staff's mistake. The shop's and the staff member's messages were read.
+  ok: The owner is asked whose mistake a return was
+  ok: The shop gets a warning that the return was its own mistake
+  ok: The staff member who made the sale gets a warning
+  NOTE: What the shop sees: Skip to content Aqua Bazar A A A বাংলা EN 70 Account Market Electronics Clothing Jewellery Home and living Beauty and care Pharmacy Food Game top-up Made to order Your messages Mark all as read Back The same mistake (Ordered by mistake) has now happened three times in 90 days. Please take more care.
+  SHOT f277_1.jpg | The owner picks whose mistake it was | admin
+  SHOT f277_2.jpg | The shop is warned | paikari
+  SHOT f277_3.jpg | The staff member who made the sale is warned | staff
+
+## 278 | Auto warning for repeated mistakes | pass
+FOR: Repeated mistakes trigger an automatic warning.
+DID: The shop returned a strip "Ordered by mistake" three times in a row, and the owner named each one the shop's mistake. The shop's messages were read.
+  ok: After the same mistake three times the shop gets a stronger "happening repeatedly" warning on its own
+  SHOT f278_1.jpg | After the same mistake three times | paikari
+
+## 279 | "Previously returned" mark | pass
+FOR: A "previously returned" mark shows on the item.
+DID: As a paikari shop, asked to return one strip from its newest memo. Then, as the owner, looked the same memo up on the Returns screen.
+  ok: The line that already has a return is marked "Previously returned"
+  SHOT f279_1.jpg | The shop asks to return one strip | paikari
+  SHOT f279_2.jpg | The owner opens memo M2026-000016 | admin
+
+## 280 | "Reprint" on memos | pass
+FOR: A memo can be reprinted when needed.
+DID: Opened a finished memo and looked for a print or reprint button.
+  ok: A finished memo has a "Print memo" button, so it can be printed again
+  SHOT f280_1.jpg | A memo with its print button | admin

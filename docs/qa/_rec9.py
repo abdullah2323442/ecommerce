@@ -1,0 +1,7 @@
+from _w import w
+w(474,"Tested live in the browser pane by hand. The date the courier rates were last checked was set back to 1 July 2026, so that more than three months had passed (the three months could not be waited for). The owner opened the Couriers screen and pressed the confirm button.",
+ ["The Couriers screen showed a red notice: \"Are the courier rates still correct? Nobody has checked for three months.\" with the button \"Yes, they are still correct\"",
+  "After pressing it the screen said \"Thank you. We will ask again in three months.\" and \"Rates last checked 22 Oct 2026\", and the notice went away"],
+ [{"file":"f474_1.jpg","caption":"The three-month reminder on the Couriers screen","role":"admin","url":"/admin/couriers"},
+  {"file":"f474_2.jpg","caption":"After confirming: thanked, date updated, notice gone","role":"admin","url":"/admin/couriers"}],
+ ["Done by hand in the live browser. The three months were not waited for: the last-checked date was moved back with a command, and everything after that was done on the screen. The same reminder is also meant to show on the owner's home screen; that was not looked at."])

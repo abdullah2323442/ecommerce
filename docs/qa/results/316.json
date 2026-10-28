@@ -1,18 +1,49 @@
 {
-  "n": 316,
-  "status": "skipped",
-  "error": null,
-  "checks": [],
-  "shots": [
-    {
-      "file": "f316_1.jpg",
-      "caption": "The shopper's market orders",
-      "role": "visitor",
-      "url": "/market-orders"
-    }
-  ],
-  "notes": [
-    "Changing an address needs an order that has not been packed. Not reproduced."
-  ],
-  "did": "Looked for changing the address before packing."
+ "n": 316,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. A guest (no account) ordered a box of Napa and opened the private order page. The shopper changed the delivery address, then the owner opened the order, saw the new address, marked the line available and finished checking. The shopper opened the page again.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "A new order offers \"Change the address\" with the name, phone, district, area and house filled in"
+  },
+  {
+   "ok": true,
+   "text": "After saving, the page says \"Address changed.\" and the owner's order page shows the new address (Flat 5B, Sector 11, Road 9, Uttara, Dhaka)"
+  },
+  {
+   "ok": true,
+   "text": "Once the owner has checked the order, \"Change the address\" and \"Cancel order\" are no longer offered: the change is possible only until the order is being prepared"
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser, not by a script."
+ ],
+ "shots": [
+  {
+   "file": "f316_1.jpg",
+   "caption": "A new order: Change the address is offered",
+   "role": "guest",
+   "url": "/orders/..."
+  },
+  {
+   "file": "f316_2.jpg",
+   "caption": "The address changed to Uttara",
+   "role": "guest",
+   "url": "/orders/..."
+  },
+  {
+   "file": "f316_3.jpg",
+   "caption": "The owner sees the new address on the order",
+   "role": "admin",
+   "url": "/admin/orders/317"
+  },
+  {
+   "file": "f316_4.jpg",
+   "caption": "After checking, the change option is gone",
+   "role": "guest",
+   "url": "/orders/..."
+  }
+ ]
 }

@@ -1,0 +1,159 @@
+# CHAPTER 5: Draft Invoice
+
+## 109 | Draft invoice — kept open, items added | pass
+FOR: A draft invoice stays open while items are added, so a long order can be built up slowly.
+DID: Started a sale, added a box, left the screen and came back from the list of open drafts.
+  ok: Coming back, the item is still on the draft
+  SHOT f109_1.jpg | The sale is kept in "Open drafts" while the owner does something else | admin
+  SHOT f109_2.jpg | The same draft, reopened with its item | admin
+
+## 110 | Stock out the moment an item is added | pass
+FOR: The moment an item is added to a draft, it comes out of stock so nobody else sells it.
+DID: Added a box to a draft and looked at the stock number straight away.
+  ok: The box left stock the moment it was added (31 became 30)
+  SHOT f110_1.jpg | The draft: stock is already reduced | admin
+
+## 111 | Removed → back to stock, kept in history | pass
+FOR: If an item is removed, it returns to stock and the removal stays in the history.
+DID: Added a box to a draft, then pressed the bin icon to remove it, and looked at the stock and the history.
+  ok: The removed box is back in stock (31 then 31)
+  ok: The removal is kept in the medicine's movement history as a return
+  SHOT f111_1.jpg | A draft with a box | admin
+  SHOT f111_2.jpg | After removing the box from the draft | admin
+  SHOT f111_3.jpg | The movement history keeps the removal | admin
+
+## 112 | Multiple drafts, separate invoice numbers | pass
+FOR: A shop can have several drafts open at once, each with its own invoice number.
+DID: Opened two retail drafts and looked at how each is named on the counter list.
+  ok: Each open draft has its own number (Customer 2, Customer 4, Customer 5, Customer 16 ...)
+  SHOT f112_1.jpg | Several drafts open, each with its own name | admin
+
+## 113 | All add up into one memo at the end | pass
+FOR: At the end, all the drafts add up into one memo.
+DID: Finished a sale and looked at the one memo that comes out, with its year-based number.
+  ok: The finished sale gets one memo number
+  SHOT f113_1.jpg | One memo for the whole sale | admin
+
+## 114 | Merge two drafts | pass
+FOR: Two drafts for the same shop can be merged into one.
+DID: Made two drafts with a box each, then used "Merge another draft" to join them.
+  ok: The draft offers other drafts to merge in
+  ok: After merging, the items of both drafts are on one
+  SHOT f114_1.jpg | The second draft, with its own box | admin
+  SHOT f114_2.jpg | After merging: both boxes are on one draft | admin
+
+## 115 | Unlimited retail drafts | pass
+FOR: Walk-in retail customers can have as many drafts as needed.
+DID: Looked at the number of retail drafts open at once.
+  ok: There is no small limit on retail drafts (9 open)
+  SHOT f115_1.jpg | 9 retail drafts are open at the same time | admin
+
+## 116 | First click wins on drafts | pass
+FOR: If two staff touch the same draft, the first click wins and the other is told.
+DID: Opened one draft as the owner and, at the same time, as staff, and looked for any sign on the screen that someone else is working on it.
+  ok: Staff are told that another person has the draft open
+  SHOT f116_1.jpg | Staff open the owner's draft while the owner has it open | staff
+
+## 117 | Draft timer and color change | pass
+FOR: A timer on each draft turns red as it gets old, so forgotten drafts stand out.
+DID: Opened the counter 35 days later and looked at how long the old open drafts say they have been open, and how they look next to a new one.
+  ok: Each draft shows how long it has been open
+  ok: An old draft is singled out and the owner is asked what to do with it
+  NOTE: The age text on an old draft is drawn as: rgb(138, 90, 0)|tabular text-sm font-semibold text-warning
+  SHOT f117_1.jpg | Old drafts at the counter | admin
+
+## 118 | Open draft count | pass
+FOR: The screen shows how many drafts are open right now.
+DID: Read the "Open drafts" count at the top of the list.
+  ok: The counter shows how many drafts are open
+  SHOT f118_1.jpg | "Open drafts (n)" | admin
+
+## 119 | Notification after 1–2 days (two buttons) | pass
+FOR: After one or two days, the system reminds staff about old drafts, with two buttons to act on them.
+DID: Set "Ask about a draft nobody touched for" to a very short time in Settings, then opened the counter where many drafts have been left.
+  ok: The counter asks what to do with a draft nobody has touched: return its goods to stock, or keep it
+  SHOT f119_1.jpg | The counter, with old drafts | admin
+
+## 120 | Open drafts by staff name | pass
+FOR: Open drafts are listed under the name of the staff member working on them.
+DID: Looked at the name of the staff member under each open draft.
+  ok: Each draft shows who is working on it
+  SHOT f120_1.jpg | Each open draft carries the name of its staff member | admin
+
+## 121 | Anyone can enter any draft | pass
+FOR: Any staff member can open and continue any draft.
+DID: As staff, opened a draft that the owner started.
+  ok: Staff can open and see a draft the owner started
+  SHOT f121_1.jpg | Staff on the owner's draft | staff
+
+## 122 | Show "Robiul is working" | pass
+FOR: The screen shows "Robiul is working" so two people do not collide.
+DID: Sent an online order. The owner opened it to check it. While it was open, staff opened the same order.
+  ok: Staff see "Siam (Admin) is working on this order"
+  NOTE: The same note was not found on counter drafts (see feature 116).
+  SHOT f122_1.jpg | The owner has the order open | admin
+  SHOT f122_2.jpg | Staff open the same order: a note says who else is working on it | staff
+
+## 123 | "Move to another draft" in three-dot menu | pass
+FOR: A three-dot menu has "Move to another draft" to shift an item.
+DID: On a draft with an item, opened the "Move…" menu beside the item.
+  ok: Each item has a "Move…" menu to shift it to another draft
+  NOTE: The menu lists: Move…, Customer 4, Customer 5, Customer 16, Customer 17, Customer 18, Customer 25, Customer 26, Customer 28, Customer 29, Customer 31, Customer 33
+  SHOT f123_1.jpg | The "Move…" menu beside the item | admin
+
+## 124 | Warning when the same medicine is added twice | pass
+FOR: If the same medicine is added twice, the system warns.
+DID: Added the same medicine twice to one draft.
+  ok: The screen tells the user the medicine was already on the sale and that the amount was added to it
+  SHOT f124_1.jpg | The same medicine added twice | admin
+
+## 125 | "This shop has 2 drafts open" | pass
+FOR: The screen says "This shop has 2 drafts open" before starting a third.
+DID: Started a sale to a shop that already has a draft open and looked for a warning.
+  ok: The counter warns that this shop already has an order open, and offers to open it
+  NOTE: The warning names one open order. A count such as "2 drafts open" was not seen.
+  SHOT f125_1.jpg | Choosing a shop that already has a draft open: the counter warns before starting another | admin
+  SHOT f125_2.jpg | The shop's existing draft opens | admin
+
+## 126 | Every item saved instantly | pass
+FOR: Every item is saved the instant it is added. Nothing is lost if the page closes.
+DID: Added a box, reloaded the page, and saw the item was kept.
+  ok: After reloading the page, the item is still on the draft (every item is saved at once)
+  SHOT f126_1.jpg | After reloading the page | admin
+
+## 127 | "Bring from outside" mark | pass
+FOR: An item the shop does not hold can be marked "bring from outside".
+DID: Looked at the "Bring from outside" tick box beside the medicine search.
+  ok: There is a "Bring from outside" box for goods the shop does not hold
+  SHOT f127_1.jpg | The "Bring from outside" tick box | admin
+
+## 128 | Invoice correction (admin) | pass
+FOR: The owner can correct a finished invoice. The old one is kept in the history.
+DID: Finished a sale, then pressed "Correct this memo".
+  ok: The owner can correct a finished memo
+  SHOT f128_1.jpg | The correction screen | admin
+
+## 129 | Change customer option | pass
+FOR: The customer on an invoice can be changed by the owner.
+DID: On the correction screen, looked for a way to change the customer.
+  ok: The correction screen has a customer option
+  SHOT f129_1.jpg | The correction screen | admin
+
+## 130 | "End of day" button | pass
+FOR: An "End of day" button closes the day's drafts and totals.
+DID: Opened the End of day page.
+  ok: There is an end-of-day screen for closing the day
+  SHOT f130_1.jpg | End of day | admin
+
+## 131 | Draft-day rate applies | pass
+FOR: A draft uses the rate that applied on the day it was started.
+DID: Added a box at the printed price of 300, then changed the printed price to 320, then reopened the draft and finished the sale.
+  ok: The draft keeps the rate it was started at (300)
+  SHOT f131_1.jpg | The draft after the printed price rose to 320 | admin
+  SHOT f131_2.jpg | The finished memo | admin
+
+## 132 | Profit at the price of the lot used | pass
+FOR: Profit is worked out from the cost of the batch actually used.
+DID: Read how profit is worked out on the stock report.
+  ok: The report says profit uses the cost of the lot each sale came from
+  SHOT f132_1.jpg | Profit uses the cost of the lot each sale came from | admin

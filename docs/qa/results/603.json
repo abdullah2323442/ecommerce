@@ -1,31 +1,41 @@
 {
-  "n": 603,
-  "status": "skipped",
-  "error": null,
-  "checks": [
-    {
-      "ok": true,
-      "text": "The wallet offers \"Invite a friend\""
-    },
-    {
-      "ok": true,
-      "text": "It says what the shopper earns when the friend orders"
-    },
-    {
-      "ok": true,
-      "text": "And counts the friends who joined by the shopper's link"
-    }
-  ],
-  "shots": [
-    {
-      "file": "f603_1.jpg",
-      "caption": "The wallet with the referral switched on",
-      "role": "visitor",
-      "url": "/wallet"
-    }
-  ],
-  "notes": [
-    "Points earned on the shopper's own purchases are not built. The checklist marks this feature as partly built: the referral token works, the purchase points do not exist yet."
-  ],
-  "did": "The owner set the token for a referral to 50 taka. A shopper then opened the wallet. The owner switched it off again afterwards."
+ "n": 603,
+ "status": "pass",
+ "error": null,
+ "did": "Built and tested live in the browser pane by hand. The owner switched reward points on (2 points for every 100 taka, 100 points worth 10 taka, least 20). A buyer's two market orders were marked delivered; the buyer opened the wallet and turned 30 points into a token.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "The Wallet has a new Reward points card with the balance in large type, how points are earned and what they are worth, and the history of each purchase that earned points"
+  },
+  {
+   "ok": true,
+   "text": "Two delivered orders of 1,200 taka of goods earned 24 points each, delivery not counted; turning 30 points into a token made a token of 3 taka that shows in the buyer's tokens, and the balance went to 18"
+  },
+  {
+   "ok": true,
+   "text": "A cancelled, returned or not-received order takes its points back once, a return takes back the points for that money, and points already turned into a token stay spent; points never go below nothing"
+  },
+  {
+   "ok": true,
+   "text": "A buyer cannot turn in more points than they have, or fewer than the least; with the programme off there is no card; two taps cannot spend the same points twice (automatic tests)"
+  }
+ ],
+ "notes": [
+  "Built this round from the spec (chapter 27, the extras). Points are earned on shop memos and market orders; the token is the same Aqua Token that works in every section. The referral reward was built before. 10 new automatic tests."
+ ],
+ "shots": [
+  {
+   "file": "f603_1.jpg",
+   "caption": "Reward points: balance, the rule and what earned them",
+   "role": "visitor",
+   "url": "/wallet"
+  },
+  {
+   "file": "f603_2.jpg",
+   "caption": "After turning 30 points into a 3 taka token",
+   "role": "visitor",
+   "url": "/wallet"
+  }
+ ]
 }

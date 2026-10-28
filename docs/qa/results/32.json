@@ -1,23 +1,45 @@
 {
-  "n": 32,
-  "status": "skipped",
-  "error": null,
-  "checks": [
-    {
-      "ok": true,
-      "text": "Five boxes cost 1,350 (270 each, 10% off the printed 300), not 1,500"
-    }
-  ],
-  "shots": [
-    {
-      "file": "f32_1.jpg",
-      "caption": "The cart with 5 boxes: the quantity discount is already in the price",
-      "role": "guest",
-      "url": "/cart"
-    }
-  ],
-  "notes": [
-    "Only the quantity step was shown in the cart. The full order (price, then quantity, then token, then credit) happens inside the system and was not shown screen by screen."
-  ],
-  "did": "As a stranger, put 5 boxes of Napa 500 mg in the cart to see the quantity discount applied in the price."
+ "n": 32,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand, in two real sales. (1) A shopper put 5 boxes of Napa 500 mg in the cart, used their Aqua Token at checkout, and the owner finished the order at the counter. (2) A shop (Karim Pharmacy) returned a box for credit, then ordered ten boxes; the owner finished that order.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "Price, then quantity: Napa is 300 a box, 5 or more are 270 a box, so 5 boxes were 1,350 (checkout showed it before the order was sent)"
+  },
+  {
+   "ok": true,
+   "text": "Then the token: the finished memo shows Subtotal 1,350, Aqua Token minus 100, Total 1,250. The token is only spent when the order is finished, not at checkout"
+  },
+  {
+   "ok": true,
+   "text": "Then the credit: on the shop's memo (offer price 247.50 a box, 10 boxes = 2,475) the line Return product minus 255 came off, and the total was 2,220"
+  },
+  {
+   "ok": true,
+   "text": "A token and an offer price do not go together; checkout says so and the shop's offer order took no token"
+  },
+  {
+   "ok": true,
+   "text": "Found and fixed: on a finished memo the Total and the Paid/Due line ignored the credit and the token (it said Total 2,475 and Due 255 though 2,220 had been paid). The memo now shows an Aqua Token line and the real total"
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser. The chain is in this order everywhere: price, quantity, token, then credit. It was shown on two memos rather than one because a shop's order does not take a token (only the public checkout offers it), and a public buyer had no return credit to spend. Set-up by command: Napa and a controlled medicine were restocked, and the returned box was approved on the owner's Returns screen."
+ ],
+ "shots": [
+  {
+   "file": "f32_1.jpg",
+   "caption": "Quantity price, then the token: 1,350 - 100 = 1,250",
+   "role": "admin",
+   "url": "/admin/counter/333"
+  },
+  {
+   "file": "f32_2.jpg",
+   "caption": "Shop memo: offer lines, then Return product (credit) minus 255",
+   "role": "admin",
+   "url": "/admin/counter/330"
+  }
+ ]
 }

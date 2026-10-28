@@ -1,23 +1,37 @@
 {
-  "n": 138,
-  "status": "pass",
-  "error": null,
-  "checks": [
-    {
-      "ok": true,
-      "text": "Staff can mark a medicine \"Not available\""
-    }
-  ],
-  "shots": [
-    {
-      "file": "f138_1.jpg",
-      "caption": "An order being checked: Full, Partial or Not available",
-      "role": "admin",
-      "url": "/admin/orders/168"
-    }
-  ],
-  "notes": [
-    "The record of medicines asked for but not available is kept on the Price requests and Reports pages."
-  ],
-  "did": "Opened an order in the back office and looked for the \"Not available\" choice."
+ "n": 138,
+ "status": "pass",
+ "error": null,
+ "did": "Opened an order in the back office and marked a line Not available. With the PharmaTrack connection on, the medicine is also sent to PharmaTrack's short list.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "Staff can mark a medicine \"Not available\" while checking an order, and the order total drops by that line"
+  },
+  {
+   "ok": true,
+   "text": "The medicine is sent once to PharmaTrack's short list (when the link is on and Live), never twice, and never stops the check if PharmaTrack is down (item 612)"
+  },
+  {
+   "ok": true,
+   "text": "The record of medicines asked for but not available is also kept on the Price requests and Reports pages"
+  }
+ ],
+ "notes": [
+  "The short list is PharmaTrack's own list; this site adds to it and does not read it back."
+ ],
+ "shots": [
+  {
+   "file": "f138_1.jpg",
+   "caption": "An order being checked: Full, Partial or Not available",
+   "role": "admin",
+   "url": "/admin/orders/168"
+  },
+  {
+   "file": "f612_1.jpg",
+   "caption": "The message about it on the PharmaTrack screen",
+   "role": "admin",
+   "url": "/admin/pharmatrack"
+  }
+ ]
 }

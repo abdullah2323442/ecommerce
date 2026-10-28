@@ -1,18 +1,43 @@
 {
-  "n": 371,
-  "status": "skipped",
-  "error": null,
-  "checks": [],
-  "shots": [
-    {
-      "file": "f371_1.jpg",
-      "caption": "Clothing",
-      "role": "guest",
-      "url": "/market?sector=clothing"
-    }
-  ],
-  "notes": [
-    "Needs a clothing product with several colours and one sold out. Not in the test data."
-  ],
-  "did": "Looked for a colour greying out when it sells out."
+ "n": 371,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. Rahim Traders opened \"Add colours and sizes\" on his phone case and wrote the colours (Olive, Black) and sizes (Small, Large). He gave each cell a stock (Olive Small 5, Olive Large 3 at a price of 1,300, Black Small 0, Black Large 4) and saved. A buyer then opened the product page.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "The buyer picks a colour first; the sizes stay greyed until then"
+  },
+  {
+   "ok": true,
+   "text": "With Black chosen, only Small is struck out (none left) and Large can still be chosen; Olive keeps both sizes"
+  },
+  {
+   "ok": true,
+   "text": "So one sold-out colour and size grey out on their own, and the rest stays on sale"
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser, not by a script. The colour photo was a sample picture made in the page because the pane cannot open a system file dialog."
+ ],
+ "shots": [
+  {
+   "file": "f371_1.jpg",
+   "caption": "The seller's grid: how many in each colour and size",
+   "role": "wholesale",
+   "url": "/wholesale/sell"
+  },
+  {
+   "file": "f371_2.jpg",
+   "caption": "The buyer sees colours and sizes",
+   "role": "paikari",
+   "url": "/market/78"
+  },
+  {
+   "file": "f371_3.jpg",
+   "caption": "Black chosen: only Small is struck out",
+   "role": "paikari",
+   "url": "/market/78"
+  }
+ ]
 }

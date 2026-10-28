@@ -1,18 +1,27 @@
 {
-  "n": 349,
-  "status": "skipped",
-  "error": null,
-  "checks": [],
-  "shots": [
-    {
-      "file": "f349_1.jpg",
-      "caption": "Returns",
-      "role": "wholesale",
-      "url": "/wholesale/returns"
-    }
-  ],
-  "notes": [
-    "Return money for cash on delivery versus online was not reproduced."
-  ],
-  "did": "Looked at the return page for money handling."
+ "n": 349,
+ "status": "skipped",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. The cash-on-delivery side: a delivered order that was paid for on arrival was sent back to the seller by the owner, and the buyer's page was read afterwards.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "Cash on delivery: nothing had been paid online, so nothing is refunded and the buyer's page says \"Nothing to pay for this order.\" (this was wrong before and was fixed)"
+  },
+  {
+   "ok": true,
+   "text": "The seller's record counts it as sent back, so no commission is taken for it"
+  }
+ ],
+ "notes": [
+  "Only the cash-on-delivery half was shown. The online half (refund from the held money) needs a real card or wallet payment, and the test gateway only makes practice payments that never touch an order's money, so it was not shown. The code does mark a really paid order Refund due and tells the office; this is covered by automatic tests only."
+ ],
+ "shots": [
+  {
+   "file": "f349_1.jpg",
+   "caption": "Buyer: returned cash-on-delivery order, nothing to pay",
+   "role": "buyer",
+   "url": "/market/orders/..."
+  }
+ ]
 }

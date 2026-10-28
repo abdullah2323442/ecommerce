@@ -1,18 +1,37 @@
 {
-  "n": 311,
-  "status": "skipped",
-  "error": null,
-  "checks": [],
-  "shots": [
-    {
-      "file": "f311_1.jpg",
-      "caption": "Couriers",
-      "role": "admin",
-      "url": "/admin/couriers"
-    }
-  ],
-  "notes": [
-    "A separate courier per seller part needs two sellers in one order."
-  ],
-  "did": "Looked at the couriers each seller can choose."
+ "n": 311,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. Rahim Traders opened his orders, accepted his package, wrote his own tracking note and pressed \"I have sent it\". The other seller's package was left alone. The buyer's packages page was read.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "Rahim sees only his own package, with the buyer's phone and address, and the line \"Pack and send it yourself\""
+  },
+  {
+   "ok": true,
+   "text": "Rahim sent his package with his own tracking note (\"Rahim own rider, tracking RT-5521\"); it became \"On the way\""
+  },
+  {
+   "ok": true,
+   "text": "The other package stayed \"Sent\" with no tracking: each seller sends and tracks on their own, the buyer's page shows each one's own state"
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser, not by a script."
+ ],
+ "shots": [
+  {
+   "file": "f311_1.jpg",
+   "caption": "Rahim's own order: buyer details, Accept, tracking note, I have sent it",
+   "role": "wholesale",
+   "url": "/wholesale/sell/orders"
+  },
+  {
+   "file": "f311_2.jpg",
+   "caption": "The buyer sees Package 1 Sent and Package 2 On the way with its own tracking",
+   "role": "paikari",
+   "url": "/market/packages/..."
+  }
+ ]
 }

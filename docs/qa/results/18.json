@@ -1,11 +1,43 @@
 {
-  "n": 18,
-  "status": "notbuilt",
-  "error": null,
-  "checks": [],
-  "shots": [],
-  "notes": [
-    "One login with a switch button between the two apps has not been built yet."
-  ],
-  "did": "Checked the checklist."
+ "n": 18,
+ "status": "pass",
+ "error": null,
+ "did": "Built and tested together with item 17. The supplier app and the shop use the same account and the same sign-in, so a supplier signs in once. The shop's menu has a link to the supplier app for suppliers, and the supplier app has a link back to the shop.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "One account for both: the supplier app needs no second sign-in because it is part of the same site and the same session"
+  },
+  {
+   "ok": true,
+   "text": "A seller sees a way across to the supplier app in the shop's menu and footer; the supplier app has a link back to the shop"
+  },
+  {
+   "ok": true,
+   "text": "Someone who does not sell is never shown the way across, and one login serves both apps (two automatic tests)"
+  }
+ ],
+ "notes": [
+  "Phone and browser notifications (Web Push) were built with this: the owner only switches the card on, the site makes its own signing keys, and a person says yes once on their own device; the Messages screen has a Push tick per message. NOT verified live: a notification arriving on a real phone or browser, because this test browser blocks notifications and there is no push service reachable here; the sending was tested in 18 automatic tests with a fake sender, and the toggle's blocked state was seen on screen."
+ ],
+ "shots": [
+  {
+   "file": "f17_1.jpg",
+   "caption": "The supplier app, with its way back to the shop",
+   "role": "wholesale",
+   "url": "/supplier"
+  },
+  {
+   "file": "f17_3.jpg",
+   "caption": "Phone notifications: the inbox offers them, and says how to allow them when the browser has blocked them",
+   "role": "paikari",
+   "url": "/inbox"
+  },
+  {
+   "file": "f17_2.jpg",
+   "caption": "Connections: Web Push makes its own signing keys when switched on",
+   "role": "admin",
+   "url": "/admin/connections"
+  }
+ ]
 }

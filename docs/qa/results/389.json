@@ -1,18 +1,41 @@
 {
-  "n": 389,
-  "status": "skipped",
-  "error": null,
-  "checks": [],
-  "shots": [
-    {
-      "file": "f389_1.jpg",
-      "caption": "Made to order",
-      "role": "visitor",
-      "url": "/custom"
-    }
-  ],
-  "notes": [
-    "Needs a job in progress. Not carried through."
-  ],
-  "did": "Looked for a trial step on clothing."
+ "n": 389,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. A clothing job (a panjabi) went through every step on the real screens: price sent by the owner, checked and confirmed by the buyer, advance received, craftsman given the job, work started. Then the owner pressed Call for a trial and, after it, Trial finished.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "The owner's steps for clothing include Call for a trial next to It is ready; the job moved to the state trial"
+  },
+  {
+   "ok": true,
+   "text": "The buyer's job page changed to \"Ready for a trial\" and the history says \"Ready for a trial.\" with the time"
+  },
+  {
+   "ok": true,
+   "text": "The owner's job then offered Trial finished and It is ready; Trial finished put the job back to being made, so the fitting is a step between making and ready"
+  },
+  {
+   "ok": true,
+   "text": "Starting work was refused until a craftsman had been given the job (\"Give the job to a craftsman before the work starts\")"
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser. The trial step is for clothing only (wood has no such button). The message to the buyer says Ready for a trial but does not give a time or place; that is left to the chat."
+ ],
+ "shots": [
+  {
+   "file": "f389_1.jpg",
+   "caption": "Owner: the job in trial with Trial finished and It is ready",
+   "role": "admin",
+   "url": "/admin/custom"
+  },
+  {
+   "file": "f389_2.jpg",
+   "caption": "Buyer: the job page during the trial",
+   "role": "buyer",
+   "url": "/custom/..."
+  }
+ ]
 }

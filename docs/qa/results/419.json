@@ -1,23 +1,44 @@
 {
-  "n": 419,
-  "status": "skipped",
-  "error": null,
-  "checks": [
-    {
-      "ok": true,
-      "text": "Each restaurant shows \"Open now\" or closed"
-    }
-  ],
-  "shots": [
-    {
-      "file": "f419_1.jpg",
-      "caption": "Restaurants and whether they are open now",
-      "role": "admin",
-      "url": "/admin/food"
-    }
-  ],
-  "notes": [
-    "Setting opening hours and seeing the restaurant close by itself was not reproduced."
-  ],
-  "did": "Looked at the owner's Restaurants page for opening hours and the open/closed mark."
+ "n": 419,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. The owner of a restaurant (Crispy House) opened its settings, changed the opening hours from 10:00 to 23:30 into 06:00 to 09:00 (the time on the clock was about 10:50) and saved. The dashboard was read, and a customer opened the restaurant page.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "Before the change the restaurant says \"Open now · 10:00 – 23:30\""
+  },
+  {
+   "ok": true,
+   "text": "After it, with no other action and with \"I am open\" still ticked, it says \"Closed now · 06:00 – 09:00\": the hours close it by themselves"
+  },
+  {
+   "ok": true,
+   "text": "The customer sees \"Closed now\" on the banner and \"This restaurant is closed now. You can look at the menu, but you cannot order.\"; every Add button is disabled"
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser, not by a script. The hours were put back afterwards.",
+  "Closing at the set time was shown by choosing hours that already do not include the time now; the page was not left open until a real closing time."
+ ],
+ "shots": [
+  {
+   "file": "f419_1.jpg",
+   "caption": "Before: Open now, 10:00 to 23:30",
+   "role": "restaurant",
+   "url": "/food/vendor"
+  },
+  {
+   "file": "f419_2.jpg",
+   "caption": "After changing the hours: Closed now",
+   "role": "restaurant",
+   "url": "/food/vendor"
+  },
+  {
+   "file": "f419_3.jpg",
+   "caption": "The customer: closed, menu readable, cannot order",
+   "role": "admin",
+   "url": "/food/r/1"
+  }
+ ]
 }

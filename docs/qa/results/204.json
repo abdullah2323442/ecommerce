@@ -1,18 +1,43 @@
 {
-  "n": 204,
-  "status": "skipped",
-  "error": null,
-  "checks": [],
-  "shots": [
-    {
-      "file": "f204_1.jpg",
-      "caption": "Offers",
-      "role": "admin",
-      "url": "/admin/offers"
-    }
-  ],
-  "notes": [
-    "Profit worked out at the normal rate below the minimum was not reproduced."
-  ],
-  "did": "Looked at profit on offers below the minimum."
+ "n": 204,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. The owner started an offer on Seclo 20 mg (25% off, minimum 5 boxes). At the counter a shop with no special rate (Meherun Pharmacy) asked for only 2 boxes of the offer. The sale was finished and the owner read \"Profit today\" on the reports page before and after.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "The offer line shows 540.00 a box with \"minimum 5 boxes\", while the normal price for this shop is 720.00 a box"
+  },
+  {
+   "ok": true,
+   "text": "Ordering 2 boxes (below the minimum) gives no offer rate: the line is 1,440.00, which is 2 × 720.00, the normal rate"
+  },
+  {
+   "ok": true,
+   "text": "Profit today went from 0.00 to 504.00, which is 1,440 less the 936 the 2 boxes cost (2 × 468). That is profit at the normal rate; at the offer's 540 it would have been 144"
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser, not by a script. Test set-up: Seclo had no stock, so 30 boxes were added through the stock service (bought at 35% off, cost 468 a box) so an offer could be made. The earlier offer on Napa could not show this because its price equals the normal rate in this data."
+ ],
+ "shots": [
+  {
+   "file": "f204_1.jpg",
+   "caption": "The offer row (540, minimum 5) beside the normal price (720)",
+   "role": "admin",
+   "url": "/admin/counter/322"
+  },
+  {
+   "file": "f204_2.jpg",
+   "caption": "2 boxes: the line is 1,440.00, the normal rate",
+   "role": "admin",
+   "url": "/admin/counter/322"
+  },
+  {
+   "file": "f204_3.jpg",
+   "caption": "Profit today: 504.00, worked out at the normal rate",
+   "role": "admin",
+   "url": "/admin/reports"
+  }
+ ]
 }

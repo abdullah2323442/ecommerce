@@ -1,0 +1,8 @@
+from _w import w
+w(367,"Tested live in the browser pane by hand. On the owner's Market screen, in the Pantry sector, the unit was changed from piece to kg, Fractions allowed was ticked, and Weight and Expiry date were added to the fields sellers are asked for. A buyer then opened a Pantry listing.",
+ ["Each sector row on the Market screen has its own Unit box (wood, clothing, electronics, home, beauty, books, pantry, jewellery all started as piece), a Fractions allowed tick and a list of fields this kind of business needs (colour, size, measurements, weight, expiry date, warranty)",
+  "After Save the sector kept unit kg, fractions on and the five fields",
+  "The buyer's Pantry listing then showed the price as \"795.60 / Kg\" and asked \"How many (kg)\", so the unit follows the sector everywhere"],
+ [{"file":"f367_1.jpg","caption":"Owner: Pantry sector with its own unit and fields","role":"admin","url":"/admin/market"},
+  {"file":"f367_2.jpg","caption":"Buyer: the price per kg on a Pantry listing","role":"buyer","url":"/market/27"}],
+ ["Done by hand in the live browser. The unit sits in a box without a visible label on a narrow screen, which is why it was missed in the first look. The Pantry sector was put back to piece afterwards. The seller's own form for the new fields (weight, expiry date) was not opened."])

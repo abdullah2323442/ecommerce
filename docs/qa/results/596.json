@@ -1,23 +1,31 @@
 {
-  "n": 596,
-  "status": "skipped",
-  "error": null,
-  "checks": [
-    {
-      "ok": true,
-      "text": "A month-end window is set in Settings"
-    }
-  ],
-  "shots": [
-    {
-      "file": "f596_1.jpg",
-      "caption": "Month-end window",
-      "role": "admin",
-      "url": "/admin/settings"
-    }
-  ],
-  "notes": [
-    "The checklist marks the monthly report date as partly built. A date for the monthly report itself was not found."
-  ],
-  "did": "Looked for the monthly report date in settings."
+ "n": 596,
+ "status": "pass",
+ "error": null,
+ "did": "Built and tested live in the browser pane by hand. The month start day was set to 10 in Settings and the owner opened the monthly report.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "The monthly report names the real period: 10 October 2026 to 9 November 2026, instead of a calendar month"
+  },
+  {
+   "ok": true,
+   "text": "A month that has ended keeps its figures as they were that night; a memo corrected later shows in a Corrected memos block rather than silently changing last month"
+  },
+  {
+   "ok": true,
+   "text": "The start day is a number from 1 to 28 in Settings; the export to Excel uses the same period"
+  }
+ ],
+ "notes": [
+  "Built this round from the spec (chapter 25). The report page and the Excel file use one period service so they cannot disagree. 8 new automatic tests together with item 551."
+ ],
+ "shots": [
+  {
+   "file": "f596_1.jpg",
+   "caption": "The report for 10 October to 9 November",
+   "role": "admin",
+   "url": "/admin/reports"
+  }
+ ]
 }

@@ -1,11 +1,51 @@
 {
-  "n": 435,
-  "status": "notbuilt",
-  "error": null,
-  "checks": [],
-  "shots": [],
-  "notes": [
-    "A maximum distance and minimum charge have not been built yet."
-  ],
-  "did": "Checked the checklist."
+ "n": 435,
+ "status": "pass",
+ "error": null,
+ "did": "Built and tested live in the browser pane by hand. The owner of Crispy House opened the restaurant settings, tried to set a longest distance of 5 km before saying where the restaurant is, then set its place and saved. The restaurant was switched to By distance (10 taka for each km, least charge 30). A buyer put a dish in the order and shared a position about 3 km away, then one about 6 km away.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "The delivery settings have a new choice By distance and a block for what is charged for each kilometre, the longest distance in km (empty means no limit) and where the restaurant is, with a button that uses the position of the device"
+  },
+  {
+   "ok": true,
+   "text": "Setting a longest distance or charging by the kilometre before the restaurant's place is set is refused with a clear reason next to the Save button"
+  },
+  {
+   "ok": true,
+   "text": "On the menu page the order form asks the buyer to share a position once (it is not kept); at about 3.9 km by road it says so and the charge is 39 taka, with the total (329) updated"
+  },
+  {
+   "ok": true,
+   "text": "At about 7.8 km, beyond the 5 km limit, the form says the buyer is further than the restaurant delivers and the Place the order button is disabled; the server refuses it too"
+  },
+  {
+   "ok": true,
+   "text": "However close, the charge is never below the least charge; the owner's own area prices and the by-hand choice work as before, and a longest distance also holds for area prices"
+  }
+ ],
+ "notes": [
+  "Built this round from the spec (chapter 17). The distance is the straight line between the two places times a road allowance the owner can set in Settings (1.3 to start), because real road distance needs a map service that is not connected (item 436 stays not built). So the distance and the limit are estimates, and the screen says so. New columns on restaurants and food orders; the buyer's position is not stored, only the distance. 14 new automatic tests."
+ ],
+ "shots": [
+  {
+   "file": "f435_1.jpg",
+   "caption": "Restaurant settings: charge for each kilometre, longest distance, where the restaurant is",
+   "role": "vendor",
+   "url": "/food/vendor"
+  },
+  {
+   "file": "f435_2.jpg",
+   "caption": "About 3.9 km away: the charge is worked out",
+   "role": "paikari",
+   "url": "/food/r/1"
+  },
+  {
+   "file": "f435_3.jpg",
+   "caption": "About 7.8 km away: too far, the order button is off",
+   "role": "paikari",
+   "url": "/food/r/1"
+  }
+ ]
 }

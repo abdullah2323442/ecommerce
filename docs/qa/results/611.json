@@ -1,11 +1,51 @@
 {
-  "n": 611,
-  "status": "notbuilt",
-  "error": null,
-  "checks": [],
-  "shots": [],
-  "notes": [
-    "Company and supplier dues have not been built yet."
-  ],
-  "did": "Checked the checklist."
+ "n": 611,
+ "status": "pass",
+ "error": null,
+ "did": "Built and tested live in the browser pane by hand. On Enter purchase the owner added 10 boxes of Seclo 20 mg (5,904 taka), chose Part or none now, tried to save without a due day, then paid 2,000 now and set the rest due on 6 November, and saved. Then the owner opened Company dues and recorded a 1,000 taka bank payment.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "Enter purchase has a new block How it is paid: Paid in full (as before) or Part or none now, with Paid now, The rest is due on, and a line that says how much we will owe the company"
+  },
+  {
+   "ok": true,
+   "text": "Saving without a due day was refused at the field: \"Write the day the rest is due.\"; paying more than the total is refused too"
+  },
+  {
+   "ok": true,
+   "text": "Company dues lists each company we owe with the total in large type (3,904 taka), the next due day and, when a due day has passed, a Late mark with the text and amount"
+  },
+  {
+   "ok": true,
+   "text": "The company's account shows the invoice still open (total 5,904, paid 2,000, due 6 Nov) and a Record payment panel (cash, bKash, Nagad, Rocket, bank, cheque); a 1,000 taka bank payment left 2,904 owed, kept as a row with who paid it"
+  },
+  {
+   "ok": true,
+   "text": "A payment fills the invoice that falls due first; purchases entered before this existed all count as paid; only the owner (stock permission) can open the screens"
+  }
+ ],
+ "notes": [
+  "Built this round from the spec (chapter 28, note 12: what we owe each company or supplier, with due dates). New columns paid_amount and due_date on purchase invoices; every older purchase was set to paid. The home screen warns about late company invoices. Not built: reminders, a payment plan over several dates, or paying a part of one invoice chosen by hand (a payment always fills the invoice due first)."
+ ],
+ "shots": [
+  {
+   "file": "f611_1.jpg",
+   "caption": "Enter purchase: no due day is refused at the field",
+   "role": "admin",
+   "url": "/admin/stock/receive"
+  },
+  {
+   "file": "f611_2.jpg",
+   "caption": "Company dues: what we owe each company",
+   "role": "admin",
+   "url": "/admin/payables"
+  },
+  {
+   "file": "f611_3.jpg",
+   "caption": "A company's account after a 1,000 taka bank payment",
+   "role": "admin",
+   "url": "/admin/payables/2"
+  }
+ ]
 }

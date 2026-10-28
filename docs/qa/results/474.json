@@ -1,27 +1,33 @@
 {
-  "n": 474,
-  "status": "skipped",
-  "error": null,
-  "checks": [
-    {
-      "ok": true,
-      "text": "The page says when the courier rates were last checked"
-    },
-    {
-      "ok": true,
-      "text": "The owner confirms they are still correct with one press"
-    }
-  ],
-  "shots": [
-    {
-      "file": "f474_1.jpg",
-      "caption": "Rates last checked",
-      "role": "admin",
-      "url": "/admin/couriers"
-    }
-  ],
-  "notes": [
-    "The reminder that appears after three months was not waited for."
-  ],
-  "did": "Looked at the top of the Couriers page for the rate check."
+ "n": 474,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. The date the courier rates were last checked was set back to 1 July 2026, so that more than three months had passed (the three months could not be waited for). The owner opened the Couriers screen and pressed the confirm button.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "The Couriers screen showed a red notice: \"Are the courier rates still correct? Nobody has checked for three months.\" with the button \"Yes, they are still correct\""
+  },
+  {
+   "ok": true,
+   "text": "After pressing it the screen said \"Thank you. We will ask again in three months.\" and \"Rates last checked 22 Oct 2026\", and the notice went away"
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser. The three months were not waited for: the last-checked date was moved back with a command, and everything after that was done on the screen. The same reminder is also meant to show on the owner's home screen; that was not looked at."
+ ],
+ "shots": [
+  {
+   "file": "f474_1.jpg",
+   "caption": "The three-month reminder on the Couriers screen",
+   "role": "admin",
+   "url": "/admin/couriers"
+  },
+  {
+   "file": "f474_2.jpg",
+   "caption": "After confirming: thanked, date updated, notice gone",
+   "role": "admin",
+   "url": "/admin/couriers"
+  }
+ ]
 }

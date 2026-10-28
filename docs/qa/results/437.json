@@ -1,27 +1,56 @@
 {
-  "n": 437,
-  "status": "skipped",
-  "error": null,
-  "checks": [
-    {
-      "ok": true,
-      "text": "The restaurant can ask for an advance on orders above an amount"
-    },
-    {
-      "ok": true,
-      "text": "And choose what percentage"
-    }
-  ],
-  "shots": [
-    {
-      "file": "f437_1.jpg",
-      "caption": "Advance for big orders",
-      "role": "vendor",
-      "url": "/food/vendor"
-    }
-  ],
-  "notes": [
-    "A big order with an advance was not placed, so the shopper side of paying the advance was not seen."
-  ],
-  "did": "On the restaurant's page, looked at the advance payment setting."
+ "n": 437,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. The restaurant set \"Advance for orders over 500\" at 30%. A guest ordered a Family Combo (1,850) for home delivery and placed the order. The restaurant opened its orders, recorded the advance, and confirmed. The guest read the order page at each step.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "Before ordering the guest is told: \"This is a big order. The restaurant asks for an advance of 555.00 before it starts.\""
+  },
+  {
+   "ok": true,
+   "text": "After placing, the order page says: \"The restaurant needs an advance of 564.00 before it starts cooking.\" The restaurant sees \"Advance: 0.00 / 564.00\" and \"Confirm\" is switched off"
+  },
+  {
+   "ok": true,
+   "text": "After the restaurant records the advance (564 of 564) \"Confirm\" turns on; confirming starts the cooking timer, and the guest sees \"Advance received: 564.00\""
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser, not by a script.",
+  "Small difference found: the figure before ordering (555.00) is 30% of the food only, while the final advance (564.00) is 30% of the food plus the 30 delivery charge. Both are explained on screen, but the two numbers differ."
+ ],
+ "shots": [
+  {
+   "file": "f437_1.jpg",
+   "caption": "The guest is told about the advance before ordering",
+   "role": "guest",
+   "url": "/food/r/1"
+  },
+  {
+   "file": "f437_2.jpg",
+   "caption": "After placing: the restaurant needs an advance before cooking",
+   "role": "guest",
+   "url": "/food/orders/..."
+  },
+  {
+   "file": "f437_3.jpg",
+   "caption": "The restaurant: Advance 0 of 564, Confirm switched off",
+   "role": "restaurant",
+   "url": "/food/vendor"
+  },
+  {
+   "file": "f437_4.jpg",
+   "caption": "Advance recorded: Confirm is on",
+   "role": "restaurant",
+   "url": "/food/vendor"
+  },
+  {
+   "file": "f437_5.jpg",
+   "caption": "The guest: cooking has started, advance received",
+   "role": "guest",
+   "url": "/food/orders/..."
+  }
+ ]
 }

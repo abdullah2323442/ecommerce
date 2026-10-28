@@ -1,0 +1,10 @@
+from _w import w
+w(15,"Tested live in the browser pane by hand. An order had earlier been placed as a guest with the phone number 01712345678. A signed-in shopper with no orders opened Settings, Mobile number, asked for a code for that number, typed the code and verified it.",
+ ["Before: the shopper's Your orders page said \"No orders yet.\"",
+  "Send me a code answered \"We sent a code to your phone.\" and the page asked for the code, which works for about 10 minutes",
+  "After typing the right code: \"Your number is verified.\" and \"2 earlier orders are now in your account.\" The verified number is shown",
+  "Your orders now lists the earlier order (21 Oct 2026, 22:45, Ready, 300 taka)"],
+ [{"file":"f15_1.jpg","caption":"The code is asked for after Send me a code","role":"buyer","url":"/settings/phone"},
+  {"file":"f15_2.jpg","caption":"Verified: 2 earlier orders are now in the account","role":"buyer","url":"/settings/phone"},
+  {"file":"f15_3.jpg","caption":"The earlier guest order is in Your orders","role":"buyer","url":"/my-orders"}],
+ ["Done by hand in the live browser. No text-message company is set up yet, so the system writes the text it would send into its log; the six-digit code was read from that log and typed in by hand, standing in for the phone. The code step itself, the ten minutes, and the linking were all on the real screens. Only orders that nobody owned were taken."])

@@ -1,18 +1,51 @@
 {
-  "n": 594,
-  "status": "skipped",
-  "error": null,
-  "checks": [],
-  "shots": [
-    {
-      "file": "f594_1.jpg",
-      "caption": "Settings",
-      "role": "admin",
-      "url": "/admin/settings"
-    }
-  ],
-  "notes": [
-    "No import screen was found. The medicine database was loaded in bulk before this test."
-  ],
-  "did": "Looked for a bulk import of old data."
+ "n": 594,
+ "status": "pass",
+ "error": null,
+ "did": "Built and tested live in the browser pane by hand. The owner opened Customers, then Bring in shops from a file, and sent a file of six lines: a shop with an address and a rate on a second line, a shop with an ambiguous medicine name, a bad phone number, an unknown tier and a price that is not for one piece. The owner read the preview and brought in the shop that was ready.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "Customers has a link Bring in shops from a file; the page explains the columns, offers a file to start from and lists the rules"
+  },
+  {
+   "ok": true,
+   "text": "The preview shows every line before anything is saved: which are new shops, which update a shop, which are rates, and which are left out with the reason in words (bad phone number, no tier called Z, more than one medicine called Napa 500 mg with the companies to choose from, a price that is not for one piece)"
+  },
+  {
+   "ok": true,
+   "text": "Bringing it in made the shop with its tier (B), area, shop name, address in the address book and the 12 percent rate; the lines with a problem were left out and the rest went in"
+  },
+  {
+   "ok": true,
+   "text": "A number already on the system updates that shop's tier, area, address and rates and never its name, type or password; a staff account's number is refused; the same file cannot be brought in twice; only those who manage customers can use it (automatic tests)"
+  },
+  {
+   "ok": true,
+   "text": "A new account has no password until the shop sets its own, and a placeholder email until then; a file saved from Excel with a byte order mark or a lost leading zero still works"
+  }
+ ],
+ "notes": [
+  "The checklist already ticked this item, but there was no import in the system; it is built now. Up to 2,000 lines and 1 MB in one file; the CSV must be UTF-8. 16 new automatic tests."
+ ],
+ "shots": [
+  {
+   "file": "f594_1.jpg",
+   "caption": "Choose the file, with the columns and the rules",
+   "role": "admin",
+   "url": "/admin/customers/import"
+  },
+  {
+   "file": "f594_2.jpg",
+   "caption": "The preview: what each line would do and why a line is left out",
+   "role": "admin",
+   "url": "/admin/customers/import"
+  },
+  {
+   "file": "f594_3.jpg",
+   "caption": "Done: one new shop, one rate, four lines left out",
+   "role": "admin",
+   "url": "/admin/customers/import"
+  }
+ ]
 }

@@ -1,29 +1,49 @@
 {
-  "n": 294,
-  "status": "skipped",
-  "error": null,
-  "checks": [
-    {
-      "ok": true,
-      "text": "Pressing the photo opens it large, so the buyer can look closer"
-    }
-  ],
-  "shots": [
-    {
-      "file": "f294_1.jpg",
-      "caption": "The product photo",
-      "role": "guest",
-      "url": "/market/78"
-    },
-    {
-      "file": "f294_2.jpg",
-      "caption": "The photo opened large",
-      "role": "guest",
-      "url": "/market/78"
-    }
-  ],
-  "notes": [
-    "Only one photo exists on this product, so the row of thumbnails to look through was not shown. The seller adds more with \"More photos\"."
-  ],
-  "did": "Looked at the product photo and pressed it to look closer."
+ "n": 294,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. Rahim Traders opened \"More photos\" on his phone case and added two photos, one at a time. A shop buyer then opened the product page, tapped the thumbnails, and tapped the big photo.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "The seller can add up to five more photos, and sees each with \"Main\" and \"Remove\""
+  },
+  {
+   "ok": true,
+   "text": "The buyer sees the main photo with two thumbnails under it; tapping a thumbnail changes the big photo"
+  },
+  {
+   "ok": true,
+   "text": "Tapping the big photo opens it large, with a Close button"
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser, not by a script. The file picker of the pane cannot open a system dialog, so the two sample pictures were attached to the file field from the page itself."
+ ],
+ "shots": [
+  {
+   "file": "f294_2.jpg",
+   "caption": "The seller added two more photos: Side view and Back view",
+   "role": "wholesale",
+   "url": "/wholesale/sell"
+  },
+  {
+   "file": "f294_3.jpg",
+   "caption": "The buyer sees the main photo and two thumbnails",
+   "role": "paikari",
+   "url": "/market/78"
+  },
+  {
+   "file": "f294_4.jpg",
+   "caption": "Tapping Side view changes the big photo",
+   "role": "paikari",
+   "url": "/market/78"
+  },
+  {
+   "file": "f294_5.jpg",
+   "caption": "Tapping the big photo opens it large, with Close",
+   "role": "paikari",
+   "url": "/market/78"
+  }
+ ]
 }

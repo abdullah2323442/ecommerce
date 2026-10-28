@@ -1,18 +1,43 @@
 {
-  "n": 452,
-  "status": "skipped",
-  "error": null,
-  "checks": [],
-  "shots": [
-    {
-      "file": "f452_1.jpg",
-      "caption": "A new post",
-      "role": "visitor",
-      "url": "/help/new"
-    }
-  ],
-  "notes": [
-    "Not carried through."
-  ],
-  "did": "Looked for page owners finding moderators."
+ "n": 452,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. The owner published a post from Karim Pharmacy: \"Moderator needed for our Facebook page\" (kind: Need a worker) with a contact line. A different signed-in person (a student) opened it, read how to reach the poster, and left a comment saying they can do it.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "The post shows its title, the words, the 'how to reach them' line (\"Call 01700000003 after 6 pm\") and the notice that the board is only a place to meet"
+  },
+  {
+   "ok": true,
+   "text": "A signed-in stranger could comment (\"I can do this. I am a student and free every evening after 6 pm. Please call me.\") and the comment appeared at once with its date and time"
+  },
+  {
+   "ok": true,
+   "text": "A guest sees the post but is told to log in before they can see how to reach the poster and before commenting"
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser. While testing, a comment that was refused showed its message at the very top of the page, away from the comment box. Fixed: the refusal now shows right above the Comment button."
+ ],
+ "shots": [
+  {
+   "file": "f452_1.jpg",
+   "caption": "A student reads the moderator post and how to reach the poster",
+   "role": "wholesaler",
+   "url": "/help/2"
+  },
+  {
+   "file": "f452_2.jpg",
+   "caption": "Their comment is on the post",
+   "role": "wholesaler",
+   "url": "/help/2"
+  },
+  {
+   "file": "f452_3.jpg",
+   "caption": "A guest is asked to log in to see how to reach them",
+   "role": "guest",
+   "url": "/help/2"
+  }
+ ]
 }

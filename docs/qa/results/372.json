@@ -1,18 +1,37 @@
 {
-  "n": 372,
-  "status": "skipped",
-  "error": null,
-  "checks": [],
-  "shots": [
-    {
-      "file": "f372_1.jpg",
-      "caption": "Clothing",
-      "role": "guest",
-      "url": "/market?sector=clothing"
-    }
-  ],
-  "notes": [
-    "Needs a clothing product with a variant grid. Not in the test data."
-  ],
-  "did": "Looked for a price and photo for each colour and size."
+ "n": 372,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. Rahim Traders opened \"Add colours and sizes\" on his phone case and wrote the colours (Olive, Black) and sizes (Small, Large). He gave each cell a stock (Olive Small 5, Olive Large 3 at a price of 1,300, Black Small 0, Black Large 4) and saved. A buyer then opened the product page. He also added a photo for the Black colour.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "A cell with its own price replaces the product price: Olive + Large (set at 1,300) shows a total of 1,406 (1,300 plus 2% commission plus 80 delivery), not the product's 1,224"
+  },
+  {
+   "ok": true,
+   "text": "The seller can give each colour its own photo (\"A photo for each colour\")"
+  },
+  {
+   "ok": true,
+   "text": "Choosing Black on the product page changes the big photo to the Black one"
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser, not by a script. The colour photo was a sample picture made in the page because the pane cannot open a system file dialog."
+ ],
+ "shots": [
+  {
+   "file": "f372_1.jpg",
+   "caption": "Olive and Large chosen: the buyer pays this cell's price (total 1,406)",
+   "role": "paikari",
+   "url": "/market/78"
+  },
+  {
+   "file": "f372_2.jpg",
+   "caption": "Black chosen: the product photo changes to the Black photo",
+   "role": "paikari",
+   "url": "/market/78"
+  }
+ ]
 }

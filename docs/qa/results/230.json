@@ -1,23 +1,44 @@
 {
-  "n": 230,
-  "status": "skipped",
-  "error": null,
-  "checks": [
-    {
-      "ok": true,
-      "text": "An MPO appears as \"Anonymous\" with a number"
-    }
-  ],
-  "shots": [
-    {
-      "file": "f230_1.jpg",
-      "caption": "Anonymous 0, 1, 2...",
-      "role": "admin",
-      "url": "/admin/mpo"
-    }
-  ],
-  "notes": [
-    "The \"Anonymous 1 (my name)\" wording on the MPO's own side was not found."
-  ],
-  "did": "Looked at how an MPO is named on screens other than the owner's."
+ "n": 230,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. Two MPOs (Anwar in Uttara, Kabir in Mirpur) each had Napa 500 mg on the market, Anwar's with a 10+2 bonus. Wholesale buyer Rahim Traders searched Napa and bid 15% on one and 18% on the other. A second wholesale account then searched and bid 10%. Kabir looked at his bids and accepted the 15% one. The owner looked at the offers.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "Buyers see each MPO's product as \"Anonymous 1 (Siam's Aqua)\" and \"Anonymous 2 (Siam's Aqua)\": a number and the shop's own name in brackets, never the MPO's name"
+  },
+  {
+   "ok": true,
+   "text": "The bonus shows to buyers: \"Take 10, get 2 free\""
+  },
+  {
+   "ok": true,
+   "text": "The MPO sees bidders only as numbers (\"Anonymous 3: 15% · 1 boxes\", \"Anonymous 4: 10% · 1 boxes\"); the owner sees the real names (\"Rahim Traders (01700000004): 18% · 1 boxes\")"
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser, not by a script.",
+  "The first MPO account made by the test set-up had no number, so it showed as \"Anonymous ?\". Accounts opened through the owner's screen always get a number, so the number was set by hand for this copy."
+ ],
+ "shots": [
+  {
+   "file": "f230_3.jpg",
+   "caption": "The owner's list: two MPOs, each shown to buyers as Anonymous N (the shop's name)",
+   "role": "admin",
+   "url": "/admin/mpo/listings"
+  },
+  {
+   "file": "f230_1.jpg",
+   "caption": "The wholesale buyer sees Anonymous N (Siam's Aqua), with the bonus line",
+   "role": "wholesale",
+   "url": "/wholesale"
+  },
+  {
+   "file": "f230_2.jpg",
+   "caption": "The MPO sees bidders without names",
+   "role": "mpo",
+   "url": "/mpo"
+  }
+ ]
 }

@@ -1,18 +1,43 @@
 {
-  "n": 228,
-  "status": "skipped",
-  "error": null,
-  "checks": [],
-  "shots": [
-    {
-      "file": "f228_1.jpg",
-      "caption": "Invoices",
-      "role": "admin",
-      "url": "/admin/invoices"
-    }
-  ],
-  "notes": [
-    "Needs an MPO product with a bonus to be sold and a memo made. Not carried through."
-  ],
-  "did": "Looked for a bonus on its own memo line."
+ "n": 228,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. A MPO's Napa with a 10+2 bonus was on the market. Wholesale buyer Rahim Traders ordered 10 boxes. The owner put the goods into stock at the discount paid (12%), received the order, and opened the memo.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "The buyer is offered the bonus: \"Take 10, get 2 free\"; the pre-order is for 10 boxes at the offer price (275)"
+  },
+  {
+   "ok": true,
+   "text": "On the received order the bonus is its own line: 10 boxes at 275.00 and 2 boxes at 0.00, so the bonus has no price but still leaves stock"
+  },
+  {
+   "ok": true,
+   "text": "The memo shows it separately: \"Napa (Bonus) 500 mg, 2 Box × 0.00\" under the paid line, and the total is for the 10 boxes only (2,750.00)"
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser, not by a script."
+ ],
+ "shots": [
+  {
+   "file": "f228_1.jpg",
+   "caption": "The owner: the MPO goods are in stock, ready to receive",
+   "role": "admin",
+   "url": "/admin/preorders"
+  },
+  {
+   "file": "f228_2.jpg",
+   "caption": "The received order: 10 boxes, and 2 bonus boxes at 0.00",
+   "role": "admin",
+   "url": "/admin/orders/319"
+  },
+  {
+   "file": "f228_3.jpg",
+   "caption": "The memo: the bonus on its own line",
+   "role": "admin",
+   "url": "/memo/319"
+  }
+ ]
 }

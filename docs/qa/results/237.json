@@ -1,18 +1,39 @@
 {
-  "n": 237,
-  "status": "skipped",
-  "error": null,
-  "checks": [],
-  "shots": [
-    {
-      "file": "f237_1.jpg",
-      "caption": "The MPO list",
-      "role": "admin",
-      "url": "/admin/mpo"
-    }
-  ],
-  "notes": [
-    "Not carried through."
-  ],
-  "did": "Looked for a count of failed deliveries."
+ "n": 237,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. A wholesaler's order from an MPO's product (accepted from a bid) was left waiting past its promised day and the grace days. The nightly job that cancels late MPO orders was run with the clock moved six days on. The owner opened the MPO's profile.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "The late order is cancelled by itself and the buyer is told (\"It did not arrive in time.\")"
+  },
+  {
+   "ok": true,
+   "text": "The MPO's profile counts it: \"Orders not delivered in time: 1\", in red under the product counters"
+  },
+  {
+   "ok": true,
+   "text": "An order whose goods had already been taken into stock is not counted as late (see the note)"
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser, not by a script.",
+  "Time cannot pass in the browser, so the nightly job was started once by hand with the clock moved on; the result was then read on the screen.",
+  "Fault found and fixed here: goods that had reached us and been put into stock with \"Goods reached me\" were still counted against the MPO when the order later ran late, and the button could be pressed twice and enter the stock twice. The order is now marked when the goods are taken, the second press is refused (\"These goods are already in stock.\"), and such an order is never counted as late (new automatic test)."
+ ],
+ "shots": [
+  {
+   "file": "f237_1.jpg",
+   "caption": "The owner's profile of the MPO: Orders not delivered in time: 1",
+   "role": "admin",
+   "url": "/admin/mpo/15"
+  },
+  {
+   "file": "f237_2.jpg",
+   "caption": "The buyer was told: \"It did not arrive in time.\"",
+   "role": "wholesale",
+   "url": "/preorders"
+  }
+ ]
 }

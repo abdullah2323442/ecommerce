@@ -1,23 +1,37 @@
 {
-  "n": 289,
-  "status": "skipped",
-  "error": null,
-  "checks": [
-    {
-      "ok": true,
-      "text": "The owner has a catalogue of products that several sellers can list under"
-    }
-  ],
-  "shots": [
-    {
-      "file": "f289_1.jpg",
-      "caption": "The catalogue: one product, many sellers",
-      "role": "admin",
-      "url": "/admin/catalog"
-    }
-  ],
-  "notes": [
-    "Only one seller exists in this copy, so a product page with two sellers side by side could not be shown."
-  ],
-  "did": "Opened the Catalogue page, which joins listings of the same product from different sellers."
+ "n": 289,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. A second electronics seller (Dhaka Gadget House) was opened by the owner and sent a matte silicone phone case. The owner made one catalogue product for it. Both sellers (Rahim Traders and Dhaka Gadget House) linked their listings to that catalogue product, and the owner read and published both again.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "The same product from two sellers is one product page: \"The same product from 2 sellers\" lists both"
+  },
+  {
+   "ok": true,
+   "text": "Each seller row shows the price, the delivery charge and the seller's record (Excellent, New)"
+  },
+  {
+   "ok": true,
+   "text": "A seller without a shop page is shown as \"Seller 2\", not by name"
+  }
+ ],
+ "notes": [
+  "Changing the catalogue product sends a published listing back to the owner to be read again (spec ch 13), so both listings waited until the owner published them. Done by hand in the live browser, not by a script."
+ ],
+ "shots": [
+  {
+   "file": "f289_2.jpg",
+   "caption": "Rahim Traders linked its listing to the catalogue product (the seller's screen)",
+   "role": "wholesale",
+   "url": "/wholesale/sell"
+  },
+  {
+   "file": "f289_1.jpg",
+   "caption": "One product page now shows the same product from 2 sellers, with price, delivery and record",
+   "role": "admin",
+   "url": "/market/79"
+  }
+ ]
 }

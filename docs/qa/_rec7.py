@@ -1,0 +1,13 @@
+from _w import w
+w(576,"Tested live in the browser pane by hand. A controlled medicine (Napa 500 mg, the Beximco one marked controlled) was put on a counter sale. First Finish sale was tried with no buyer details, then the buyer, prescription number and doctor were written, saved in the register, the sale finished, and the register was opened, printed and exported.",
+ ["Putting the controlled medicine on the memo made a \"Controlled medicine\" box appear: \"The law needs a record of who bought it...\" with buyer name, phone, address, prescription number and doctor",
+  "Finish sale with the box empty was refused: \"A controlled medicine is on this memo. Write the buyer, prescription number and doctor before finishing.\"",
+  "After Save in the register the line shows \"In the register\" with all the details, and Finish sale worked (memo M2026-000042)",
+  "The Controlled register screen lists the sale with date, memo, medicine, quantity, buyer, phone and address, prescription number, doctor and the staff member, with date and medicine filters and a Change button that is logged",
+  "Print gives a clean table for the drug-licence inspector, and Download CSV gives the same row (CSV also has a column for a cancelled memo)"],
+ [{"file":"f576_1.jpg","caption":"The controlled-medicine box on the counter with the buyer fields","role":"admin","url":"/admin/counter/329"},
+  {"file":"f576_2.jpg","caption":"The sale is refused until the details are written","role":"admin","url":"/admin/counter/329"},
+  {"file":"f576_3.jpg","caption":"Details saved: In the register","role":"admin","url":"/admin/counter/329"},
+  {"file":"f576_4.jpg","caption":"The Controlled register with the sale","role":"admin","url":"/admin/controlled"},
+  {"file":"f576_5.jpg","caption":"The printable register","role":"admin","url":"/admin/controlled/print"}],
+ ["Done by hand in the live browser. Set-up: five boxes of this medicine were put in stock first (it had none), by a command, because nothing in the shop could be sold before. The buyer in the test is made up."])

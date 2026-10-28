@@ -1,18 +1,43 @@
 {
-  "n": 375,
-  "status": "skipped",
-  "error": null,
-  "checks": [],
-  "shots": [
-    {
-      "file": "f375_1.jpg",
-      "caption": "The catalog",
-      "role": "admin",
-      "url": "/admin/catalog"
-    }
-  ],
-  "notes": [
-    "Not carried through."
-  ],
-  "did": "Looked for one product in many categories."
+ "n": 375,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. Rahim Traders sent a new listing in Wood: a teak bedside table, price 6,500, 4 in stock, length 24, width 16, height 22 inch, and ticked \"Home and living\" under \"Also show it in\". The owner read it and published it (commission 2%). A buyer opened the product page and both category pages.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "The form says \"Also show it in. It stays one product with one stock.\" and lists the other categories"
+  },
+  {
+   "ok": true,
+   "text": "The same table appears in Home and living and in Wood"
+  },
+  {
+   "ok": true,
+   "text": "It is one listing (one number, one stock of 4), not a copy for each category"
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser, not by a script."
+ ],
+ "shots": [
+  {
+   "file": "f375_1.jpg",
+   "caption": "The seller ticks Home and living: \"It stays one product with one stock\"",
+   "role": "wholesale",
+   "url": "/wholesale/sell"
+  },
+  {
+   "file": "f375_2.jpg",
+   "caption": "The table is listed in Home and living",
+   "role": "admin",
+   "url": "/market?sector=home"
+  },
+  {
+   "file": "f375_3.jpg",
+   "caption": "And in Wood",
+   "role": "admin",
+   "url": "/market?sector=wood"
+  }
+ ]
 }

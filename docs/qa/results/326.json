@@ -1,23 +1,43 @@
 {
-  "n": 326,
-  "status": "skipped",
-  "error": null,
-  "checks": [
-    {
-      "ok": true,
-      "text": "The owner sets the share asked up front on a pre-order"
-    }
-  ],
-  "shots": [
-    {
-      "file": "f326_1.jpg",
-      "caption": "The pre-order setting",
-      "role": "admin",
-      "url": "/admin/settings"
-    }
-  ],
-  "notes": [
-    "A time window for wholesale pre-orders was not found as a separate setting."
-  ],
-  "did": "Looked at the Pre-orders page and the pre-order setting."
+ "n": 326,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. A shop pressed \"Pre-order · 3 days\" on Seclo 20 mg, which was out of stock. The owner opened the pre-orders page, chose a different time window (5 days) and pressed Accept. The shop read its pre-orders page.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "The shop's pre-order shows \"Waiting for our answer\""
+  },
+  {
+   "ok": true,
+   "text": "The owner's answer box has the time window to choose, 2 days, 3 days, 4 days or 5 days, with Accept, and Decline with a reason the buyer will read"
+  },
+  {
+   "ok": true,
+   "text": "After Accept with 5 days the shop is told \"Your pre-order for Seclo 20 mg is accepted. It should reach you within 5 days.\" and its list shows the date (27 Oct 2026)"
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser, not by a script. The window is chosen by the owner for each pre-order (it was not found earlier because it is part of the answer box, not a separate setting). Wholesale buyers use the same pre-orders page."
+ ],
+ "shots": [
+  {
+   "file": "f326_1.jpg",
+   "caption": "The shop: waiting for our answer",
+   "role": "paikari",
+   "url": "/preorders"
+  },
+  {
+   "file": "f326_2.jpg",
+   "caption": "The owner chooses 2, 3, 4 or 5 days, then Accept or Decline",
+   "role": "admin",
+   "url": "/admin/preorders"
+  },
+  {
+   "file": "f326_3.jpg",
+   "caption": "The shop is told: within 5 days",
+   "role": "paikari",
+   "url": "/preorders"
+  }
+ ]
 }

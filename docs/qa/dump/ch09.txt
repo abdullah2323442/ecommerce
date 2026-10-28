@@ -1,0 +1,169 @@
+# CHAPTER 9: MPO Sector
+
+## 220 | Detailed MPO profile | skipped
+FOR: Each medical sales representative (MPO) has a detailed profile. Part of it is still to be finished.
+DID: Opened the MPO page and looked at what is kept for each MPO.
+  ok: Each MPO has an anonymous number
+  ok: The list counts each MPO's products and how many are on the market
+  NOTE: The checklist marks the detailed MPO profile as only partly built. A full profile page was not found.
+  SHOT f220_1.jpg | The MPO list: name, anonymous number, phone, area and counts | admin
+
+## 221 | Area and auto-grouping | pass
+FOR: MPOs are grouped automatically by the area they cover.
+DID: Opened a second MPO account in the area "Mirpur" and looked at how the list groups MPOs by area.
+  ok: MPOs are grouped by the area they cover
+  SHOT f221_1.jpg | The account form filled in, with an area and companies | admin
+  SHOT f221_2.jpg | The list, grouped by area | admin
+
+## 222 | Product selection (they choose) | pass
+FOR: An MPO chooses which products they work with.
+DID: Signed in as the new MPO and looked at how an MPO chooses a product to work with.
+  ok: The MPO sends the products they choose to work with
+  ok: The MPO chooses the products themselves
+  SHOT f222_1.jpg | The MPO's own page | mpo2
+
+## 223 | Access to multiple companies | pass
+FOR: One MPO can work with several companies.
+DID: Looked at the companies this MPO may work with.
+  ok: The MPO sees the companies the owner gave them
+  SHOT f223_1.jpg | One MPO, several companies | mpo2
+
+## 224 | One-to-many data structure | pass
+FOR: One company can have many MPOs behind it.
+DID: Tested live in the browser pane by hand. The owner opened an MPO who had no company, wrote his area, and gave him the company Square. The MPO signed in, searched Napa in that company's list and added it to the products he works with. Another MPO already had two companies.
+  ok: One MPO can have several companies: Kabir's own page lists Beximco Pharmaceuticals and Square, each with its own "Choose products"
+  ok: The owner adds a company at any time ("Save companies") and the MPO at once gets that company's medicine list to choose from
+  ok: The MPO chooses the products he works with himself (Napa 500 mg was added), and only those can be sent
+  NOTE: Done by hand in the live browser, not by a script.
+  SHOT f224_2.jpg | The owner's page for an MPO: area, note and the list of companies | admin
+  SHOT f224_3.jpg | The MPO searches the company's medicines and adds the ones he works with | mpo
+  SHOT f224_1.jpg | An MPO with two companies | mpo
+
+## 225 | MPOs don't see each other | pass
+FOR: MPOs cannot see each other.
+DID: Signed in as MPO Anwar and looked for any trace of another MPO.
+  ok: MPO Anwar cannot see MPO Kabir
+  SHOT f225_1.jpg | MPO Anwar's page shows only their own things | mpo
+
+## 226 | Stock status (in stock / pre-order) | pass
+FOR: Each MPO product shows if it is in stock or can be pre-ordered.
+DID: Looked at the Stock choice when sending a product.
+  ok: A product can be marked In stock
+  ok: Or Pre-order
+  NOTE: Choices on the page: Choose
+  SHOT f226_1.jpg | Stock: In stock or Pre-order | mpo2
+
+## 227 | Bonus products (10+2) | pass
+FOR: Bonus products such as buy 10, get 2 free are supported.
+DID: Looked at the bonus box on the product form.
+  ok: An MPO can give a bonus, for example 10 boxes plus 2 free
+  SHOT f227_1.jpg | The bonus box | mpo2
+
+## 228 | Bonus on a separate memo line | pass
+FOR: A bonus shows on its own line on the memo.
+DID: Tested live in the browser pane by hand. A MPO's Napa with a 10+2 bonus was on the market. Wholesale buyer Rahim Traders ordered 10 boxes. The owner put the goods into stock at the discount paid (12%), received the order, and opened the memo.
+  ok: The buyer is offered the bonus: "Take 10, get 2 free"; the pre-order is for 10 boxes at the offer price (275)
+  ok: On the received order the bonus is its own line: 10 boxes at 275.00 and 2 boxes at 0.00, so the bonus has no price but still leaves stock
+  ok: The memo shows it separately: "Napa (Bonus) 500 mg, 2 Box × 0.00" under the paid line, and the total is for the 10 boxes only (2,750.00)
+  NOTE: Done by hand in the live browser, not by a script.
+  SHOT f228_1.jpg | The owner: the MPO goods are in stock, ready to receive | admin
+  SHOT f228_2.jpg | The received order: 10 boxes, and 2 bonus boxes at 0.00 | admin
+  SHOT f228_3.jpg | The memo: the bonus on its own line | admin
+
+## 229 | My review and approval | pass
+FOR: The owner reviews and approves MPO goods before they go on sale.
+DID: Opened the owner's page for MPO products waiting to be looked at.
+  ok: The owner reviews each product and chooses where it shows and the price
+  ok: Products from several MPOs sit side by side
+  SHOT f229_1.jpg | Products to look at | admin
+
+## 230 | Anonymous 1 (my name) format | pass
+FOR: MPO identities appear as "Anonymous 1 (my name)" to the other side.
+DID: Tested live in the browser pane by hand. Two MPOs (Anwar in Uttara, Kabir in Mirpur) each had Napa 500 mg on the market, Anwar's with a 10+2 bonus. Wholesale buyer Rahim Traders searched Napa and bid 15% on one and 18% on the other. A second wholesale account then searched and bid 10%. Kabir looked at his bids and accepted the 15% one. The owner looked at the offers.
+  ok: Buyers see each MPO's product as "Anonymous 1 (Siam's Aqua)" and "Anonymous 2 (Siam's Aqua)": a number and the shop's own name in brackets, never the MPO's name
+  ok: The bonus shows to buyers: "Take 10, get 2 free"
+  ok: The MPO sees bidders only as numbers ("Anonymous 3: 15% · 1 boxes", "Anonymous 4: 10% · 1 boxes"); the owner sees the real names ("Rahim Traders (01700000004): 18% · 1 boxes")
+  NOTE: Done by hand in the live browser, not by a script.
+  NOTE: The first MPO account made by the test set-up had no number, so it showed as "Anonymous ?". Accounts opened through the owner's screen always get a number, so the number was set by hand for this copy.
+  SHOT f230_3.jpg | The owner's list: two MPOs, each shown to buyers as Anonymous N (the shop's name) | admin
+  SHOT f230_1.jpg | The wholesale buyer sees Anonymous N (Siam's Aqua), with the bonus line | wholesale
+  SHOT f230_2.jpg | The MPO sees bidders without names | mpo
+
+## 231 | Identity secrecy (both directions) | pass
+FOR: Identity stays secret in both directions.
+DID: Read the notes on the MPO's page about who can see whom.
+  ok: The MPO sees orders as coming from the owner's account, never from a buyer
+  ok: The owner's screen states identity is hidden both ways
+  SHOT f231_1.jpg | The MPO sees our account, not the buyer | mpo
+
+## 232 | Order record for the MPO (proof) | pass
+FOR: The MPO gets an order record as proof.
+DID: Looked at the MPO's Orders section.
+  ok: The MPO's Orders list is a proof record for their own target report
+  SHOT f232_1.jpg | The Orders record | mpo
+
+## 233 | Blind bidding | pass
+FOR: Wholesalers bid on MPO goods without seeing each other's bids.
+DID: As a wholesaler, found the MPO product among "Other offers", asked for a 12% discount on it and sent the offer.
+  ok: The MPO product is listed as "Other offers", under an anonymous name
+  ok: The wholesaler sees that the offer was sent
+  SHOT f233_1.jpg | A wholesaler asks for a 12% discount | wholesale
+  SHOT f233_2.jpg | After sending the offer | wholesale
+
+## 234 | Wholesalers don't see each other's bids | pass
+FOR: One wholesaler never sees another's bid.
+DID: Tested live in the browser pane by hand. Two MPOs (Anwar in Uttara, Kabir in Mirpur) each had Napa 500 mg on the market, Anwar's with a 10+2 bonus. Wholesale buyer Rahim Traders searched Napa and bid 15% on one and 18% on the other. A second wholesale account then searched and bid 10%. Kabir looked at his bids and accepted the 15% one. The owner looked at the offers.
+  ok: The second wholesaler, searching the same medicine, sees the two offers with no sign of Rahim's offers
+  ok: Each wholesaler sees only their own offer: "Your offer: 10% off, 1 boxes. Waiting." on the second account, and Rahim's own 15% and 18% on his
+  ok: The MPO sees the bids without names and accepts one; the owner alone sees which shop offered how much
+  NOTE: Done by hand in the live browser, not by a script.
+  NOTE: Fault found and fixed here: after a wholesaler sent or withdrew an offer, the search result on the order page was not read again, so the row did not say "Your offer: ... Waiting" and had no Withdraw button until the page was reloaded. The row now updates at once.
+  SHOT f234_1.jpg | A second wholesaler sees the offers, with no one else's bid | wholesale 2
+  SHOT f234_2.jpg | After bidding, this account sees only its own 10% | wholesale 2
+  SHOT f234_3.jpg | Rahim sees only his own 15% and 18% | wholesale
+  SHOT f234_4.jpg | The owner sees the real name next to the offer | admin
+
+## 235 | MPO accepts the bid | pass
+FOR: The MPO accepts the bid they like.
+DID: As the MPO, opened the portal, found the bid on the product and pressed Accept.
+  ok: The MPO sees the bid (12%) and a button to accept it
+  ok: The accepted bid becomes a confirmed order in the MPO's own record
+  ok: And the bid is no longer waiting
+  SHOT f235_1.jpg | The MPO's portal: the bid under the product | mpo2
+  SHOT f235_2.jpg | After accepting | mpo2
+
+## 236 | Notification to raise % if not selling | pass
+FOR: If the goods are not selling, the MPO is told to raise the percentage.
+DID: MPO Kabir's product was on the market without a sale. Later the MPO's page was opened.
+  ok: An MPO whose goods sit unsold is asked to raise the percentage
+  SHOT f236_1.jpg | The MPO is asked to raise the percentage | mpo2
+
+## 237 | Count of failed deliveries | pass
+FOR: The system counts how many deliveries failed.
+DID: Tested live in the browser pane by hand. A wholesaler's order from an MPO's product (accepted from a bid) was left waiting past its promised day and the grace days. The nightly job that cancels late MPO orders was run with the clock moved six days on. The owner opened the MPO's profile.
+  ok: The late order is cancelled by itself and the buyer is told ("It did not arrive in time.")
+  ok: The MPO's profile counts it: "Orders not delivered in time: 1", in red under the product counters
+  ok: An order whose goods had already been taken into stock is not counted as late (see the note)
+  NOTE: Done by hand in the live browser, not by a script.
+  NOTE: Time cannot pass in the browser, so the nightly job was started once by hand with the clock moved on; the result was then read on the screen.
+  NOTE: Fault found and fixed here: goods that had reached us and been put into stock with "Goods reached me" were still counted against the MPO when the order later ran late, and the button could be pressed twice and enter the stock twice. The order is now marked when the goods are taken, the second press is refused ("These goods are already in stock."), and such an order is never counted as late (new automatic test).
+  SHOT f237_1.jpg | The owner's profile of the MPO: Orders not delivered in time: 1 | admin
+  SHOT f237_2.jpg | The buyer was told: "It did not arrive in time." | wholesale
+
+## 238 | Goods pass through my hands | pass
+FOR: The goods pass through the owner's hands before reaching the buyer.
+DID: Looked at how goods pass through the owner.
+  ok: Goods from an MPO are entered as a purchase from an MPO source
+  SHOT f238_1.jpg | Enter purchase has an "MPO" source | admin
+
+## 239 | MPO goods enter stock | pass
+FOR: MPO goods then enter the shop's own stock.
+DID: Tested live in the browser pane by hand. A pre-order that came from an MPO was waiting for its goods on the owner's pre-orders page. First Napa's stock was read (18 boxes). The owner typed the discount paid to the MPO (12%) and pressed "Goods reached me". The stock page was opened again.
+  ok: The card says "From an MPO. When the goods reach you, put them into stock at the discount you paid." and has a "Discount you paid (%)" box and "Goods reached me"
+  ok: The page confirms: "The goods are in stock now. You can receive the order."
+  ok: Napa goes from 18 to 19 boxes, in a new lot with source "Through MPO", cost 264.00 a unit, 12% below the printed price of 300
+  NOTE: Done by hand in the live browser, not by a script.
+  SHOT f239_1.jpg | Before: Napa has 18 boxes on hand | admin
+  SHOT f239_2.jpg | The owner types the discount paid (12%) before pressing Goods reached me | admin
+  SHOT f239_3.jpg | "The goods are in stock now" | admin
+  SHOT f239_4.jpg | After: a new lot, Through MPO, 12% below the printed price | admin

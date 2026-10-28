@@ -1,11 +1,39 @@
 {
-  "n": 608,
-  "status": "notbuilt",
-  "error": null,
-  "checks": [],
-  "shots": [],
-  "notes": [
-    "Facebook Pixel and Analytics have not been built yet."
-  ],
-  "did": "Checked the checklist."
+ "n": 608,
+ "status": "pass",
+ "error": null,
+ "did": "Built and tested this round. The owner opened Connections and found two new cards under Visitor statistics and ads: Facebook (Meta) Pixel and Google Analytics. A Pixel ID and a Measurement ID were typed, the cards were switched on and set to Live, and the public site was then loaded.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "Both cards ask for one number only and say where to find it; a Pixel ID must be 10 to 20 digits and a Measurement ID must look like G-ABC123XYZ4, anything else is refused with a plain reason (so nothing odd can be placed in the page)"
+  },
+  {
+   "ok": true,
+   "text": "Nothing is sent until the card is on and set to Live; in Test mode, or switched off, the public page carries no tracking code at all"
+  },
+  {
+   "ok": true,
+   "text": "Once Live, every public page loads the tags, and the site reports page views, product views, adds to cart, searches and orders; staff, the owner and the admin screens are never counted"
+  },
+  {
+   "ok": true,
+   "text": "Google Analytics is told not to count its own page view because the app sends them as the page changes, so one visit is not counted twice"
+  },
+  {
+   "ok": true,
+   "text": "The Test button answers without sending anything (12 automatic tests)"
+  }
+ ],
+ "notes": [
+  "Built this round. NOT verified live: whether Meta or Google actually receive and show the events, because that needs the owner's real ids and their dashboards; the page code and the events were checked in the app and in 12 automatic tests. While fixing it a bug was found where a key containing a digit (analytics:ga4) could not be saved from the screen; fixed and covered by a test."
+ ],
+ "shots": [
+  {
+   "file": "f608_1.jpg",
+   "caption": "Connections: the Pixel ID and the Measurement ID cards, both on and Live",
+   "role": "admin",
+   "url": "/admin/connections"
+  }
+ ]
 }

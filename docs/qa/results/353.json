@@ -1,11 +1,41 @@
 {
-  "n": 353,
-  "status": "notbuilt",
-  "error": null,
-  "checks": [],
-  "shots": [],
-  "notes": [
-    "A security deposit has not been built yet."
-  ],
-  "did": "Checked the checklist."
+ "n": 353,
+ "status": "pass",
+ "error": null,
+ "did": "Built and tested live in the browser pane by hand. The owner switched the seller deposit on in Settings (5,000 taka asked), opened Seller deposits, chose Rahim Traders and took in 3,000 taka with a note. The seller then opened the Sell page.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "Seller deposits lists every seller with what is asked, what is held and a Short mark with the amount; the owner can set a different amount for one seller"
+  },
+  {
+   "ok": true,
+   "text": "Take it in, Give back and Deduct each keep a row with who did it and the reason; a deduction needs a reason that the seller is told; nothing larger than what is held can be given back or deducted"
+  },
+  {
+   "ok": true,
+   "text": "The seller's Sell page says how much is asked (5,000), how much is held (3,000) and how much more is needed (2,000) before new products can be sent in"
+  },
+  {
+   "ok": true,
+   "text": "While a seller is short, sending in a new product is refused with that reason; with the option off (the starting setting) nobody is asked for anything (automatic tests)"
+  }
+ ],
+ "notes": [
+  "Built this round from the spec (chapter 14, security deposit, kept off until trust is built). It holds the number only; the money itself is taken and given back outside the system and the owner writes it down here. New tables seller_deposits and deposit_entries. 8 new automatic tests."
+ ],
+ "shots": [
+  {
+   "file": "f353_1.jpg",
+   "caption": "The owner took in 3,000 taka of 5,000 asked",
+   "role": "admin",
+   "url": "/admin/market/deposits?seller=5"
+  },
+  {
+   "file": "f353_2.jpg",
+   "caption": "The seller is told what is short",
+   "role": "wholesale",
+   "url": "/wholesale/sell"
+  }
+ ]
 }

@@ -1,23 +1,38 @@
 {
-  "n": 308,
-  "status": "skipped",
-  "error": null,
-  "checks": [
-    {
-      "ok": true,
-      "text": "A product that allows it tells the buyer they pay on arrival"
-    }
-  ],
-  "shots": [
-    {
-      "file": "f308_1.jpg",
-      "caption": "The owner's Market page",
-      "role": "admin",
-      "url": "/admin/market"
-    }
-  ],
-  "notes": [
-    "The cash-on-delivery switch is set by the seller on their own listing form. It was not changed here. The product page tells the buyer \"You pay when it arrives\" when cash on delivery is allowed."
-  ],
-  "did": "Looked at the owner's Market page for the cash-on-delivery choice on each product."
+ "n": 308,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. Rahim Traders opened Change on his phone case, unticked \"Buyers can pay when it arrives (cash on delivery)\" and saved. He opened the form again, and a buyer opened the product page.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "The seller's form has the switch, with the words \"Off: buyers must pay online first, and you are paid after it is delivered.\""
+  },
+  {
+   "ok": true,
+   "text": "After saving, the form opens with the switch off (the choice is kept)"
+  },
+  {
+   "ok": true,
+   "text": "The buyer's product page changes from \"You pay when it arrives\" to \"You pay online first. The seller sends it after that.\""
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser, not by a script.",
+  "A real fault was found here and fixed: the seller's switch was shown and said \"Saved.\" but was never stored, so cash on delivery stayed on. It is stored now (new automatic test: CashOnDeliveryTest)."
+ ],
+ "shots": [
+  {
+   "file": "f308_1.jpg",
+   "caption": "The seller unticked cash on delivery on this product",
+   "role": "wholesale",
+   "url": "/wholesale/sell"
+  },
+  {
+   "file": "f308_2.jpg",
+   "caption": "The buyer's page now says: You pay online first",
+   "role": "paikari",
+   "url": "/market/78"
+  }
+ ]
 }

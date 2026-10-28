@@ -1,23 +1,43 @@
 {
-  "n": 166,
-  "status": "skipped",
-  "error": null,
-  "checks": [
-    {
-      "ok": true,
-      "text": "The owner sets the month-end window for tier tasks"
-    }
-  ],
-  "shots": [
-    {
-      "file": "f166_1.jpg",
-      "caption": "The month-end tier task setting",
-      "role": "admin",
-      "url": "/admin/settings"
-    }
-  ],
-  "notes": [
-    "A shop qualifying for the next tier at month end was not reproduced, because it needs a month of sales."
-  ],
-  "did": "Looked for the tier upgrade task that appears near the end of the month."
+ "n": 166,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. The month-end window was set to 10 days on the Settings screen (so that 22 October counted as month end) and the owner lowered tier D's monthly target to 3,000 taka on the Tiers screen. Karim Pharmacy (tier B, 3,472.50 taka bought this month) was then looked at from the shop's side and from the owner's side.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "In the month-end window the shop's order page shows its task: \"Buy 496,527.50 more this month and you move up to tier D.\" (with the old 500,000 target)"
+  },
+  {
+   "ok": true,
+   "text": "Once the target was met the owner's Customers screen listed \"Ready for a higher tier - Karim Pharmacy, 3,472.50 this month, target 3,000.00\" with an Upgrade to D button; nothing upgraded by itself"
+  },
+  {
+   "ok": true,
+   "text": "Pressing Upgrade to D moved the shop to tier D and the shop's messages got \"Congratulations! You are now in tier D.\""
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser. The real month end was not waited for: the window was widened in Settings and the target lowered on the Tiers screen. Both settings were put back afterwards, and the shop was returned to tier B by a command."
+ ],
+ "shots": [
+  {
+   "file": "f166_1.jpg",
+   "caption": "Shop: the month-end task and what is still missing",
+   "role": "shop",
+   "url": "/paikari"
+  },
+  {
+   "file": "f166_2.jpg",
+   "caption": "Owner: the shop is ready for a higher tier",
+   "role": "admin",
+   "url": "/admin/customers"
+  },
+  {
+   "file": "f166_3.jpg",
+   "caption": "Shop: the congratulations message",
+   "role": "shop",
+   "url": "/inbox"
+  }
+ ]
 }

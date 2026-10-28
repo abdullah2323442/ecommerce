@@ -1,11 +1,51 @@
 {
-  "n": 609,
-  "status": "notbuilt",
-  "error": null,
-  "checks": [],
-  "shots": [],
-  "notes": [
-    "Affiliate and bulk text messages have not been built yet."
-  ],
-  "did": "Checked the checklist."
+ "n": 609,
+ "status": "pass",
+ "error": null,
+ "did": "Built and tested this round, in two halves. Bulk texts: the owner opened Bulk texts, chose pharmacies as the audience, saw at once how many people would get it (5, 2 texts each, 10 in all, against a daily limit of 2,000), wrote an Eid offer and sent it. Affiliates: the owner made a promoter called Rima with a 3 percent share and the link /a/RIMA3; an order placed through the link was counted and a payout was written down.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "Bulk texts: the audience can be narrowed by type (public, pharmacy, wholesale), tier, area, days since the last order and whether they owe us; before sending, the screen says how many will get it, how many texts each, how many in all and how many of today's limit are used"
+  },
+  {
+   "ok": true,
+   "text": "Every text ends with a line to stop the messages (a link that works without signing in); anyone who stops is left out next time, and a person who opted out never gets another campaign text"
+  },
+  {
+   "ok": true,
+   "text": "The campaign page lists each person (number hidden except the last digits) with sent, failed or waiting; it can be stopped, and started again where it stopped; the sending speed and the daily limit are settings"
+  },
+  {
+   "ok": true,
+   "text": "Affiliates: the promoter's page shows the link, visits, orders and what has been earned and paid; the share applies to finished orders only and comes back off on a return or cancellation; the link leaves a code on the visitor's phone for the number of days set in Settings, and a buyer is never their own promoter's customer"
+  },
+  {
+   "ok": true,
+   "text": "A payout pays what is owed in full, is written down with how it was paid (cash, bKash, Nagad, Rocket or bank) and a note, and is refused when nothing is owed (23 and 21 automatic tests)"
+  }
+ ],
+ "notes": [
+  "Built this round. The texts go out through whichever SMS service the owner connected in Connections (the same one used for order messages); in this test they went through the test gateway, so NOT verified: delivery to a real phone and the real gateway's own limits. Money to promoters is paid by the owner outside the site and written down here; nothing is sent to any payment service."
+ ],
+ "shots": [
+  {
+   "file": "f609_1.jpg",
+   "caption": "A new campaign: who gets it and how many texts that is",
+   "role": "admin",
+   "url": "/admin/sms"
+  },
+  {
+   "file": "f609_2.jpg",
+   "caption": "The Eid offer sent, with who got it",
+   "role": "admin",
+   "url": "/admin/sms/1"
+  },
+  {
+   "file": "f609_3.jpg",
+   "caption": "A promoter's card: link, share, order earned and the payout choices",
+   "role": "admin",
+   "url": "/admin/affiliates"
+  }
+ ]
 }

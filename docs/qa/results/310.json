@@ -1,18 +1,44 @@
 {
-  "n": 310,
-  "status": "skipped",
-  "error": null,
-  "checks": [],
-  "shots": [
-    {
-      "file": "f310_1.jpg",
-      "caption": "The market cart",
-      "role": "visitor",
-      "url": "/market-cart"
-    }
-  ],
-  "notes": [
-    "All products in the test data belong to one seller, so a split into two seller orders could not be shown."
-  ],
-  "did": "Put products from two sellers in the cart and looked at how the order splits."
+ "n": 310,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. A shop (paikari account) put the same phone case from two different sellers into one market cart and sent one checkout.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "The cart splits into Package 1 (first seller) and Package 2 (Rahim Traders), each with its own delivery charge (70 and 80)"
+  },
+  {
+   "ok": true,
+   "text": "One \"Send the orders\" button places both; the buyer lands on \"Your packages\" with two packages and one total (2,547)"
+  },
+  {
+   "ok": true,
+   "text": "Each seller sees only their own order, not the other seller's"
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser, not by a script.",
+  "While testing, the button \"Add to the market cart\" gave no sign on a phone (the message was far above it). That was fixed: the confirmation or the reason it was refused now sits right above the buttons."
+ ],
+ "shots": [
+  {
+   "file": "f310_0.jpg",
+   "caption": "\"Added to your market cart.\" now shows beside the button",
+   "role": "paikari",
+   "url": "/market/79"
+  },
+  {
+   "file": "f310_1.jpg",
+   "caption": "One cart, two packages, one per seller",
+   "role": "paikari",
+   "url": "/market-cart"
+  },
+  {
+   "file": "f310_2.jpg",
+   "caption": "One checkout placed both orders",
+   "role": "paikari",
+   "url": "/market/packages/..."
+  }
+ ]
 }

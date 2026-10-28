@@ -1,18 +1,49 @@
 {
-  "n": 432,
-  "status": "skipped",
-  "error": null,
-  "checks": [],
-  "shots": [
-    {
-      "file": "f432_1.jpg",
-      "caption": "Food",
-      "role": "visitor",
-      "url": "/food"
-    }
-  ],
-  "notes": [
-    "Saving a favourite combination was not carried through."
-  ],
-  "did": "Looked for saved favourite combinations."
+ "n": 432,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. The restaurant added a base (Classic burger, 200) and the ingredients Beef patty (80) and Bacon (30) on its Custom food page. A signed-in shop buyer opened the restaurant, built a burger with both ingredients, named it \"My double bacon burger\" and saved it as a favourite. The page was reloaded and the favourite was added with one tap.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "The restaurant page has \"Build your own\": choose a base, tick ingredients, and the price follows (Classic burger + 2 / 10 · 310.00)"
+  },
+  {
+   "ok": true,
+   "text": "\"Name this favourite\" and \"Save as a favourite\" keep it: \"Your favourites: My double bacon burger 310.00\" with Add and Remove, still there after the page is loaded again"
+  },
+  {
+   "ok": true,
+   "text": "One tap on Add puts \"1 × Classic burger (your own), Beef patty, Bacon, 310.00\" into the order"
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser, not by a script. The base and the ingredient prices were set by the restaurant first, because the demo restaurant had none."
+ ],
+ "shots": [
+  {
+   "file": "f432_1.jpg",
+   "caption": "The restaurant sets a base",
+   "role": "restaurant",
+   "url": "/food/vendor/custom"
+  },
+  {
+   "file": "f432_2.jpg",
+   "caption": "The buyer builds a burger; the price follows the choices",
+   "role": "paikari",
+   "url": "/food/r/1"
+  },
+  {
+   "file": "f432_3.jpg",
+   "caption": "Saved: Your favourites",
+   "role": "paikari",
+   "url": "/food/r/1"
+  },
+  {
+   "file": "f432_4.jpg",
+   "caption": "One tap on Add: the favourite is in the order",
+   "role": "paikari",
+   "url": "/food/r/1"
+  }
+ ]
 }

@@ -1,18 +1,37 @@
 {
-  "n": 55,
-  "status": "skipped",
-  "error": null,
-  "checks": [],
-  "shots": [
-    {
-      "file": "f55_1.jpg",
-      "caption": "The stock page: no PharmaTrack sync control",
-      "role": "admin",
-      "url": "/admin/stock"
-    }
-  ],
-  "notes": [
-    "Syncing with PharmaTrack is not finished. Stock is entered on this site."
-  ],
-  "did": "Looked for PharmaTrack sync."
+ "n": 55,
+ "status": "pass",
+ "error": null,
+ "did": "Checked together with item 612: PharmaTrack and this site were joined and one stock was followed through a count, a shop sale, a correction, an online order and a deliberate difference, all by hand in the browser.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "Sales, returns, receipts, corrections, counts and online orders made on either side reach the other, once, in pieces"
+  },
+  {
+   "ok": true,
+   "text": "Medicines are matched by name, strength and company, and never linked when the pieces in a box differ"
+  },
+  {
+   "ok": true,
+   "text": "Compare stock shows any difference and changes nothing"
+  }
+ ],
+ "notes": [
+  "Details and honest limits in item 612."
+ ],
+ "shots": [
+  {
+   "file": "f612_5.jpg",
+   "caption": "PharmaTrack's sync screen",
+   "role": "admin",
+   "url": "PharmaTrack /sync"
+  },
+  {
+   "file": "f612_9.jpg",
+   "caption": "Compare stock",
+   "role": "admin",
+   "url": "PharmaTrack /sync"
+  }
+ ]
 }

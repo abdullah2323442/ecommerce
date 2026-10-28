@@ -1,18 +1,55 @@
 {
-  "n": 275,
-  "status": "skipped",
-  "error": null,
-  "checks": [],
-  "shots": [
-    {
-      "file": "f275_1.jpg",
-      "caption": "Returns",
-      "role": "admin",
-      "url": "/admin/returns"
-    }
-  ],
-  "notes": [
-    "Needs an advance payment on an order. Not reproduced."
-  ],
-  "did": "Looked at the 50% on product advance rule."
+ "n": 275,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane. With a 50% pre-order advance switched on, a paikari shop pre-ordered a box of Napa (advance 123.75). The owner accepted it and marked the advance received. The shop then cancelled. The owner chose \"Return half (goods not taken)\".",
+ "checks": [
+  {
+   "ok": true,
+   "text": "A pre-order carries an advance (50% of what the buyer would pay), shown to both the owner and the shop"
+  },
+  {
+   "ok": true,
+   "text": "When the shop cancels, the owner decides about the advance: return it, return half (goods not taken), or keep it"
+  },
+  {
+   "ok": true,
+   "text": "Returning half gives back exactly 50% of the advance: 61.88 of 123.75"
+  }
+ ],
+ "notes": [
+  "This test was done by hand in the live browser, not by a script. The product advance in the spec is the pre-order advance."
+ ],
+ "shots": [
+  {
+   "file": "f275_1.jpg",
+   "caption": "The owner sees the pre-order with its advance: 123.75, to be paid",
+   "role": "admin",
+   "url": "/admin/preorders"
+  },
+  {
+   "file": "f275_2.jpg",
+   "caption": "The owner pressed \"Advance received\": the advance now reads Received",
+   "role": "admin",
+   "url": "/admin/preorders"
+  },
+  {
+   "file": "f275_3.jpg",
+   "caption": "The shop sees its pre-order: \"Advance: 123.75, Received\"",
+   "role": "paikari",
+   "url": "/preorders/4"
+  },
+  {
+   "file": "f275_4.jpg",
+   "caption": "The shop cancelled. The owner is asked to decide about the advance: Returned, Return half (goods not taken), Keep it",
+   "role": "admin",
+   "url": "/admin/preorders"
+  },
+  {
+   "file": "f275_5.jpg",
+   "caption": "After \"Return half\": the advance of 123.75 shows Returned 61.88",
+   "role": "admin",
+   "url": "/admin/preorders"
+  }
+ ]
 }

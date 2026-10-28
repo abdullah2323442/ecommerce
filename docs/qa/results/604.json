@@ -1,11 +1,51 @@
 {
-  "n": 604,
-  "status": "notbuilt",
-  "error": null,
-  "checks": [],
-  "shots": [],
-  "notes": [
-    "Bundle deals and flash sales have not been built yet."
-  ],
-  "did": "Checked the checklist."
+ "n": 604,
+ "status": "pass",
+ "error": null,
+ "did": "Built and tested live in the browser pane by hand. A wholesale seller opened Sales and bundles, put the 27 inch 4K monitor on a 20 percent sale for one day, and made a bundle called Desk setup of the monitor and the 4K action camera at 10 percent off. A signed-in buyer then opened the monitor, added the whole bundle to the market cart and read the cart.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "The seller's page lists every product that buyers can see with a Put on sale button; the form asks for the percent (5 to 70) and when the sale ends (up to 14 days, a setting) and says so; the sale started and the product moved to End the sale with its end time"
+  },
+  {
+   "ok": true,
+   "text": "The product page shows the old price crossed out (55,080 taka), the new price (44,064) and a badge with 20 percent off and the time the sale ends; the old price is also read aloud as Was"
+  },
+  {
+   "ok": true,
+   "text": "The bundle card under the product lists both products at today's prices (the monitor at its sale price), what the buyer saves (7,568.40) and the new total (68,115.60), with Add all to the market cart"
+  },
+  {
+   "ok": true,
+   "text": "In the cart each bundle line carries its own lower price and a line saying Desk setup: you save 4,406.40 and 3,162.00; the checkout is placed at exactly the price the cart showed"
+  },
+  {
+   "ok": true,
+   "text": "A bundle only counts for each full set in the cart (two chairs and three tables is two sets), a product with colours or sizes cannot be in a bundle, another seller's products cannot be added, and the seller carries the discount while our commission stays the same in taka (automatic tests)"
+  }
+ ],
+ "notes": [
+  "Built this round from the spec (chapter 13 and the extras list). New tables listing_sales, bundles and bundle_items. A sale is a percent off the seller's price for the public price only; a wholesale price is not touched. Our commission is worked out on the lower price. Not built: a sale starting later than now, sales across many products at once, and a bundle that mixes products of different sellers. 19 new automatic tests."
+ ],
+ "shots": [
+  {
+   "file": "f604_1.jpg",
+   "caption": "The seller puts the monitor on a 20 percent sale",
+   "role": "wholesale",
+   "url": "/wholesale/sell/deals"
+  },
+  {
+   "file": "f604_2.jpg",
+   "caption": "The buyer sees the crossed-out price, the end time and the bundle",
+   "role": "visitor",
+   "url": "/market/71"
+  },
+  {
+   "file": "f604_3.jpg",
+   "caption": "In the cart the bundle saving shows on each line",
+   "role": "paikari",
+   "url": "/market-cart"
+  }
+ ]
 }

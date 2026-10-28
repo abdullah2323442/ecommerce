@@ -1,18 +1,27 @@
 {
-  "n": 338,
-  "status": "skipped",
-  "error": null,
-  "checks": [],
-  "shots": [
-    {
-      "file": "f338_1.jpg",
-      "caption": "The Market page",
-      "role": "admin",
-      "url": "/admin/market"
-    }
-  ],
-  "notes": [
-    "The page has a \"No photo\" flag for a waiting product that has no picture. Every product in this copy has a photo, so the flag never had a chance to show."
-  ],
-  "did": "Looked at the Market page for a flag on products with no photo."
+ "n": 338,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. Rahim Traders sent a new listing (a braided USB-C cable) with no photo. The owner opened the Market page and looked at the list of listings waiting to be read.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "The seller is told, under the new listing, \"A photo helps buyers and gets it read sooner.\""
+  },
+  {
+   "ok": true,
+   "text": "In the owner's waiting list the listing carries a \"No photo\" tag, so it is plain before publishing"
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser, not by a script. The listing is left waiting in the QA copy."
+ ],
+ "shots": [
+  {
+   "file": "f338_1.jpg",
+   "caption": "The owner's list: the new listing is tagged \"No photo\"",
+   "role": "admin",
+   "url": "/admin/market"
+  }
+ ]
 }

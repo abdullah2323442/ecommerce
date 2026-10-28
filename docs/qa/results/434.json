@@ -1,27 +1,31 @@
 {
-  "n": 434,
-  "status": "pass",
-  "error": null,
-  "checks": [
-    {
-      "ok": true,
-      "text": "The charge can depend on the area: one price inside, another outside"
-    },
-    {
-      "ok": true,
-      "text": "Or the restaurant writes it on each order"
-    }
-  ],
-  "shots": [
-    {
-      "file": "f434_1.jpg",
-      "caption": "Delivery charge choices",
-      "role": "vendor",
-      "url": "/food/vendor"
-    }
-  ],
-  "notes": [
-    "The checklist marks the third choice as partly built."
-  ],
-  "did": "On the restaurant's page, looked at how the delivery charge is set."
+ "n": 434,
+ "status": "pass",
+ "error": null,
+ "did": "Checked together with item 435. The restaurant's delivery charge can now be written three ways: by area (one price inside, another outside), by the kilometre, or written by hand on each order.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "The settings offer all three ways: By area, By distance and I write it on each order"
+  },
+  {
+   "ok": true,
+   "text": "By area was already built; By distance and the longest distance and least charge now work as described under item 435"
+  },
+  {
+   "ok": true,
+   "text": "Each way is tested with the order placed and the charge kept on the order"
+  }
+ ],
+ "notes": [
+  "The by-the-kilometre way uses an estimated road distance (see item 435). Item 436, real road distance, still needs a map service."
+ ],
+ "shots": [
+  {
+   "file": "f435_1.jpg",
+   "caption": "The three ways of charging, with the kilometre block",
+   "role": "vendor",
+   "url": "/food/vendor"
+  }
+ ]
 }

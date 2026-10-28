@@ -1,11 +1,47 @@
 {
-  "n": 577,
-  "status": "notbuilt",
-  "error": null,
-  "checks": [],
-  "shots": [],
-  "notes": [
-    "The prescription marketplace has not been built."
-  ],
-  "did": "Checked the checklist."
+ "n": 577,
+ "status": "pass",
+ "error": null,
+ "did": "Built and tested this round as the placeholder the spec asks for. A signed-in buyer opened the Prescription marketplace page, read what it will be, and added their name, phone and area to the list of people who want it. The owner opened the list in the back office.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "The public page explains the idea in three steps (send your prescription, pharmacies answer with a price, you choose) and says it is coming; it asks for a phone number and optionally a name and area; a signed-in person's name and phone are filled in"
+  },
+  {
+   "ok": true,
+   "text": "After signing up the page says thanks and that they are on the list; signing up again with the same number does not make a second row"
+  },
+  {
+   "ok": true,
+   "text": "The back office list (for those who manage customers) shows how many people want it, with name, phone, area and when, and how many prescriptions and answers exist so far (none yet)"
+  },
+  {
+   "ok": true,
+   "text": "The tables for a prescription request and a pharmacy's answer are ready for the real marketplace, but nothing creates them yet; the sign-up is rate-limited (6 automatic tests)"
+  }
+ ],
+ "notes": [
+  "A stub on purpose (spec: Prescription marketplace stub, Future). The marketplace itself, with pharmacies answering prescriptions, is not built."
+ ],
+ "shots": [
+  {
+   "file": "f577_1.jpg",
+   "caption": "Tell me when it opens: the form",
+   "role": "admin",
+   "url": "/prescription-market"
+  },
+  {
+   "file": "f577_2.jpg",
+   "caption": "Done: thanks and on the list",
+   "role": "admin",
+   "url": "/prescription-market"
+  },
+  {
+   "file": "f577_3.jpg",
+   "caption": "The owner's list of people who want it",
+   "role": "admin",
+   "url": "/admin/rx-market"
+  }
+ ]
 }

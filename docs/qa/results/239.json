@@ -1,18 +1,49 @@
 {
-  "n": 239,
-  "status": "skipped",
-  "error": null,
-  "checks": [],
-  "shots": [
-    {
-      "file": "f239_1.jpg",
-      "caption": "Stock",
-      "role": "admin",
-      "url": "/admin/stock"
-    }
-  ],
-  "notes": [
-    "MPO goods entering stock was not carried through end to end."
-  ],
-  "did": "Looked at the stock page for goods that came from an MPO."
+ "n": 239,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. A pre-order that came from an MPO was waiting for its goods on the owner's pre-orders page. First Napa's stock was read (18 boxes). The owner typed the discount paid to the MPO (12%) and pressed \"Goods reached me\". The stock page was opened again.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "The card says \"From an MPO. When the goods reach you, put them into stock at the discount you paid.\" and has a \"Discount you paid (%)\" box and \"Goods reached me\""
+  },
+  {
+   "ok": true,
+   "text": "The page confirms: \"The goods are in stock now. You can receive the order.\""
+  },
+  {
+   "ok": true,
+   "text": "Napa goes from 18 to 19 boxes, in a new lot with source \"Through MPO\", cost 264.00 a unit, 12% below the printed price of 300"
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser, not by a script."
+ ],
+ "shots": [
+  {
+   "file": "f239_1.jpg",
+   "caption": "Before: Napa has 18 boxes on hand",
+   "role": "admin",
+   "url": "/admin/stock/medicines/1"
+  },
+  {
+   "file": "f239_2.jpg",
+   "caption": "The owner types the discount paid (12%) before pressing Goods reached me",
+   "role": "admin",
+   "url": "/admin/preorders"
+  },
+  {
+   "file": "f239_3.jpg",
+   "caption": "\"The goods are in stock now\"",
+   "role": "admin",
+   "url": "/admin/preorders"
+  },
+  {
+   "file": "f239_4.jpg",
+   "caption": "After: a new lot, Through MPO, 12% below the printed price",
+   "role": "admin",
+   "url": "/admin/stock/medicines/1"
+  }
+ ]
 }

@@ -1,0 +1,23 @@
+from _w import w
+w(610,"Built and tested live in the browser pane by hand. A shop (Karim Pharmacy) bought 612 taka of goods at the counter and paid 200 now; the memo was finished with the rest due. An older memo of 1,000 taka left on credit 45 days ago was added to the test data by a command. The owner then opened the new Credit ledger, Karim's account, and took a payment of 1,100 taka by bKash.",
+ ["The Credit ledger lists each customer who owes us, biggest first, with the total in large type (1,712 taka) and a count of customers who are late; Karim shows a Late mark with the text (45 days) and not only a colour",
+  "Memos left Due with no customer on them cannot be chased by name, so they are counted in a note instead (141,087 taka on 105 old test memos) with a link to All orders",
+  "Karim's account shows what he owes (1,412), a Take payment panel with the amount, an All-of-it shortcut, the way paid (cash, bKash, Nagad, Rocket, bank, card) and a note",
+  "A payment of 1,100 went to the oldest memo first: the 45-day-old memo was cleared and the newer one shows total 612, paid 300 (200 + 100), 312 still owed",
+  "Payments received lists each part with its memo, the way paid, who took it and the note; the customer's page in Customers now says Owes us 312 with a link to the account",
+  "A payment bigger than what is owed, a zero amount and an unknown way are all refused (automatic tests); it also works at 320 px wide and in dark mode, with no sideways scroll"],
+ [{"file":"f610_1.jpg","caption":"The ledger: total, who is late, memos without a customer, the list","role":"admin","url":"/admin/ledger"},
+  {"file":"f610_2.jpg","caption":"A customer's account with the payment panel","role":"admin","url":"/admin/ledger/4"},
+  {"file":"f610_3.jpg","caption":"After 1,100 taka: oldest memo cleared first, 312 left, payments listed","role":"admin","url":"/admin/ledger/4"},
+  {"file":"f610_4.jpg","caption":"The customer page says what they owe","role":"admin","url":"/admin/customers/4"}],
+ ["Built this round from the spec (chapter 28, note 12: the ledger is built separately and connected to the memo's Paid/Due mark). New tables invoice_payments and supplier_payments; services Receivables and Payables; the old Take payment on All orders now goes through the same service. The old memo was made by a command to show Late and the oldest-first rule. Not built: reminders to customers, interest, credit limits, and a customer's own view of what they owe. 20 new automatic tests."])
+w(611,"Built and tested live in the browser pane by hand. On Enter purchase the owner added 10 boxes of Seclo 20 mg (5,904 taka), chose Part or none now, tried to save without a due day, then paid 2,000 now and set the rest due on 6 November, and saved. Then the owner opened Company dues and recorded a 1,000 taka bank payment.",
+ ["Enter purchase has a new block How it is paid: Paid in full (as before) or Part or none now, with Paid now, The rest is due on, and a line that says how much we will owe the company",
+  "Saving without a due day was refused at the field: \"Write the day the rest is due.\"; paying more than the total is refused too",
+  "Company dues lists each company we owe with the total in large type (3,904 taka), the next due day and, when a due day has passed, a Late mark with the text and amount",
+  "The company's account shows the invoice still open (total 5,904, paid 2,000, due 6 Nov) and a Record payment panel (cash, bKash, Nagad, Rocket, bank, cheque); a 1,000 taka bank payment left 2,904 owed, kept as a row with who paid it",
+  "A payment fills the invoice that falls due first; purchases entered before this existed all count as paid; only the owner (stock permission) can open the screens"],
+ [{"file":"f611_1.jpg","caption":"Enter purchase: no due day is refused at the field","role":"admin","url":"/admin/stock/receive"},
+  {"file":"f611_2.jpg","caption":"Company dues: what we owe each company","role":"admin","url":"/admin/payables"},
+  {"file":"f611_3.jpg","caption":"A company's account after a 1,000 taka bank payment","role":"admin","url":"/admin/payables/2"}],
+ ["Built this round from the spec (chapter 28, note 12: what we owe each company or supplier, with due dates). New columns paid_amount and due_date on purchase invoices; every older purchase was set to paid. The home screen warns about late company invoices. Not built: reminders, a payment plan over several dates, or paying a part of one invoice chosen by hand (a payment always fills the invoice due first)."])

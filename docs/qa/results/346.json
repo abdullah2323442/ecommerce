@@ -1,18 +1,41 @@
 {
-  "n": 346,
-  "status": "skipped",
-  "error": null,
-  "checks": [],
-  "shots": [
-    {
-      "file": "f346_1.jpg",
-      "caption": "Messages",
-      "role": "admin",
-      "url": "/admin/messages"
-    }
-  ],
-  "notes": [
-    "Not reproduced."
-  ],
-  "did": "Looked for notifications that come from the owner's site."
+ "n": 346,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. On the owner's Settings screen the notice shown on every page was written in English and in Bangla (\"We update the site tonight at 2 am. Orders are safe.\") and saved. A visitor then opened the home page and the medicines page, and switched language.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "The owner has two boxes: a notice for every page and the same notice in Bangla"
+  },
+  {
+   "ok": true,
+   "text": "As soon as it was saved, a banner with the notice appeared at the very top of the home page and the medicines page for a visitor who is not signed in"
+  },
+  {
+   "ok": true,
+   "text": "Switching to Bangla showed the Bangla words in the same banner"
+  },
+  {
+   "ok": true,
+   "text": "Emptying the boxes takes the banner away again (done after the test)"
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser. The notice is plain text for everybody; it is not sent to phones or by SMS. The boxes were emptied afterwards with a command."
+ ],
+ "shots": [
+  {
+   "file": "f346_1.jpg",
+   "caption": "Owner: the notice written in two languages",
+   "role": "admin",
+   "url": "/admin/settings"
+  },
+  {
+   "file": "f346_2.jpg",
+   "caption": "Visitor: the notice at the top of every page",
+   "role": "guest",
+   "url": "/"
+  }
+ ]
 }

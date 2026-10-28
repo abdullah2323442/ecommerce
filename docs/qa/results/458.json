@@ -1,18 +1,27 @@
 {
-  "n": 458,
-  "status": "skipped",
-  "error": null,
-  "checks": [],
-  "shots": [
-    {
-      "file": "f458_1.jpg",
-      "caption": "A new post",
-      "role": "visitor",
-      "url": "/help/new"
-    }
-  ],
-  "notes": [
-    "Not carried through."
-  ],
-  "did": "Looked for a limit on how many posts one person can make."
+ "n": 458,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. Karim Pharmacy published two help posts in one day and then tried a third.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "The first two posts were accepted"
+  },
+  {
+   "ok": true,
+   "text": "The third was refused with \"That is enough posts for today. Please try again tomorrow.\""
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser."
+ ],
+ "shots": [
+  {
+   "file": "f458_1.jpg",
+   "caption": "The third post of the day is refused",
+   "role": "shop",
+   "url": "/help/new"
+  }
+ ]
 }

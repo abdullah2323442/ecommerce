@@ -1,18 +1,51 @@
 {
-  "n": 455,
-  "status": "skipped",
-  "error": null,
-  "checks": [],
-  "shots": [
-    {
-      "file": "f455_1.jpg",
-      "caption": "The Help board",
-      "role": "guest",
-      "url": "/help"
-    }
-  ],
-  "notes": [
-    "Not carried through."
-  ],
-  "did": "Looked for the card following visibility rules."
+ "n": 455,
+ "status": "pass",
+ "error": null,
+ "did": "Tested live in the browser pane by hand. A comment with two product links was left on a help post: one to Napa and one to a medicine that does not exist. The same post was then opened by a guest, by a shop (tier C) and by a wholesaler who has no medicine category.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "A guest sees a Napa card at the retail price of 300 taka per box"
+  },
+  {
+   "ok": true,
+   "text": "A shop in price tier C sees the same card at its own price, 240 taka per box"
+  },
+  {
+   "ok": true,
+   "text": "A wholesaler whose account has no medicine category sees no Napa card at all, because medicine is not shown to them"
+  },
+  {
+   "ok": true,
+   "text": "The link to a medicine that does not exist shows \"This product is no longer available.\" for everyone"
+  },
+  {
+   "ok": true,
+   "text": "Found and fixed: a pasted link to our own site with a port (as on a test server) was refused without any visible message; the port is now ignored when checking the address"
+  }
+ ],
+ "notes": [
+  "Done by hand in the live browser. New automatic test in HelpBoardTest for the link with a port; the comment refusal now uses its own message place."
+ ],
+ "shots": [
+  {
+   "file": "f455_1.jpg",
+   "caption": "Wholesaler without a medicine category: no Napa card, only the gone product note",
+   "role": "wholesaler",
+   "url": "/help/2"
+  },
+  {
+   "file": "f455_2.jpg",
+   "caption": "Guest: Napa card at the retail price (300)",
+   "role": "guest",
+   "url": "/help/2"
+  },
+  {
+   "file": "f455_3.jpg",
+   "caption": "Shop in tier C: the same card at its own price (240)",
+   "role": "shop",
+   "url": "/help/2"
+  }
+ ]
 }

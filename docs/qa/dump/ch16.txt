@@ -1,0 +1,256 @@
+# CHAPTER 16: Delivery and Courier
+
+## 460 | Automatic location | skipped
+FOR: Location is filled in automatically.
+DID: Looked at the district box on a product order form to see how the place is chosen.
+  ok: A full list of districts is offered (64)
+  NOTE: Filling the place in automatically from the phone's location was not reproduced.
+  SHOT f460_1.jpg | The district list on an order form | guest
+
+## 461 | Map pin | skipped
+FOR: A map pin is partly built.
+DID: Looked for a map pin on the order form.
+  NOTE: The checklist marks the map pin as partly built. No map was found on the order form.
+  SHOT f461_1.jpg | The order form | guest
+
+## 462 | "How to get there" field | pass
+FOR: A "how to get there" field helps the rider.
+DID: Looked at the order form for a "how to get there" box.
+  ok: The form has a box to help the rider find the place (a Note box)
+  SHOT f462_1.jpg | The order form | guest
+
+## 463 | Three-layer delivery charge order | pass
+FOR: Delivery charge is worked out in three layers.
+DID: Looked at the delivery charges in settings and on a product to see the layers.
+  ok: A charge for inside the shop's district
+  ok: A charge for outside it
+  ok: A charge set on a product beats every other delivery charge
+  SHOT f463_1.jpg | The shop-wide delivery charges | admin
+  SHOT f463_2.jpg | A product's own charge beats the others | admin
+
+## 464 | Mandatory product charge highest | pass
+FOR: A product's mandatory delivery charge is the highest layer.
+DID: Read the rule that a product's own charge is the highest.
+  ok: The mandatory product charge is the highest layer
+  SHOT f464_1.jpg | Weights and delivery charges | admin
+
+## 465 | Courier list in profile | pass
+FOR: A courier list is kept in the seller's profile.
+DID: Opened the Couriers page where the shop lists the couriers it uses.
+  ok: The shop keeps a list of couriers
+  SHOT f465_1.jpg | Couriers | admin
+
+## 466 | Unlimited couriers | pass
+FOR: There is no limit on couriers.
+DID: Added a new courier called "QA Express" with its charges.
+  ok: The new courier is added and kept on the list with its charges: there is no fixed limit
+  SHOT f466_1.jpg | The courier is on the list, with its charges | admin
+
+## 467 | Charges entered by hand (no API) | pass
+FOR: Charges are typed in by hand, with no outside service.
+DID: Looked at how courier charges are entered.
+  ok: Charges are typed by hand
+  SHOT f467_1.jpg | Charges typed by hand | admin
+
+## 468 | Zone + first kg + additional kg | pass
+FOR: A courier's price uses a zone, a first kilogram and each extra kilogram.
+DID: Looked at the zones, first kilo and extra kilo for a courier.
+  ok: A zone: Own area
+  ok: A zone: Inside the district
+  ok: A zone: Outside the district
+  ok: A price for the first kilo
+  ok: And for each extra kilo
+  SHOT f468_1.jpg | Zone, first kilo and extra kilo | admin
+
+## 469 | COD charge percentage | pass
+FOR: A percentage is added for cash on delivery.
+DID: Looked at the cash-on-delivery percentage on a courier.
+  ok: A courier has a cash-on-delivery percentage
+  SHOT f469_1.jpg | Cash on delivery share | admin
+
+## 470 | Weight rounding rule | pass
+FOR: A rounding rule for weight is set.
+DID: Looked at the weight rounding rule in settings.
+  ok: A rule for rounding weight
+  ok: One choice is round up to half a kilo
+  SHOT f470_1.jpg | Weight rounding | admin
+
+## 471 | All couriers side by side at checkout | pass
+FOR: All couriers show side by side at checkout.
+DID: Tested live in the browser pane by hand. The owner gave Napa 500 mg a weight (120 g) on the Weights screen, added a second courier (Sundarban Fast, with charges for own area, inside and outside the district) on the Couriers screen, and set the free-delivery limit above the order. A shopper then put one box of Napa in the cart and opened checkout.
+  ok: Checkout shows "Choose a courier - Weight 0.12 kg" with both couriers side by side: Sundarban Fast 90 taka and QA Express 94.50 taka, cheapest first
+  ok: Choosing Sundarban Fast changed the order: delivery charge 90, total 390
+  ok: The weight on the product is what the charge is worked from: the first kilo plus extra kilos, rounded up as the owner's rule says
+  NOTE: Done by hand in the live browser. Set-up done on the owner's own screens: the weight, the second courier, free delivery over 1,000 (it was 300 so the order was free) and the delivery-charge-paid-first limit set to never. Without a weight on every product the flat area charge is used instead, as the screen says. The order itself was not sent.
+  SHOT f471_1.jpg | Owner: adding the second courier with its charges | admin
+  SHOT f471_2.jpg | Shopper: both couriers side by side at checkout | guest
+  SHOT f471_3.jpg | Shopper: Sundarban Fast chosen, total 390 | guest
+
+## 472 | Flat charge when no weight | pass
+FOR: If there is no weight, a flat charge applies.
+DID: Looked at the flat delivery charge on a product with no weight.
+  ok: A product with no weight uses a flat delivery charge (80)
+  SHOT f472_1.jpg | A flat delivery charge | guest
+
+## 473 | Reminders to add weight | pass
+FOR: Reminders ask staff to add weights.
+DID: Looked at the list of products with no weight.
+  ok: The owner is shown how many products still have no weight
+  SHOT f473_1.jpg | Products with no weight | admin
+
+## 474 | Courier rate check after 3 months | pass
+FOR: Courier rates are checked again after three months.
+DID: Tested live in the browser pane by hand. The date the courier rates were last checked was set back to 1 July 2026, so that more than three months had passed (the three months could not be waited for). The owner opened the Couriers screen and pressed the confirm button.
+  ok: The Couriers screen showed a red notice: "Are the courier rates still correct? Nobody has checked for three months." with the button "Yes, they are still correct"
+  ok: After pressing it the screen said "Thank you. We will ask again in three months." and "Rates last checked 22 Oct 2026", and the notice went away
+  NOTE: Done by hand in the live browser. The three months were not waited for: the last-checked date was moved back with a command, and everything after that was done on the screen. The same reminder is also meant to show on the owner's home screen; that was not looked at.
+  SHOT f474_1.jpg | The three-month reminder on the Couriers screen | admin
+  SHOT f474_2.jpg | After confirming: thanked, date updated, notice gone | admin
+
+## 475 | Delivery charge draft (add extra) | pass
+FOR: A delivery charge draft lets staff add extra.
+DID: A paikari shop asked for a box of Napa to be delivered. The owner confirmed the line, set the delivery charge to 50, finished checking, then wrote an extra delivery charge of 20 and marked it as sent.
+  ok: The owner can write an extra delivery charge
+  ok: The page explains it is added and shown on the memo
+  SHOT f475_1.jpg | The order is checked: the "Send it" box | admin
+  SHOT f475_2.jpg | An extra charge of 20 typed in | admin
+
+## 476 | "Product on the way" shown | pass
+FOR: "Product on the way" shows to the buyer.
+DID: As the shop, opened the order after the owner marked it as sent.
+  ok: The shop sees the "On the way" step
+  ok: With the tracking note
+  SHOT f476_1.jpg | The shop sees "On the way" with the tracking note | paikari
+
+## 477 | 50-50 courier charge in wholesale | pass
+FOR: Wholesale courier charge is split 50-50.
+DID: In the same "Send it" box, looked at the choices for who pays the courier and picked "Shared 50-50".
+  ok: The courier charge can be as quoted, shared 50-50, or a fixed amount (As quoted, Shared 50-50, A fixed amount)
+  ok: Choosing 50-50 asks what the courier charged
+  SHOT f477_1.jpg | Shared 50-50 chosen: the courier's charge and the cartons are asked for | admin
+
+## 478 | By weight and carton | pass
+FOR: Charges can be by weight and by carton.
+DID: Wrote what the courier charged (100) and 2 cartons, a tracking note, and pressed "Mark as sent".
+  ok: The order records the courier charge arrangement and the number of cartons
+  ok: And the tracking note
+  SHOT f478_1.jpg | The order is sent: the courier charge and the cartons are recorded | admin
+
+## 479 | Advance delivery charge | pass
+FOR: An advance delivery charge can be taken.
+DID: Looked at the setting for an advance delivery charge.
+  ok: Large orders can ask for the delivery charge first
+  SHOT f479_1.jpg | Delivery charge paid first | admin
+
+## 480 | Pickup point | pass
+FOR: A pickup point can be used.
+DID: Looked at the seller screen for a pickup point.
+  ok: A seller can set a pickup point
+  SHOT f480_1.jpg | Where buyers can collect | wholesale
+
+## 481 | Only for name-visible sellers | pass
+FOR: It is only for sellers whose name is visible.
+DID: Read the condition on the pickup point.
+  ok: A pickup point removes the delivery charge
+  SHOT f481_1.jpg | Pickup point | wholesale
+
+## 482 | Reminder after 3 days | pass
+FOR: A reminder goes out after three days.
+DID: A made-to-order job was ready for collection and nobody came. Later the buyer's messages were opened.
+  ok: The buyer gets a reminder that the job has been ready for some days
+  SHOT f482_1.jpg | The buyer is reminded to collect | visitor
+
+## 483 | Delivery person's list | pass
+FOR: The delivery person has a list of drops.
+DID: Opened "My deliveries", the delivery person's list.
+  ok: A delivery person has their own list
+  SHOT f483_1.jpg | The delivery person's list | admin
+
+## 484 | Grouped by area | pass
+FOR: The list is grouped by area.
+DID: The owner opened a delivery account, two shoppers ordered (one in Mirpur, one in Gulshan), the owner checked both orders and gave them to the rider. The rider opened "My deliveries".
+  ok: The list has a group for Mirpur
+  ok: And a group for Gulshan, so the rider can plan the trip by area
+  NOTE: The rider's buttons: Toggle Sidebar |  | বাংলা | EN | Delivered | Delivered | Delivered | I have arrived | Delivered | Delivered | Delivered | Delivered | Delivered | Delivered | Delivered | Delivered | I have arrived | Delivered | I have arrived | Delivered | I have arrived | Delivered | I have arrived | Delivered | I have arrived | Delivered | I have arrived | Delivered | I have arrived | Delivered | I have arrived | Delivered | I have arrived | Delivered | I have arrived | Delivered | I have arrived | Delivered | I have arrived | Delivered | I have arrived | Delivered
+  SHOT f484_1.jpg | The rider's list, grouped by area | rider
+
+## 485 | "Arrived" mark and notification | pass
+FOR: An "arrived" mark notifies the buyer.
+DID: As the rider, pressed "I have arrived" on the Gulshan delivery. Then, as the buyer, opened the order page.
+  ok: The delivery is marked "arrived" and the rider is told the buyer knows
+  ok: The buyer is told the delivery person has arrived: "Our delivery person is at your door."
+  ok: And is shown a six-digit code to tell the rider
+  NOTE: Orders in this run: [{"id":292,"token":"I4U5UlgUU14s3Yw2OPU90Whlqp7HbubvZOa6lnOQ","area":"Mirpur"},{"id":293,"token":"2jCaUBTLBZdErJc21spiTT55A57qkAUr7L7H5o6w","area":"Gulshan"}]
+  NOTE: Around the code: Our delivery person is at your door. Tell this code to our delivery person when you get your order. Do not tell it to anyone else. 515468 On the way Sent 21 Oct 2026, 19:37 I received it I did not receive it Add a note, voice note or photo Get help with this order Keep thi
+  SHOT f485_1.jpg | The rider has arrived | rider
+  SHOT f485_2.jpg | The buyer order page: the rider is at the door, and the code to tell them | visitor
+
+## 486 | Delivery person's cash accounting | pass
+FOR: The delivery person's cash is accounted for.
+DID: Opened Delivery money.
+  ok: The owner sees what each delivery person holds
+  ok: The owner counts it and presses Received
+  SHOT f486_1.jpg | Delivery money | admin
+
+## 487 | Delivery confirmation by OTP or photo | pass
+FOR: Delivery is confirmed by a code or a photo.
+DID: The buyer told the rider the code. The rider typed it with the money taken and pressed "Delivered" on the Gulshan order. For the Mirpur order the rider attached a photo of the parcel instead.
+  ok: The right code finishes the delivery
+  ok: The delivered order is off the rider list
+  ok: A photo of the parcel can finish a delivery when the buyer has no code
+  SHOT f487_1.jpg | The buyer code and the money taken, typed by the rider | rider
+  SHOT f487_2.jpg | After confirming with the code | rider
+  SHOT f487_3.jpg | The rider list: the finished delivery is gone | rider
+  SHOT f487_4.jpg | Finished with a photo of the parcel instead of the code | rider
+
+## 488 | OTP turns draft sale into complete sale automatically | pass
+FOR: The code turns the draft sale into a complete sale.
+DID: After the rider confirmed with the code, opened the buyer order and then the owner order.
+  ok: The code is no longer asked for: the sale is complete
+  ok: The order shows as delivered
+  ok: The owner order is finished: a complete sale, not a draft
+  SHOT f488_1.jpg | The buyer order after the code was accepted | visitor
+  SHOT f488_2.jpg | The owner order after delivery | admin
+
+## 489 | "Received" tap / auto-confirm for courier deliveries | pass
+FOR: A "received" tap or automatic confirm is partly built.
+DID: As the shop, pressed "I received it", then looked at the order and at the memo.
+  ok: The shop has a "I received it" button
+  ok: The order is finished: it can no longer be sent again
+  SHOT f489_1.jpg | After the shop taps "I received it" | paikari
+  SHOT f489_2.jpg | The owner's order after the shop received it | admin
+
+## 490 | Delivery and service rating | pass
+FOR: The buyer can rate the delivery and the service.
+DID: Opened Delivery ratings.
+  ok: Buyers rate the delivery and the service
+  ok: Buyers do not see the names of people rated
+  SHOT f490_1.jpg | Delivery ratings | admin
+
+## 491 | Ratings per delivery person and staff, low-rating alert | pass
+FOR: Ratings are kept per delivery person and per staff, with an alert if one is low.
+DID: Looked at ratings kept per delivery person and per staff.
+  ok: Ratings are kept for delivery people
+  ok: And for staff
+  SHOT f491_1.jpg | Ratings per person | admin
+
+## 492 | Courier integration and tracking | pass
+FOR: Courier tracking is connected.
+DID: Looked at the courier list for booking parcels with a courier service.
+  ok: A courier can book parcels through a service
+  ok: Steadfast is offered
+  ok: Pathao is offered
+  NOTE: Both services show "not switched on" in the test copy.
+  SHOT f492_1.jpg | Courier integration | admin
+
+## 493 | Delivery zones | pass
+FOR: Delivery zones are set.
+DID: Looked at the zones on a courier.
+  ok: A courier can leave out zones it does not serve
+  SHOT f493_1.jpg | Delivery zones | admin
+
+## 494 | "Delivery by arrangement" | pass
+FOR: "Delivery by arrangement" is an option.
+DID: Looked for "delivery by arrangement".
+  ok: Delivery can be "I send it myself"
+  SHOT f494_1.jpg | "Nobody: I send it myself" | admin

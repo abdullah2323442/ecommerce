@@ -1,11 +1,35 @@
 {
-  "n": 284,
-  "status": "notbuilt",
-  "error": null,
-  "checks": [],
-  "shots": [],
-  "notes": [
-    "Personal recommendations have not been built yet."
-  ],
-  "did": "Checked the checklist."
+ "n": 284,
+ "status": "pass",
+ "error": null,
+ "did": "Built and tested live in the browser pane by hand. A signed-in buyer with market orders opened the market home.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "At the very top of the market home a Picked for you row shows eight products, each with its photo, name and price, scrolling sideways on a phone"
+  },
+  {
+   "ok": true,
+   "text": "The products come from what this buyer ordered or saved: the same categories first, then the same kind of business and the same sellers, with products that sold more in the last 90 days a little ahead"
+  },
+  {
+   "ok": true,
+   "text": "What they already bought, their own products, sold-out products, hidden products and cancelled orders are left out; one buyer's history is never used for another; a buyer with no history sees nothing there"
+  },
+  {
+   "ok": true,
+   "text": "It shows only on the plain market page, not inside a shop, a category or a search, and a sale price shows on the card like anywhere else (automatic tests)"
+  }
+ ],
+ "notes": [
+  "Built this round from the spec (chapter 13). It is the plain, explainable kind, worked out from order and saved-product history; no learning model and no outside service. Not built: a switch for a buyer to turn it off, and recommendations in the pharmacy or food sections. 8 new automatic tests."
+ ],
+ "shots": [
+  {
+   "file": "f284_1.jpg",
+   "caption": "Picked for you, at the top of the market",
+   "role": "visitor",
+   "url": "/market"
+  }
+ ]
 }

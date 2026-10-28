@@ -1,0 +1,131 @@
+# CHAPTER 2: Pricing
+
+## 22 | Tier system — unlimited tiers | pass
+FOR: Customers are grouped into levels (tiers) A, B and C. Each level gets its own default discount.
+DID: Opened the Tiers page to see the discount levels. Then signed in as a paikari shop on tier B and looked at what it is charged for Napa 500 mg. Finally added a new tier "D".
+  ok: Tier A exists
+  ok: Tier A gives 10%
+  ok: Tier B gives 15%
+  ok: Tier C gives 20%
+  ok: A tier B shop pays 255 for a box printed at 300, which is 15% off (saw 255 at 15%)
+  ok: The new tier D appears with its 25% discount
+  SHOT f22_1.jpg | The owner's Tiers page: three discount levels | admin
+  SHOT f22_2.jpg | A paikari shop on tier B: the box printed at 300 is charged 255 | paikari
+  SHOT f22_3.jpg | Adding a fourth tier, D, at 25% | admin
+  SHOT f22_4.jpg | Tier D is now on the list: the number of tiers is not fixed | admin
+
+## 23 | Company-level rate | pass
+FOR: A discount can be set once for a whole company, and it covers all that company's medicines.
+DID: On the Tiers page, set a 10% rate for the whole company "Square", then looked at what a Square medicine costs a shop, then removed the rate.
+  ok: The Tiers page has a place for rates by company
+  ok: The company rate is saved: every Square medicine is 10% off for customers without a rate of their own
+  SHOT f23_1.jpg | A 10% rate for the company Square | admin
+  SHOT f23_2.jpg | The company rate is saved and listed | admin
+  SHOT f23_3.jpg | Removed again | admin
+
+## 24 | Product-level override | pass
+FOR: A discount can also be set for one single medicine, overriding the company's.
+DID: On the Tiers page, set a 12% rate for one medicine (Napa 500 mg), then removed it.
+  ok: The rate for one medicine is saved
+  SHOT f24_1.jpg | A 12% rate for one medicine | admin
+  SHOT f24_2.jpg | The medicine rate is saved and listed | admin
+  SHOT f24_3.jpg | Removed again | admin
+
+## 25 | Customer-specific manual rate | pass
+FOR: The owner can give one customer a special price on one medicine. This beats every other rule.
+DID: Gave Karim Pharmacy a hand-set 18% price on Napa 500 mg, then signed in as Karim to see the price.
+  ok: The special rate shows in the shop's Manual rates list
+  ok: The shop pays 246 for a box printed at 300 (18% off) instead of the tier price (saw 246 at 18%)
+  SHOT f25_1.jpg | Typing 18 percent off for this shop on Napa 500 mg | admin
+  SHOT f25_2.jpg | The special rate is saved on the shop's profile | admin
+  SHOT f25_3.jpg | Karim now sees the box at 246, not 255 | paikari
+
+## 26 | Four-layer priority | pass
+FOR: When several discounts could apply, the system always picks in a fixed order: hand-set price first, then medicine, company, then tier.
+DID: Tested live in the browser pane by hand. The price a shop (Karim Pharmacy) pays for Napa 500 mg was read after each step. The owner set a rate for the whole company Square (22%), then a rate for the one medicine (27%), then a hand-set rate for this one shop (18%). Each rate was saved on the owner's screens and the shop's price was read again.
+  ok: Before any of them the shop paid 247.50 a box (17.5% off the printed 300)
+  ok: Company rate 22%: the shop pays 234.00 (the company rate beats the tier price)
+  ok: Medicine rate 27%: the shop pays 219.00 (the rate for one medicine beats the company rate)
+  ok: Hand-set rate for this shop, 18%: the shop pays 246.00, even though it is a smaller discount (the shop's own rate beats everything)
+  ok: The screens say it in words: "A rate for one medicine beats the company rate. Both beat the tier. A shop with its own rate keeps it." and "Highest priority; overrides tier, company and medicine rates."
+  NOTE: Done by hand in the live browser, not by a script. Setting a rate needs the owner's password again, which is a safeguard. The test rates were removed afterwards.
+  SHOT f26_1.jpg | A company rate: Square 22% off | admin
+  SHOT f26_2.jpg | A medicine rate below cost asks to confirm: "Raise it, or confirm to sell at a loss" | admin
+  SHOT f26_3.jpg | Company 22% and medicine 27% saved | admin
+  SHOT f26_4.jpg | A hand-set rate for this shop: Napa 18% off | admin
+
+## 27 | Manual rate unchanged when tier changes | pass
+FOR: Moving a customer to a new tier does not change the special prices already set by hand for them.
+DID: Set a hand-set 18% rate, moved the shop from tier B to tier C, and checked the hand-set price did not change.
+  ok: The hand-set price stays at 246 after the tier change (saw 246 at 18%)
+  SHOT f27_1.jpg | Typing 18 percent off for this shop on Napa 500 mg | admin
+  SHOT f27_2.jpg | The shop is moved to tier C | admin
+  SHOT f27_3.jpg | After the tier change the hand-set price is still 246 | paikari
+
+## 28 | Percentage and taka — both | pass
+FOR: A discount can be written as a percentage or as a fixed taka amount.
+DID: Gave the shop a fixed taka price on Napa 500 mg. First typed 250, thinking of the price of a box. Then typed 8.2, the price of one piece.
+  ok: A box price typed by mistake is refused, and the message says a taka price is for one piece and what the printed piece price is
+  ok: A fixed taka price typed per piece works (8.2 per piece gives 246 for a box)
+  SHOT f28_1.jpg | Typing a fixed taka price for this shop on Napa 500 mg | admin
+  SHOT f28_2.jpg | Typed 250, a box price, into the "Taka price per piece" box: the system explains the mistake | admin
+  SHOT f28_3.jpg | Typing a fixed taka price for this shop on Napa 500 mg | admin
+  SHOT f28_4.jpg | Typed 8.2 as the price of one piece: the box is now 246 | paikari
+
+## 29 | Percentage/taka toggle | pass
+FOR: A switch on the price form flips between percentage and taka.
+DID: On the rate form, flipped the switch between "Percent off" and "Taka price".
+  ok: The form can be set to percent
+  ok: The same form can be switched to a fixed taka price
+  SHOT f29_1.jpg | Percent mode of the rate form | admin
+  SHOT f29_2.jpg | Taka mode of the rate form | admin
+
+## 30 | Quantity-based discount steps | pass
+FOR: Bigger orders can earn bigger discounts, in steps.
+DID: On the medicine screen, added a step to "Buy more, pay less": from 5 boxes, 10% off each. Saved it and reloaded to see it was kept.
+  ok: The step is kept after reloading the page (the field shows "5")
+  SHOT f30_1.jpg | The "Buy more, pay less" section before any step is added | admin
+  SHOT f30_2.jpg | A step typed in: from 5 boxes, 10 percent off each | admin
+  SHOT f30_3.jpg | After reloading, the step is still there | admin
+
+## 31 | Discount steps shown on product page | pass
+FOR: The steps are shown on the product page so buyers see what they save by ordering more.
+DID: Opened the public page for Napa 500 mg as a stranger and looked for the quantity discount.
+  ok: The public page shows that buying 5 or more boxes earns 10% off
+  NOTE: The discount is the same for every public buyer.
+  SHOT f31_1.jpg | The public medicine page shows the quantity discount steps | guest
+
+## 32 | Discount order (price → quantity → token → credit) | pass
+FOR: Discounts stack in a fixed order: price first, then quantity, then token, then credit.
+DID: Tested live in the browser pane by hand, in two real sales. (1) A shopper put 5 boxes of Napa 500 mg in the cart, used their Aqua Token at checkout, and the owner finished the order at the counter. (2) A shop (Karim Pharmacy) returned a box for credit, then ordered ten boxes; the owner finished that order.
+  ok: Price, then quantity: Napa is 300 a box, 5 or more are 270 a box, so 5 boxes were 1,350 (checkout showed it before the order was sent)
+  ok: Then the token: the finished memo shows Subtotal 1,350, Aqua Token minus 100, Total 1,250. The token is only spent when the order is finished, not at checkout
+  ok: Then the credit: on the shop's memo (offer price 247.50 a box, 10 boxes = 2,475) the line Return product minus 255 came off, and the total was 2,220
+  ok: A token and an offer price do not go together; checkout says so and the shop's offer order took no token
+  ok: Found and fixed: on a finished memo the Total and the Paid/Due line ignored the credit and the token (it said Total 2,475 and Due 255 though 2,220 had been paid). The memo now shows an Aqua Token line and the real total
+  NOTE: Done by hand in the live browser. The chain is in this order everywhere: price, quantity, token, then credit. It was shown on two memos rather than one because a shop's order does not take a token (only the public checkout offers it), and a public buyer had no return credit to spend. Set-up by command: Napa and a controlled medicine were restocked, and the returned box was approved on the owner's Returns screen.
+  SHOT f32_1.jpg | Quantity price, then the token: 1,350 - 100 = 1,250 | admin
+  SHOT f32_2.jpg | Shop memo: offer lines, then Return product (credit) minus 255 | admin
+
+## 33 | Warning on abnormal prices | pass
+FOR: If someone types a strange price, such as far too high or low, the system warns them.
+DID: Tried to change the printed price of a box from 300 to 30, a drop that looks like a typing mistake.
+  ok: The system warns about an unusually big price drop
+  SHOT f33_1.jpg | Typing 30 where 300 was | admin
+  SHOT f33_2.jpg | What the system says | admin
+
+## 34 | Tier change log | pass
+FOR: Every tier change is written to the customer's history, with date and who changed it.
+DID: Changed the shop's tier and looked at the Tier changes list on the customer page.
+  ok: The customer page has a Tier changes list
+  ok: The change between tiers is written down
+  SHOT f34_1.jpg | The customer page lists every tier change | admin
+
+## 35 | Invoice stores that day's price | pass
+FOR: An invoice keeps the price from the day it was made, so later price changes never alter old invoices.
+DID: Finished a retail sale of a box of Napa at 300, then raised the printed price to 320 and opened the memo again.
+  ok: The memo shows the box at 300
+  ok: The memo still shows 300: it keeps that day's price
+  ok: It does not change to the new price
+  SHOT f35_1.jpg | The finished memo at 300 | admin
+  SHOT f35_2.jpg | The same memo after the printed price rose to 320 | admin

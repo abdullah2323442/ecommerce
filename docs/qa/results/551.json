@@ -1,11 +1,31 @@
 {
-  "n": 551,
-  "status": "notbuilt",
-  "error": null,
-  "checks": [],
-  "shots": [],
-  "notes": [
-    "Overnight report generation has not been built yet."
-  ],
-  "did": "Checked the checklist."
+ "n": 551,
+ "status": "pass",
+ "error": null,
+ "did": "Built and tested live in the browser pane by hand. The owner opened the monthly report and saw when it was prepared, then pressed Prepare it again now.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "The report says when it was prepared (22 October, 9:22 PM) and offers Prepare it again now; the heavy figures are worked out ahead and kept, so the page opens at once"
+  },
+  {
+   "ok": true,
+   "text": "Every night at 02:00 Bangladesh time the current and the previous month are prepared; a month that has ended is served from the kept copy"
+  },
+  {
+   "ok": true,
+   "text": "Tonight's summary and the comparison with last month and the same month last year are on the same page, with no figure shown for a month that has no data"
+  }
+ ],
+ "notes": [
+  "Built this round from the spec (chapter 25: big reports prepared overnight). New table report_snapshots. 8 automatic tests cover the snapshot, the nightly job and the period."
+ ],
+ "shots": [
+  {
+   "file": "f551_1.jpg",
+   "caption": "Tonight's summary and this month against the last",
+   "role": "admin",
+   "url": "/admin/reports"
+  }
+ ]
 }

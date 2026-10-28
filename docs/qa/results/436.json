@@ -1,11 +1,39 @@
 {
-  "n": 436,
-  "status": "notbuilt",
-  "error": null,
-  "checks": [],
-  "shots": [],
-  "notes": [
-    "Charging by road distance has not been built yet."
-  ],
-  "did": "Checked the checklist."
+ "n": 436,
+ "status": "pass",
+ "error": null,
+ "did": "Built and tested this round. The owner opened Connections and found one new card, Google Maps, with a single box for the API key and a Test button, and a note saying which two Google services must be on (Geocoding and Distance Matrix). The restaurant settings got a button that finds the restaurant's place from its written address. With a key pasted, the by-the-kilometre charge uses real road distance from Google; with none, or when Google does not answer, it falls back to the earlier estimate and says so.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "Connections has a Google Maps card with one required box (API key), the help text that names the Geocoding API and the Distance Matrix API, a Switch on tick, Test or Live, and a Try button; the key is stored encrypted and never shown again"
+  },
+  {
+   "ok": true,
+   "text": "The restaurant's settings have an address box and Find it from the address above, which fills in the place; the order form and the menu page say whether the distance is by road (Google) or an estimate (straight line times the road allowance)"
+  },
+  {
+   "ok": true,
+   "text": "Each order keeps whether its distance was by road or estimated (food_orders.distance_by_road); a road distance is kept for 7 days for the same two places, so the same trip is not asked for twice"
+  },
+  {
+   "ok": true,
+   "text": "When Google is off, has no key, refuses the key, is slow or sends something unreadable, the order carries on with the estimate and nothing breaks (11 automatic tests with Google's replies simulated)"
+  },
+  {
+   "ok": true,
+   "text": "The Try button on the card asks Google for one real address and one real distance and says in words which of the two worked"
+  }
+ ],
+ "notes": [
+  "Built this round after the owner asked that every outside service be code-complete so only a key is left to paste. Item 435's estimate stays as the fallback. NOT verified live: the call to Google itself, because there was no Google key and no network permission here; the code was checked against simulated Google answers (success, no route, denied key, timeout, bad reply). The first real key may need the Distance Matrix API switched on in the Google Cloud project, which is what the card's help text says."
+ ],
+ "shots": [
+  {
+   "file": "f436_1.jpg",
+   "caption": "The Google Maps card in Connections: one key box, the two services it needs, Test and Try",
+   "role": "admin",
+   "url": "/admin/connections"
+  }
+ ]
 }

@@ -1,11 +1,45 @@
 {
-  "n": 613,
-  "status": "notbuilt",
-  "error": null,
-  "checks": [],
-  "shots": [],
-  "notes": [
-    "Service and coaching booking has not been built yet."
-  ],
-  "did": "Checked the checklist."
+ "n": 613,
+ "status": "pass",
+ "error": null,
+ "did": "Built and tested this round. A provider (Rahim) opened Sell > Services, made Maths and physics lesson (60 minutes, 500 taka, Mirpur) and gave it three daily times with two places each. A buyer opened the service, took the second time, gave a name, a phone and a note, and asked for it. The provider saw the request and pressed Confirm; the buyer's private page then showed Confirmed with the provider's phone.",
+ "checks": [
+  {
+   "ok": true,
+   "text": "The provider adds a service with a name, how long it takes, the price, the area, and times (one, or the same time every day for a number of days); each time has a number of places"
+  },
+  {
+   "ok": true,
+   "text": "The service page lists the free times; a buyer picks one and asks without signing up, and gets a private page (a link nobody can guess) that shows waiting, then confirmed or declined, and can cancel before the cut-off hours set in Settings"
+  },
+  {
+   "ok": true,
+   "text": "The provider sees each request with the buyer's name, phone and note, and Confirm, Decline (with a reason the buyer is told) and later Done; a time with all places taken cannot be booked and a request that waits too long is declined by itself"
+  },
+  {
+   "ok": true,
+   "text": "The provider sees the buyer's phone with the request, and the buyer sees the provider's phone only after Confirm; the same phone cannot ask for the same time twice (but may ask again after a decline); the owner can hide a service and its bookings stay"
+  },
+  {
+   "ok": true,
+   "text": "The provider is messaged about a new request; a signed-in buyer is messaged when it is confirmed or declined and once the day before (27 automatic tests)"
+  }
+ ],
+ "notes": [
+  "Built this round from the spec extras list. Payment is not taken on the site: it is paid to the provider when they meet, and the page says so. A buyer who is not signed in is not messaged (they keep the private link), which is the one gap. While testing, three confirmation messages were found to show in English on the Bangla page; fixed and translated."
+ ],
+ "shots": [
+  {
+   "file": "f613_1.jpg",
+   "caption": "The provider's service page with its times and a waiting request",
+   "role": "wholesale",
+   "url": "/wholesale/sell/services"
+  },
+  {
+   "file": "f613_2.jpg",
+   "caption": "The buyer's private page after the provider confirmed",
+   "role": "visitor",
+   "url": "/services/booking/{link}"
+  }
+ ]
 }

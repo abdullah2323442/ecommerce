@@ -1,0 +1,257 @@
+# CHAPTER 17: Pre-Order, Memos, Chat, Wallet
+
+## 495 | Pre-order is one system | pass
+FOR: Pre-order is one system used in every sector.
+DID: Opened the owner's Pre-orders page and the shop's own pre-order page.
+  ok: Pre-orders have one page on the owner's side
+  ok: And one page on the shop's side
+  SHOT f495_1.jpg | The owner's Pre-orders page | admin
+  SHOT f495_2.jpg | The same system, seen by a shop | paikari
+
+## 496 | Order goes to whoever turned it on | pass
+FOR: The order goes to whoever turned pre-order on.
+DID: Read where pre-orders are switched on and who they go to.
+  ok: Pre-order is switched on in one place
+  ok: The owner turns it on for a company or one medicine, with a promised time
+  SHOT f496_1.jpg | Where pre-order is on | admin
+
+## 497 | Medicine by company/product | pass
+FOR: Medicines are pre-ordered by company or product.
+DID: Looked at the choices for a whole company or one medicine.
+  ok: A medicine setting beats its company's
+  SHOT f497_1.jpg | By company or by medicine | admin
+
+## 498 | Other sectors by size and color | pass
+FOR: Other sectors pre-order by size and colour.
+DID: Looked at what a pre-order can be switched on for.
+  ok: Pre-order can be switched on for a whole company
+  ok: Or for one medicine
+  NOTE: No size or colour choice was found. Pre-order here is by company or medicine only.
+  SHOT f498_1.jpg | A company or one medicine | admin
+
+## 499 | Limited options on pre-orders | pass
+FOR: Pre-orders have limited options.
+DID: Looked at how long the promise can be.
+  ok: Four promise times are offered (2 days, 3 days, 4 days, 5 days)
+  SHOT f499_1.jpg | Promise: 2 to 5 days | admin
+
+## 500 | Accumulated pre-orders shown together | pass
+FOR: Pre-orders are shown together in one total.
+DID: Looked at the buying list that gathers pre-orders together.
+  ok: Pre-orders waiting for the owner are gathered in one list
+  ok: And accepted ones waiting for the goods
+  SHOT f500_1.jpg | Pre-orders gathered together | admin
+
+## 501 | Not linked to stock | pass
+FOR: They are not linked to stock.
+DID: Read how pre-orders relate to stock.
+  ok: A pre-order is not tied to stock; when the goods are received, the real order is made
+  SHOT f501_1.jpg | Not linked to stock | admin
+
+## 502 | Told after goods arrive | pass
+FOR: The buyer is told after the goods arrive.
+DID: Looked at the shop's messages for a note that the goods arrived.
+  ok: The shop is told after the goods arrive
+  SHOT f502_1.jpg | The shop's messages | paikari
+
+## 503 | Reserve or general stock | pass
+FOR: Goods are held in reserve or general stock.
+DID: Opened the owner's Pre-orders page and the "Buying list".
+  ok: Waiting pre-orders are counted
+  ok: A buying list gathers what to order from suppliers
+  SHOT f503_1.jpg | Waiting orders and the buying list | admin
+
+## 504 | Draft memo (editable) | pass
+FOR: A draft memo can be edited.
+DID: Looked at the shop's pre-orders after one was made and accepted.
+  ok: The pre-order is listed with its medicine and quantity
+  ok: And its state
+  SHOT f504_1.jpg | The shop's pre-orders | paikari
+
+## 505 | Buyer also sees on "Receive" | pass
+FOR: The buyer also sees it when they press "Receive".
+DID: Looked at the notice the shop gets about its pre-order.
+  ok: The shop is told its pre-order was accepted and when to expect it
+  SHOT f505_1.jpg | The acceptance notice | paikari
+
+## 506 | Advance field and refund rules | pass
+FOR: An advance field and refund rules are on the memo.
+DID: Looked at the advance a pre-order asks for.
+  ok: A share of the price can be asked up front on a pre-order
+  SHOT f506_1.jpg | The advance on a pre-order | admin
+
+## 507 | Sorry note if goods don't come | pass
+FOR: A sorry note is sent if the goods do not come.
+DID: Tested live in the browser pane by hand. A shop had an accepted pre-order for a box of Seclo that was waiting for the goods. The owner opened the pre-orders page, wrote why it did not come, and pressed "Did not come, cancel". The shop opened its pre-orders page.
+  ok: The owner's card has a reason box ("Why it did not come, the buyer will read it") and the button "Did not come, cancel"
+  ok: The shop gets a sorry note at the top of its pre-orders: "Sorry, your pre-order for Seclo 20 mg could not be supplied: The company has not sent it this month."
+  ok: The pre-order turns to Cancelled in the shop's list, so nothing hangs
+  NOTE: Done by hand in the live browser, not by a script.
+  SHOT f507_1.jpg | The owner: the reason and "Did not come, cancel" | admin
+  SHOT f507_2.jpg | The shop sees the sorry note and the pre-order Cancelled | paikari
+
+## 508 | Red and notification when time passes | pass
+FOR: A late pre-order turns red and notifies the owner.
+DID: Opened the owner's Pre-orders page 35 days later, when the promised days for the accepted pre-orders had gone by.
+  ok: The page warns that pre-orders are past their promised time
+  ok: Each late pre-order is marked
+  ok: The owner can give a new time or cancel what did not come
+  SHOT f508_1.jpg | Pre-orders past their time | admin
+
+## 509 | Short supply → earlier orders first | pass
+FOR: When supply is short, earlier orders are served first.
+DID: Accepted the shop's pre-order, then wrote in fewer boxes than were ordered ("Boxes that came") and pressed "Share out".
+  ok: The accepted pre-order waits for the goods
+  ok: The shop is told what came
+  SHOT f509_1.jpg | The pre-order is accepted and waits for the goods | admin
+  SHOT f509_2.jpg | After the goods came and were shared out | admin
+  SHOT f509_3.jpg | The shop sees the result | paikari
+
+## 510 | Nice memos in every sector | pass
+FOR: Every sector has a nicely formatted memo.
+DID: Opened a finished memo.
+  ok: The memo carries the shop's name
+  ok: And its items
+  ok: And who served the customer
+  SHOT f510_1.jpg | A memo | admin
+
+## 511 | Every step on its own memo line | pass
+FOR: Each step has its own memo line.
+DID: Looked at the memo lines.
+  ok: Each line shows the quantity, unit and price
+  SHOT f511_1.jpg | Memo lines | admin
+
+## 512 | Year in memo number | pass
+FOR: The year is part of the memo number.
+DID: Looked at the memo number.
+  ok: The memo number includes the year (2026)
+  SHOT f512_1.jpg | The year is in the memo number | admin
+
+## 513 | Thermal receipt printer format (58/80 mm) | pass
+FOR: Memos print on 58 mm and 80 mm receipt printers.
+DID: Opened a memo and looked at the paper sizes.
+  ok: A 58 mm receipt printer
+  ok: An 80 mm receipt printer
+  ok: Or a full A4 page
+  SHOT f513_1.jpg | 58 mm, 80 mm or A4 | admin
+
+## 514 | Correction → new number, old cancelled | pass
+FOR: A correction gets a new number and the old one is cancelled.
+DID: Tested live in the browser pane by hand. The owner opened the finished memo M2026-000040 (Napa 1 box, Seclo 1 box, 1,020 taka) and pressed Correct this memo, changed Napa to 2 boxes and pressed Finish sale.
+  ok: Pressing Correct this memo (with its confirmation) cancelled the old memo and opened a new draft with the same lines and the message "The old memo is cancelled. Fix this one and finish it for the new number."
+  ok: The draft said "This memo corrects M2026-000040."; after the fix (Napa 2, total 1,320) and Finish sale it got the new number M2026-000041
+  ok: The old memo M2026-000040 is kept, with the note "Corrected." and its original lines, so history is not lost
+  ok: Found and fixed: the cancelled memo still showed a green "Paid" line; it is hidden now on a cancelled memo
+  NOTE: Done by hand in the live browser.
+  SHOT f514_1.jpg | The new draft opened by the correction | admin
+  SHOT f514_2.jpg | New memo number M2026-000041 corrects M2026-000040 | admin
+  SHOT f514_3.jpg | The old memo is kept and marked Corrected | admin
+
+## 515 | PDF, email, WhatsApp | pass
+FOR: Memos can be sent as PDF or email. WhatsApp is partly built.
+DID: Finished a sale, then looked at what the memo page offers for sending it. Pressed "Send by WhatsApp" and looked at the address it opened.
+  ok: The memo can be printed
+  ok: The memo can be saved as a PDF
+  ok: The memo can be sent by WhatsApp
+  ok: The memo can be sent by email
+  ok: WhatsApp opens with the message already written
+  SHOT f515_1.jpg | The finished memo: print, PDF, WhatsApp and email | admin
+
+## 516 | Print-friendly format | pass
+FOR: A print-friendly format is available.
+DID: Looked at the print-friendly format.
+  ok: A memo has a Print button and a plain printing layout
+  SHOT f516_1.jpg | Print | admin
+
+## 517 | Automatic status messages | pass
+FOR: Automatic status messages go out as orders move along. Some channels are partly built.
+DID: Opened the Messages page, where the owner controls the automatic status messages.
+  ok: Customers are told about their order automatically
+  ok: For example when the order is received
+  SHOT f517_1.jpg | Automatic status messages | admin
+
+## 518 | Four channels (inbox/push/SMS/email) | skipped
+FOR: Four channels are planned: inbox, push, text message and email. Some are partly built.
+DID: Looked at the channels on the Messages page.
+  ok: Channel: Inbox
+  ok: Channel: Email
+  ok: Channel: SMS
+  ok: Channel: Phone notification
+  ok: The inbox is always on; SMS starts off because it costs money
+  NOTE: The checklist marks the channels as partly built. Only the inbox was seen working; email, SMS and phone notifications were not sent.
+  SHOT f518_1.jpg | Four channels | admin
+
+## 519 | Controlled from admin | pass
+FOR: Messages are controlled from admin.
+DID: Looked at the table that controls each message.
+  ok: Each message has an importance
+  SHOT f519_1.jpg | Controlled from admin | admin
+
+## 520 | Notes and voice notes | pass
+FOR: Notes and voice notes can be sent.
+DID: Sent an order and looked at the order page for a way to add a note, a voice note or a photo.
+  ok: The order page lets the shop add a note, a voice note or a photo
+  SHOT f520_1.jpg | Add a note, voice note or photo | paikari
+
+## 521 | Time and photo with orders | pass
+FOR: A time and photo can go with an order.
+DID: Tested live in the browser pane by hand. A shopper put Napa in the cart, opened checkout, set Needed by (time) to 18:30 and added a photo (a picture of the strip), then sent the order. The buyer's order page and the owner's order screen were opened.
+  ok: Checkout has Needed by (time), a voice note and a Photo box; the order was accepted with the time and photo
+  ok: The buyer's order page shows "Needed by 18:30 - Photo sent"
+  ok: The owner's order screen shows "Needed by 18:30" at the top and the photo itself, so staff see both before packing
+  NOTE: Done by hand in the live browser. The photo was made on the page (a plain picture with words) instead of picked from a phone, and the voice note was not recorded.
+  SHOT f521_1.jpg | Owner: the needed-by time and the photo on the order | admin
+  SHOT f521_2.jpg | Buyer: the order that was sent | buyer
+
+## 522 | Q&A | pass
+FOR: Buyers ask questions on a product page and the seller answers.
+DID: Looked at the questions and answers area on a product page.
+  ok: A product page has a questions and answers area
+  SHOT f522_1.jpg | Questions and answers | guest
+
+## 523 | Unanswered → comes to me | pass
+FOR: An unanswered question comes to the owner.
+DID: Opened the owner's Questions page.
+  ok: Buyers ask under a product and everyone reads the answer
+  ok: Unanswered questions come to the owner
+  SHOT f523_1.jpg | Questions waiting for an answer | admin
+
+## 524 | Wallet — two parts | pass
+FOR: The wallet has two parts.
+DID: Opened the shop's wallet.
+  ok: The first part: Aqua Tokens
+  ok: The second part: money from a return, which works in one place only
+  SHOT f524_1.jpg | The wallet has two parts | paikari
+
+## 525 | Aqua Token — two levels | pass
+FOR: Aqua Token has two levels.
+DID: Tested live in the browser pane by hand, both levels. Level 1 (our token): the owner gave a 100 taka Aqua Token to a shopper; it was used at checkout and taken off the finished memo. Level 2 (a seller's own token): Rahim Traders set a 50 taka token (smallest order 500, once per buyer) on his Sell page; a shopper ordered his Fitness tracker band and used it.
+  ok: Owner gives a token: the Aqua Tokens screen lists it under Given lately as Ready to use, 100 taka, with the reason
+  ok: The shopper's checkout offers "Use my Aqua Token (100 taka off)", ticked, with the note that it comes off when the order is finished
+  ok: After the order was finished the memo shows Aqua Token minus 100 and the token is spent (it cannot be used twice)
+  ok: Seller's token: the listing offered "Use my Aqua Token (up to 50 taka off)" and the order M2026-000186 shows Aqua Token minus 50 on the buyer's page (4,008 to pay)
+  ok: It comes off what the seller is paid too: the seller's order says "You get 3,930" (3,900 plus 80 delivery minus the 50), so the seller bears the token on their own products
+  NOTE: Done by hand in the live browser. The seller's token is left switched on at 50 taka after this test. The order was placed with cash on delivery and not carried to delivery.
+  SHOT f525_1.jpg | Owner: giving a token and the list of tokens given | admin
+  SHOT f525_2.jpg | The token taken off the finished memo | admin
+  SHOT f525_3.jpg | Buyer: the seller's token on the market order | buyer
+  SHOT f525_4.jpg | Seller: the order, with the token taken off what they get | wholesaler
+
+## 526 | Seller token only on their products | pass
+FOR: A seller's token works only on their own products.
+DID: Looked at the seller's own token form.
+  ok: A seller can make a token
+  ok: It works only on the seller's own products
+  SHOT f526_1.jpg | A seller's token | wholesale
+
+## 527 | Token back on cancellation | pass
+FOR: A token is returned when an order is cancelled.
+DID: Looked at the token rule on cancellation.
+  ok: A token comes back if the order is cancelled
+  SHOT f527_1.jpg | A token comes back on cancellation | admin
+
+## 528 | Offer and token don't combine | pass
+FOR: An offer and a token do not combine.
+DID: Read the rule that a token does not go with an offer.
+  ok: A token cannot be used together with an offer price
+  SHOT f528_1.jpg | Token and offer do not combine | paikari
