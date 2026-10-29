@@ -74,6 +74,50 @@ All screens below are the real application running on its QA data, shown in Engl
 | ![MPO portal](docs/screenshots/22-mpo-portal.jpg) | ![Market complaints](docs/screenshots/17-market-cases.jpg) |
 | **MPO portal.** Company representatives offer stock through a private channel; the owner sets the price. | **Complaints.** Buyers complain or return, sellers answer, and the owner steps in with a stepped penalty. |
 
+### From the QA run
+
+These come from the QA report in `docs/qa/`, where every feature was tried by hand in a browser.
+
+**Stock, staff and control**
+
+| | |
+|:--|:--|
+| ![Counter draft](docs/screenshots/40-counter-draft.jpg) | ![Expiry](docs/screenshots/41-expiry.jpg) |
+| **Counter draft.** A sale to a shop held as a draft, with the line totals, discount and payment. | **Expiry.** Lots near their date, each with its lowest safe price and a suggested discount. |
+| ![Staff](docs/screenshots/42-staff.jpg) | ![Activity log](docs/screenshots/43-activity-log.jpg) |
+| **Staff.** One account per person, a discount limit each, and extra powers lent for a while. | **Activity log.** Who changed what and when, searchable by person or action. |
+
+**Returns and money**
+
+| | |
+|:--|:--|
+| ![Shop returns](docs/screenshots/44-shop-returns.jpg) | ![Owner returns](docs/screenshots/45-owner-returns.jpg) |
+| **Returns for a shop.** Find the memo, pick what comes back, and choose credit, exchange or part cash. | **Returns for the owner.** Requests waiting to be approved, and returns made without a memo. |
+| ![VAT report](docs/screenshots/46-vat-report.jpg) | ![Wallet](docs/screenshots/47-wallet.jpg) |
+| **VAT report.** Memo by memo for a date range, ready for the accountant. | **Wallet.** Money that works everywhere, kept apart from money that works at one seller only. |
+
+**The marketplace**
+
+| | |
+|:--|:--|
+| ![Seller page](docs/screenshots/48-seller-page.jpg) | ![Review](docs/screenshots/49-review.jpg) |
+| **A seller's own page.** Their goods, their record and their trusted mark. | **Reviews.** Only a buyer who received the order can review it, with a photo. |
+| ![Cart by seller](docs/screenshots/50-cart-by-seller.jpg) | ![Size grid](docs/screenshots/51-size-grid.jpg) |
+| **One cart, a package per seller.** Each seller sends their own package with its own delivery charge. | **Colours and sizes.** The seller enters stock for every colour and size in one grid. |
+| ![Seller orders](docs/screenshots/52-seller-orders.jpg) | ![Seller record](docs/screenshots/53-seller-record.jpg) |
+| **Orders for a seller.** Accept, add a tracking note, and mark it sent. | **How a seller is doing.** Rank, delivery speed, what sells most and what sells least. |
+
+**Food, medicine and everything else**
+
+| | |
+|:--|:--|
+| ![Restaurant](docs/screenshots/54-restaurant.jpg) | ![Prescription](docs/screenshots/55-prescription.jpg) |
+| **A restaurant.** Opening hours, an open switch, the menu and orders as they arrive. | **Prescriptions.** A shop sends a prescription photo, and the owner sees each new one. |
+| ![Delivery settings](docs/screenshots/56-delivery-settings.jpg) | ![Help board](docs/screenshots/57-help-board.jpg) |
+| **Delivery settings.** Working days, night hours, and delivery charges by distance and weight. | **Help board.** Post what you need, such as a worker or a product you cannot find, after the owner approves it. |
+| ![Bangla](docs/screenshots/58-bangla.jpg) | ![Two-step sign-in](docs/screenshots/59-two-step.jpg) |
+| **In Bangla.** The whole site in Bangla, which is the default. | **Two-step sign-in.** A code from a phone app on top of the password, required for staff. |
+
 ---
 
 ## What it does
