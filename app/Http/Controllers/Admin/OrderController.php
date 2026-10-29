@@ -6,12 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\ApprovalRequest;
 use App\Models\Invoice;
 use App\Models\InvoiceLine;
-use App\Models\Setting;
 use App\Models\User;
 use App\Services\Couriers\CourierBooking;
 use App\Services\Sales\ApprovalService;
 use App\Services\Sales\ControlledRegister;
 use App\Services\Sales\CustomerFlags;
+use App\Services\Sales\DeliveryCharge;
 use App\Services\Sales\Deliveries;
 use App\Services\Sales\Dispatching;
 use App\Services\Sales\InvoiceService;
@@ -62,14 +62,14 @@ class OrderController extends Controller
             'id' => $invoice->id, 'status' => $invoice->status, 'cancel_requested' => $invoice->cancel_requested_at !== null, 'customer' => $invoice->customer?->name ?? ($invoice->ship_to['name'] ?? null), 'phone' => $invoice->customer?->phone ?? ($invoice->ship_to['phone'] ?? null), 'ship_to' => $invoice->ship_to, 'payment_terms' => $invoice->payment_terms, 'public' => $invoice->public_token !== null,
             'flagged' => $invoice->customer ? $this->flags->isFlagged($invoice->customer) : false,
             'late_cancellations' => $invoice->customer ? $this->flags->lateCancellations($invoice->customer) : 0,
-            'delivery_mode' => $invoice->delivery_mode, 'note' => $invoice->note, 'wanted_time' => $invoice->wanted_time, 'has_voice' => $invoice->voice_path !== null, 'has_photo' => $invoice->photo_path !== null, 'total' => $this->invoices->totals($invoice)['total'],
+            'delivery_mode' => $invoice->delivery_mode, 'collector' => $invoice->collector_name ? ['name' => $invoice->collector_name, 'phone' => $invoice->collector_phone] : null, 'note' => $invoice->note, 'wanted_time' => $invoice->wanted_time, 'has_voice' => $invoice->voice_path !== null, 'has_photo' => $invoice->photo_path !== null, 'total' => $this->invoices->totals($invoice)['total'],
             'working' => app(Presence::class)->otherOn($invoice, request()->user()),
             'people' => app(Deliveries::class)->people()->map(fn ($p) => ['id' => $p->id, 'name' => $p->name])->values(),
             'delivery_person' => $invoice->delivery_person_id ? User::whereKey($invoice->delivery_person_id)->value('name') : null, 'arrived_at' => $invoice->arrived_at?->toIso8601String(),
             'courier_id' => $invoice->courier_id, 'courier_panel' => app(CourierBooking::class)->panel($invoice->loadMissing('courier')),
             'trade' => $invoice->kind !== 'retail', 'courier_terms' => $invoice->courier_terms, 'courier_cost' => $invoice->courier_cost !== null ? (float) $invoice->courier_cost : null, 'cartons' => $invoice->cartons, 'delivery_refund' => (float) $invoice->delivery_refund, 'advance_needed' => app(Dispatching::class)->advanceRequired($invoice), 'advance_at' => $invoice->delivery_advance_at?->toIso8601String(), 'sent_at' => $invoice->sent_at?->toIso8601String(), 'tracking' => $invoice->tracking, 'delivery_extra' => (float) $invoice->delivery_extra,
             'delivered_at' => $invoice->delivered_at?->toIso8601String(), 'delivered_by' => $invoice->delivered_by, 'not_received' => $invoice->not_received_at !== null,
-            'subtotal' => $this->invoices->totals($invoice)['subtotal'], 'delivery_charge' => (float) $invoice->delivery_charge, 'free_over' => (float) Setting::read('delivery.free_over', 0),
+            'subtotal' => $this->invoices->totals($invoice)['subtotal'], 'delivery_charge' => (float) $invoice->delivery_charge, 'free_over' => app(DeliveryCharge::class)->freeOver($invoice->customer),
             'lines' => $invoice->lines->map(fn (InvoiceLine $l) => [
                 'id' => $l->id, 'name' => $l->medicine->brand_name, 'strength' => $l->medicine->strength, 'company' => $l->medicine->company?->name,
                 'cold' => (bool) $l->medicine->is_cold_chain, 'unit' => $l->unit, 'requested' => (float) ($l->requested_quantity ?? $l->quantity), 'quantity' => (float) $l->quantity,

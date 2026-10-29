@@ -5,6 +5,7 @@ namespace App\Services\Sales;
 use App\Models\Courier;
 use App\Models\Medicine;
 use App\Models\Setting;
+use App\Models\User;
 use Illuminate\Support\Collection;
 
 /**
@@ -40,8 +41,13 @@ class DeliveryCharge
         return (float) Setting::read('delivery.charge_outside', 120);
     }
 
-    public function freeOver(): float
+    /** The amount past which delivery is free: the one set for this shop when there is one, else the site-wide amount. */
+    public function freeOver(?User $shop = null): float
     {
+        if ($shop && $shop->free_delivery_over !== null) {
+            return (float) $shop->free_delivery_over;
+        }
+
         return (float) Setting::read('delivery.free_over', 0);
     }
 

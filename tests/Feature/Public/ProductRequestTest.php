@@ -6,6 +6,8 @@ use App\Enums\AccountType;
 use App\Models\ProductRequest;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
 
@@ -100,5 +102,64 @@ class ProductRequestTest extends TestCase
     public function test_a_guest_is_sent_to_login_for_the_requests_page(): void
     {
         $this->get('/admin/requests')->assertRedirect('/login');
+    }
+
+    public function test_a_request_names_its_sector_and_the_same_words_in_two_sectors_are_two_wants(): void
+    {
+        $this->postJson('/requests', ['query' => 'Teak bed', 'sector' => 'market'])->assertOk();
+        $this->postJson('/requests', ['query' => 'Teak bed', 'sector' => 'market'])->assertOk();   // the same person, the same want: one voice
+        $this->postJson('/requests', ['query' => 'Teak bed', 'sector' => 'food'])->assertOk();
+
+        $this->assertDatabaseCount('product_requests', 2);
+        $this->assertDatabaseHas('product_requests', ['normalized' => 'teak bed', 'sector' => 'market']);
+        $this->assertDatabaseHas('product_requests', ['normalized' => 'teak bed', 'sector' => 'food']);
+    }
+
+    public function test_a_sector_must_be_a_plain_word(): void
+    {
+        $this->postJson('/requests', ['query' => 'Teak bed', 'sector' => '<script>'])->assertStatus(422)->assertJsonValidationErrors('sector');
+        $this->postJson('/requests', ['query' => 'Teak bed', 'sector' => str_repeat('a', 31)])->assertStatus(422);
+    }
+
+    public function test_a_photo_and_a_note_can_be_attached_and_only_the_owner_sees_the_photo(): void
+    {
+        Storage::fake();
+        $admin = User::factory()->create(['account_type' => AccountType::Admin]);
+
+        $this->postJson('/requests', ['query' => 'Teak bed', 'sector' => 'market', 'note' => 'Like this one, 6 by 5 feet', 'photo' => UploadedFile::fake()->image('bed.jpg', 400, 300)])->assertOk();
+
+        $row = ProductRequest::firstOrFail();
+        $this->assertSame('Like this one, 6 by 5 feet', $row->note);
+        $this->assertNotNull($row->photo_path);
+        Storage::assertExists($row->photo_path);
+
+        $this->actingAs($admin)->get('/admin/requests')->assertInertia(fn (Assert $p) => $p
+            ->where('groups.data.0.sector', 'market')->where('groups.data.0.photo', route('admin.requests.photo', $row->id)));
+        $this->actingAs($admin)->get("/admin/requests/{$row->id}/photo")->assertOk();
+
+        $shop = User::factory()->create(['account_type' => AccountType::Paikari]);
+        $this->actingAs($shop)->get("/admin/requests/{$row->id}/photo")->assertRedirect('/');
+    }
+
+    public function test_a_file_that_is_not_a_picture_is_refused_and_nothing_is_stored(): void
+    {
+        Storage::fake();
+
+        $this->postJson('/requests', ['query' => 'Teak bed', 'photo' => UploadedFile::fake()->create('bed.pdf', 20, 'application/pdf')])->assertStatus(422)->assertJsonValidationErrors('photo');
+        $this->postJson('/requests', ['query' => 'Teak bed', 'photo' => UploadedFile::fake()->image('big.jpg')->size(4000)])->assertStatus(422);
+        $this->assertDatabaseCount('product_requests', 0);
+    }
+
+    public function test_the_owner_list_groups_by_want_and_sector(): void
+    {
+        $admin = User::factory()->create(['account_type' => AccountType::Admin]);
+        $this->postJson('/requests', ['query' => 'Teak bed', 'sector' => 'market']);
+        $this->flushSession();
+        $this->postJson('/requests', ['query' => 'teak  BED', 'sector' => 'market']);
+        $this->flushSession();
+        $this->postJson('/requests', ['query' => 'Teak bed', 'sector' => 'food']);
+
+        $this->actingAs($admin)->get('/admin/requests')->assertInertia(fn (Assert $p) => $p
+            ->has('groups.data', 2)->where('groups.data.0.total', 2)->where('groups.data.0.sector', 'market')->where('groups.data.1.sector', 'food'));
     }
 }

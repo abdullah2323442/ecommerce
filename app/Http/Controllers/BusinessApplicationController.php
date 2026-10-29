@@ -57,7 +57,8 @@ class BusinessApplicationController extends Controller
             'address' => ['required', 'string', 'max:300'],
             'license_number' => ['nullable', 'string', 'max:80'],
             'license' => ['required', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:5120'],
-            'second_license' => ['nullable', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:5120'],
+            // A business that sells medicine must show its drug licence as well as its trade licence (spec ch 25: both are checked).
+            'second_license' => [Rule::requiredIf(fn () => in_array('medicine', (array) $request->input('categories', []), true)), 'nullable', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:5120'],
             'note' => ['nullable', 'string', 'max:500'],
         ]);
 

@@ -26,6 +26,7 @@ interface Customer {
     suspended_at: string | null;
     suspended_until?: string | null;
     show_monthly_total: boolean;
+    free_delivery_over: number | null;
     late_cancellations: number;
     flagged: boolean;
     created_at: string | null;
@@ -129,6 +130,35 @@ function TierSection({ customer, tiers }: { customer: Customer; tiers: Tier[] })
     );
 }
 
+/** The amount past which this shop's delivery is free; empty means the site-wide amount (spec ch 07 step 9-B). */
+function FreeDeliverySection({ customer }: { customer: Customer }) {
+    const { t } = useI18n();
+    const form = useForm({ amount: customer.free_delivery_over === null ? '' : String(customer.free_delivery_over) });
+
+    return (
+        <Section title={t('Free delivery')} hint={t('Orders from this shop at or above this amount get free delivery. Leave empty to use the amount set for the whole site.')}>
+            <form
+                onSubmit={(e) => {
+                    e.preventDefault();
+                    form.put(`/admin/customers/${customer.id}/free-delivery`, { preserveScroll: true });
+                }}
+                className="flex flex-wrap items-start gap-2"
+            >
+                <div className="grid gap-1">
+                    <label htmlFor="free-delivery-over" className="sr-only">
+                        {t('Free delivery amount')}
+                    </label>
+                    <Input id="free-delivery-over" type="number" inputMode="decimal" min="0" step="1" value={form.data.amount} onChange={(e) => form.setData('amount', e.target.value)} className="min-w-44" placeholder={t('Same as the whole site')} />
+                    <InputError message={form.errors.amount} />
+                </div>
+                <Button type="submit" disabled={form.processing}>
+                    {t('Save')}
+                </Button>
+            </form>
+        </Section>
+    );
+}
+
 function TradeSection({ customer, options }: { customer: Customer; options: { key: string; label: string }[] }) {
     const { t } = useI18n();
     const form = useForm({
@@ -216,6 +246,7 @@ function RatesSection({ customer, rates }: { customer: Customer; rates: ManualRa
     const { t, num, money } = useI18n();
     const [medicine, setMedicine] = useState<PickedMedicine | null>(null);
     const [mode, setMode] = useState<'percent' | 'price'>('percent');
+    const [unit, setUnit] = useState<'piece' | 'strip' | 'box'>('piece');
     const form = useForm({ medicine_id: '', discount_percent: '', fixed_price: '' });
     const [forceLoss, setForceLoss] = useState(false);
     const lossError = (form.errors as Record<string, string>).loss;
@@ -226,6 +257,7 @@ function RatesSection({ customer, rates }: { customer: Customer; rates: ManualRa
             medicine_id: medicine?.id,
             discount_percent: mode === 'percent' ? d.discount_percent : null,
             fixed_price: mode === 'price' ? d.fixed_price : null,
+            price_unit: mode === 'price' ? unit : null,
             force_loss: forceLoss,
         }));
         form.put(`/admin/customers/${customer.id}/rates`, {
@@ -271,13 +303,13 @@ function RatesSection({ customer, rates }: { customer: Customer; rates: ManualRa
                     <div className="flex rounded-md border p-0.5" role="group" aria-label={t('Rate type')}>
                         {(['percent', 'price'] as const).map((m) => (
                             <button key={m} type="button" aria-pressed={mode === m} onClick={() => setMode(m)} className={`rounded px-3 text-sm ${mode === m ? 'bg-foreground text-background' : 'text-muted-foreground'}`}>
-                                {m === 'percent' ? t('Percent off') : t('Taka price per piece')}
+                                {m === 'percent' ? t('Percent off') : t('Taka price')}
                             </button>
                         ))}
                     </div>
                     <div>
                         <label htmlFor="rate-value" className="sr-only">
-                            {mode === 'percent' ? t('Percent off') : t('Price in taka for one piece')}
+                            {mode === 'percent' ? t('Percent off') : t('Price in taka for one {unit}', { unit: t(unit) })}
                         </label>
                         <Input
                             id="rate-value"
@@ -292,6 +324,19 @@ function RatesSection({ customer, rates }: { customer: Customer; rates: ManualRa
                         />
                     </div>
                 </div>
+                {mode === 'price' && (
+                    <div className="flex flex-wrap items-center gap-2 text-sm">
+                        <span className="text-muted-foreground">{t('The price is for one')}</span>
+                        <div className="flex rounded-md border p-0.5" role="group" aria-label={t('Price unit')}>
+                            {(['piece', 'strip', 'box'] as const).map((u) => (
+                                <button key={u} type="button" aria-pressed={unit === u} onClick={() => setUnit(u)} className={`rounded px-3 py-1 ${unit === u ? 'bg-foreground text-background' : 'text-muted-foreground'}`}>
+                                    {t(u)}
+                                </button>
+                            ))}
+                        </div>
+                        <span className="text-muted-foreground">{t('It is kept per piece, and the percent off is shown after you save.')}</span>
+                    </div>
+                )}
                 <InputError message={form.errors.medicine_id || form.errors.discount_percent || form.errors.fixed_price} />
                 {lossError && (
                     <div role="alert" className="rounded-md border border-destructive/40 bg-destructive/5 p-3 text-sm">
@@ -451,6 +496,7 @@ export default function CustomerShow({ customer, tiers, manualRates, tierHistory
                         </label>
                     </Section>
                 )}
+                {customer.account_type === 'paikari' && <FreeDeliverySection customer={customer} />}
                 {offersTaken && offersTaken.length > 0 && (
                     <Section title={t('Offers taken')} hint={t('Offers given at the counter or ordered online show here.')}>
                         <ul className="divide-y text-sm">

@@ -2,6 +2,8 @@
 
 namespace App\Services\Security;
 
+use App\Enums\AccountType;
+use App\Models\Setting;
 use App\Models\User;
 use App\Services\Audit\ActivityLogger;
 use App\Services\Stock\StockException;
@@ -25,6 +27,20 @@ class TwoFactor
     private const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
 
     public function __construct(private ActivityLogger $activity) {}
+
+    /**
+     * Whether this account must use two-step sign-in (spec ch 03 and 26: the owner, staff, wholesale and paikari accounts).
+     * The owner and staff are asked for it by default on the live site and the owner can switch it off; the two kinds of shop are
+     * asked only when the owner turns it on, because a shop owner needs a phone app for the code.
+     */
+    public function requiredFor(User $user): bool
+    {
+        return match ($user->account_type) {
+            AccountType::Staff, AccountType::Admin => (bool) Setting::read('security.require_2fa_staff', app()->isProduction()),
+            AccountType::Paikari, AccountType::Wholesaler => (bool) Setting::read('security.require_2fa_trade', false),
+            default => false,
+        };
+    }
 
     public function enabled(User $user): bool
     {

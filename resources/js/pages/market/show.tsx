@@ -41,6 +41,7 @@ interface Props {
     cod: boolean;
     digital: boolean;
     gallery: { url: string }[];
+    video: string | null;
     reviews: Review[];
     rating: { average: number | null; count: number; stars: Record<string, number> };
     offers: Offer[];
@@ -597,6 +598,7 @@ export default function MarketShow({
     bundles,
     offers,
     gallery,
+    video,
     reviews,
     rating,
     pickup,
@@ -640,7 +642,10 @@ export default function MarketShow({
                     {t('Back to the market')}
                 </Link>
                 <article className="grid gap-10 sm:grid-cols-2">
-                    <Gallery key={colorPhoto ?? 'main'} pictures={gallery} color={colorPhoto} />
+                    <div className="space-y-4">
+                        <Gallery key={colorPhoto ?? 'main'} pictures={gallery} color={colorPhoto} />
+                        {video && <video src={video} controls preload="metadata" playsInline aria-label={t('Video of this product')} className="aspect-video w-full rounded-[1.5rem] border bg-muted" />}
+                    </div>
                     <div className="space-y-4">
                         <p className="text-xs font-semibold text-[var(--pt-muted)]">
                             {listing.sector_name}

@@ -5,6 +5,7 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
 import { route as routeFn } from 'ziggy-js';
 import { initializeTheme } from './hooks/use-appearance';
+import { heldDictionaryKey } from './lib/i18n';
 import { type AnalyticsIds, setAnalytics, track } from './lib/track';
 
 declare global {
@@ -28,6 +29,12 @@ createInertiaApp({
 
 // This will set light / dark mode on load...
 initializeTheme();
+
+// Tell the server which dictionary is already here, so a move to another page does not carry it again.
+router.on('before', (event) => {
+    const key = heldDictionaryKey();
+    if (key) event.detail.visit.headers = { ...event.detail.visit.headers, 'X-Dictionary': key };
+});
 
 // Visitor statistics: every page the visitor opens, whether the browser loaded it or the app moved to it (only when the owner switched them on).
 router.on('navigate', (event) => {

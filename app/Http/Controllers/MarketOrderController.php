@@ -39,7 +39,7 @@ class MarketOrderController extends Controller
         $request->merge(['phone' => $this->normalisePhone((string) $request->input('phone'))]);
 
         // A file to download needs no address: nothing is sent.
-        $where = $listing->digital_path !== null ? 'nullable' : 'required_unless:pickup,1';
+        $where = $listing->digital_path !== null ? 'nullable' : 'required_unless:pickup,1,true';
         $data = $request->validate([
             'quantity' => ['required', 'numeric', 'gt:0', 'max:1000000'],
             'name' => ['required', 'string', 'max:120'],
@@ -94,7 +94,7 @@ class MarketOrderController extends Controller
                 'pickup' => (bool) $order->pickup, 'pickup_where' => $order->pickup && in_array($order->status, ['accepted'], true) ? $order->seller?->shop_address : null,
                 'can_review' => app(Reviews::class)->canReview($order),
                 'can_answer' => $order->status === 'shipped',
-                'can_complain' => $this->cases->allowed($order)['complaint'], 'can_return' => $this->cases->allowed($order)['return'], 'return_days' => $this->cases->returnDays($order), 'return_note' => $order->listing?->return_note,
+                'can_complain' => $this->cases->allowed($order)['complaint'], 'can_return' => $this->cases->allowed($order)['return'], 'can_report_promo' => $this->cases->allowed($order)['promo'], 'return_days' => $this->cases->returnDays($order), 'return_note' => $order->listing?->return_note,
             ],
             'cases' => $order->cases()->latest('id')->get()->map(fn (MarketCase $c) => $this->cases->present($c)),
         ]);
@@ -136,7 +136,7 @@ class MarketOrderController extends Controller
     /** A complaint, or sending it back (spec ch 14). The seller is told, and we get a copy. */
     public function openCase(Request $request, string $token): RedirectResponse
     {
-        $data = $request->validate(['kind' => ['required', 'in:complaint,return'], 'reason' => ['required', 'string', 'min:3', 'max:300']]);
+        $data = $request->validate(['kind' => ['required', 'in:complaint,return,promo'], 'reason' => ['required', 'string', 'min:3', 'max:300']]);
 
         return $this->act(fn () => $this->cases->open($this->find($token), $data['kind'], $data['reason']), 'Sent. The seller and we have been told.');
     }

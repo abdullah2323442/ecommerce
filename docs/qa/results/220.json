@@ -1,15 +1,23 @@
 {
   "n": 220,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
   "checks": [
     {
       "ok": true,
-      "text": "Each MPO has an anonymous number"
+      "text": "Photo, name, phone, territory and the owner's own note"
     },
     {
       "ok": true,
-      "text": "The list counts each MPO's products and how many are on the market"
+      "text": "The companies they work for, the date the account was made"
+    },
+    {
+      "ok": true,
+      "text": "Products submitted, approved and sold, and the list of products they work with"
+    },
+    {
+      "ok": true,
+      "text": "Orders not delivered in time are counted automatically and shown once there is one"
     }
   ],
   "shots": [
@@ -20,8 +28,6 @@
       "url": "/admin/mpo"
     }
   ],
-  "notes": [
-    "The checklist marks the detailed MPO profile as only partly built. A full profile page was not found."
-  ],
-  "did": "Opened the MPO page and looked at what is kept for each MPO."
+  "notes": [],
+  "did": "Opened the owner's MPO page for one MPO."
 }

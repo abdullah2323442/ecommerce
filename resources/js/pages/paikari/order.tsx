@@ -23,7 +23,7 @@ interface Line {
 }
 
 interface Props {
-    order: { id: number; cancel_requested: boolean; status: 'draft' | 'placed' | 'verified' | 'final' | 'cancelled'; number: string | null; total: number; paid_amount: number; delivery_mode: string | null; sent_at: string | null; tracking: string | null; delivery_extra: number; delivered: boolean; not_received: boolean; wanted_time: string | null; has_voice: boolean; has_photo: boolean; can_note: boolean; lines: Line[] };
+    order: { id: number; cancel_requested: boolean; status: 'draft' | 'placed' | 'verified' | 'final' | 'cancelled'; number: string | null; total: number; paid_amount: number; delivery_mode: string | null; collector: { name: string; phone: string | null } | null; sent_at: string | null; tracking: string | null; delivery_extra: number; delivered: boolean; not_received: boolean; wanted_time: string | null; has_voice: boolean; has_photo: boolean; can_note: boolean; lines: Line[] };
 }
 
 export default function Order({ order }: Props) {
@@ -56,6 +56,7 @@ export default function Order({ order }: Props) {
                     {t('Back to orders')}
                 </Link>
                 <h1 className="font-display text-3xl font-extrabold">{order.number ? `${t('Memo')} ${order.number}` : t('Your order')}</h1>
+                {order.collector && <p className="text-sm text-[var(--pt-muted)]">{t('Someone else will collect it: {name}', { name: order.collector.name })}</p>}
 
                 {order.status === 'cancelled' ? (
                     <p className="rounded-2xl border border-dashed p-4 text-sm">{t('This order was cancelled.')}</p>

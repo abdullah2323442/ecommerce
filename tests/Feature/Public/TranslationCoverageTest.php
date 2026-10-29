@@ -3,9 +3,11 @@
 namespace Tests\Feature\Public;
 
 use App\Enums\AccountType;
+use App\Http\Middleware\HandleInertiaRequests;
 use App\Http\Middleware\SetLocale;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Request;
 use Inertia\Testing\AssertableInertia as Assert;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -85,6 +87,28 @@ class TranslationCoverageTest extends TestCase
             ->where('translations.Medicines', 'ওষুধ'));
     }
 
+    public function test_a_move_to_another_page_does_not_carry_the_dictionary_the_browser_already_holds(): void
+    {
+        $key = $this->inertiaProps('/')['dictKey'];
+        $move = fn (?string $held) => $this->withHeaders(array_filter(['X-Inertia' => 'true', 'X-Inertia-Version' => (string) app(HandleInertiaRequests::class)->version(Request::create('/')), 'X-Dictionary' => $held]))->get('/market')->json('props');
+
+        $this->assertNull($move($key)['translations'], 'Held already: left out.');
+        $this->assertSame('ওষুধ', $move('an-old-key')['translations']['Medicines'], 'A different dictionary is sent in full.');
+        $this->assertSame('ওষুধ', $move(null)['translations']['Medicines'], 'Nothing held: sent in full.');
+        $this->assertSame($key, $move(null)['dictKey']);
+    }
+
+    public function test_the_dictionary_key_changes_when_the_viewer_changes_and_is_sent_again_after_a_login(): void
+    {
+        $guest = $this->inertiaProps('/')['dictKey'];
+        $admin = User::factory()->create(['account_type' => AccountType::Admin]);
+
+        $page = $this->actingAs($admin)->withHeaders(['X-Inertia' => 'true', 'X-Inertia-Version' => (string) app(HandleInertiaRequests::class)->version(Request::create('/')), 'X-Dictionary' => $guest])->get('/market')->json('props');
+
+        $this->assertNotSame($guest, $page['dictKey']);
+        $this->assertIsArray($page['translations'], 'The guest dictionary is not the admin one: it is sent again.');
+    }
+
     public function test_a_visitor_can_switch_to_english_and_it_is_remembered(): void
     {
         $this->from('/')->post('/locale', ['locale' => 'en'])->assertRedirect('/')->assertCookie(SetLocale::COOKIE, 'en');
@@ -158,5 +182,21 @@ class TranslationCoverageTest extends TestCase
         $this->actingAs($admin)->post('/admin/tiers', ['name' => 'A', 'discount_percent' => 10]);
 
         $this->assertSame('টিয়ার A তৈরি হয়েছে।', session('status'));
+    }
+
+    public function test_buyers_and_sellers_get_the_stock_phrases_meant_for_them_but_not_staff_only_ones(): void
+    {
+        $shop = $this->dictionaryKeysFor(User::factory()->create(['account_type' => AccountType::Paikari]));
+        $guest = $this->dictionaryKeysFor(null);
+
+        foreach ([$shop, $guest] as $keys) {
+            $this->assertContains('In stock', $keys, 'A shopper is told "In stock" in Bangla, not English.');
+            $this->assertContains('Was on offer a moment ago. Stock out.', $keys);
+            // What staff use to run the stock stays with staff.
+            $this->assertNotContains('Purchase rates', $keys);
+        }
+
+        $admin = $this->dictionaryKeysFor(User::factory()->create(['account_type' => AccountType::Admin]));
+        $this->assertContains('In stock', $admin);
     }
 }

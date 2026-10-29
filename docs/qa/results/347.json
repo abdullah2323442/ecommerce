@@ -1,11 +1,23 @@
 {
   "n": 347,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
   "checks": [
     {
       "ok": true,
-      "text": "Sellers are told not to put cards or leaflets in the package"
+      "text": "A buyer whose order was sent can report 'there was a card or leaflet in the package' from the order page"
+    },
+    {
+      "ok": true,
+      "text": "It is counted apart from ordinary complaints on the seller's record"
+    },
+    {
+      "ok": true,
+      "text": "The seller can say it is solved or cannot be solved, and cannot 'take it back' (nothing is sent back)"
+    },
+    {
+      "ok": true,
+      "text": "The owner can only close the case, and uses a penalty step if it is true; a return case beside it still has 'Send it back to the seller'"
     }
   ],
   "shots": [
@@ -14,10 +26,20 @@
       "caption": "The package rule",
       "role": "wholesale",
       "url": "/wholesale/sell/orders"
+    },
+    {
+      "file": "f347_2.jpg",
+      "caption": "The buyer's order page: waiting for the seller",
+      "role": "visitor",
+      "url": "/market/orders/..."
+    },
+    {
+      "file": "f347_3.jpg",
+      "caption": "The owner's cases page: only 'Close the case'",
+      "role": "admin",
+      "url": "/admin/market/cases"
     }
   ],
-  "notes": [
-    "The checklist marks this rule only partly built: it is a notice, with no way to check what is in a package."
-  ],
-  "did": "Read the package rule."
+  "notes": [],
+  "did": "Reported a card in the package as the buyer, answered it as the seller, and read it as the owner."
 }

@@ -1,3 +1,4 @@
+import RequestButton from '@/components/requests/request-button';
 import { track } from '@/lib/track';
 import { unitLabel } from '@/lib/units';
 import { SaleTag, WasPrice } from '@/components/market/sale-price';
@@ -252,9 +253,12 @@ export default function MarketIndex({ category, tree, storefront, picked, hero, 
                         </div>
 
                         {items.length === 0 ? (
-                            <p className="rounded-[1.75rem] border border-dashed border-[var(--pt-ink)] p-10 text-center text-[var(--pt-muted)]">
-                                {t('Nothing here yet.')}
-                            </p>
+                            <div className="space-y-4 rounded-[1.75rem] border border-dashed border-[var(--pt-ink)] p-10 text-center text-[var(--pt-muted)]">
+                                <p>{filters.q ? t('Nothing matches “{term}”.', { term: filters.q }) : t('Nothing here yet.')}</p>
+                                <div className="flex justify-center text-left text-[var(--pt-ink)]">
+                                    <RequestButton key={(filters.q ?? '').toLowerCase()} query={filters.q ?? ''} sector={filters.sector ?? 'market'} />
+                                </div>
+                            </div>
                         ) : layout === 'tech' ? (
                             <TechGrid items={items} />
                         ) : layout === 'fashion' ? (

@@ -16,6 +16,8 @@ use App\Services\Mpo\MpoService;
 use App\Services\Sales\InvoiceService;
 use App\Services\Stock\StockService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
 
@@ -446,5 +448,61 @@ class MpoTest extends TestCase
         Preorder::create(['customer_id' => $buyer->id, 'medicine_id' => $this->napa->id, 'mpo_listing_id' => $listing->id, 'status' => 'accepted', 'promised_days' => 3]);
 
         $this->actingAs($this->admin)->get("/admin/mpo/{$mpo->id}")->assertInertia(fn ($p) => $p->where('mpo.submitted', 2)->where('mpo.approved', 1)->where('mpo.sold', 1));
+    }
+
+    // ---- the profile photo (spec ch 10): the owner's, and nobody else's ---------------------------------------
+
+    public function test_the_owner_sets_an_mpo_photo_and_sees_it_on_the_profile(): void
+    {
+        Storage::fake();
+        $mpo = $this->openMpo();
+
+        $this->actingAs($this->admin)->post("/admin/mpo/{$mpo->id}/photo", ['photo' => UploadedFile::fake()->image('rafiq.jpg', 300, 300)])->assertSessionHasNoErrors();
+
+        $mpo->refresh();
+        $this->assertNotNull($mpo->photo_path);
+        Storage::assertExists($mpo->photo_path);
+
+        $this->get("/admin/mpo/{$mpo->id}")->assertInertia(fn ($page) => $page->where('mpo.photo', fn ($url) => str_contains($url, "/admin/mpo/{$mpo->id}/photo")));
+        $this->get("/admin/mpo/{$mpo->id}/photo")->assertOk();
+    }
+
+    public function test_a_new_photo_replaces_the_old_one_and_can_be_removed(): void
+    {
+        Storage::fake();
+        $mpo = $this->openMpo();
+        $this->actingAs($this->admin)->post("/admin/mpo/{$mpo->id}/photo", ['photo' => UploadedFile::fake()->image('a.jpg', 300, 300)]);
+        $first = $mpo->fresh()->photo_path;
+
+        $this->post("/admin/mpo/{$mpo->id}/photo", ['photo' => UploadedFile::fake()->image('b.jpg', 300, 300)]);
+        $second = $mpo->fresh()->photo_path;
+        $this->assertNotSame($first, $second);
+        Storage::assertMissing($first);
+
+        $this->post("/admin/mpo/{$mpo->id}/photo", ['remove' => true])->assertSessionHasNoErrors();
+        $this->assertNull($mpo->fresh()->photo_path);
+        Storage::assertMissing($second);
+    }
+
+    public function test_the_photo_must_be_a_picture_and_something_must_be_sent(): void
+    {
+        Storage::fake();
+        $mpo = $this->openMpo();
+        $this->actingAs($this->admin);
+
+        $this->post("/admin/mpo/{$mpo->id}/photo", ['photo' => UploadedFile::fake()->create('x.pdf', 10, 'application/pdf')])->assertSessionHasErrors('photo');
+        $this->post("/admin/mpo/{$mpo->id}/photo", [])->assertSessionHasErrors('photo');
+    }
+
+    public function test_nobody_but_the_owner_can_put_or_see_an_mpo_photo(): void
+    {
+        Storage::fake();
+        $mpo = $this->openMpo();
+        $this->actingAs($this->admin)->post("/admin/mpo/{$mpo->id}/photo", ['photo' => UploadedFile::fake()->image('r.jpg', 300, 300)]);
+
+        $shop = User::factory()->create(['account_type' => AccountType::Paikari]);
+        $this->actingAs($shop)->get("/admin/mpo/{$mpo->id}/photo")->assertRedirect('/');
+        $this->actingAs($shop)->post("/admin/mpo/{$mpo->id}/photo", ['photo' => UploadedFile::fake()->image('x.jpg')])->assertRedirect('/');
+        $this->actingAs($mpo)->get("/admin/mpo/{$mpo->id}/photo")->assertRedirect('/');
     }
 }

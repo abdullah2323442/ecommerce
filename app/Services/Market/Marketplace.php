@@ -155,6 +155,7 @@ class Marketplace
         $this->forget($listing->photo_path);
         app(ListingVariants::class)->forgetPhotos($listing);
         app(ListingPhotos::class)->forgetAll($listing);
+        app(ListingVideo::class)->remove($listing);
         $listing->delete();
     }
 

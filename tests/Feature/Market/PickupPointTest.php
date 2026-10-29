@@ -237,4 +237,17 @@ class PickupPointTest extends TestCase
         $this->assertSame('200.00', (string) $o->commission, '2 at 100 each, as for any order');
         $this->assertEqualsWithDelta(2000.0, $o->sellerGets(), 0.001, 'the seller is paid their price, and no delivery charge');
     }
+
+    public function test_the_order_screen_sends_pickup_as_a_json_true_and_that_needs_no_address(): void
+    {
+        // The product page posts JSON, so the choice arrives as true, not as the form value 1.
+        $this->actingAs($this->buyer)->postJson("/market/{$this->chair->id}/order", ['quantity' => 2, 'name' => 'Buyer', 'phone' => '01712345678', 'pickup' => true])
+            ->assertRedirect();
+
+        $this->assertTrue(MarketOrder::latest('id')->firstOrFail()->pickup);
+
+        // Not collecting: the address is still needed.
+        $this->actingAs($this->buyer)->postJson("/market/{$this->chair->id}/order", ['quantity' => 2, 'name' => 'Buyer', 'phone' => '01712345678', 'pickup' => false])
+            ->assertStatus(422)->assertJsonValidationErrors(['district', 'area', 'address']);
+    }
 }

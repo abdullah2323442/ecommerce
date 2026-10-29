@@ -1,3 +1,4 @@
+import CameraScan from '@/components/camera-scan';
 import ChangeCustomer from '@/components/admin/change-customer';
 import ControlledDetails, { type ControlledItem } from '@/components/admin/controlled-details';
 import Flash from '@/components/admin/flash';
@@ -83,6 +84,7 @@ function Search({ invoice, popular, simple }: { invoice: Invoice; popular: Props
     const { t, money, num } = useI18n();
     const [q, setQ] = useState('');
     const [results, setResults] = useState<Result[]>([]);
+    const [searched, setSearched] = useState('');
     const [qty, setQty] = useState('1');
     const [special, setSpecial] = useState('');
     const [outside, setOutside] = useState(false);
@@ -114,7 +116,10 @@ function Search({ invoice, popular, simple }: { invoice: Invoice; popular: Props
         const timer = setTimeout(() => {
             fetch(`/admin/counter/${invoice.id}/search?q=${encodeURIComponent(q)}`, { headers: { Accept: 'application/json' } })
                 .then((r) => r.json())
-                .then((d) => setResults(d.results))
+                .then((d) => {
+                    setResults(d.results);
+                    setSearched(q);
+                })
                 .catch(() => setResults([]));
         }, 200);
         return () => clearTimeout(timer);
@@ -136,6 +141,19 @@ function Search({ invoice, popular, simple }: { invoice: Invoice; popular: Props
             },
         );
 
+    // One code in, from a scanner that types it or from the phone camera: it adds one box, and an unknown code is asked about.
+    const scanCode = (code: string) =>
+        router.post(`/admin/counter/${invoice.id}/scan`, { code }, {
+            preserveScroll: true,
+            onSuccess: () => setQ(''),
+            onError: (errs) => {
+                if (errs.unknown_barcode) {
+                    setUnknown(errs.unknown_barcode);
+                    setQ('');
+                }
+            },
+        });
+
     // A barcode scanner types the digits and presses Enter: that adds one box, and scanning again adds another.
     const onKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === 'ArrowDown' && results.length) {
@@ -150,7 +168,7 @@ function Search({ invoice, popular, simple }: { invoice: Invoice; popular: Props
         } else if (e.key === 'Enter') {
             e.preventDefault();
             if (/^\d{6,}$/.test(q.trim())) {
-                router.post(`/admin/counter/${invoice.id}/scan`, { code: q.trim() }, { preserveScroll: true, onSuccess: () => setQ(''), onError: (errs) => { if (errs.unknown_barcode) { setUnknown(errs.unknown_barcode); setQ(''); } } });
+                scanCode(q.trim());
             } else if (results[hot]) {
                 add(results[hot], results[hot].units[0].unit);
             }
@@ -170,6 +188,7 @@ function Search({ invoice, popular, simple }: { invoice: Invoice; popular: Props
                     </Button>
                 </div>
             )}
+            <CameraScan onCode={scanCode} />
             <div className="flex flex-wrap items-end gap-2">
                 <div className="min-w-48 flex-1">
                     <label htmlFor="med-q" className="sr-only">
@@ -235,6 +254,20 @@ function Search({ invoice, popular, simple }: { invoice: Invoice; popular: Props
                 </div>
             )}
             <p className="text-muted-foreground text-xs">{t('Shortcuts: / search · ↑ ↓ choose · Enter add · Esc clear')}</p>
+            {results.length === 0 && q.trim().length >= 2 && searched === q && (
+                <div className="flex flex-wrap items-center gap-3 rounded-md border border-dashed px-3 py-2">
+                    <p className="text-sm">{t('Nothing found for "{q}".', { q })}</p>
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() =>
+                            router.post('/admin/counter/wanted', { query: q.trim() }, { preserveScroll: true, onSuccess: () => { setQ(''); setSearched(''); box.current?.focus(); } })
+                        }
+                    >
+                        {t('Customer asked for it, we do not have it')}
+                    </Button>
+                </div>
+            )}
             {results.some((m) => m.similar) && (
                 <p role="alert" className="rounded-md border border-warning/50 bg-warning/10 px-3 py-1.5 text-sm font-semibold">
                     {t('Some of these names look alike. Check the strength before you add.')}
@@ -523,6 +556,15 @@ export default function CounterShow({ invoice, working, otherDrafts, limit, poli
                     <h2 id="lines-h" className="sr-only">
                         {t('Items')}
                     </h2>
+                    {draft && invoice.lines_detail.some((l) => l.held) && (
+                        <p role="alert" className="mb-2 rounded-md border border-warning/50 bg-warning/10 px-3 py-2 text-sm font-semibold">
+                            {t('The invoice percent went on {n} items. {m} would sell at a loss, so they kept their price: {names}. Give each a lower percent of its own.', {
+                                n: num(invoice.lines_detail.filter((l) => !l.held).length),
+                                m: num(invoice.lines_detail.filter((l) => l.held).length),
+                                names: invoice.lines_detail.filter((l) => l.held).map((l) => l.name).join(', '),
+                            })}
+                        </p>
+                    )}
                     {invoice.lines_detail.length === 0 ? (
                         <p className="text-muted-foreground rounded-md border border-dashed p-6 text-center text-sm">{t('Nothing added yet.')}</p>
                     ) : (

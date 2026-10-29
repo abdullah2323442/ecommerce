@@ -4,13 +4,58 @@ import { Input } from '@/components/ui/input';
 import AppLayout from '@/layouts/app-layout';
 import { useI18n } from '@/lib/i18n';
 import { type BreadcrumbItem } from '@/types';
-import { Head, router } from '@inertiajs/react';
+import InputError from '@/components/input-error';
+import { Head, router, useForm } from '@inertiajs/react';
 import { useState } from 'react';
 
 interface Props {
-    mpo: { id: number; number: number; name: string; phone: string | null; email: string; area: string | null; note: string | null; closed: boolean; failed: number; submitted: number; approved: number; sold: number; since: string | null; company_ids: number[]; products: { id: number; name: string; company: string | null }[] };
+    mpo: { photo: string | null; id: number; number: number; name: string; phone: string | null; email: string; area: string | null; note: string | null; closed: boolean; failed: number; submitted: number; approved: number; sold: number; since: string | null; company_ids: number[]; products: { id: number; name: string; company: string | null }[] };
     companies: { id: number; name: string }[];
     listings: { id: number; name: string; status: string; stock_status: string }[];
+}
+
+/** The MPO's photo: the owner sets it, and only the owner ever sees it. */
+function Photo({ mpoId, photo, name }: { mpoId: number; photo: string | null; name: string }) {
+    const { t } = useI18n();
+    const form = useForm<{ photo: File | null }>({ photo: null });
+
+    return (
+        <section aria-labelledby="mpo-photo-h" className="flex flex-wrap items-center gap-4 rounded-lg border bg-card p-4">
+            {photo ? (
+                <img src={photo} alt={t('Photo of {name}', { name })} className="size-20 rounded-full border object-cover" />
+            ) : (
+                <div aria-hidden className="grid size-20 place-items-center rounded-full border bg-muted text-2xl font-bold text-muted-foreground">
+                    {name.slice(0, 1).toUpperCase()}
+                </div>
+            )}
+            <form
+                onSubmit={(e) => {
+                    e.preventDefault();
+                    form.post(`/admin/mpo/${mpoId}/photo`, { forceFormData: true, preserveScroll: true, onSuccess: () => form.reset() });
+                }}
+                className="space-y-2"
+            >
+                <h2 id="mpo-photo-h" className="text-sm font-medium">
+                    {t('Photo')}
+                </h2>
+                <div className="flex flex-wrap items-center gap-2">
+                    <label htmlFor="mpo-photo" className="sr-only">
+                        {t('Choose a photo')}
+                    </label>
+                    <Input id="mpo-photo" type="file" accept="image/png,image/jpeg,image/webp" onChange={(e) => form.setData('photo', e.target.files?.[0] ?? null)} className="max-w-xs" />
+                    <Button type="submit" variant="outline" disabled={form.processing || form.data.photo === null}>
+                        {t('Save photo')}
+                    </Button>
+                    {photo && (
+                        <Button type="button" variant="ghost" onClick={() => router.post(`/admin/mpo/${mpoId}/photo`, { remove: true }, { preserveScroll: true })}>
+                            {t('Remove photo')}
+                        </Button>
+                    )}
+                </div>
+                <InputError message={form.errors.photo} />
+            </form>
+        </section>
+    );
 }
 
 /** Everything about one MPO, for the owner only: who they are, their companies, the products they work with and what they sent. */
@@ -36,6 +81,8 @@ export default function MpoShow({ mpo, companies, listings }: Props) {
                         {t('Buyers see')} “{t('Anonymous')} {num(mpo.number)}” · {mpo.email} · {mpo.since && dateTime(mpo.since)}
                     </p>
                 </header>
+
+                <Photo mpoId={mpo.id} photo={mpo.photo} name={mpo.name} />
 
                 <dl className="grid grid-cols-3 gap-3 text-center text-sm">
                     {(

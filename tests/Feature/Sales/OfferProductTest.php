@@ -7,6 +7,8 @@ use App\Models\Company;
 use App\Models\Invoice;
 use App\Models\InvoiceLine;
 use App\Models\Medicine;
+use App\Models\Notice;
+use App\Models\Setting;
 use App\Models\OfferProduct;
 use App\Models\StockLot;
 use App\Models\StockSource;
@@ -287,5 +289,51 @@ class OfferProductTest extends TestCase
             $this->assertStringNotContainsString('purchase_percent', $body);
             $this->assertStringNotContainsString('unit_cost', $body);
         }
+    }
+
+    public function test_the_owner_is_warned_once_when_an_offer_runs_low_and_again_after_new_stock(): void
+    {
+        $offer = $this->offer();   // 10 boxes on offer
+        $svc = app(OfferProducts::class);
+
+        Setting::write('offers.alert_boxes', 2);
+        $this->assertSame(0, $svc->alertLow(), '10 boxes left is not low.');
+
+        Setting::write('offers.alert_boxes', 12);
+        $this->assertSame(1, $svc->alertLow());
+        $this->assertSame(0, $svc->alertLow(), 'Told once, not every five minutes.');
+        $this->assertDatabaseHas('notices', ['user_id' => $this->admin->id, 'kind' => 'offer_low']);
+        $this->assertDatabaseMissing('notices', ['user_id' => $this->shop->id, 'kind' => 'offer_low']);
+        $this->assertStringContainsString('Napa', Notice::where('kind', 'offer_low')->firstOrFail()->body);
+        $this->assertNotNull($offer->fresh()->low_alerted_at);
+
+        // The offer is healthy again (the level is below what is left): the warning is armed again.
+        Setting::write('offers.alert_boxes', 3);
+        $svc->alertLow();
+        $this->assertNull($offer->fresh()->low_alerted_at);
+
+        Setting::write('offers.alert_boxes', 12);
+        $this->assertSame(1, $svc->alertLow(), 'Low again: warned again.');
+    }
+
+    public function test_the_alert_command_runs_and_reports(): void
+    {
+        $this->offer();
+        Setting::write('offers.alert_boxes', 12);
+
+        $this->artisan('offers:alert')->expectsOutputToContain('Warned about 1')->assertExitCode(0);
+        $this->artisan('offers:alert')->expectsOutputToContain('No offer needs a warning')->assertExitCode(0);
+    }
+
+    public function test_the_owner_dashboard_shows_an_offer_that_is_nearly_sold_out(): void
+    {
+        $this->offer();
+        $titles = fn () => collect($this->actingAs($this->admin)->get('/dashboard')->viewData('page')['props']['alerts'])->pluck('title');
+
+        Setting::write('offers.alert_boxes', 2);
+        $this->assertFalse($titles()->contains('An offer is nearly sold out: {names}'));
+
+        Setting::write('offers.alert_boxes', 12);
+        $this->assertTrue($titles()->contains('An offer is nearly sold out: {names}'));
     }
 }

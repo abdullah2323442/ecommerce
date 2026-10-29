@@ -50,7 +50,7 @@ interface Result {
     units: { unit: 'piece' | 'strip' | 'box'; mrp: number; price: number; percent: number }[];
 }
 
-export const usePortal = () => usePage().props.portal as { base: string; bulk: boolean; moq: number; payments: string[] };
+export const usePortal = () => usePage().props.portal as { base: string; bulk: boolean; moq: number; payments: string[]; brand: { name: string; logo: string | null } | null };
 
 export const unitLabel = (u: string) => (u === 'box' ? 'Box' : u === 'strip' ? 'Strip' : 'Piece');
 
@@ -373,6 +373,7 @@ function Cart({ cart, freeOver }: { cart: NonNullable<Props['cart']>; freeOver: 
     const errors = usePage().props.errors as Record<string, string>;
     const { bulk, moq, payments } = usePortal();
     const [mode, setMode] = useState('collect');
+    const [collector, setCollector] = useState({ name: '', phone: '' });
     const [note, setNote] = useState('');
     const [terms, setTerms] = useState(payments[0] ?? '');
     const [extras, setExtras] = useState<Extras>(emptyExtras);
@@ -423,6 +424,7 @@ function Cart({ cart, freeOver }: { cart: NonNullable<Props['cart']>; freeOver: 
                     </label>
                     <select id="mode" value={mode} onChange={(e) => setMode(e.target.value)} className="mt-1 block h-10 w-full rounded-md border bg-background px-2 text-sm">
                         <option value="collect">{t('I will collect it')}</option>
+                        <option value="someone">{t('Someone will collect it for me')}</option>
                         <option value="send">{t('Send it by courier')}</option>
                         <option value="delivery">{t('Deliver it to me')}</option>
                     </select>
@@ -434,6 +436,24 @@ function Cart({ cart, freeOver }: { cart: NonNullable<Props['cart']>; freeOver: 
                     <Input id="note" className="mt-1" value={note} onChange={(e) => setNote(e.target.value)} maxLength={300} />
                 </div>
             </div>
+            {mode === 'someone' && (
+                <div className="grid gap-3 sm:grid-cols-2">
+                    <div>
+                        <label htmlFor="collector-name" className="text-sm font-medium">
+                            {t('Name of the person collecting')}
+                        </label>
+                        <Input id="collector-name" className="mt-1" value={collector.name} onChange={(e) => setCollector({ ...collector, name: e.target.value })} maxLength={80} autoComplete="off" />
+                        <InputError message={errors.collector_name} />
+                    </div>
+                    <div>
+                        <label htmlFor="collector-phone" className="text-sm font-medium">
+                            {t('Their phone number')}
+                        </label>
+                        <Input id="collector-phone" className="mt-1" type="tel" inputMode="tel" value={collector.phone} onChange={(e) => setCollector({ ...collector, phone: e.target.value })} maxLength={20} autoComplete="off" />
+                        <InputError message={errors.collector_phone} />
+                    </div>
+                </div>
+            )}
             {freeOver > 0 && mode === 'delivery' && (
                 <div className="space-y-1">
                     <div className="h-2 overflow-hidden rounded-full bg-[var(--pt-sage)]">
@@ -461,7 +481,7 @@ function Cart({ cart, freeOver }: { cart: NonNullable<Props['cart']>; freeOver: 
             <OrderExtras value={extras} onChange={setExtras} errors={errors} />
             <InputError message={errors.order} />
             <InputError message={errors.payment_terms} />
-            <Button className="h-12 w-full text-base" onClick={() => router.post(`${base}/order`, { delivery_mode: mode, note, payment_terms: bulk ? terms : undefined, ...extras }, { forceFormData: true })}>
+            <Button className="h-12 w-full text-base" onClick={() => router.post(`${base}/order`, { delivery_mode: mode === 'someone' ? 'collect' : mode, ...(mode === 'someone' ? { collector_name: collector.name, collector_phone: collector.phone } : {}), note, payment_terms: bulk ? terms : undefined, ...extras }, { forceFormData: true })}>
                 {t('Send order')} · {num(cart.lines.length)} {t('items')}
             </Button>
         </section>
@@ -537,7 +557,7 @@ function BulkUpload() {
 
 export default function PaikariHome({ cart, orders, freeOver, shortList, notice, monthTotal, usual, tierTask, notices, offers, reminder, companies }: Props) {
     const { t, money, dateTime } = useI18n();
-    const { base, bulk } = usePortal();
+    const { base, bulk, brand } = usePortal();
     const status = usePage().props.flash as { status?: string } | undefined;
     const errors = usePage().props.errors as Record<string, string>;
     const state = (s: string) => t(s === 'placed' ? 'Being checked' : s === 'verified' ? 'Ready' : s === 'final' ? 'Done' : 'Cancelled');
@@ -548,6 +568,12 @@ export default function PaikariHome({ cart, orders, freeOver, shortList, notice,
             <div className="mx-auto max-w-3xl space-y-8">
                 {status?.status && <p className="rounded-md border border-success/30 bg-success/10 px-3 py-2 text-sm text-success">{status.status}</p>}
                 <InputError message={!cart ? errors.order : undefined} />
+                {brand && (
+                    <div className="flex items-center gap-3">
+                        {brand.logo && <img src={brand.logo} alt="" className="size-12 rounded-md border object-contain" />}
+                        <p className="font-display text-xl font-extrabold">{brand.name}</p>
+                    </div>
+                )}
                 <div className="flex items-baseline justify-between gap-3">
                     <h1 className="font-display text-3xl font-extrabold">{t('Order')}</h1>
                     <div className="flex gap-4">
@@ -574,7 +600,7 @@ export default function PaikariHome({ cart, orders, freeOver, shortList, notice,
                 </div>
                 {notice && (
                     <p role="note" className="rounded-2xl border border-warning/40 bg-warning/10 px-4 py-3 text-sm">
-                        {notice === 'holiday' ? t('We are closed today. You can still order. We will check it on the next working day.') : t('It is night. You can still order. We will check it in the morning.')}
+                        {notice === 'holiday' ? t('We are closed today. You can still order. We will check it on the next working day.') : t('It is night. Place your order now and we will pack it tonight.')}
                     </p>
                 )}
                 {notices.map((n) => (

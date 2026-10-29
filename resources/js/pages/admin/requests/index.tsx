@@ -6,9 +6,12 @@ import { Head } from '@inertiajs/react';
 
 interface Group {
     normalized: string;
+    sector: string | null;
+    photo: string | null;
     sample: string;
     total: number;
     notes: number;
+    counter: number;
     last_at: string;
 }
 
@@ -17,6 +20,9 @@ interface Props {
 }
 
 const breadcrumbs: BreadcrumbItem[] = [{ title: 'Requests', href: '/admin/requests' }];
+
+/** Where in the site the want came from. */
+const sectorName = (s: string) => (s === 'medicine' ? 'Medicine' : s === 'food' ? 'Food' : s === 'gaming' ? 'Gaming' : s === 'search' ? 'Whole-site search' : s === 'market' ? 'Marketplace' : s.charAt(0).toUpperCase() + s.slice(1));
 
 export default function RequestsIndex({ groups }: Props) {
     const { t, num, date } = useI18n();
@@ -37,9 +43,12 @@ export default function RequestsIndex({ groups }: Props) {
                 ) : (
                     <ul className="divide-y rounded-xl border bg-card">
                         {groups.data.map((g) => (
-                            <li key={g.normalized} className="px-4 py-3">
+                            <li key={`${g.sector ?? ''}|${g.normalized}`} className="px-4 py-3">
                                 <div className="flex items-baseline justify-between gap-4">
-                                    <p className="min-w-0 truncate font-semibold">{g.sample}</p>
+                                    <p className="min-w-0 truncate font-semibold">
+                                        {g.sample}
+                                        {g.sector && <span className="ml-2 rounded-full border px-2 py-0.5 text-xs font-normal text-muted-foreground">{t(sectorName(g.sector))}</span>}
+                                    </p>
                                     <p className="shrink-0 text-sm tabular-nums">
                                         <strong className="text-base">{num(g.total)}</strong> {g.total === 1 ? t('person') : t('people')}
                                     </p>
@@ -50,7 +59,13 @@ export default function RequestsIndex({ groups }: Props) {
                                 <p className="mt-1.5 text-xs text-muted-foreground">
                                     {t('Last asked {date}', { date: date(g.last_at) })}
                                     {g.notes > 0 ? ` · ${t('{n} with a note', { n: num(g.notes) })}` : ''}
+                                    {` · ${t('{a} from the website, {b} from the counter', { a: num(g.total - g.counter), b: num(g.counter) })}`}
                                 </p>
+                                {g.photo && (
+                                    <a href={g.photo} target="_blank" rel="noreferrer" className="mt-2 inline-block">
+                                        <img src={g.photo} alt={t('A photo sent with this request: {name}', { name: g.sample })} className="size-16 rounded-md border object-cover" loading="lazy" />
+                                    </a>
+                                )}
                             </li>
                         ))}
                     </ul>

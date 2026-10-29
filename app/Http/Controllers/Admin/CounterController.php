@@ -11,6 +11,7 @@ use App\Models\Medicine;
 use App\Models\MedicineBarcode;
 use App\Models\Notice;
 use App\Models\OfferProduct;
+use App\Models\ProductRequest;
 use App\Models\QuickNote;
 use App\Models\Setting;
 use App\Models\StockLot;
@@ -135,6 +136,17 @@ class CounterController extends Controller
         $unit = $barcode->medicine->packaging_type === 'box' ? 'box' : 'piece';
 
         return $this->attempt(fn () => $this->invoices->addLine($invoice, $barcode->medicine, $unit, 1.0, $request->user()));
+    }
+
+    /** "Asked for but not here": one press at the counter notes what a customer wanted and we did not have (spec ch 08). It joins the online searches. */
+    public function wanted(Request $request): RedirectResponse
+    {
+        $this->authorize('use-counter');
+        $data = $request->validate(['query' => ['required', 'string', 'min:2', 'max:120']]);
+
+        ProductRequest::create(['query' => $data['query'], 'normalized' => ProductRequest::normalize($data['query']), 'source' => 'counter', 'sector' => 'medicine', 'user_id' => null]);
+
+        return back()->with('status', __('Noted. We will try to stock it.'));
     }
 
     /** Jot a phone order under the shop's name so it is not forgotten (spec 4.4.7). */

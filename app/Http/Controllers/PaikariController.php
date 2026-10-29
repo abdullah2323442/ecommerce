@@ -11,12 +11,12 @@ use App\Models\Notice;
 use App\Models\OfferProduct;
 use App\Models\Prescription;
 use App\Models\SaleReturn;
-use App\Models\Setting;
 use App\Models\ShortListItem;
 use App\Models\StockLot;
 use App\Services\Media\ImageCompressor;
 use App\Services\Mpo\MpoService;
 use App\Services\Sales\BulkOrder;
+use App\Services\Sales\DeliveryCharge;
 use App\Services\Sales\Dispatching;
 use App\Services\Sales\InvoiceService;
 use App\Services\Sales\OfferProducts;
@@ -53,7 +53,7 @@ class PaikariController extends Controller
             'portal' => $this->portal($request),
             'bulkResult' => session('bulk'),
             'cart' => $cart ? $this->detail($cart->load('lines.medicine.company')) : null,
-            'freeOver' => (float) Setting::read('delivery.free_over', 0),
+            'freeOver' => app(DeliveryCharge::class)->freeOver($request->user()),
             'notice' => $this->notice->at(),
             'offers' => $this->offerProducts->visibleTo($this->kind($request))->map(fn (OfferProduct $o) => $this->invoices->offerCard($this->probe($request), $o))->values(),
             'usual' => $this->usual($request),
@@ -259,6 +259,7 @@ class PaikariController extends Controller
         $ways = $this->terms->payments($request->user());
         $data = $request->validate([
             'delivery_mode' => ['required', 'in:collect,send,delivery'], 'note' => ['nullable', 'string', 'max:300'],
+            'collector_name' => ['nullable', 'string', 'max:80', 'required_with:collector_phone'], 'collector_phone' => ['nullable', 'string', 'max:20', 'required_with:collector_name'],
             'voice' => OrderNotes::RULES['voice'], 'photo' => OrderNotes::RULES['photo'], 'wanted_time' => OrderNotes::RULES['wanted_time'],
             'payment_terms' => [$ways ? 'required' : 'nullable', 'in:'.implode(',', $ways ?: ['cod'])],
         ]);
@@ -271,7 +272,12 @@ class PaikariController extends Controller
             return back()->withErrors(['order' => collect($short)->map(fn ($s) => __('The minimum for {name} is {n}.', ['name' => $s['name'], 'n' => $s['minimum'] + 0]))->implode(' ')]);
         }
 
-        $cart->update(['delivery_mode' => $data['delivery_mode'], 'note' => $data['note'] ?? null, 'payment_terms' => $data['payment_terms'] ?? null]);
+        // Someone else may collect it (spec ch 07 step 9): only for a collected order, with the person's name and phone.
+        $collects = $data['delivery_mode'] === 'collect';
+        $cart->update([
+            'delivery_mode' => $data['delivery_mode'], 'note' => $data['note'] ?? null, 'payment_terms' => $data['payment_terms'] ?? null,
+            'collector_name' => $collects ? ($data['collector_name'] ?? null) : null, 'collector_phone' => $collects ? ($data['collector_phone'] ?? null) : null,
+        ]);
 
         try {
             $order = $this->invoices->place($cart);
@@ -282,7 +288,7 @@ class PaikariController extends Controller
 
         $message = match ($this->notice->at()) {
             'holiday' => 'Order sent. We are closed today and will check it on the next working day.',
-            'night' => 'Order sent. It is night now, so we will check it in the morning.',
+            'night' => 'Order sent. We will pack it tonight and it will be ready in the morning.',
             default => 'Order sent. We are checking it now.',
         };
 
@@ -494,6 +500,8 @@ class PaikariController extends Controller
             'bulk' => $bulk,
             'moq' => $this->terms->moq($user),
             'payments' => $this->terms->payments($user),
+            // The shop's own name and logo, so a bulk buyer's pages read as theirs (spec ch 14, white-label).
+            'brand' => $bulk ? ['name' => $user->business_name ?: $user->name, 'logo' => $user->logo_path ? '/wholesale/account/logo?v='.substr(md5($user->logo_path), 0, 8) : null] : null,
         ];
     }
 
@@ -529,7 +537,7 @@ class PaikariController extends Controller
         $totals = $this->invoices->totals($i);
 
         return [
-            'id' => $i->id, 'status' => $i->status, 'number' => $i->number, 'cancel_requested' => $i->cancel_requested_at !== null, 'delivery_mode' => $i->delivery_mode, 'note' => $i->note,
+            'id' => $i->id, 'status' => $i->status, 'number' => $i->number, 'cancel_requested' => $i->cancel_requested_at !== null, 'delivery_mode' => $i->delivery_mode, 'collector' => $i->collector_name ? ['name' => $i->collector_name, 'phone' => $i->collector_phone] : null, 'note' => $i->note,
             'wanted_time' => $i->wanted_time, 'has_voice' => $i->voice_path !== null, 'has_photo' => $i->photo_path !== null, 'can_note' => app(OrderNotes::class)->open($i),
             'paid_amount' => (float) $i->paid_amount, 'total' => $totals['total'], 'subtotal' => $totals['subtotal'], 'delivery' => $totals['delivery'],
             'sent_at' => $i->sent_at?->toIso8601String(), 'tracking' => $i->tracking, 'delivery_extra' => (float) $i->delivery_extra, 'courier_terms' => $i->courier_terms, 'cartons' => $i->cartons, 'delivered' => $i->delivered_at !== null, 'not_received' => $i->not_received_at !== null,

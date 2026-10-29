@@ -1,3 +1,4 @@
+import CameraScan from '@/components/camera-scan';
 import Flash from '@/components/admin/flash';
 import MedicinePicker, { type PickedMedicine } from '@/components/admin/medicine-picker';
 import InputError from '@/components/input-error';
@@ -65,6 +66,19 @@ export default function StockCountShow({ count, lines, totalDifference }: Props)
         });
     };
 
+    // A code read by the phone camera counts the same as one typed by a scanner.
+    const scanFromCamera = (code: string) =>
+        router.post(`/admin/stock/counts/${count.id}/scan`, { code }, {
+            preserveScroll: true,
+            onSuccess: () => {
+                setUnknown(null);
+                scanBox.current?.focus();
+            },
+            onError: (errs) => {
+                if (errs.code) setUnknown(code);
+            },
+        });
+
     const approve = () => {
         if (window.confirm(t('Approve this count? Stock will be changed to the counted numbers.'))) router.post(`/admin/stock/counts/${count.id}/approve`);
     };
@@ -104,6 +118,7 @@ export default function StockCountShow({ count, lines, totalDifference }: Props)
                             </label>
                             <Input id="scan" ref={scanBox} autoFocus autoComplete="off" value={scan.data.code} onChange={(e) => scan.setData('code', e.target.value)} placeholder={t('Point the scanner here')} />
                             <InputError message={errors.scan.code} />
+                            <CameraScan onCode={scanFromCamera} />
                         </form>
 
                         <form

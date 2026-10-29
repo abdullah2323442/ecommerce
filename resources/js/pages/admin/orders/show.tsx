@@ -42,7 +42,7 @@ interface Props {
     controlled: ControlledItem[];
     controlledDefaults: { buyer_name: string | null; buyer_phone: string | null } | null;
     approvals: { id: number; kind: string; line_id: number | null; value: number; status: string }[];
-    order: { wanted_time: string | null; has_voice: boolean; has_photo: boolean; id: number; status: string; cancel_requested: boolean; flagged: boolean; late_cancellations: number; customer: string | null; phone: string | null; delivery_mode: string | null; note: string | null; ship_to: ShipTo | null; payment_terms: string | null; public: boolean; working: string | null; trade: boolean; courier_terms: string | null; courier_cost: number | null; cartons: number | null; advance_needed: boolean; advance_at: string | null; delivery_refund: number; people: { id: number; name: string }[]; delivery_person: string | null; arrived_at: string | null; courier_id: number | null; courier_panel: { provider: string; name: string; booked: boolean; consignment: string | null; status: string | null; status_label: string | null; status_at: string | null; tracking: string | null; blocked: string | null; collect: number; places?: boolean } | null; sent_at: string | null; tracking: string | null; delivery_extra: number; delivered_at: string | null; delivered_by: string | null; not_received: boolean; total: number; subtotal: number; delivery_charge: number; free_over: number; lines: Line[] };
+    order: { wanted_time: string | null; has_voice: boolean; has_photo: boolean; id: number; status: string; cancel_requested: boolean; flagged: boolean; late_cancellations: number; customer: string | null; phone: string | null; delivery_mode: string | null; collector: { name: string; phone: string | null } | null; note: string | null; ship_to: ShipTo | null; payment_terms: string | null; public: boolean; working: string | null; trade: boolean; courier_terms: string | null; courier_cost: number | null; cartons: number | null; advance_needed: boolean; advance_at: string | null; delivery_refund: number; people: { id: number; name: string }[]; delivery_person: string | null; arrived_at: string | null; courier_id: number | null; courier_panel: { provider: string; name: string; booked: boolean; consignment: string | null; status: string | null; status_label: string | null; status_at: string | null; tracking: string | null; blocked: string | null; collect: number; places?: boolean } | null; sent_at: string | null; tracking: string | null; delivery_extra: number; delivered_at: string | null; delivered_by: string | null; not_received: boolean; total: number; subtotal: number; delivery_charge: number; free_over: number; lines: Line[] };
 }
 
 function LineRow({ orderId, line, open, approvals }: { orderId: number; line: Line; open: boolean; approvals: Props['approvals'] }) {
@@ -55,7 +55,7 @@ function LineRow({ orderId, line, open, approvals }: { orderId: number; line: Li
     const send = (status: string, quantity?: string) => router.post(`/admin/orders/${orderId}/lines/${line.id}/verify`, { status, quantity, expected: line.check ?? 'pending' }, { preserveScroll: true });
 
     return (
-        <li className="flex flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3">
+        <li className={`flex flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3 ${line.offer ? 'bg-warning/10' : ''}`}>
             <div className="min-w-48 flex-1">
                 <p className="font-medium">
                     {line.name} <span className="text-sm font-normal text-muted-foreground">{line.strength}</span>
@@ -233,6 +233,12 @@ export default function OrderShow({ order, approvals, controlled, controlledDefa
                     <p className="text-sm text-muted-foreground">
                         {order.phone} · {t(order.delivery_mode === 'send' ? 'Send it by courier' : order.delivery_mode === 'delivery' ? 'Deliver it to me' : 'I will collect it')}
                     </p>
+                    {order.collector && (
+                        <p className="mt-2 text-sm font-semibold">
+                            {t('Someone else will collect it: {name}', { name: order.collector.name })}
+                            {order.collector.phone ? ` · ${order.collector.phone}` : ''}
+                        </p>
+                    )}
                     {order.note && <p className="mt-2 rounded-md bg-muted p-2 text-sm">{order.note}</p>}
                     {order.wanted_time && <p className="mt-2 text-sm font-semibold">{t('Needed by {time}', { time: order.wanted_time })}</p>}
                     {order.has_voice && (
@@ -416,7 +422,7 @@ export default function OrderShow({ order, approvals, controlled, controlledDefa
                         <Button variant="outline" disabled={charge === ''} onClick={() => router.put(`/admin/orders/${order.id}/delivery`, { charge }, { preserveScroll: true })}>
                             {t('Save')}
                         </Button>
-                        {overFree && <p className="text-sm font-semibold text-warning">{t('This order is past the free-delivery amount.')}</p>}
+                        {overFree && <p className="text-sm font-semibold text-warning">{t('Free delivery applies for this shop. This order is past its free-delivery amount.')}</p>}
                     </div>
                 )}
 

@@ -7,9 +7,18 @@ import { useEffect } from 'react';
  * falls back to readable English instead of a code. Product, company and generic names are data and
  * are never passed through `t` (spec: names are never auto-translated).
  */
+let held: { key: string; words: Record<string, string> } = { key: '', words: {} };
+
+/** The key of the dictionary this browser already holds, sent with every move to another page so the server need not send it again. */
+export const heldDictionaryKey = () => held.key;
+
 export function useI18n() {
-    const { locale, translations } = usePage<SharedData>().props;
-    const dictionary = translations as Record<string, string>;
+    const { locale, translations, dictKey } = usePage<SharedData>().props;
+
+    // A page the app moved to leaves the dictionary out when this browser already holds it: use the one held.
+    if (translations && Object.keys(translations).length > 0) held = { key: dictKey, words: translations as Record<string, string> };
+
+    const dictionary = (translations ? (translations as Record<string, string>) : held.words) ?? {};
     const isBn = locale === 'bn';
     const tag = isBn ? 'bn-BD' : 'en-US';
 

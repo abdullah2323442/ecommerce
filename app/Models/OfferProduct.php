@@ -9,7 +9,7 @@ class OfferProduct extends Model
 {
     protected $fillable = [
         'medicine_id', 'percent', 'lot_percent', 'min_boxes', 'step_percent', 'viewer_percent', 'visible_to', 'stock_mode', 'weight_kg', 'delivery_charge',
-        'ends_on', 'is_on', 'soldout_at', 'created_by',
+        'ends_on', 'is_on', 'soldout_at', 'low_alerted_at', 'created_by',
     ];
 
     protected function casts(): array

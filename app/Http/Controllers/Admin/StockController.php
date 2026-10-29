@@ -177,7 +177,7 @@ class StockController extends Controller
             $invoice = $this->stock->receive(StockSource::findOrFail($data['source_id']), $data, $request->user(), (bool) ($data['confirm_duplicate'] ?? false));
         } catch (StockException $e) {
             $field = match (true) {
-                str_contains($e->getMessage(), 'already entered') => 'invoice_number',
+                $e->reason === 'duplicate_invoice' => 'invoice_number',
                 str_contains($e->getMessage(), 'day the rest is due') => 'due_date',
                 str_contains($e->getMessage(), 'amount paid') => 'paid_now',
                 default => 'lines',

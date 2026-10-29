@@ -35,6 +35,7 @@ interface Props {
     previous: Totals;
     lastYear: Totals;
     sectors: { kind: string; channel: string; memos: number; total: number }[];
+    departments: { key: string; name: string; orders: number; total: number }[];
     days: {
         day: string;
         memos: number;
@@ -223,6 +224,22 @@ export default function MonthlyReport(p: Props) {
                         {t('Profit counts what came off the stock. A sale that took nothing from stock has no cost to compare.')}
                     </p>
                 </Block>
+
+                {/* A report prepared before departments existed has none: it simply has no such block. */}
+                {(p.departments ?? []).length > 0 && (
+                <Block title={t('By department')}>
+                    <ul className="divide-y rounded-md border text-sm">
+                        {p.departments.map((d) => (
+                            <li key={d.key} className="flex justify-between px-3 py-2">
+                                <span>{t(d.name)}</span>
+                                <span className="tabular-nums">
+                                    {num(d.orders)} · {money(d.total)}
+                                </span>
+                            </li>
+                        ))}
+                    </ul>
+                </Block>
+                )}
 
                 {p.sectors.length > 0 && (
                     <Block title={t('By kind of sale')}>

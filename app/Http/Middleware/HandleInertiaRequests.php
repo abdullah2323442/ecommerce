@@ -64,7 +64,13 @@ class HandleInertiaRequests extends Middleware
             'analytics' => fn () => app(\App\Services\Analytics\Tags::class)->forRequest($request),
             'locale' => fn () => app()->getLocale(),
             // English is the source text, so only Bangla needs a dictionary sent to the browser.
-            'translations' => fn () => app()->getLocale() === 'bn' ? self::dictionaryFor($request) : (object) [],
+            // The dictionary is a few hundred kilobytes, so a page the app moves to (not a full load) leaves it out when the browser says
+            // it already holds this very one (`X-Dictionary` is the key it was sent with); the key changes with the language, the kind of
+            // viewer (a login changes what they may read) and the dictionary file itself.
+            'dictKey' => fn () => self::dictKey($request),
+            'translations' => fn () => app()->getLocale() !== 'bn'
+                ? (object) []
+                : ($request->header('X-Inertia') && $request->header('X-Dictionary') === self::dictKey($request) ? null : self::dictionaryFor($request)),
             'flash' => ['status' => fn () => $request->session()->get('status')],
             // How many different items are in the public cart (the badge on the cart button).
             // The public cart is for visitors and plain accounts; a shop or a bulk buyer orders from their own screen.
@@ -126,6 +132,13 @@ class HandleInertiaRequests extends Middleware
      *
      * @return array<string, string>
      */
+    private static function dictKey(Request $request): string
+    {
+        $file = lang_path('bn.json');
+
+        return md5(app()->getLocale().'|'.($request->user()?->account_type?->value ?? 'guest').'|'.@filemtime($file).'|'.@filesize($file));
+    }
+
     private static function dictionaryFor(Request $request): array
     {
         static $all = null;
@@ -134,6 +147,11 @@ class HandleInertiaRequests extends Middleware
         $type = $request->user()?->account_type ?? AccountType::Public;
 
         return array_filter($all, function (string $_, string $key) use ($type) {
+            // Words a buyer or a seller reads on their own screens, even though they use a staff-only word.
+            if (in_array($key, self::SAFE_FOR_EVERYONE, true)) {
+                return true;
+            }
+
             $lower = mb_strtolower($key);
 
             foreach (self::RESTRICTED_WORDS as $word => $section) {
@@ -145,6 +163,22 @@ class HandleInertiaRequests extends Middleware
             return true;
         }, ARRAY_FILTER_USE_BOTH);
     }
+
+    /**
+     * Phrases that contain a staff-only word (stock, cost) but are for buyers and sellers: "In stock" is what a shop is told about a product.
+     * Without this they were held back and a Bangla screen showed them in English.
+     */
+    private const SAFE_FOR_EVERYONE = [
+        'In stock',
+        'In stock · {n} boxes',
+        'It is not in stock now. The seller will have it ready within {n} days.',
+        'It is not in stock now. Your pre-order is kept and the seller sends it when they have it again.',
+        'Was on offer a moment ago. Stock out.',
+        'Noted. We will try to stock “{query}”.',
+        'Noted. We will try to stock it.',
+        'You made {amount} after your own cost',
+        'Your own cost for one (only you see it)',
+    ];
 
     /** Words that name a section not everyone may know about, and the section a viewer needs to see them. */
     private const RESTRICTED_WORDS = [

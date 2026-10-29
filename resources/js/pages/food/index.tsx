@@ -1,4 +1,6 @@
 import { DISPLAY, FaqList, type Front, type FrontBlock, SectionHead, ServiceStrip, StepsList } from '@/components/storefront/shared';
+import LocateButton from '@/components/locate-button';
+import RequestButton from '@/components/requests/request-button';
 import PublicLayout from '@/layouts/public-layout';
 import { useI18n } from '@/lib/i18n';
 import { Head, Link, router } from '@inertiajs/react';
@@ -146,6 +148,19 @@ export default function FoodIndex({ area, mode, restaurants, areas, front }: Pro
                                 {t('Show restaurants')}
                             </button>
                         </form>
+                    )}
+                    {mode === 'delivery' && (
+                        <div className="mt-3 max-w-md rounded-xl bg-white p-2 text-[var(--k-ink)]">
+                            <LocateButton
+                                onFound={(f) => {
+                                    const place = f.area || f.district || '';
+                                    setValue(place);
+                                    if (place !== '') {
+                                        router.get('/food', { area: place }, { preserveState: true });
+                                    }
+                                }}
+                            />
+                        </div>
                     )}
                 </div>
             </section>
@@ -316,9 +331,12 @@ export default function FoodIndex({ area, mode, restaurants, areas, front }: Pro
                         </div>
 
                         {list.length === 0 ? (
-                            <p className="mt-6 rounded-[1.5rem] border-2 border-dashed border-[var(--k-red)] p-10 text-center text-[var(--k-muted)]">
-                                {t('No restaurant delivers to this area yet.')}
-                            </p>
+                            <div className="mt-6 space-y-4 rounded-[1.5rem] border-2 border-dashed border-[var(--k-red)] p-10 text-center text-[var(--k-muted)]">
+                                <p>{t('No restaurant delivers to this area yet.')}</p>
+                                <div className="flex justify-center text-left text-[var(--k-ink)]">
+                                    <RequestButton key={area.toLowerCase()} query={area ? t('Food delivery in {area}', { area }) : ''} sector="food" />
+                                </div>
+                            </div>
                         ) : (
                             <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                                 {list.map((r) => (

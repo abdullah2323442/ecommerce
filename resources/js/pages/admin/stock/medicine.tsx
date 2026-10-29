@@ -7,18 +7,67 @@ import { Input } from '@/components/ui/input';
 import AppLayout from '@/layouts/app-layout';
 import { useI18n } from '@/lib/i18n';
 import { type BreadcrumbItem } from '@/types';
-import { Head, useForm } from '@inertiajs/react';
+import { Head, Link, router, useForm } from '@inertiajs/react';
 
 interface Props {
     medicine: MedicineSummary;
     fields: { strips_per_box: number | null; pieces_per_strip: number | null; mrp_box: string | null; mrp_strip: string | null; mrp_piece: string | null };
     units: string[];
     steps: Step[];
+    active: boolean;
+    barcodes: { id: number; code: string }[];
     history: { action: string; changes: Record<string, unknown> | null; at: string; by: string | null }[];
 }
 
+/** Every barcode this medicine's packs carry: one medicine can have several, and each can be taken off again (spec ch 06). */
+function Barcodes({ medicineId, barcodes }: { medicineId: number; barcodes: { id: number; code: string }[] }) {
+    const { t } = useI18n();
+    const form = useForm({ code: '' });
+
+    return (
+        <section aria-labelledby="barcodes-h" className="space-y-2 rounded-xl border bg-card p-4">
+            <h2 id="barcodes-h" className="font-display text-xl font-bold">
+                {t('Barcodes')}
+            </h2>
+            <p className="text-sm text-muted-foreground">{t('A scan of any of these finds this medicine. A new code can also be linked at the counter the first time it is scanned.')}</p>
+            {barcodes.length === 0 ? (
+                <p className="text-sm text-muted-foreground">{t('No barcode linked yet.')}</p>
+            ) : (
+                <ul className="divide-y rounded-md border text-sm">
+                    {barcodes.map((b) => (
+                        <li key={b.id} className="flex items-center justify-between gap-3 px-3 py-2">
+                            <span className="tabular font-mono">{b.code}</span>
+                            <Button type="button" variant="ghost" size="sm" onClick={() => router.delete(`/admin/stock/medicines/${medicineId}/barcodes/${b.id}`, { preserveScroll: true })}>
+                                {t('Remove')}
+                            </Button>
+                        </li>
+                    ))}
+                </ul>
+            )}
+            <form
+                onSubmit={(e) => {
+                    e.preventDefault();
+                    form.post(`/admin/stock/medicines/${medicineId}/barcodes`, { preserveScroll: true, onSuccess: () => form.reset() });
+                }}
+                className="flex flex-wrap items-start gap-2"
+            >
+                <div className="grid gap-1">
+                    <label htmlFor="new-barcode" className="sr-only">
+                        {t('New barcode')}
+                    </label>
+                    <Input id="new-barcode" value={form.data.code} onChange={(e) => form.setData('code', e.target.value)} placeholder={t('Type or scan a code')} autoComplete="off" maxLength={64} className="w-64" />
+                    <InputError message={form.errors.code} />
+                </div>
+                <Button type="submit" variant="outline" disabled={form.processing || form.data.code.trim() === ''}>
+                    {t('Add')}
+                </Button>
+            </form>
+        </section>
+    );
+}
+
 /** Pack size and printed prices. A pack-size change asks twice; a new MRP leaves a mark for a month (spec 6.1, 6.8). */
-export default function MedicineEdit({ medicine, fields, history, units, steps }: Props) {
+export default function MedicineEdit({ medicine, fields, history, units, steps, active, barcodes }: Props) {
     const { t, dateTime } = useI18n();
     const form = useForm({
         strips_per_box: fields.strips_per_box === null ? '' : String(fields.strips_per_box),
@@ -102,6 +151,34 @@ export default function MedicineEdit({ medicine, fields, history, units, steps }
                 </form>
 
                 <QuantityStepsEditor medicineId={medicine.id} units={units} steps={steps} />
+
+                <Barcodes medicineId={medicine.id} barcodes={barcodes} />
+
+                <section aria-labelledby="active-h" className="space-y-2 rounded-xl border bg-card p-4">
+                    <h2 id="active-h" className="font-display text-xl font-bold">
+                        {active ? t('Switch this medicine off') : t('This medicine is switched off')}
+                    </h2>
+                    <p className="text-sm text-muted-foreground">
+                        {active
+                            ? t('For a medicine that is discontinued or renamed. It is not offered for new orders. Old memos, reports and its history keep it.')
+                            : t('It is not offered for new orders now. Switch it on to sell it again.')}
+                    </p>
+                    <div className="flex flex-wrap items-center gap-3">
+                        <Button
+                            type="button"
+                            variant={active ? 'destructive' : 'default'}
+                            onClick={() => {
+                                if (active && !window.confirm(t('Switch off {name}? It will not be offered for new orders.', { name: medicine.brand_name }))) return;
+                                router.put(`/admin/stock/medicines/${medicine.id}/active`, { active: !active }, { preserveScroll: true });
+                            }}
+                        >
+                            {active ? t('Switch off') : t('Switch on')}
+                        </Button>
+                        <Link href="/admin/stock/inactive" className="text-sm underline underline-offset-4">
+                            {t('See every switched-off medicine')}
+                        </Link>
+                    </div>
+                </section>
 
                 {history.length > 0 && (
                     <section aria-labelledby="hist-h" className="space-y-2">

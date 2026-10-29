@@ -240,4 +240,26 @@ class CustomerAdminTest extends TestCase
         $this->assertDatabaseCount('customer_rates', 0);
         $this->assertDatabaseHas('activity_logs', ['action' => 'customer.manual_rate_removed']);
     }
+
+    public function test_a_shop_can_have_its_own_free_delivery_amount_and_clearing_it_goes_back_to_the_site_amount(): void
+    {
+        \App\Models\Setting::write('delivery.free_over', 6000);
+        $delivery = app(\App\Services\Sales\DeliveryCharge::class);
+        $this->assertSame(6000.0, $delivery->freeOver($this->customer));
+
+        $this->actingAs($this->admin)->put("/admin/customers/{$this->customer->id}/free-delivery", ['amount' => '4000'])->assertRedirect();
+        $this->assertSame(4000.0, $delivery->freeOver($this->customer->fresh()));
+        $this->assertSame(6000.0, $delivery->freeOver(), 'Other shops keep the site-wide amount.');
+        $this->assertDatabaseHas('activity_logs', ['action' => 'customer.free_delivery']);
+
+        $this->actingAs($this->admin)->put("/admin/customers/{$this->customer->id}/free-delivery", ['amount' => ''])->assertRedirect();
+        $this->assertSame(6000.0, $delivery->freeOver($this->customer->fresh()));
+    }
+
+    public function test_the_free_delivery_amount_is_checked_and_only_the_admin_can_set_it(): void
+    {
+        $this->actingAs($this->admin)->put("/admin/customers/{$this->customer->id}/free-delivery", ['amount' => '-5'])->assertSessionHasErrors('amount');
+        $this->actingAs($this->customer)->put("/admin/customers/{$this->customer->id}/free-delivery", ['amount' => '10'])->assertRedirect('/');
+        $this->assertNull($this->customer->fresh()->free_delivery_over);
+    }
 }

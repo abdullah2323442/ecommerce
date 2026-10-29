@@ -1,4 +1,4 @@
-529|a_market|-|The owner manages products with every option. A few options are still being finished.
+529|a_market|-|The owner manages products with every option, and a seller can add a short video. The advance delivery charge waits for online payment.
 530|a_customer|-|Every control for a customer sits on that customer's profile page.
 531|a_customer|-|All of a customer's transactions show on one page.
 532|a_apps|-|The owner reviews applications and checks licences.
@@ -54,15 +54,15 @@
 582|-|p_item|Product names are never auto-translated.
 583|-|p_home|The web version stays in sync with the app.
 584|-|p_home|Pages are set up so search engines can find them.
-585|-|p_home|The site is mobile friendly and quick. Some speed work remains.
+585|-|p_home|The site is mobile friendly and quick: pictures are sent in phone sizes and the language dictionary is sent once. Speed on a real phone connection was not measured.
 586|-|u_appearance|The text size can be changed for easier reading.
 587|-|p_home|Everything works on the web too. A few things are still partial.
 588|-|p_home|An app update message tells people when a new version is ready.
 589|a_market|p_item|The main product photo can be chosen.
 590|a_settings|-|A backup is taken daily and kept for 30 days.
 591|a_settings|-|Backups stored outside the server are partly built.
-592|a_settings|-|A backup is tested each month.
-593|a_counter_off|-|Work is not lost when the internet drops. Partly built.
+592|a_settings|-|A backup is tested each month by loading it into a scratch database, and the owner sees the result on the dashboard.
+593|a_counter_off|-|Work is not lost when the internet drops: sales made offline wait on the device and are sent when the connection returns.
 594|a_settings|-|Old data can be imported in bulk.
 595|a_settings|-|The system clock is correct.
 596|a_settings|-|The monthly report date is in settings. Partly built.
@@ -70,7 +70,7 @@
 598|-|-|Old data stored separately has not been built yet.
 599|a_site|-|Photos are compressed automatically.
 600|-|p_market|A low quality image shows first, then the sharp one.
-601|a_settings|-|Festival order peaks are handled. Partly built.
+601|a_settings|-|Festival order peaks: a load test of 300 requests found no failures. The real server needs several PHP workers.
 602|a_settings|-|Updates run at night or on closed days.
 603|a_tokens|k_wallet|Reward points and referrals are partly built.
 604|-|-|Bundle deals and flash sales have not been built yet.

@@ -51,7 +51,7 @@ export default function TwoFactor({ enabled, setup, codesLeft, recoveryCodes, re
             <SettingsLayout>
                 <div className="space-y-6">
                     <HeadingSmall title={t('Two-step sign-in')} description={t('After your password, you also write a 6-digit code from an app on your phone. A stolen password is then not enough.')} />
-                    {required && !enabled && <p role="alert" className="rounded-md border border-warning/40 bg-warning/10 p-3 text-sm">{t('The owner asks staff to use two-step sign-in. Turn it on to use the admin panel.')}</p>}
+                    {required && !enabled && <p role="alert" className="rounded-md border border-warning/40 bg-warning/10 p-3 text-sm">{t('The owner asks for two-step sign-in on your account. Turn it on to carry on.')}</p>}
 
                     {recoveryCodes && (
                         <section role="status" className="space-y-2 rounded-md border border-success/40 bg-success/10 p-4">

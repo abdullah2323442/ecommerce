@@ -110,7 +110,7 @@ class CheckoutController extends Controller
 
         $message = match ($this->notice->at()) {
             'holiday' => 'Your order is received. It will be processed on the next working day.',
-            'night' => 'Your order is received. It is night now, so we will check it in the morning.',
+            'night' => 'Your order is received. We will pack it tonight and it will be ready in the morning.',
             default => 'Your order is received. We are checking it now.',
         };
 

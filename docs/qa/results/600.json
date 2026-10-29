@@ -1,8 +1,13 @@
 {
   "n": 600,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
-  "checks": [],
+  "checks": [
+    {
+      "ok": true,
+      "text": "The saved copy is a progressive JPEG, which shows a rough picture first and sharpens as the rest arrives"
+    }
+  ],
   "shots": [
     {
       "file": "f600_1.jpg",
@@ -11,8 +16,6 @@
       "url": "/market/78"
     }
   ],
-  "notes": [
-    "Progressive image loading was not measured."
-  ],
-  "did": "Looked for a low-quality image that loads first."
+  "notes": [],
+  "did": "Checked the saved copy of the same large photo."
 }

@@ -5,7 +5,9 @@ namespace App\Providers;
 use App\Models\SaleReturn;
 use App\Models\User;
 use App\Services\Backup\DatabaseDumper;
+use App\Services\Backup\DatabaseRestorer;
 use App\Services\Backup\MysqlDumper;
+use App\Services\Backup\MysqlRestorer;
 use App\Services\Gaming\ManualTopUp;
 use App\Services\Gaming\PlayerVerifier;
 use App\Services\Gaming\TopUpProvider;
@@ -40,6 +42,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->bind(DatabaseDumper::class, MysqlDumper::class);
+        $this->app->bind(DatabaseRestorer::class, MysqlRestorer::class);
         // The text service follows what the owner set up in Admin > Connections (a live one sends; none, or a test one, only logs).
         // Texts leave the buyer's request and follow from the queue; a code someone is waiting to type is the exception and goes at once.
         $this->app->bind(SmsGateway::class, QueuedSmsGateway::class);

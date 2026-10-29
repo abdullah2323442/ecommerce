@@ -1,3 +1,4 @@
+import RequestButton from '@/components/requests/request-button';
 import { DISPLAY, FaqList, type Front, type FrontBlock, SectionHead, ServiceStrip, StepsList } from '@/components/storefront/shared';
 import PublicLayout from '@/layouts/public-layout';
 import { useI18n } from '@/lib/i18n';
@@ -183,7 +184,15 @@ export default function GamingIndex({ games, front }: { games: Game[]; front: Fr
         <PublicLayout>
             <Head title={t('Game top-up')} />
             <div className="game -mx-4 min-h-[70vh] px-5 py-10 sm:mx-0 sm:rounded-[2rem] sm:px-10 sm:py-14">
-                <div className="mx-auto max-w-5xl space-y-16">{blocks.map(section)}</div>
+                <div className="mx-auto max-w-5xl space-y-16">
+                    {blocks.map(section)}
+                    <section aria-labelledby="game-missing-h" className="space-y-3 rounded-2xl bg-[var(--pt-surface)] p-6 text-[var(--pt-ink)]">
+                        <h2 id="game-missing-h" className="font-display text-xl font-extrabold">
+                            {t('Not the game or pack you wanted?')}
+                        </h2>
+                        <RequestButton sector="gaming" />
+                    </section>
+                </div>
             </div>
         </PublicLayout>
     );

@@ -23,6 +23,7 @@ interface Row {
     review_note: string | null;
     commission_request: string | null;
     has_photo: boolean;
+    has_video: boolean;
     item_weight: number | null;
     expires_on: string | null;
     warranty_months: number | null;
@@ -481,6 +482,17 @@ function MorePhotos({ row }: { row: Row }) {
             </div>
             <input type="file" accept="image/*" className="block text-sm" onChange={(e) => e.target.files?.[0] && router.post(`/wholesale/sell/${row.id}/photos`, { photo: e.target.files[0] }, { forceFormData: true, preserveScroll: true })} />
             <InputError message={errors.photo} />
+            <div className="space-y-1 border-t pt-2">
+                <p className="font-medium">{row.has_video ? t('This product has a video') : t('Add a video')}</p>
+                <p className="text-[var(--pt-muted)]">{t('One short clip, MP4 or WebM, up to 20 MB. Buyers watch it under the photos.')}</p>
+                <input type="file" accept="video/mp4,video/webm" aria-label={t('Add a video')} className="block text-sm" onChange={(e) => e.target.files?.[0] && router.post(`/wholesale/sell/${row.id}/video`, { video: e.target.files[0] }, { forceFormData: true, preserveScroll: true })} />
+                {row.has_video && (
+                    <Button size="sm" variant="ghost" onClick={() => router.delete(`/wholesale/sell/${row.id}/video`, { preserveScroll: true })}>
+                        {t('Remove the video')}
+                    </Button>
+                )}
+                <InputError message={errors.video} />
+            </div>
             <Button size="sm" variant="ghost" onClick={() => setOpen(false)}>
                 {t('Close')}
             </Button>

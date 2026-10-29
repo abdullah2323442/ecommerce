@@ -1,11 +1,19 @@
 {
   "n": 190,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
   "checks": [
     {
       "ok": true,
-      "text": "There is a counter that keeps working without internet"
+      "text": "The page shows 'No internet. Will send later.' and still finds medicines from the saved copy of the prices"
+    },
+    {
+      "ok": true,
+      "text": "A sale made offline is kept on the device ('1 waiting to be sent') and the memo prints without any request"
+    },
+    {
+      "ok": true,
+      "text": "When the connection came back the sale was sent by itself and the real memo M2026-000047 was made"
     }
   ],
   "shots": [
@@ -14,10 +22,14 @@
       "caption": "The offline counter",
       "role": "admin",
       "url": "/admin/counter/offline"
+    },
+    {
+      "file": "f190_2.jpg",
+      "caption": "After reconnecting: the sale is sent and has its real memo number",
+      "role": "admin",
+      "url": "/admin/counter/offline"
     }
   ],
-  "notes": [
-    "Actually disconnecting the internet and selling was not done here."
-  ],
-  "did": "Opened the \"Counter without internet\" page."
+  "notes": [],
+  "did": "Copied the prices, cut the connection, sold a strip of Napa, and reconnected."
 }

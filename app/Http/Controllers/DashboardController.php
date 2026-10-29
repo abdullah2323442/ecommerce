@@ -14,6 +14,8 @@ use App\Services\Admin\CommerceStats;
 use App\Services\Backup\BackupService;
 use App\Services\Ledger\Payables;
 use App\Services\Ledger\Receivables;
+use App\Services\Sales\OfferProducts;
+use Carbon\CarbonImmutable;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -100,7 +102,7 @@ class DashboardController extends Controller
                 'blocked_ips' => BlockedIp::query()->where(fn ($q) => $q->whereNull('expires_at')->orWhere('expires_at', '>', now()))->count(),
             ],
             'requests' => ['unfound' => ProductRequest::query()->distinct()->count('normalized')],
-            'backup' => ['latest_at' => $backupAt, 'disk' => config('backup.disk')],
+            'backup' => ['latest_at' => $backupAt, 'disk' => config('backup.disk'), 'restore' => app(BackupService::class)->lastRestoreTest()],
         ];
     }
 
@@ -123,12 +125,27 @@ class DashboardController extends Controller
             $alerts[] = $alert('warning', 'The last backup is more than 36 hours old', 'The nightly backup is not running. Check the scheduler on the server.');
         }
 
+        // A backup nobody has restored is only a hope (spec ch 28): say when the monthly test failed or has gone quiet.
+        $restore = $stats['backup']['restore'];
+        if ($restore !== null && ! $restore['ok']) {
+            $alerts[] = $alert('warning', 'The last backup did not restore properly', 'The monthly restore test found a problem: {problem} Make a fresh backup and run php artisan backup:restore-test.', null, ['problem' => $restore['problem'] ?: '-']);
+        } elseif ($restore !== null && CarbonImmutable::parse($restore['at'])->diffInDays(now()) > 40) {
+            $alerts[] = $alert('warning', 'The monthly backup restore test has not run for over 40 days', 'Check the scheduler on the server, then run php artisan backup:restore-test.');
+        }
+
         if (config('backup.disk') === 'local') {
             $alerts[] = $alert('warning', 'Backups are stored on this server', 'If the server fails, the backups go with it. Point BACKUP_DISK at storage on a different machine.');
         }
 
         if (config('app.debug') && app()->isProduction()) {
             $alerts[] = $alert('warning', 'Debug mode is on in production', 'Error pages can reveal passwords and code. Set APP_DEBUG=false.');
+        }
+
+        // An offer about to run out (spec ch 09): buy more while the offer still runs.
+        $low = app(OfferProducts::class)->lowOnes();
+        if ($low->isNotEmpty()) {
+            $names = $low->take(2)->map(fn (array $r) => trim($r['offer']->medicine->brand_name.' '.$r['offer']->medicine->strength))->implode(', ');
+            $alerts[] = $alert('warning', $low->count() === 1 ? 'An offer is nearly sold out: {names}' : '{n} offers are nearly sold out: {names}', 'Only a few boxes are left. Bring new stock in before the offer sells out.', '/admin/offers', ['n' => $low->count(), 'names' => $names]);
         }
 
         $suspicious = $stats['security']['suspicious_7d'];

@@ -78,7 +78,8 @@ return [
         'title' => 'Security',
         'hint' => 'A staff account signed in on too many devices signs the oldest one out.',
         'items' => [
-            'security.require_2fa_staff' => ['type' => 'toggle', 'label' => 'Staff and the owner must use two-step sign-in', 'default' => false],
+            'security.require_2fa_staff' => ['type' => 'toggle', 'label' => 'Staff and the owner must use two-step sign-in (on by default on the live site)', 'default' => false],
+            'security.require_2fa_trade' => ['type' => 'toggle', 'label' => 'Paikari and wholesale shops must use two-step sign-in', 'default' => false],
             'services.cancel_hours' => ['type' => 'number', 'label' => 'Hours before a booked service after which a buyer can no longer cancel by themselves', 'default' => 12, 'min' => 0, 'max' => 168, 'step' => 1],
             'services.confirm_hours' => ['type' => 'number', 'label' => 'Hours a provider has to answer a booking request before it is declined by itself', 'default' => 24, 'min' => 1, 'max' => 168, 'step' => 1],
             'affiliate.days' => ['type' => 'number', 'label' => 'Days an affiliate link keeps its code on a visitor', 'default' => 30, 'min' => 1, 'max' => 365, 'step' => 1],

@@ -1,4 +1,4 @@
-220|a_mpo|-|Each medical sales representative (MPO) has a detailed profile. Part of it is still to be finished.
+220|a_mpo|-|Each medical sales representative (MPO) has a detailed profile: photo, contact, territory, companies, the products they work with, and their record.
 221|a_mpo|-|MPOs are grouped automatically by the area they cover.
 222|a_mpo_list|-|An MPO chooses which products they work with.
 223|a_mpo|-|One MPO can work with several companies.
@@ -125,7 +125,7 @@
 344|a_market|-|Sellers see only the buyer's phone and address, not their name.
 345|a_market|-|After a sale, the phone and address show as stars so sellers cannot poach customers.
 346|a_market|-|Notifications come from the owner's site, not the seller's.
-347|a_market|-|The rule against promotional material in parcels is partly in place.
+347|a_market|-|Sellers may not put their own cards or leaflets in a parcel. A buyer who finds one can report it from the order page, and the owner decides what follows.
 348|a_market_cases|-|Penalty steps for rule breaking are partly in place.
 349|a_market_cases|-|Return money is handled separately for cash on delivery and online.
 350|a_market|-|Returned goods go straight to the seller.

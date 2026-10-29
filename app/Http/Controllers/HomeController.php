@@ -67,7 +67,7 @@ class HomeController extends Controller
                 'slug' => $s->slug,
                 'name' => $bn && $s->name_bn ? $s->name_bn : $s->name,
                 'line' => $bn && $s->tagline_bn ? $s->tagline_bn : $s->tagline,
-                'image' => $s->hero_path ? route('market.hero', ['slug' => $s->slug, 'v' => substr(md5($s->hero_path), 0, 8)]) : null,
+                'image' => $s->hero_path ? route('market.hero', ['slug' => $s->slug, 'w' => 960, 'v' => substr(md5($s->hero_path), 0, 8)]) : null,
                 'count' => $rows[$s->slug]->count(),
                 'items' => $rows[$s->slug]->take(4)->map(fn ($r) => [
                     'id' => $r['listing']->id, 'title' => $r['listing']->title, 'blurb' => Str::limit(trim(strip_tags((string) $r['listing']->description)), 130), 'price' => $r['price'], 'unit' => $s->unit,

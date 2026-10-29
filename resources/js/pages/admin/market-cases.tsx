@@ -10,7 +10,7 @@ import { useState } from 'react';
 
 interface Row {
     id: number;
-    kind: 'complaint' | 'return';
+    kind: 'complaint' | 'return' | 'promo';
     reason: string;
     status: string;
     seller_note: string | null;
@@ -134,7 +134,7 @@ function Card({ r, decide }: { r: Row; decide?: boolean }) {
                     {r.seller} · {r.title} · {r.number}
                 </p>
                 <span className="text-xs text-muted-foreground">
-                    {r.kind === 'return' ? t('Return') : t('Complaint')} · {dateTime(r.at)}
+                    {r.kind === 'return' ? t('Return') : r.kind === 'promo' ? t('Promotion in the package') : t('Complaint')} · {dateTime(r.at)}
                 </span>
             </div>
             <p className="text-sm">{r.reason}</p>
@@ -143,9 +143,11 @@ function Card({ r, decide }: { r: Row; decide?: boolean }) {
             {decide && (
                 <div className="flex flex-wrap items-center gap-2">
                     <Input aria-label={t('Our note')} className="h-8 w-72" placeholder={t('What we decided, and why')} value={note} onChange={(e) => setNote(e.target.value)} />
-                    <Button size="sm" disabled={note.trim().length < 3} onClick={() => go('return')}>
-                        {t('Send it back to the seller')}
-                    </Button>
+                    {r.kind !== 'promo' && (
+                        <Button size="sm" disabled={note.trim().length < 3} onClick={() => go('return')}>
+                            {t('Send it back to the seller')}
+                        </Button>
+                    )}
                     <Button size="sm" variant="outline" disabled={note.trim().length < 3} onClick={() => go('close')}>
                         {t('Close the case')}
                     </Button>

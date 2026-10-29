@@ -30,6 +30,9 @@ class User extends Authenticatable
         'phone',
         'area',
         'business_name',
+        'logo_path',
+        'photo_path',
+        'business_names',
         'password',
     ];
 
@@ -57,6 +60,8 @@ class User extends Authenticatable
             'suspended_at' => 'datetime',
             'suspended_until' => 'datetime',
             'show_monthly_total' => 'boolean',
+            'free_delivery_over' => 'decimal:2',
+            'business_names' => 'array',
             'discount_limit' => 'decimal:2',
             'categories' => 'array',
             'moq' => 'decimal:2',

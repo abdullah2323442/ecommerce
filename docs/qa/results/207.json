@@ -6,6 +6,18 @@
     {
       "ok": true,
       "text": "The owner sets how many boxes left should trigger a warning"
+    },
+    {
+      "ok": true,
+      "text": "When an offer is down to that level, the dashboard says which offer is nearly sold out, and the line opens the offers page"
+    },
+    {
+      "ok": true,
+      "text": "Everyone who runs offers gets one notice, not one every five minutes"
+    },
+    {
+      "ok": true,
+      "text": "When new stock lifts the offer above the level the warning is armed again, and the line is gone once the level is back to 2"
     }
   ],
   "shots": [
@@ -14,8 +26,14 @@
       "caption": "The setting",
       "role": "admin",
       "url": "/admin/settings"
+    },
+    {
+      "file": "f207_2.jpg",
+      "caption": "The owner's dashboard: the offer is nearly sold out",
+      "role": "admin",
+      "url": "/dashboard"
     }
   ],
   "notes": [],
-  "did": "Looked at the setting for the warning before an offer runs out."
+  "did": "Set the warning level, then looked at the owner's dashboard when an offer was down to it."
 }

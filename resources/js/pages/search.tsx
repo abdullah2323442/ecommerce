@@ -1,4 +1,5 @@
 import MedicineCard from '@/components/medicines/medicine-card';
+import RequestButton from '@/components/requests/request-button';
 import { type MedicineSummary } from '@/components/medicines/types';
 import PublicLayout from '@/layouts/public-layout';
 import { useI18n } from '@/lib/i18n';
@@ -37,7 +38,12 @@ export default function SearchPage({ q, medicines, products, productTotal }: Pro
             </form>
 
             {!searched && <p className="mt-6 text-[var(--pt-muted)]">{t('Type at least two letters.')}</p>}
-            {none && <p className="mt-8 text-lg font-semibold">{t('Nothing matches “{term}”.', { term: q })}</p>}
+            {none && (
+                <div className="mt-8 max-w-prose">
+                    <p className="text-lg font-semibold">{t('Nothing matches “{term}”.', { term: q })}</p>
+                    <RequestButton key={q.toLowerCase()} query={q} sector="search" className="mt-4" />
+                </div>
+            )}
 
             {medicines.length > 0 && (
                 <section className="mt-8">

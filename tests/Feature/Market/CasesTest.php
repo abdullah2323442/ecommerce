@@ -90,7 +90,7 @@ class CasesTest extends TestCase
     public function test_a_return_is_only_open_for_a_few_days_after_it_arrived(): void
     {
         $late = $this->order('delivered', '2026-10-01 12:00:00');   // nine days ago, the window is seven
-        $this->assertSame(['complaint' => true, 'return' => false], $this->cases->allowed($late));
+        $this->assertSame(['complaint' => true, 'return' => false, 'promo' => true], $this->cases->allowed($late));
 
         $this->expectException(StockException::class);
         $this->cases->open($late, 'return', 'Changed my mind');
@@ -326,5 +326,38 @@ class CasesTest extends TestCase
     {
         $this->actingAs($this->seller)->get('/admin/market/cases')->assertRedirect('/');
         $this->actingAs(User::factory()->create(['account_type' => AccountType::Staff]))->get('/admin/market/cases')->assertRedirect('/');
+    }
+
+    public function test_a_card_in_the_package_is_reported_by_itself_and_nothing_is_sent_back(): void
+    {
+        $order = $this->order();
+
+        $case = $this->cases->open($order, 'promo', 'There was a shop leaflet inside');
+
+        $this->assertSame(['open', 'promo'], [$case->status, $case->kind]);
+        $this->assertSame(1, Notice::where('user_id', $this->reviewer->id)->where('kind', 'market_case')->where('body', 'like', '%promotion material%')->count());
+        $this->assertFalse($this->cases->allowed($order)['promo'], 'One open report at a time.');
+        $this->assertSame(1, $this->cases->record($this->seller)['promos']);
+        $this->assertSame(0, $this->cases->record($this->seller)['complaints'], 'It is counted on its own, not as an ordinary complaint.');
+
+        try {
+            $this->cases->answer($case, $this->seller, 'return');
+            $this->fail('A leaflet cannot be sent back.');
+        } catch (StockException) {
+            $this->assertSame('delivered', $order->fresh()->status);
+        }
+
+        $closed = $this->cases->decide($case->fresh(), $this->reviewer, 'close', 'Seller warned');
+        $this->assertSame('closed', $closed->status);
+    }
+
+    public function test_the_buyer_can_report_a_card_in_the_package_from_the_order_page(): void
+    {
+        $order = $this->order();
+
+        $this->actingAs($this->buyer)->get('/market/orders/'.$order->public_token)
+            ->assertInertia(fn (Assert $p) => $p->where('order.can_report_promo', true));
+        $this->actingAs($this->buyer)->post('/market/orders/'.$order->public_token.'/case', ['kind' => 'promo', 'reason' => 'Page address on a card'])->assertSessionHasNoErrors();
+        $this->assertDatabaseHas('market_cases', ['market_order_id' => $order->id, 'kind' => 'promo']);
     }
 }

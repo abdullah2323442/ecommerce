@@ -9,7 +9,7 @@ import { unitLabel } from '@/lib/units';
 
 interface CaseRow {
     id: number;
-    kind: 'complaint' | 'return';
+    kind: 'complaint' | 'return' | 'promo';
     reason: string;
     status: 'open' | 'solved' | 'returned' | 'escalated' | 'closed';
     seller_note: string | null;
@@ -69,6 +69,7 @@ interface Props {
         can_answer: boolean;
         can_complain: boolean;
         can_return: boolean;
+        can_report_promo: boolean;
         return_days: number;
         return_note: string | null;
     };
@@ -108,7 +109,7 @@ function ReviewForm({ token }: { token: string }) {
 
 export default function MarketOrder({ token, order, cases, pay, digital }: Props) {
     const { t, money, num, dateTime } = useI18n();
-    const [kind, setKind] = useState<'complaint' | 'return' | null>(null);
+    const [kind, setKind] = useState<'complaint' | 'return' | 'promo' | null>(null);
     const [reason, setReason] = useState('');
     const caseState = (s: CaseRow['status']) => t(s === 'open' ? 'Waiting for the seller' : s === 'solved' ? 'The seller says it is solved' : s === 'returned' ? 'Sent back' : s === 'escalated' ? 'With us' : 'Closed');
     const errors = usePage().props.errors as Record<string, string>;
@@ -255,7 +256,7 @@ export default function MarketOrder({ token, order, cases, pay, digital }: Props
                         {cases.map((c) => (
                             <li key={c.id} className="space-y-1 rounded-[1.5rem] border bg-[var(--pt-surface)] p-4 text-sm">
                                 <div className="flex flex-wrap items-baseline justify-between gap-2">
-                                    <p className="font-semibold">{c.kind === 'return' ? t('Return') : t('Complaint')}</p>
+                                    <p className="font-semibold">{c.kind === 'return' ? t('Return') : c.kind === 'promo' ? t('Promotion in the package') : t('Complaint')}</p>
                                     <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-semibold">{caseState(c.status)}</span>
                                 </div>
                                 <p>{c.reason}</p>
@@ -271,12 +272,17 @@ export default function MarketOrder({ token, order, cases, pay, digital }: Props
                     </ul>
                 )}
 
-                {(order.can_complain || order.can_return) && (
+                {(order.can_complain || order.can_return || order.can_report_promo) && (
                     <div className="space-y-3 rounded-[1.5rem] border p-4">
                         <div className="flex flex-wrap items-center gap-2">
                             {order.can_complain && (
                                 <Button size="sm" variant={kind === 'complaint' ? 'default' : 'outline'} onClick={() => setKind('complaint')}>
                                     {t('I have a complaint')}
+                                </Button>
+                            )}
+                            {order.can_report_promo && (
+                                <Button size="sm" variant={kind === 'promo' ? 'default' : 'outline'} onClick={() => setKind('promo')}>
+                                    {t('There was a card or leaflet in the package')}
                                 </Button>
                             )}
                             {order.can_return && (

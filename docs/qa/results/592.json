@@ -1,18 +1,29 @@
 {
   "n": 592,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
-  "checks": [],
+  "checks": [
+    {
+      "ok": true,
+      "text": "The newest backup was loaded into a scratch database: 147 tables came back, medicines 25,934 restored against 25,934 live"
+    },
+    {
+      "ok": true,
+      "text": "The scratch database was removed afterwards"
+    },
+    {
+      "ok": true,
+      "text": "The dashboard says when the test last passed and how many tables came back; a failed test, or one not run for 40 days, shows as a warning"
+    }
+  ],
   "shots": [
     {
       "file": "f592_1.jpg",
-      "caption": "Settings",
+      "caption": "The dashboard: restore test passed",
       "role": "admin",
-      "url": "/admin/settings"
+      "url": "/dashboard"
     }
   ],
-  "notes": [
-    "Not found on a screen."
-  ],
-  "did": "Looked for the monthly backup test."
+  "notes": [],
+  "did": "Made a backup, ran the monthly restore test on the QA database, and looked at the dashboard."
 }

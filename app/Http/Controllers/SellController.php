@@ -15,6 +15,7 @@ use App\Models\Sector;
 use App\Services\Market\Catalog;
 use App\Services\Market\DigitalGoods;
 use App\Services\Market\ListingPhotos;
+use App\Services\Market\ListingVideo;
 use App\Services\Market\ListingQuestions;
 use App\Services\Market\ListingVariants;
 use App\Services\Market\MarketCases;
@@ -32,6 +33,7 @@ use App\Services\Wallet\Tokens;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -86,10 +88,24 @@ class SellController extends Controller
         $picked = $businesses->firstWhere('slug', (string) $request->query('business'));
 
         return Inertia::render('market/reports', [
-            'businesses' => $businesses->map(fn (Sector $s) => ['slug' => $s->slug, 'name' => $s->name])->values(), 'business' => $picked?->slug,
+            'businesses' => $businesses->map(fn (Sector $s) => ['slug' => $s->slug, 'name' => ($seller->business_names[$s->slug] ?? null) ?: $s->name, 'sector' => $s->name])->values(), 'business' => $picked?->slug,
             'products' => $this->reports->products($seller, 90, $picked?->id), 'months' => $this->reports->months($seller, 12, $picked?->id),
             'rank' => $rank + ['label' => SellerReports::label($rank['score'], $rank['proven'])], 'proven' => SellerReports::PROVEN,
         ]);
+    }
+
+    /** A name for one of the seller's own businesses (spec ch 03); empty goes back to the kind of business. */
+    public function businessName(Request $request): RedirectResponse
+    {
+        $seller = $this->seller($request);
+        $data = $request->validate(['business' => ['required', 'string', 'max:60'], 'name' => ['nullable', 'string', 'max:60']]);
+        abort_unless(Sector::where('slug', $data['business'])->whereIn('id', Listing::where('seller_id', $seller->id)->select('sector_id'))->exists(), 404);
+
+        $names = (array) $seller->business_names;
+        trim((string) ($data['name'] ?? '')) === '' ? Arr::forget($names, $data['business']) : $names[$data['business']] = trim($data['name']);
+        $seller->forceFill(['business_names' => $names ?: null])->save();
+
+        return back()->with('status', __('Saved.'));
     }
 
     /** The month-end statements, with Paid and Problem to answer them (spec ch 14). Open to a seller whose selling is switched off, so they can answer. */
@@ -319,6 +335,25 @@ class SellController extends Controller
         return back()->with('status', __('The file is removed.'));
     }
 
+    /** One short video of the product (spec ch 25). It plays on the product page once the listing is published. */
+    public function attachVideo(Request $request, Listing $listing): RedirectResponse
+    {
+        $this->mine($request, $listing);
+        $request->validate(['video' => ['required', 'file', 'mimes:mp4,webm', 'max:'.ListingVideo::MAX_KB]]);
+
+        app(ListingVideo::class)->attach($listing, $request->file('video'));
+
+        return back()->with('status', __('Video saved.'));
+    }
+
+    public function removeVideo(Request $request, Listing $listing): RedirectResponse
+    {
+        $this->mine($request, $listing);
+        app(ListingVideo::class)->remove($listing);
+
+        return back()->with('status', __('Removed.'));
+    }
+
     public function removePhoto(Request $request, ListingPhoto $photo): RedirectResponse
     {
         $this->mine($request, $photo->listing);
@@ -473,7 +508,7 @@ class SellController extends Controller
             'cost_price' => $l->cost_price !== null ? (float) $l->cost_price : null, 'low_stock_at' => $l->low_stock_at !== null ? (float) $l->low_stock_at : null,
             'extra_sector_ids' => $l->extraSectors->pluck('id')->all(),
             'variants' => app(ListingVariants::class)->forSeller($l), 'size' => ['height' => $l->item_height !== null ? (float) $l->item_height : null, 'length' => $l->item_length !== null ? (float) $l->item_length : null, 'width' => $l->item_width !== null ? (float) $l->item_width : null, 'unit' => $l->item_size_unit],
-            'review_note' => $l->review_note, 'commission_request' => $l->commission_request, 'has_photo' => $l->photo_path !== null,
+            'review_note' => $l->review_note, 'commission_request' => $l->commission_request, 'has_photo' => $l->photo_path !== null, 'has_video' => $l->video_path !== null,
             // The seller knows the commission we set; it is added to the price buyers pay.
             'commission' => $l->commission_kind ? ['kind' => $l->commission_kind, 'value' => (float) $l->commission_value] : null,
         ];

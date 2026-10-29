@@ -192,6 +192,28 @@ class InvoiceServiceTest extends TestCase
         $this->assertEqualsWithDelta(7.0, $this->stock->onHand($this->napa), 1e-6);
     }
 
+    public function test_goods_brought_from_outside_join_the_asked_for_but_not_here_list_when_the_memo_is_finished(): void
+    {
+        // 10 boxes in stock: asking for 15 from outside means we did not have them.
+        $draft = $this->invoices->open('retail', $this->staff);
+        $this->invoices->addLine($draft, $this->napa, 'box', 15, $this->staff, null, true);
+        $this->assertDatabaseCount('product_requests', 0); // nothing yet: the memo is still a draft
+
+        $this->invoices->finalise($draft, $this->staff);
+
+        $this->assertDatabaseCount('product_requests', 1);
+        $this->assertDatabaseHas('product_requests', ['query' => 'Napa 500 mg', 'normalized' => 'napa 500 mg', 'source' => 'counter', 'sector' => 'medicine', 'note' => 'Brought from outside']);
+    }
+
+    public function test_an_outside_mark_on_something_we_had_in_stock_is_not_counted_as_wanted(): void
+    {
+        $draft = $this->invoices->open('retail', $this->staff);
+        $this->invoices->addLine($draft, $this->napa, 'box', 2, $this->staff, null, true);   // 2 of the 10 we have: sold outside the stock, not missing
+        $this->invoices->finalise($draft, $this->staff);
+
+        $this->assertDatabaseCount('product_requests', 0);
+    }
+
     public function test_a_line_from_outside_is_priced_but_takes_no_stock(): void
     {
         $draft = $this->invoices->open('retail', $this->staff);

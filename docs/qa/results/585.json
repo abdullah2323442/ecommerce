@@ -5,7 +5,15 @@
   "checks": [
     {
       "ok": true,
-      "text": "The page fits a phone screen without sideways scrolling"
+      "text": "Shop pictures now come as a 960 pixel copy (29 to 88 KB each) instead of the 2400 pixel original (88 to 197 KB)"
+    },
+    {
+      "ok": true,
+      "text": "Moving to another market page costs 23 KB, because the 342 KB Bangla dictionary is no longer sent again"
+    },
+    {
+      "ok": true,
+      "text": "Pictures below the first screen load only when they come near it (81 of 85 are lazy)"
     }
   ],
   "shots": [
@@ -23,7 +31,7 @@
     }
   ],
   "notes": [
-    "Loading speed on a real phone connection was not measured."
+    "Loading speed on a real phone connection was not measured; these are sizes and timings on this computer."
   ],
-  "did": "Opened the home page and a product page on a phone-sized screen."
+  "did": "Opened the market and a product on a phone-sized screen and measured what is downloaded."
 }

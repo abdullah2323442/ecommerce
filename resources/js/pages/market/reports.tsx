@@ -1,7 +1,9 @@
 import SellerBrand from '@/components/seller-brand';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import PublicLayout from '@/layouts/public-layout';
 import { useI18n } from '@/lib/i18n';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, useForm } from '@inertiajs/react';
 
 interface Product {
     id: number;
@@ -22,6 +24,7 @@ interface Month {
     sales: number;
     commission: number;
     orders: number;
+    returns: number;
     change: number | null;
 }
 
@@ -35,8 +38,34 @@ interface Rank {
     label: 'New' | 'Excellent' | 'Good' | 'Needs care';
 }
 
+/** One name for one of the seller's own businesses; emptied, it goes back to the kind of business (spec ch 03). */
+function BusinessName({ slug, current }: { slug: string; current: string }) {
+    const { t } = useI18n();
+    const form = useForm({ business: slug, name: current });
+
+    return (
+        <form
+            onSubmit={(e) => {
+                e.preventDefault();
+                form.put('/wholesale/sell/business-name', { preserveScroll: true });
+            }}
+            className="flex flex-wrap items-end gap-2"
+        >
+            <div className="grid gap-1">
+                <label htmlFor="business-name" className="text-sm font-medium">
+                    {t('Name of this business')}
+                </label>
+                <Input id="business-name" value={form.data.name} onChange={(e) => form.setData('name', e.target.value)} maxLength={60} className="w-64" />
+            </div>
+            <Button type="submit" variant="outline" disabled={form.processing}>
+                {t('Save')}
+            </Button>
+        </form>
+    );
+}
+
 /** The seller's own business, in plain words (spec ch 14: when sellers understand their business they do better). */
-export default function Reports({ products, months, rank, proven, businesses, business }: { products: Product[]; months: Month[]; rank: Rank; proven: number; businesses: { slug: string; name: string }[]; business: string | null }) {
+export default function Reports({ products, months, rank, proven, businesses, business }: { products: Product[]; months: Month[]; rank: Rank; proven: number; businesses: { slug: string; name: string; sector: string }[]; business: string | null }) {
     const { t, money, num, date } = useI18n();
     const best = Math.max(1, ...months.map((m) => m.sales));
     const top = products.find((p) => p.earned > 0);
@@ -65,11 +94,12 @@ export default function Reports({ products, months, rank, proven, businesses, bu
                         </Link>
                         {businesses.map((b) => (
                             <Link key={b.slug} href={`/wholesale/sell/reports?business=${b.slug}`} className={`rounded-full border px-3 py-1 ${business === b.slug ? 'border-[var(--pt-ink)] bg-[var(--pt-sage)] font-semibold' : ''}`}>
-                                {b.name}
+                                {t(b.name)}
                             </Link>
                         ))}
                     </nav>
                 )}
+                {business !== null && <BusinessName slug={business} current={businesses.find((b) => b.slug === business)?.name ?? ''} />}
 
                 <section className="space-y-2 rounded-[1.5rem] border bg-[var(--pt-surface)] p-4">
                     <div className="flex flex-wrap items-baseline justify-between gap-2">
@@ -169,6 +199,7 @@ export default function Reports({ products, months, rank, proven, businesses, bu
                                     {money(m.sales)} {m.change !== null && m.change > 0 && <strong className="text-success">▲ {num(m.change)}%</strong>}
                                     {m.change !== null && m.change < 0 && <span className="text-[var(--pt-muted)]">▼ {num(Math.abs(m.change))}%</span>}
                                     {m.commission > 0 && <span className="block text-xs text-[var(--pt-muted)]">{t('Commission owed: {amount}', { amount: money(m.commission) })}</span>}
+                                    {m.returns > 0 && <span className="block text-xs text-[var(--pt-muted)]">{t('{n} came back', { n: num(m.returns) })}</span>}
                                 </span>
                             </li>
                         ))}

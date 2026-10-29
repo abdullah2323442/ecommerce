@@ -6,16 +6,34 @@ Source: `docs/chapters/30-feature-checklist.md` (613 features). Each row below w
 
 | | Done | Partial | Not started | Total |
 |---|---|---|---|---|
-| All features | 590 | 23 | 0 | 613 |
-| Phase 1 only | 401 | 19 | 0 | 420 |
+| All features | 592 | 21 | 0 | 613 |
+| Phase 1 only | 403 | 17 | 0 | 420 |
 
 ## What the partial marks mean
 
 - 3, 6, 7, 8, 9, 20: the account type exists with its sections and home path; sign-up/approval flows and per-role screens do not.
 - 13: password reset works by email; the phone-code version is deferred with SMS/OTP.
 - 42: the counter shows staff no profit or stock; a full staff role/permission screen is not built (ch 26).
-- 107: phone-camera scanning is missing; the data and scanner (USB or Bluetooth) lookups work.
+- 593: the counter without internet is proven end to end (sold with the server stopped, sent when it came back); other screens still need the line.
 - 134, 135, 177: the domain logic exists (units) but the matching screen control or warning is not built yet.
+
+## Gaps from the developer-versus-spec report (28 Oct 2026)
+
+Built and tested, and checked by hand in the browser on the QA copy:
+
+- Free delivery set for each paikari shop, with the warning on the order screen (151). Night orders are told they will be packed that night (157). A wholesale link a visitor may not open goes quietly to the homepage (38).
+- Someone else can collect an order, with their name and phone (148). Pay-by-taka for a box, a strip or a piece in a shop's manual rate (28).
+- One press at the counter notes what was asked for and not here (550); "I was looking for this" works in the marketplace, food, gaming and whole-site search, with an optional note and photo, grouped by sector (303).
+- Sales by department (537). A shop's own name and logo on its wholesale pages (343). A seller's returns counted per business, and each business can be named (26). A line saying buyers get messages in the site's name (346).
+- Staff and the owner are asked for two-step sign-in by default on the live site, and the owner can switch it off; shops only when switched on (12).
+- Phone-camera barcode scan at the counter, stock count and stock receive, using the browser's own reader: it works in Chrome on a phone over https, and says plainly when it cannot (107). The owner can switch a medicine off and on, and see the switched-off list (247), and add or remove barcodes on a medicine (107). The MPO profile has a photo (220).
+- The server clock is Bangladesh time (595). The monthly restore test loads the newest backup into a scratch MySQL database, checks every table came back, and removes it (592); it was run against the QA database: 147 tables, row counts matching.
+
+Found while proving the counter without internet, and fixed: the page sent its waiting sales in a tight loop (hundreds of requests, then 429), and a memo number with letters in it (an import or a hand-made one) sent the numbering back to 1, so the sale failed with a duplicate.
+
+Already built before the report, so nothing to add: craftsmen shifting and sharing a job and splitting wages by percent (396), gradual trust for new sellers (352), pre-order by size and colour in the marketplace (498), the loss lines held back from a bill percent (73, now also summed up in one line at the top).
+
+Still needs an outside account or key, so not started: online payments, text and email, WhatsApp, the off-server backup disk (591), the map pin, a courier, game ID check and top-up, Google and Facebook sign-in.
 
 ## Next to build (Phase 1, in order)
 
@@ -151,7 +169,7 @@ Source: `docs/chapters/30-feature-checklist.md` (613 features). Each row below w
 | 104 | **Stock count mode** (shelf/company-wise physical count) | Phase 1 | ✅ |
 | 105 | Count differences approved only by admin, count report saved | Phase 1 | ✅ |
 | 106 | **Barcode scanning** (counter, stock entry, count) | Phase 1 | ✅ |
-| 107 | Phone-camera scanning and multiple barcodes per medicine | Phase 1 | 🟡 |
+| 107 | Phone-camera scanning and multiple barcodes per medicine | Phase 1 | ✅ |
 | 108 | Unknown barcode linked once, remembered | Phase 1 | ✅ |
 
 ### Draft Invoice
@@ -289,7 +307,7 @@ Source: `docs/chapters/30-feature-checklist.md` (613 features). Each row below w
 
 | No. | Feature | Phase | Done |
 |---|---|---|---|
-| 220 | Detailed MPO profile | Phase 1 | 🟡 |
+| 220 | Detailed MPO profile | Phase 1 | ✅ |
 | 221 | **Area and auto-grouping** | Phase 1 | ✅ |
 | 222 | **Product selection (they choose)** | Phase 1 | ✅ |
 | 223 | Access to multiple companies | Phase 1 | ✅ |
@@ -436,7 +454,7 @@ Source: `docs/chapters/30-feature-checklist.md` (613 features). Each row below w
 | 344 | Only phone and address, name hidden | Phase 2 | ✅ |
 | 345 | **Phone and address masked as \*\*\* after sale** | Phase 2 | ✅ |
 | 346 | Notifications from my site | Phase 2 | ✅ |
-| 347 | No promotional material in packages | Phase 2 | 🟡 |
+| 347 | No promotional material in packages | Phase 2 | ✅ |
 | 348 | Penalty steps | Phase 2 | 🟡 |
 | 349 | **Return money — COD and online separate** | Phase 2 | ✅ |
 | 350 | Goods go straight to the seller | Phase 2 | ✅ |
@@ -712,7 +730,7 @@ Source: `docs/chapters/30-feature-checklist.md` (613 features). Each row below w
 | 590 | **Daily backup, 30 days** | Phase 1 | ✅ |
 | 591 | Backup stored outside the server | Phase 1 | 🟡 |
 | 592 | Monthly backup test | Phase 1 | ✅ |
-| 593 | Work not lost when internet drops | Phase 1 | 🟡 |
+| 593 | Work not lost when internet drops | Phase 1 | ✅ |
 | 594 | Bulk import of old data | Phase 1 | ✅ |
 | 595 | **Correct system time** | Phase 1 | ✅ |
 | 596 | Monthly report date in settings | Phase 1 | ✅ |

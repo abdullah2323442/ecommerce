@@ -235,7 +235,7 @@ export default function OrderPublic({ token, districts, order, pay }: Props) {
                             </div>
                             {order.can_edit_items && order.status === 'placed' && (
                                 <span className="flex items-center gap-1">
-                                    <Input aria-label={t('Amount')} className="h-8 w-20" type="number" min="1" step="1" defaultValue={l.requested} onBlur={(e) => Number(e.target.value) > 0 && Number(e.target.value) !== l.requested && router.put(`/orders/${token}/lines/${l.id}`, { quantity: e.target.value }, { preserveScroll: true })} />
+                                    <Input aria-label={t('Quantity')} className="h-8 w-20" type="number" min="1" step="1" defaultValue={l.requested} onBlur={(e) => Number(e.target.value) > 0 && Number(e.target.value) !== l.requested && router.put(`/orders/${token}/lines/${l.id}`, { quantity: e.target.value }, { preserveScroll: true })} />
                                     {order.lines.length > 1 && (
                                         <Button size="sm" variant="ghost" onClick={() => window.confirm(t('Take this off your order?')) && router.delete(`/orders/${token}/lines/${l.id}`, { preserveScroll: true })}>
                                             {t('Remove')}

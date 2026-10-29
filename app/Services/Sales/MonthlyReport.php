@@ -31,6 +31,7 @@ class MonthlyReport
             'previous' => $this->reports->totals($pFrom, $pTo),
             'lastYear' => $this->reports->totals($yFrom, $yTo),
             'sectors' => $this->reports->bySector($from, $to),
+            'departments' => $this->reports->departments($from, $to),
             'days' => $this->reports->days($from, $to),
             'ordering' => $ordering->take(40)->values(),
             'byProfit' => $ordering->sortByDesc('profit')->take(10)->values(),

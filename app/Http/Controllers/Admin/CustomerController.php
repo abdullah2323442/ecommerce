@@ -19,6 +19,7 @@ use App\Services\Messages\Messenger;
 use App\Services\Pricing\TierAssigner;
 use App\Services\Sales\CustomerFlags;
 use App\Services\Sales\CustomerTransactions;
+use App\Services\Sales\InvoiceService;
 use App\Services\Sales\TierUpgrade;
 use App\Services\Stock\StockService;
 use App\Support\Categories;
@@ -108,6 +109,7 @@ class CustomerController extends Controller
                 'pay_cod' => (bool) $user->pay_cod,
                 'pay_advance' => (bool) $user->pay_advance,
                 'show_monthly_total' => (bool) $user->show_monthly_total,
+                'free_delivery_over' => $user->free_delivery_over !== null ? (float) $user->free_delivery_over : null,
                 'late_cancellations' => app(CustomerFlags::class)->lateCancellations($user),
                 'flagged' => app(CustomerFlags::class)->isFlagged($user),
                 'created_at' => $user->created_at?->toIso8601String(),
@@ -207,6 +209,20 @@ class CustomerController extends Controller
         return back()->with('status', __('Saved.'));
     }
 
+    /** The amount past which this shop's delivery is free (spec ch 07 step 9-B). Empty goes back to the site-wide amount. */
+    public function freeDelivery(Request $request, User $user): RedirectResponse
+    {
+        $this->authorize('manage-customers');
+        $this->ensureCustomer($user);
+        $data = $request->validate(['amount' => ['nullable', 'numeric', 'min:0', 'max:100000000']]);
+
+        $amount = ($data['amount'] ?? '') === '' || ($data['amount'] ?? null) === null ? null : (float) $data['amount'];
+        $user->forceFill(['free_delivery_over' => $amount])->save();
+        $this->activity->record('customer.free_delivery', $user, ['amount' => $amount], $request->user());
+
+        return back()->with('status', __('Saved.'));
+    }
+
     public function suspend(Request $request, User $user): RedirectResponse
     {
         $this->authorize('manage-customers');
@@ -248,6 +264,7 @@ class CustomerController extends Controller
             'medicine_id' => ['required', 'integer', Rule::exists('medicines', 'id')],
             'discount_percent' => ['nullable', 'numeric', 'min:0', 'max:100', 'required_without:fixed_price'],
             'fixed_price' => ['nullable', 'numeric', 'gt:0', 'required_without:discount_percent'],
+            'price_unit' => ['nullable', 'in:piece,strip,box'],
             'force_loss' => ['sometimes', 'boolean'],
         ]);
 
@@ -255,10 +272,16 @@ class CustomerController extends Controller
         $percent = $data['discount_percent'] ?? null;
         $fixed = $percent === null ? ($data['fixed_price'] ?? null) : null;
 
-        // A taka price is for ONE PIECE. A price at or above the printed piece price gives no discount at all, and is almost always a box price typed by mistake.
+        // The owner may type the taka price for a box, a strip or a piece (spec ch 04, 28); it is kept per piece, and the percent it works out to is shown after saving.
         $medicine = Medicine::findOrFail($data['medicine_id']);
+        $unit = $data['price_unit'] ?? 'piece';
+        if ($fixed !== null && $unit !== 'piece') {
+            $fixed = round((float) $fixed * InvoiceService::fraction($medicine, 'piece') / InvoiceService::fraction($medicine, $unit), 2);
+        }
+
+        // A price at or above the printed piece price gives no discount at all, and is almost always a price typed for the wrong unit.
         if ($fixed !== null && (float) $medicine->mrp_piece > 0 && (float) $fixed >= (float) $medicine->mrp_piece) {
-            throw ValidationException::withMessages(['fixed_price' => __('A taka price is for one piece, and this medicine is printed at :price a piece. Type a price below that (for a box, divide by the pieces in it), or use a percent.', ['price' => number_format((float) $medicine->mrp_piece, 2)])]);
+            throw ValidationException::withMessages(['fixed_price' => __('This works out to :given a piece, and this medicine is printed at :price a piece. Type a price below that, check you chose the right unit (box, strip or piece), or use a percent.', ['price' => number_format((float) $medicine->mrp_piece, 2), 'given' => number_format((float) $fixed, 2)])]);
         }
 
         // LOS-1: a rate that loses money on every lot in stock is blocked when it is set. LOS-5: the admin may force it.
@@ -280,7 +303,12 @@ class CustomerController extends Controller
             'loss_forced' => $loses,
         ], $request->user());
 
-        return back()->with('status', $rate->wasRecentlyCreated ? __('Manual rate added.') : __('Manual rate updated.'));
+        $saved = $rate->wasRecentlyCreated ? __('Manual rate added.') : __('Manual rate updated.');
+        if ($fixed !== null && (float) $medicine->mrp_piece > 0) {
+            $saved .= ' '.__('That is :n% off the printed price.', ['n' => rtrim(rtrim(number_format((1 - (float) $fixed / (float) $medicine->mrp_piece) * 100, 2), '0'), '.')]);
+        }
+
+        return back()->with('status', $saved);
     }
 
     public function deleteRate(Request $request, User $user, CustomerRate $rate): RedirectResponse

@@ -41,7 +41,8 @@ class MarketCases
         // Nothing can be sent back that was downloaded.
         $digital = $order->download_max > 0;
 
-        return ['complaint' => $sent && ! $busy('complaint'), 'return' => $window && ! $digital && ! $busy('return')];
+        // A card, leaflet or page address in the package is its own kind of complaint (spec ch 14: no promotion in packages), so it is counted against the seller by itself.
+        return ['complaint' => $sent && ! $busy('complaint'), 'return' => $window && ! $digital && ! $busy('return'), 'promo' => $sent && ! $busy('promo')];
     }
 
     /** @throws StockException */
@@ -49,7 +50,7 @@ class MarketCases
     {
         $reason = trim($reason);
 
-        if (! in_array($kind, ['complaint', 'return'], true)) {
+        if (! in_array($kind, ['complaint', 'return', 'promo'], true)) {
             throw new StockException('Choose a complaint or a return.');
         }
 
@@ -64,7 +65,7 @@ class MarketCases
         $case = MarketCase::create(['market_order_id' => $order->id, 'seller_id' => $order->seller_id, 'buyer_id' => $order->buyer_id, 'kind' => $kind, 'reason' => mb_substr($reason, 0, 300), 'status' => 'open']);
 
         $this->messages->send($order->seller, 'market_case_new', ['name' => $order->title], '/wholesale/sell/orders');
-        $this->copyToUs($order->seller, __($kind === 'return' ? 'wants to return' : 'complained about').' "'.$order->title.'"');
+        $this->copyToUs($order->seller, __(match ($kind) { 'return' => 'wants to return', 'promo' => 'was reported for promotion material in the package of', default => 'complained about' }).' "'.$order->title.'"');
 
         return $case;
     }
@@ -86,6 +87,10 @@ class MarketCases
 
         if (! in_array($action, ['solved', 'return', 'cannot'], true)) {
             throw new StockException('Choose what you did.');
+        }
+
+        if ($action === 'return' && $case->kind === 'promo') {
+            throw new StockException('Nothing is sent back for this. Say what you did.');
         }
 
         if ($action !== 'return' && ($note === null || mb_strlen(trim($note)) < 3)) {
@@ -150,6 +155,10 @@ class MarketCases
             throw new StockException('Choose to send it back or close the case.');
         }
 
+        if ($decision === 'return' && $case->kind === 'promo') {
+            throw new StockException('Nothing is sent back for this. Close the case, and use a penalty step if it is true.');
+        }
+
         $meta = ['our_note' => mb_substr(trim($note), 0, 300), 'decided_at' => now(), 'decided_by' => $by->id];
 
         $decision === 'return' ? $this->takeBack($case, $meta) : $case->update($meta + ['status' => 'closed']);
@@ -201,6 +210,7 @@ class MarketCases
         return [
             'sold' => round($sold, 2), 'returned' => round((float) (clone $back)->sum('quantity'), 2), 'returned_orders' => (clone $back)->count(),
             'complaints' => MarketCase::where('seller_id', $seller->id)->where('kind', 'complaint')->count(),
+            'promos' => MarketCase::where('seller_id', $seller->id)->where('kind', 'promo')->count(),
             'reasons' => MarketCase::where('seller_id', $seller->id)->where('status', 'returned')->latest('id')->limit(8)->pluck('reason')->all(),
         ];
     }
@@ -217,7 +227,7 @@ class MarketCases
 
             return [
                 'seller_id' => $seller->id, 'seller' => $seller->business_name ?: $seller->name, 'total' => $rows->count(),
-                'complaints' => $rows->where('kind', 'complaint')->count(), 'returns' => $rows->where('kind', 'return')->count(),
+                'complaints' => $rows->where('kind', 'complaint')->count(), 'returns' => $rows->where('kind', 'return')->count(), 'promos' => $rows->where('kind', 'promo')->count(),
                 'serious' => $rows->whereIn('status', ['escalated', 'closed'])->count(), 'waiting' => $rows->whereIn('status', MarketCase::OPEN)->count(),
             ];
         })->sortByDesc('serious')->values();

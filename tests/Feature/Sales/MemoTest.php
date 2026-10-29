@@ -75,6 +75,29 @@ class MemoTest extends TestCase
         Carbon::setTestNow();
     }
 
+    public function test_a_number_with_letters_in_it_never_resets_the_count_and_a_taken_number_is_skipped(): void
+    {
+        Carbon::setTestNow('2026-10-14 10:00');
+        $first = $this->sale(1);
+        $this->assertSame('M2026-000001', $first->number);
+
+        // Numbers from an old import or made by hand sort above the plain ones, and must not send the count back to 1.
+        Invoice::where('id', '!=', $first->id)->update(['number' => null]);
+        $stray = $this->invoices->open('paikari', $this->staff, $this->shop);
+        $stray->forceFill(['number' => 'M2026-QA6073', 'status' => 'final'])->save();
+        $legacy = $this->invoices->open('paikari', $this->staff, $this->shop);
+        $legacy->forceFill(['number' => 'M2026-OLD-1', 'status' => 'final'])->save();
+
+        $second = $this->sale(1);
+        $this->assertSame('M2026-000002', $second->number, 'The count carries on from the plain numbers, not from the ones with letters.');
+
+        // Even a plain number that was skipped over earlier, and taken by hand, is never handed out twice.
+        $manual = $this->invoices->open('paikari', $this->staff, $this->shop);
+        $manual->forceFill(['number' => 'M2026-000003', 'status' => 'final'])->save();
+        $this->assertSame('M2026-000004', $this->sale(1)->number);
+        Carbon::setTestNow();
+    }
+
     public function test_the_memo_has_everything_and_offers_come_first_with_their_own_subtotal(): void
     {
         $this->stock->receive(StockSource::create(['name' => 'Big', 'type' => 'company', 'default_percent' => 25]), ['invoice_date' => now()->toDateString(), 'lines' => [['medicine_id' => $this->napa->id, 'units' => 6]]]);

@@ -3,6 +3,7 @@
 namespace App\Services\Sales;
 
 use App\Models\Medicine;
+use App\Models\Notice;
 use App\Models\OfferProduct;
 use App\Models\Setting;
 use App\Models\StockLot;
@@ -146,6 +147,43 @@ class OfferProducts
             'weight_kg' => $data['weight_kg'] ?? null, 'delivery_charge' => $data['delivery_charge'] ?? null,
             'ends_on' => ($data['ends_on'] ?? null) ? Carbon::parse($data['ends_on'])->startOfDay() : now()->endOfMonth()->startOfDay(), 'created_by' => $by->id,
         ]);
+    }
+
+    /**
+     * The warning itself (spec ch 09, "Alert before the offer stock runs out"): once, when an offer drops to the alert level, every person who runs
+     * offers is told how many boxes are left. When new stock lifts it above the level again the warning is armed again for next time.
+     * Returns how many offers were warned about.
+     */
+    public function alertLow(): int
+    {
+        $alert = (float) Setting::read('offers.alert_boxes', 2);
+        $low = $this->lowOnes()->keyBy(fn (array $r) => $r['offer']->id);
+
+        // New stock came in: the next fall below the level warns again.
+        OfferProduct::whereNotNull('low_alerted_at')->whereNotIn('id', $low->keys())->get()
+            ->each(fn (OfferProduct $o) => $this->available($o) > $alert ? $o->update(['low_alerted_at' => null]) : null);
+
+        $sent = 0;
+
+        foreach ($low as $row) {
+            $offer = $row['offer'];
+
+            if ($offer->low_alerted_at !== null) {
+                continue;
+            }
+
+            $left = rtrim(rtrim(number_format($row['left'], 2, '.', ''), '0'), '.');
+            $name = trim($offer->medicine->brand_name.' '.$offer->medicine->strength);
+
+            foreach (User::withPermission('offers') as $owner) {
+                Notice::create(['user_id' => $owner->id, 'kind' => 'offer_low', 'body' => mb_substr(__('Only {n} boxes left on the offer for {name}. Bring new stock in time.', ['n' => $left, 'name' => $name]), 0, 290)]);
+            }
+
+            $offer->update(['low_alerted_at' => now()]);
+            $sent++;
+        }
+
+        return $sent;
     }
 
     /** Boxes left at which the admin is warned (setting offers.alert_boxes, default 2). */

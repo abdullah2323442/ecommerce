@@ -2,6 +2,7 @@
 
 namespace App\Services\Backup;
 
+use App\Models\Setting;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Storage;
 use RuntimeException;
@@ -14,7 +15,7 @@ class BackupService
 {
     private const PREFIX = 'db-';
 
-    public function __construct(private DatabaseDumper $dumper) {}
+    public function __construct(private DatabaseDumper $dumper, private DatabaseRestorer $restorer) {}
 
     /** Create today's backup and return its file name on the backup disk. */
     public function run(): string
@@ -88,6 +89,73 @@ class BackupService
         }
 
         return ['file' => basename($file), 'bytes' => strlen($content)];
+    }
+
+    /**
+     * A real restore test (spec ch 28 note 7: a backup nobody has restored is only a hope). The newest backup is unpacked, loaded into a
+     * scratch database that is made and thrown away within this call, and checked: every table in the dump came back, and the core tables
+     * hold rows wherever the live database does. The live database is only read, never changed.
+     *
+     * @return array{file: string, tables: int, dumped: int, core: array<string, array{restored: int, live: int}>, ok: bool, problems: list<string>}
+     */
+    public function restoreTest(): array
+    {
+        $file = $this->list()[0] ?? throw new RuntimeException('No backups found.');
+        $sql = $this->read($file);
+
+        if ($sql === '' || ! str_contains($sql, 'CREATE TABLE')) {
+            throw new RuntimeException("Backup {$file} is empty or has no tables.");
+        }
+
+        $dumped = preg_match_all('/^CREATE TABLE `([^`]+)`/m', $sql, $found);
+        $scratch = preg_replace('/[^A-Za-z0-9_]/', '_', (string) config('database.connections.'.config('database.default').'.database')).'_restore_test';
+        $tmp = tempnam(sys_get_temp_dir(), 'restore');
+
+        try {
+            file_put_contents($tmp, $sql);
+            $this->restorer->restoreInto($scratch, $tmp);
+
+            $restored = $this->restorer->tableCounts($scratch);
+            $live = $this->restorer->liveCounts((array) config('backup.required_tables'));
+        } finally {
+            @unlink($tmp);
+            $this->restorer->drop($scratch);
+        }
+
+        $problems = [];
+
+        foreach (array_unique($found[1]) as $table) {
+            if (! array_key_exists($table, $restored)) {
+                $problems[] = "Table {$table} was in the backup but did not come back.";
+            }
+        }
+
+        $core = [];
+        foreach ((array) config('backup.required_tables') as $table) {
+            $core[$table] = ['restored' => $restored[$table] ?? 0, 'live' => $live[$table] ?? 0];
+
+            if (! array_key_exists($table, $restored)) {
+                $problems[] = "Core table {$table} did not come back.";
+            } elseif ($restored[$table] === 0 && ($live[$table] ?? 0) > 0) {
+                $problems[] = "Core table {$table} came back empty, but the live database has rows in it.";
+            }
+        }
+
+        return ['file' => basename($file), 'tables' => count($restored), 'dumped' => count(array_unique($found[1])), 'core' => $core, 'ok' => $problems === [], 'problems' => $problems];
+    }
+
+    /** Keep what the monthly restore test found, so the owner can see it on the dashboard and not only in a log. */
+    public function rememberRestoreTest(bool $ok, ?string $file, int $tables, string $problem = ''): void
+    {
+        Setting::write('backup.restore_test', ['at' => now()->toIso8601String(), 'ok' => $ok, 'file' => $file, 'tables' => $tables, 'problem' => mb_substr($problem, 0, 250)]);
+    }
+
+    /** @return array{at: string, ok: bool, file: ?string, tables: int, problem: string}|null the last restore test, or null if it never ran */
+    public function lastRestoreTest(): ?array
+    {
+        $saved = Setting::read('backup.restore_test');
+
+        return is_array($saved) && isset($saved['at']) ? $saved : null;
     }
 
     /** When the newest backup was written, or null if there is none. */

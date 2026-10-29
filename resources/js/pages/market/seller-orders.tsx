@@ -28,7 +28,7 @@ interface Order {
     address: string | null;
     how_to_find: string | null;
     cancel_reason: string | null;
-    cases: { id: number; kind: 'complaint' | 'return'; reason: string; status: string; seller_note: string | null; our_note: string | null }[];
+    cases: { id: number; kind: 'complaint' | 'return' | 'promo'; reason: string; status: string; seller_note: string | null; our_note: string | null }[];
 }
 
 interface SellerRecord {
@@ -48,7 +48,7 @@ function CaseBox({ c }: { c: Order['cases'][number] }) {
     return (
         <div className="space-y-2 rounded-[1.25rem] border border-warning/40 bg-warning/5 p-3 text-sm">
             <div className="flex flex-wrap items-baseline justify-between gap-2">
-                <p className="font-semibold">{c.kind === 'return' ? t('The buyer wants to send it back') : t('The buyer has a complaint')}</p>
+                <p className="font-semibold">{c.kind === 'return' ? t('The buyer wants to send it back') : c.kind === 'promo' ? t('The buyer found promotion material in the package') : t('The buyer has a complaint')}</p>
                 <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-semibold">{state(c.status)}</span>
             </div>
             <p>{c.reason}</p>
@@ -60,9 +60,11 @@ function CaseBox({ c }: { c: Order['cases'][number] }) {
                     <Button size="sm" disabled={note.trim().length < 3} onClick={() => answer('solved')}>
                         {t('I solved it')}
                     </Button>
-                    <Button size="sm" variant="outline" onClick={() => answer('return')}>
-                        {t('Take it back')}
-                    </Button>
+                    {c.kind !== 'promo' && (
+                        <Button size="sm" variant="outline" onClick={() => answer('return')}>
+                            {t('Take it back')}
+                        </Button>
+                    )}
                     <Button size="sm" variant="ghost" disabled={note.trim().length < 3} onClick={() => answer('cannot')}>
                         {t('I cannot solve it')}
                     </Button>
@@ -152,6 +154,7 @@ export default function SellerOrders({ orders, paused, record }: { orders: Order
     const { t, num } = useI18n();
     const errors = usePage().props.errors as Record<string, string>;
     const flash = (usePage().props.flash as { status?: string } | undefined)?.status;
+    const siteName = (usePage().props.brand as { name: string }).name;
 
     return (
         <PublicLayout>
@@ -164,6 +167,7 @@ export default function SellerOrders({ orders, paused, record }: { orders: Order
                         {t('Your listings')}
                     </Link>
                 </div>
+                <p className="text-sm text-[var(--pt-muted)]">{t('Your buyers get every message and text about their order from {site}, never in your name. Their details stay with us.', { site: siteName })}</p>
                 {paused && <p className="rounded-[1.5rem] border border-warning/40 bg-warning/10 px-4 py-3 text-sm">{t('You are on holiday. New orders are off.')}</p>}
                 {flash && <p role="status" className="rounded-md border border-success/30 bg-success/10 px-3 py-2 text-sm text-success">{flash}</p>}
                 <InputError message={errors.order ?? errors.reason} />

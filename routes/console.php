@@ -103,9 +103,15 @@ Schedule::call(fn () => app(ReportSnapshots::class)->prepareTonight())->dailyAt(
 // Spec 6.2: a "Need admin approval" request nobody answers cancels itself.
 Schedule::command('approvals:expire')->everyMinute()->withoutOverlapping();
 
-// Monthly reminder check that backups are fresh and readable (a real restore test is still manual).
+// Spec ch 09: the owner is warned before an offer's stock runs out.
+Schedule::command('offers:alert')->everyFiveMinutes()->withoutOverlapping();
+
+// Monthly: backups are fresh and readable, and the newest one really restores into a scratch database (spec ch 28 note 7).
 Schedule::command('backup:verify')
     ->monthlyOn(1, '09:00')
+    ->timezone('Asia/Dhaka');
+Schedule::command('backup:restore-test')
+    ->monthlyOn(1, '03:30')
     ->timezone('Asia/Dhaka');
 
 // Spec ch 23: a question a seller leaves too long comes to us.

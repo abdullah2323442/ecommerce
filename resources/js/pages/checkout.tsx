@@ -99,7 +99,7 @@ export default function Checkout({ advance_over, lines, subtotal, districts, loc
                 <h1 className="font-display text-3xl font-extrabold">{t('Checkout')}</h1>
                 {notice && (
                     <p role="note" className="rounded-2xl border border-warning/40 bg-warning/10 px-4 py-3 text-sm">
-                        {notice === 'holiday' ? t('We are closed today. You can still order. We will check it on the next working day.') : t('It is night. You can still order. We will check it in the morning.')}
+                        {notice === 'holiday' ? t('We are closed today. You can still order. We will check it on the next working day.') : t('It is night. Place your order now and we will pack it tonight.')}
                     </p>
                 )}
                 {!signedIn && (

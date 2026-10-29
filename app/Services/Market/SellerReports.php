@@ -69,13 +69,18 @@ class SellerReports
             ->get(['quantity', 'seller_price', 'commission', 'delivered_at'])
             ->groupBy(fn ($o) => $o->delivered_at->format('Y-m'));
 
+        // What came back in each month, for the same business (spec ch 03: returns are shown per business too).
+        $back = MarketOrder::where('seller_id', $seller->id)->where('status', 'returned')->where('returned_at', '>=', $start)
+            ->when($sectorId, fn ($q) => $q->whereIn('listing_id', Listing::where('seller_id', $seller->id)->where('sector_id', $sectorId)->select('id')))
+            ->get(['returned_at'])->groupBy(fn ($o) => $o->returned_at->format('Y-m'));
+
         $out = [];
         $prev = null;
         for ($i = 0; $i < $count; $i++) {
             $key = $start->copy()->addMonths($i)->format('Y-m');
             $set = $rows->get($key, collect());
             $sales = round((float) $set->sum(fn ($o) => (float) $o->quantity * (float) $o->seller_price), 2);
-            $out[] = ['month' => $key, 'sales' => $sales, 'commission' => round((float) $set->sum('commission'), 2), 'orders' => $set->count(), 'change' => $prev !== null && $prev > 0 ? round(($sales - $prev) / $prev * 100, 1) : null];
+            $out[] = ['month' => $key, 'sales' => $sales, 'commission' => round((float) $set->sum('commission'), 2), 'orders' => $set->count(), 'returns' => $back->get($key, collect())->count(), 'change' => $prev !== null && $prev > 0 ? round(($sales - $prev) / $prev * 100, 1) : null];
             $prev = $sales;
         }
 

@@ -223,6 +223,7 @@ Route::get('wishlist', [WishlistController::class, 'index'])->middleware('auth')
 Route::post('market/{listing}/wishlist', [WishlistController::class, 'toggle'])->whereNumber('listing')->middleware(['auth', 'throttle:60,1,wishlist'])->name('wishlist.toggle');
 Route::post('shop/{seller}/follow', [MarketController::class, 'follow'])->whereNumber('seller')->middleware(['auth', 'throttle:20,1,shop-follow'])->name('shop.follow');
 Route::delete('shop/{seller}/follow', [MarketController::class, 'unfollow'])->whereNumber('seller')->middleware('auth')->name('shop.unfollow');
+Route::get('market/video/{listing}', [MarketController::class, 'video'])->whereNumber('listing')->name('market.video');
 Route::get('market/extra-photo/{photo}', [MarketController::class, 'extraPhoto'])->whereNumber('photo')->name('market.extra-photo');
 Route::get('market/review-photo/{photo}', [MarketController::class, 'reviewPhoto'])->whereNumber('photo')->name('market.review-photo');
 Route::post('market/orders/{token}/review', [MarketOrderController::class, 'review'])->where('token', '[A-Za-z0-9]{40}')->middleware('throttle:6,1,market-review')->name('market.order.review');
@@ -337,13 +338,16 @@ Route::middleware('auth')->get('memo/{invoice}', [MemoController::class, 'show']
 // The buyer's portal: one set of screens for a shop (spec ch 07) and for a bulk buyer (ch 14), each under its own
 // address. The section gate hides each from everyone else; the controller picks prices and kind from the account.
 foreach (['paikari', 'wholesale'] as $portal) {
-    Route::middleware(['auth', 'section:'.$portal])->prefix($portal)->name($portal.'.')->group(function () use ($portal) {
+    // The wholesale link has no sign-in step of its own: the section gate treats a guest as the public, so anyone who is not a
+    // wholesaler goes quietly to the homepage and never meets a login page that gives the section away (spec ch 05, deep links).
+    Route::middleware(array_merge($portal === 'wholesale' ? ['section:wholesale'] : ['auth', 'section:'.$portal], ['two-factor.required']))->prefix($portal)->name($portal.'.')->group(function () use ($portal) {
         Route::get('/', [PaikariController::class, 'index'])->name('index');
         Route::get('search', [PaikariController::class, 'search'])->name('search');
         if ($portal === 'wholesale') {
             // A trade account sells too (spec ch 14): its listings wait for us, we add our commission, buyers pay both.
             Route::get('sell', [SellController::class, 'index'])->name('sell.index');
             Route::get('sell/reports', [SellController::class, 'reports'])->name('sell.reports');
+            Route::put('sell/business-name', [SellController::class, 'businessName'])->name('sell.business-name');
             Route::get('sell/statements', [SellController::class, 'statements'])->name('sell.statements');
             Route::post('sell/statements/{statement}/reply', [SellController::class, 'reply'])->name('sell.statements.reply');
             Route::get('sell/orders', [SellController::class, 'orders'])->name('sell.orders');
@@ -358,6 +362,8 @@ foreach (['paikari', 'wholesale'] as $portal) {
             Route::post('sell/{listing}/digital', [SellController::class, 'attachDigital'])->whereNumber('listing')->middleware('throttle:10,1,sell-digital')->name('sell.digital.attach');
             Route::delete('sell/{listing}/digital', [SellController::class, 'removeDigital'])->whereNumber('listing')->name('sell.digital.remove');
             Route::post('sell/{listing}/photos', [SellController::class, 'addPhoto'])->whereNumber('listing')->name('sell.photos.add');
+            Route::post('sell/{listing}/video', [SellController::class, 'attachVideo'])->whereNumber('listing')->name('sell.video.attach');
+            Route::delete('sell/{listing}/video', [SellController::class, 'removeVideo'])->whereNumber('listing')->name('sell.video.remove');
             Route::delete('sell/photos/{photo}', [SellController::class, 'removePhoto'])->whereNumber('photo')->name('sell.photos.remove');
             Route::put('sell/photos/{photo}/main', [SellController::class, 'mainPhoto'])->whereNumber('photo')->name('sell.photos.main');
             Route::post('sell/{listing}', [SellController::class, 'update'])->whereNumber('listing')->name('sell.update');
@@ -408,6 +414,8 @@ foreach (['paikari', 'wholesale'] as $portal) {
 
         if ($portal === 'wholesale') {
             Route::get('account', [WholesaleController::class, 'account'])->name('account');
+            Route::post('account/branding', [WholesaleController::class, 'branding'])->middleware('throttle:20,1,branding')->name('account.branding');
+            Route::get('account/logo', [WholesaleController::class, 'logo'])->name('account.logo');
             // Bulk upload and custom quotation (spec ch 14): a bulk buyer's own tools.
             Route::post('bulk', [PaikariController::class, 'bulk'])->middleware('throttle:10,1,bulk')->name('bulk');
             Route::get('quotes', [QuoteController::class, 'index'])->name('quotes');
@@ -538,6 +546,7 @@ Route::middleware(['auth', 'section:admin_panel', 'two-factor.required'])->prefi
     Route::get('customers/{user}', [CustomerController::class, 'show'])->name('customers.show');
     Route::patch('customers/{user}/tier', [CustomerController::class, 'updateTier'])->name('customers.tier');
     Route::put('customers/{user}/monthly-total', [CustomerController::class, 'monthlyTotal'])->name('customers.monthly-total');
+    Route::put('customers/{user}/free-delivery', [CustomerController::class, 'freeDelivery'])->name('customers.free-delivery');
     Route::post('customers/{user}/suspend', [CustomerController::class, 'suspend'])->middleware('password.confirm')->name('customers.suspend');
     Route::delete('customers/{user}/suspend', [CustomerController::class, 'reactivate'])->middleware('password.confirm')->name('customers.reactivate');
     Route::put('customers/{user}/rates', [CustomerController::class, 'saveRate'])->middleware('password.confirm')->name('customers.rates.save');
@@ -570,6 +579,7 @@ Route::middleware(['auth', 'section:admin_panel', 'two-factor.required'])->prefi
     Route::put('customers/{user}/trade', [CustomerController::class, 'trade'])->name('customers.trade');
 
     Route::get('requests', [AdminProductRequestController::class, 'index'])->name('requests.index');
+    Route::get('requests/{productRequest}/photo', [AdminProductRequestController::class, 'photo'])->whereNumber('productRequest')->name('requests.photo');
 
     // Stock (spec ch 06): admin only, purchase prices never leave this gate.
     Route::get('stock', [StockController::class, 'index'])->name('stock.index');
@@ -588,6 +598,10 @@ Route::middleware(['auth', 'section:admin_panel', 'two-factor.required'])->prefi
     Route::get('stock/medicines/{medicine}/edit', [AdminMedicineController::class, 'edit'])->name('stock.medicine.edit');
     Route::put('stock/medicines/{medicine}', [AdminMedicineController::class, 'update'])->name('stock.medicine.update');
     Route::put('stock/medicines/{medicine}/steps', [AdminMedicineController::class, 'steps'])->name('stock.medicine.steps');
+    Route::get('stock/inactive', [AdminMedicineController::class, 'inactive'])->name('stock.inactive');
+    Route::put('stock/medicines/{medicine}/active', [AdminMedicineController::class, 'active'])->name('stock.medicine.active');
+    Route::post('stock/medicines/{medicine}/barcodes', [AdminMedicineController::class, 'addBarcode'])->name('stock.medicine.barcodes.add');
+    Route::delete('stock/medicines/{medicine}/barcodes/{barcode}', [AdminMedicineController::class, 'removeBarcode'])->name('stock.medicine.barcodes.remove');
     Route::post('stock/master-sync', [StockController::class, 'masterSync'])->name('stock.master-sync');
     Route::get('stock/sources', [StockSourceController::class, 'index'])->name('stock.sources');
     Route::post('stock/sources', [StockSourceController::class, 'store'])->name('stock.sources.store');
@@ -648,6 +662,8 @@ Route::middleware(['auth', 'section:admin_panel', 'two-factor.required'])->prefi
     Route::get('mpo', [MpoController::class, 'index'])->name('mpo.index');
     Route::post('mpo', [MpoController::class, 'store'])->name('mpo.store');
     Route::get('mpo/listings', [MpoController::class, 'listings'])->name('mpo.listings');
+    Route::post('mpo/{user}/photo', [MpoController::class, 'photo'])->whereNumber('user')->middleware('throttle:20,1,mpo-photo')->name('mpo.photo');
+    Route::get('mpo/{user}/photo', [MpoController::class, 'showPhoto'])->whereNumber('user')->name('mpo.photo.show');
     Route::post('mpo/listings/{listing}/approve', [MpoController::class, 'approve'])->name('mpo.listings.approve');
     Route::post('mpo/listings/{listing}/reject', [MpoController::class, 'reject'])->name('mpo.listings.reject');
     Route::get('mpo/{user}', [MpoController::class, 'show'])->name('mpo.show');
@@ -890,6 +906,7 @@ Route::middleware(['auth', 'section:admin_panel', 'two-factor.required'])->prefi
     Route::post('counter', [CounterController::class, 'open'])->name('counter.open');
     Route::post('counter/shops', [CounterController::class, 'newShop'])->name('counter.shops.store');
     Route::post('counter/notes', [CounterController::class, 'storeNote'])->name('counter.notes.store');
+    Route::post('counter/wanted', [CounterController::class, 'wanted'])->middleware('throttle:60,1,counter-wanted')->name('counter.wanted');
     Route::post('counter/notes/{note}/draft', [CounterController::class, 'noteToDraft'])->name('counter.notes.draft');
     Route::get('counter/customers', [CounterController::class, 'customers'])->name('counter.customers');
     // The counter without internet (spec ch 8): the screen, a copy of the list for the device, and the sales sent back.

@@ -37,6 +37,8 @@ export default function Business({ categories, application, defaults }: Props) {
         note: '',
     });
     const waiting = application?.status === 'pending';
+    // A business that sells medicine shows both its trade licence and its drug licence.
+    const sellsMedicine = form.data.categories.includes('medicine');
     const toggle = (k: string) => form.setData('categories', form.data.categories.includes(k) ? form.data.categories.filter((x) => x !== k) : [...form.data.categories, k]);
 
     return (
@@ -140,14 +142,14 @@ export default function Business({ categories, application, defaults }: Props) {
                             <p className="text-sm text-[var(--pt-muted)]">{t('Your licence is a private file. Only our staff can open it.')}</p>
                             <div>
                                 <label htmlFor="lf" className="text-sm font-medium">
-                                    {t('Licence photo or PDF')}
+                                    {sellsMedicine ? t('Trade licence, photo or PDF') : t('Licence photo or PDF')}
                                 </label>
                                 <input id="lf" type="file" accept="image/jpeg,image/png,application/pdf" className="mt-1 block text-sm" onChange={(e) => form.setData('license', e.target.files?.[0] ?? null)} />
                                 <InputError message={form.errors.license} />
                             </div>
                             <div>
                                 <label htmlFor="lf2" className="text-sm font-medium">
-                                    {t('Another licence, if you have one')}
+                                    {sellsMedicine ? t('Drug licence, photo or PDF (needed for medicine)') : t('Another licence, if you have one')}
                                 </label>
                                 <input id="lf2" type="file" accept="image/jpeg,image/png,application/pdf" className="mt-1 block text-sm" onChange={(e) => form.setData('second_license', e.target.files?.[0] ?? null)} />
                                 <InputError message={form.errors.second_license} />

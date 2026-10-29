@@ -84,6 +84,9 @@ export default function OfflineCounter() {
     const [note, setNote] = useState<string | null>(null);
     const [printing, setPrinting] = useState<string | null>(null);
     const sending = useRef(false);
+    // The words for the notice are read when it is shown, so sending does not depend on them: new helper functions each render must never restart it.
+    const words = useRef({ t, num });
+    words.current = { t, num };
 
     const reload = useCallback(async () => setList(await store.all()), []);
 
@@ -102,6 +105,7 @@ export default function OfflineCounter() {
             const out = await sendWaiting();
             await reload();
             if (out.sent > 0 || out.refused > 0) {
+                const { t, num } = words.current;
                 setNote(t('{n} sales sent.', { n: num(out.sent) }) + (out.refused > 0 ? ' ' + t('{n} need a look.', { n: num(out.refused) }) : ''));
                 const fresh = await refreshCopy();
                 if (fresh) setCopy(fresh);
@@ -109,7 +113,7 @@ export default function OfflineCounter() {
         } finally {
             sending.current = false;
         }
-    }, [reload, t, num]);
+    }, [reload]);
 
     useEffect(() => {
         const up = () => {

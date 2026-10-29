@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Listing extends Model
 {
     protected $fillable = [
-        'seller_id', 'sector_id', 'category_id', 'catalog_product_id', 'title', 'description', 'photo_path', 'public_price', 'wholesale_price', 'min_qty', 'delivery_charge', 'stock', 'status',
+        'seller_id', 'sector_id', 'category_id', 'catalog_product_id', 'title', 'description', 'photo_path', 'video_path', 'public_price', 'wholesale_price', 'min_qty', 'delivery_charge', 'stock', 'status',
         'pickup', 'cod_allowed', 'digital_path', 'digital_name', 'digital_max', 'digital_days', 'cost_price', 'low_stock_at', 'item_weight', 'expires_on', 'warranty_months', 'seo_title', 'seo_description', 'return_days', 'return_note', 'preorder_days', 'alt_names', 'item_height', 'item_length', 'item_width', 'item_size_unit', 'commission_kind', 'commission_value', 'commission_request', 'review_note', 'reviewed_by', 'submitted_at', 'approved_at', 'flag',
     ];
 

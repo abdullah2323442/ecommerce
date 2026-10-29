@@ -59,6 +59,7 @@ class WholesaleTest extends TestCase
         return $this->actingAs($u)->post('/business', array_merge([
             'business_name' => 'Rahman Traders', 'business_kind' => 'trader', 'categories' => ['medicine'], 'phone' => '01711111111',
             'address' => 'Dhaka', 'license_number' => 'DL-123', 'license' => UploadedFile::fake()->create('license.pdf', 100, 'application/pdf'),
+            'second_license' => UploadedFile::fake()->create('drug.pdf', 100, 'application/pdf'),
         ], $over));
     }
 
@@ -77,6 +78,28 @@ class WholesaleTest extends TestCase
         $this->assertSame('pending', $app->status);
         Storage::disk('local')->assertExists($app->license_path);
         $this->actingAs($user)->get('/business')->assertInertia(fn (Assert $p) => $p->component('business')->where('application.status', 'pending'));
+    }
+
+    public function test_a_medicine_business_must_show_its_drug_licence_as_well_as_its_trade_licence(): void
+    {
+        $user = $this->plain();
+
+        // Only the trade licence: not enough for a business that sells medicine.
+        $this->applyAs($user, ['second_license' => null])->assertSessionHasErrors('second_license');
+        $this->assertSame(0, TradeApplication::count());
+
+        $this->applyAs($user)->assertSessionHasNoErrors();
+        $application = TradeApplication::firstOrFail();
+        $this->assertNotNull($application->license_path);
+        $this->assertNotNull($application->second_path);
+    }
+
+    public function test_a_business_that_does_not_sell_medicine_needs_only_one_licence(): void
+    {
+        $user = $this->plain();
+
+        $this->applyAs($user, ['categories' => ['wood'], 'second_license' => null])->assertSessionHasNoErrors();
+        $this->assertNull(TradeApplication::firstOrFail()->second_path);
     }
 
     public function test_an_application_needs_a_licence_and_only_one_can_wait(): void

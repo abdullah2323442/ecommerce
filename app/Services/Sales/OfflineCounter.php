@@ -173,7 +173,7 @@ class OfflineCounter
             } catch (StockException $e) {
                 // It was sold. The stock cannot say so: it goes on the memo outside the system's stock, and the owner decides.
                 $this->invoices->addLine($invoice->fresh(), $m, $line['unit'], (float) $line['qty'], $by, null, true);
-                $flags[str_contains($e->getMessage(), 'loss') ? 'loss' : 'out_of_stock'][] = $m->brand_name;
+                $flags[$e->reason === 'loss' ? 'loss' : 'out_of_stock'][] = $m->brand_name;
             }
         }
 

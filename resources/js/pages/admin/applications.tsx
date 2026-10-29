@@ -73,11 +73,11 @@ function Review({ a, tiers, categories }: { a: Row; tiers: Props['tiers']; categ
             {a.note && <p className="text-muted-foreground text-sm">“{a.note}”</p>}
             <div className="flex flex-wrap gap-3 text-sm">
                 <a className="font-semibold underline underline-offset-4" href={`/admin/applications/${a.id}/file/first`} target="_blank" rel="noreferrer">
-                    {t('Open licence')} {a.license_name && `(${a.license_name})`}
+                    {t(a.categories.includes('medicine') ? 'Open trade licence' : 'Open licence')} {a.license_name && `(${a.license_name})`}
                 </a>
                 {a.second_name && (
                     <a className="font-semibold underline underline-offset-4" href={`/admin/applications/${a.id}/file/second`} target="_blank" rel="noreferrer">
-                        {t('Open second licence')} ({a.second_name})
+                        {t(a.categories.includes('medicine') ? 'Open drug licence' : 'Open second licence')} ({a.second_name})
                     </a>
                 )}
             </div>

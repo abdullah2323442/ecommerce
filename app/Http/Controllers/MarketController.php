@@ -17,6 +17,8 @@ use App\Services\Analytics\Behavior;
 use App\Services\Market\Catalog;
 use App\Services\Market\Deals;
 use App\Services\Market\ListingPhotos;
+use App\Services\Media\ImageCompressor;
+use App\Services\Market\ListingVideo;
 use App\Services\Market\ListingQuestions;
 use App\Services\Market\ListingReports;
 use App\Services\Market\ListingVariants;
@@ -37,6 +39,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
@@ -114,7 +117,7 @@ class MarketController extends Controller
         $chosen = is_string($sector) ? Sector::where('slug', $sector)->where('is_active', true)->first() : null;
         $hero = $chosen ? [
             'slug' => $chosen->slug, 'name' => $chosen->name, 'name_bn' => $chosen->name_bn, 'tagline' => $chosen->tagline, 'tagline_bn' => $chosen->tagline_bn,
-            'image' => $chosen->hero_path ? route('market.hero', ['slug' => $chosen->slug, 'v' => substr(md5($chosen->hero_path), 0, 8)]) : null,
+            'image' => $chosen->hero_path ? route('market.hero', ['slug' => $chosen->slug, 'w' => 1600, 'v' => substr(md5($chosen->hero_path), 0, 8)]) : null,
         ] : null;
 
         $plain = $category === null && $q === '' && $from === null && ! $premium && $minStars === null && $request->query('stall') === null && $request->query('all') === null && $page === 1;
@@ -158,6 +161,7 @@ class MarketController extends Controller
             'token' => $pick ? $pick['amount'] : null,
             'questions' => app(ListingQuestions::class)->shown($listing),
             'gallery' => app(ListingPhotos::class)->gallery($listing),
+            'video' => $listing->video_path !== null ? route('market.video', $listing) : null,
             'cod' => (bool) $listing->cod_allowed,
             'digital' => $listing->digital_path !== null,
             'pickup' => $this->market->canPickup($listing) ? ['where' => $listing->seller->shop_address] : null,
@@ -213,10 +217,26 @@ class MarketController extends Controller
     }
 
     /** A kind of business's banner, shown to everyone. Only the file the owner saved for that sector. */
-    public function hero(string $slug): StreamedResponse
+    /** Widths a phone or a tile can ask for with ?w=, so nobody downloads a 2400 pixel picture to fill a 375 pixel screen (spec ch 28: fast on slow internet). */
+    public const HERO_WIDTHS = [480, 960, 1600];
+
+    public function hero(Request $request, string $slug): StreamedResponse
     {
         $path = Sector::where('slug', $slug)->where('is_active', true)->value('hero_path');
         abort_unless($path && Storage::exists($path), 404);
+
+        $w = (int) $request->query('w');
+
+        if (in_array($w, self::HERO_WIDTHS, true)) {
+            // A smaller copy is made once, the first time it is asked for, and kept beside the original.
+            $small = 'sectors/w'.$w.'/'.basename($path);
+
+            if (! Storage::exists($small) && ($bytes = app(ImageCompressor::class)->compress((string) Storage::get($path), $w)) !== null) {
+                Storage::put($small, $bytes);
+            }
+
+            $path = Storage::exists($small) ? $small : $path;
+        }
 
         return Storage::response($path, null, ['Cache-Control' => 'public, max-age=31536000, immutable', 'X-Content-Type-Options' => 'nosniff']);
     }
@@ -305,6 +325,18 @@ class MarketController extends Controller
         abort_unless($mine || $this->market->priceFor($listing, $viewer) !== null, 404);
 
         return Storage::response($photo->path, null, ['Cache-Control' => 'private, max-age=86400']);
+    }
+
+    /** The product's video: seen by whoever may see the product at all, with ranges so a phone can skip about. */
+    public function video(Request $request, Listing $listing): BinaryFileResponse
+    {
+        $viewer = $request->user();
+        $listing->loadMissing(['sector', 'seller']);
+        $mine = $viewer && ($viewer->id === $listing->seller_id || $viewer->can('manage-customers'));
+        abort_unless($listing->video_path !== null && Storage::exists($listing->video_path), 404);
+        abort_unless($mine || $this->market->priceFor($listing, $viewer) !== null, 404);
+
+        return response()->file(Storage::path($listing->video_path), ['Cache-Control' => 'private, max-age=86400']);
     }
 
     /** A picture a buyer put in a review: shown while the review is shown, to its writer and to staff any time. */
@@ -572,7 +604,7 @@ class MarketController extends Controller
         $image = fn (StorefrontBlock $b) => $b->image_path ? route('market.storefront-image', ['block' => $b->id, 'v' => substr(md5($b->image_path.$b->updated_at), 0, 8)]) : null;
 
         $shopPictures = Sector::where('is_active', true)->whereNotNull('hero_path')->get(['slug', 'hero_path'])->keyBy('slug');
-        $shopPicture = fn (string $slug) => isset($shopPictures[$slug]) ? route('market.hero', ['slug' => $slug, 'v' => substr(md5($shopPictures[$slug]->hero_path), 0, 8)]) : null;
+        $shopPicture = fn (string $slug) => isset($shopPictures[$slug]) ? route('market.hero', ['slug' => $slug, 'w' => 960, 'v' => substr(md5($shopPictures[$slug]->hero_path), 0, 8)]) : null;
 
         $out = [];
 
@@ -622,7 +654,7 @@ class MarketController extends Controller
                             $count = $sectors->firstWhere('slug', $s->slug)['count'] ?? 0;
 
                             return ['slug' => $s->slug, 'name' => $bn && $s->name_bn ? $s->name_bn : $s->name, 'tagline' => ($bn && $s->tagline_bn ? $s->tagline_bn : $s->tagline), 'count' => $count,
-                                'image' => $s->hero_path ? route('market.hero', ['slug' => $s->slug, 'v' => substr(md5($s->hero_path), 0, 8)]) : null];
+                                'image' => $s->hero_path ? route('market.hero', ['slug' => $s->slug, 'w' => 960, 'v' => substr(md5($s->hero_path), 0, 8)]) : null];
                         })->filter(fn ($d) => $d['count'] > 0)->take(max(1, $b->item_limit))->values()->all();
                     if ($row['departments'] === []) {
                         continue 2;

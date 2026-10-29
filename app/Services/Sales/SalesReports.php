@@ -2,7 +2,10 @@
 
 namespace App\Services\Sales;
 
+use App\Models\FoodOrder;
+use App\Models\GameOrder;
 use App\Models\Invoice;
+use App\Models\MarketOrder;
 use App\Models\Medicine;
 use App\Models\SaleReturn;
 use App\Models\Setting;
@@ -157,6 +160,34 @@ class SalesReports
     {
         return Invoice::query()->whereNotNull('completed_at')->whereBetween('completed_at', [$from, $to])->selectRaw('kind, channel, count(*) as memos, sum(total) as total')
             ->groupBy('kind', 'channel')->orderBy('kind')->get()->map(fn ($r) => ['kind' => $r->kind, 'channel' => $r->channel, 'memos' => (int) $r->memos, 'total' => round((float) $r->total, 2)]);
+    }
+
+    /**
+     * Sales for each department on its own (spec ch 25 and 537): the pharmacy counter and shop orders, each marketplace sector (wood, clothing and
+     * the rest), food and gaming. A sale counts when it is complete: a finished memo, a delivered order, or a finished top-up.
+     *
+     * @return Collection<int, array{key: string, name: string, orders: int, total: float}>
+     */
+    public function departments(Carbon $from, Carbon $to): Collection
+    {
+        $pharmacy = Invoice::query()->whereNotNull('completed_at')->whereBetween('completed_at', [$from, $to])->selectRaw('count(*) as n, coalesce(sum(total), 0) as t')->first();
+        $rows = collect([['key' => 'pharmacy', 'name' => 'Medicine', 'orders' => (int) $pharmacy->n, 'total' => round((float) $pharmacy->t, 2)]]);
+
+        $market = MarketOrder::query()->join('listings', 'listings.id', '=', 'market_orders.listing_id')->join('sectors', 'sectors.id', '=', 'listings.sector_id')
+            ->where('market_orders.status', 'delivered')->whereBetween('market_orders.delivered_at', [$from, $to])
+            ->groupBy('sectors.id', 'sectors.name')->orderBy('sectors.name')
+            ->get(['sectors.id as id', 'sectors.name as name', DB::raw('count(*) as n'), DB::raw('coalesce(sum(market_orders.total), 0) as t')]);
+        foreach ($market as $m) {
+            $rows->push(['key' => 'sector-'.$m->id, 'name' => (string) $m->name, 'orders' => (int) $m->n, 'total' => round((float) $m->t, 2)]);
+        }
+
+        $food = FoodOrder::query()->where('status', 'delivered')->whereBetween('delivered_at', [$from, $to])->selectRaw('count(*) as n, coalesce(sum(total), 0) as t')->first();
+        $rows->push(['key' => 'food', 'name' => 'Food', 'orders' => (int) $food->n, 'total' => round((float) $food->t, 2)]);
+
+        $games = GameOrder::query()->where('status', 'topped_up')->whereBetween('topped_up_at', [$from, $to])->selectRaw('count(*) as n, coalesce(sum(price), 0) as t')->first();
+        $rows->push(['key' => 'gaming', 'name' => 'Gaming', 'orders' => (int) $games->n, 'total' => round((float) $games->t, 2)]);
+
+        return $rows->values();
     }
 
     /** Day by day, to find where a month-end mismatch is (spec ch 25). */

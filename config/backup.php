@@ -15,6 +15,9 @@ return [
 
     'mysqldump_path' => env('MYSQLDUMP_PATH', 'mysqldump'),
 
+    // The mysql client, used by the monthly restore test to load the newest backup into a scratch database.
+    'mysql_path' => env('MYSQL_PATH', 'mysql'),
+
     // Tables that must appear in a backup for it to count as valid.
     'required_tables' => ['users', 'medicines', 'companies', 'activity_logs'],
 ];

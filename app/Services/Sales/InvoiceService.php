@@ -8,6 +8,7 @@ use App\Models\Invoice;
 use App\Models\InvoiceLine;
 use App\Models\Medicine;
 use App\Models\OfferProduct;
+use App\Models\ProductRequest;
 use App\Models\SaleReturn;
 use App\Models\Setting;
 use App\Models\User;
@@ -599,6 +600,17 @@ class InvoiceService
                 'subtotal' => $totals['subtotal'], 'discount_total' => $totals['discount'], 'total' => $total,
             ]);
 
+            // Goods brought from outside never touched our stock: they are what someone asked for and we did not have (spec ch 06), so they join that list.
+            foreach ($invoice->lines()->where('is_outside', true)->whereNull('removed_at')->with('medicine')->get() as $line) {
+                // Only what we really did not have enough of: a loss-priced line sold outside the stock by the offline counter was in stock.
+                if ($this->stock->onHand($line->medicine) + 0.00001 >= (float) $line->quantity * self::fraction($line->medicine, $line->unit)) {
+                    continue;
+                }
+
+                $name = mb_substr(trim($line->medicine->brand_name.' '.$line->medicine->strength), 0, 120);
+                ProductRequest::create(['query' => $name, 'normalized' => ProductRequest::normalize($name), 'note' => 'Brought from outside', 'source' => 'counter', 'sector' => 'medicine', 'user_id' => null]);
+            }
+
             return $invoice->fresh();
         });
 
@@ -1003,7 +1015,7 @@ class InvoiceService
         if ($percent > $limit) {
             app(ApprovalService::class)->noteAttempt($by, "asked for {$percent}% (limit {$limit}%)");
 
-            throw new StockException("A discount above {$limit}% needs the admin.");
+            throw new StockException(__('A discount above {limit}% needs the admin.', ['limit' => rtrim(rtrim(number_format($limit, 2, '.', ''), '0'), '.')]));
         }
     }
 
@@ -1016,8 +1028,15 @@ class InvoiceService
     {
         // The year is part of the number (spec ch 22) and counter and online share one sequence, so numbers never collide.
         $prefix = 'M'.now()->year.'-';
-        $last = Invoice::where('number', 'like', $prefix.'%')->orderByDesc('number')->lockForUpdate()->value('number');
+
+        // Only the plain numbered ones count: a number with letters in it (an old import, a hand-made one) must not reset the count to 1.
+        $last = Invoice::where('number', 'like', $prefix.'0%')->orderByDesc('number')->lockForUpdate()->value('number');
         $n = $last ? ((int) substr($last, strlen($prefix))) + 1 : 1;
+
+        // And never hand out one that is already taken, whatever the shape of the others.
+        while (Invoice::where('number', $prefix.str_pad((string) $n, 6, '0', STR_PAD_LEFT))->exists()) {
+            $n++;
+        }
 
         return $prefix.str_pad((string) $n, 6, '0', STR_PAD_LEFT);
     }

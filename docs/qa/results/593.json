@@ -1,11 +1,15 @@
 {
   "n": 593,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
   "checks": [
     {
       "ok": true,
-      "text": "A counter page that keeps working without internet"
+      "text": "Nothing was lost while the connection was down: the sale waited on the device and was sent when the connection returned"
+    },
+    {
+      "ok": true,
+      "text": "It was sent once, not twice"
     }
   ],
   "shots": [
@@ -14,10 +18,14 @@
       "caption": "The counter without internet",
       "role": "admin",
       "url": "/admin/counter/offline"
+    },
+    {
+      "file": "f593_2.jpg",
+      "caption": "The sale made offline, sent after reconnecting",
+      "role": "admin",
+      "url": "/admin/counter/offline"
     }
   ],
-  "notes": [
-    "The checklist marks this as partly built. A real internet drop was not reproduced."
-  ],
-  "did": "Opened the counter without internet."
+  "notes": [],
+  "did": "Cut the connection in the browser, made a sale, and reconnected."
 }

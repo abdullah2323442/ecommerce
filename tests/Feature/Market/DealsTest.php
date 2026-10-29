@@ -274,6 +274,6 @@ class DealsTest extends TestCase
 
     public function test_a_guest_cannot_open_the_deals_page(): void
     {
-        $this->get('/wholesale/sell/deals')->assertRedirect('/login');
+        $this->get('/wholesale/sell/deals')->assertRedirect('/');
     }
 }

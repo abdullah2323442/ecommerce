@@ -1,9 +1,13 @@
 import PublicLayout from '@/layouts/public-layout';
 import { useI18n } from '@/lib/i18n';
-import { Head, Link } from '@inertiajs/react';
+import InputError from '@/components/input-error';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Head, Link, useForm } from '@inertiajs/react';
 
 interface Props {
     business: string;
+    logo: string | null;
     grade: string | null;
     tierTask: { tier: string; target: number; gap: number } | null;
     trend: { month: string; total: number; orders: number }[];
@@ -12,7 +16,7 @@ interface Props {
 }
 
 /** The bulk buyer's own page. Only finished months are counted, so nothing here moves while the month is running. */
-export default function Account({ business, grade, tierTask, trend, history, terms }: Props) {
+export default function Account({ business, logo, grade, tierTask, trend, history, terms }: Props) {
     const { t, money, num, dateTime, date } = useI18n();
     const top = Math.max(1, ...trend.map((m) => m.total));
     const monthName = (ym: string) => date(`${ym}-15T12:00:00`, { month: 'short', year: '2-digit' });
@@ -22,9 +26,12 @@ export default function Account({ business, grade, tierTask, trend, history, ter
             <Head title={t('Your account')} />
             <div className="mx-auto max-w-3xl space-y-8">
                 <header className="flex flex-wrap items-baseline justify-between gap-3">
-                    <div>
-                        <h1 className="font-display text-3xl font-extrabold">{business}</h1>
-                        <p className="text-[var(--pt-muted)]">{t('Your account')}</p>
+                    <div className="flex items-center gap-3">
+                        {logo && <img src={logo} alt="" className="size-14 rounded-md border object-contain" />}
+                        <div>
+                            <h1 className="font-display text-3xl font-extrabold">{business}</h1>
+                            <p className="text-[var(--pt-muted)]">{t('Your account')}</p>
+                        </div>
                     </div>
                     <div className="flex gap-4">
                         <Link href="/wholesale/sell" className="text-sm font-semibold underline underline-offset-4">
@@ -102,7 +109,57 @@ export default function Account({ business, grade, tierTask, trend, history, ter
                         </ul>
                     )}
                 </section>
+
+                <Branding business={business} hasLogo={logo !== null} />
             </div>
         </PublicLayout>
+    );
+}
+
+/** The shop's own name and logo: they head every page of this section, so it reads as the shop's own dashboard. */
+function Branding({ business, hasLogo }: { business: string; hasLogo: boolean }) {
+    const { t } = useI18n();
+    const form = useForm<{ business_name: string; logo: File | null; remove_logo: boolean }>({ business_name: business, logo: null, remove_logo: false });
+
+    return (
+        <section aria-labelledby="branding-h" className="space-y-3">
+            <h2 id="branding-h" className="font-display text-xl font-extrabold">
+                {t('Your name and logo')}
+            </h2>
+            <p className="text-sm text-[var(--pt-muted)]">{t('They show at the top of your pages here, so this feels like your own dashboard.')}</p>
+            <form
+                onSubmit={(e) => {
+                    e.preventDefault();
+                    form.post('/wholesale/account/branding', { forceFormData: true, preserveScroll: true, onSuccess: () => form.setData('logo', null) });
+                }}
+                className="grid gap-3 sm:max-w-md"
+            >
+                <div className="grid gap-1">
+                    <label htmlFor="brand-name" className="text-sm font-medium">
+                        {t('Business name')}
+                    </label>
+                    <Input id="brand-name" value={form.data.business_name} onChange={(e) => form.setData('business_name', e.target.value)} maxLength={150} required />
+                    <InputError message={form.errors.business_name} />
+                </div>
+                <div className="grid gap-1">
+                    <label htmlFor="brand-logo" className="text-sm font-medium">
+                        {t('Logo')}
+                    </label>
+                    <Input id="brand-logo" type="file" accept="image/png,image/jpeg,image/webp" onChange={(e) => form.setData('logo', e.target.files?.[0] ?? null)} />
+                    <InputError message={form.errors.logo} />
+                </div>
+                {hasLogo && (
+                    <label className="flex items-center gap-2 text-sm">
+                        <input type="checkbox" checked={form.data.remove_logo} onChange={(e) => form.setData('remove_logo', e.target.checked)} />
+                        {t('Remove my logo')}
+                    </label>
+                )}
+                <div>
+                    <Button type="submit" disabled={form.processing}>
+                        {t('Save')}
+                    </Button>
+                </div>
+            </form>
+        </section>
     );
 }

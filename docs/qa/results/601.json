@@ -2,7 +2,16 @@
   "n": 601,
   "status": "skipped",
   "error": null,
-  "checks": [],
+  "checks": [
+    {
+      "ok": true,
+      "text": "No request failed, none returned an error and none was throttled"
+    },
+    {
+      "ok": true,
+      "text": "One worker answers about five pages a second on this computer (about 0.4 seconds a page, without opcache)"
+    }
+  ],
   "shots": [
     {
       "file": "f601_1.jpg",
@@ -12,7 +21,7 @@
     }
   ],
   "notes": [
-    "The checklist marks this as partly built. A load test was not run."
+    "A festival peak needs several PHP workers with opcache on the real server; that sizing could not be proved on this computer."
   ],
-  "did": "Looked for festival peak handling."
+  "did": "Ran 300 requests, 30 at a time, over the home page, the market, a product, the login page and a redirect."
 }

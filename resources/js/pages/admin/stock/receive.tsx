@@ -1,3 +1,4 @@
+import CameraScan from '@/components/camera-scan';
 import CompanyAdder from '@/components/admin/company-adder';
 import Flash from '@/components/admin/flash';
 import MedicinePicker, { type PickedMedicine } from '@/components/admin/medicine-picker';
@@ -98,9 +99,9 @@ export default function StockReceive({ sources, today, draft }: { sources: Sourc
     };
 
     /** A scanner types the code and presses Enter. A known code adds a line, or one more unit to the line already there. */
-    const scan = async (e: { preventDefault: () => void }) => {
+    const scan = async (e: { preventDefault: () => void }, fromCamera?: string) => {
         e.preventDefault();
-        const code = scanCode.trim();
+        const code = (fromCamera ?? scanCode).trim();
         if (!code) return;
         const res = await fetch(`/admin/stock/barcodes/lookup?code=${encodeURIComponent(code)}`, { headers: { Accept: 'application/json' } });
         setScanCode('');
@@ -265,6 +266,9 @@ export default function StockReceive({ sources, today, draft }: { sources: Sourc
                                     placeholder={t('Point the scanner here')}
                                     className="mt-1 max-w-sm"
                                 />
+                                <div className="mt-2">
+                                    <CameraScan onCode={(code) => void scan({ preventDefault: () => {} }, code)} />
+                                </div>
                             </div>
                             {unknownCode && (
                                 <div role="alert" className="mt-3 space-y-2 rounded-md border border-warning/40 bg-warning/10 p-3 text-sm">

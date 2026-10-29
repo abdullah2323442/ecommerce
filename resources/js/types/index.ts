@@ -77,7 +77,8 @@ export interface SharedData {
     sellerBrand: string | null;
     canCart: boolean;
     locale: 'bn' | 'en';
-    translations: Record<string, string>;
+    translations: Record<string, string> | null;
+    dictKey: string;
     [key: string]: unknown;
 }
 

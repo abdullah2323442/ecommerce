@@ -1,11 +1,15 @@
 {
   "n": 599,
-  "status": "skipped",
+  "status": "pass",
   "error": null,
   "checks": [
     {
       "ok": true,
-      "text": "Uploads are limited in size"
+      "text": "A 4.4 MB photo of 4000 x 3000 pixels became 314 KB at 1600 x 1200 pixels, 93 percent smaller"
+    },
+    {
+      "ok": true,
+      "text": "Pictures people upload are made smaller on the way in; a PDF is stored as it came"
     }
   ],
   "shots": [
@@ -16,8 +20,6 @@
       "url": "/admin/site"
     }
   ],
-  "notes": [
-    "Automatic compression of uploaded images was not measured."
-  ],
-  "did": "Looked for image compression."
+  "notes": [],
+  "did": "Put a 4000 x 3000 photo through the shop's own image compressor."
 }

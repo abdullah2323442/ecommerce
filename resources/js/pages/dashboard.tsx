@@ -37,7 +37,7 @@ interface Props {
         customers: { total: number; by_type: Record<string, number>; suspended: number; without_tier: number };
         medicines: { total: number; local_image: number; remote_image: number; no_image: number; flagged: number };
         security: { suspicious_7d: number; failed_24h: number; blocked_ips: number };
-        backup: { latest_at: string | null; disk: string };
+        backup: { latest_at: string | null; disk: string; restore: { at: string; ok: boolean; tables: number } | null };
     };
     recent: { id: number; action: string; actor: string | null; at: string }[];
     commerce: Commerce;
@@ -285,6 +285,13 @@ export default function Dashboard({ alerts, stats, recent, commerce }: Props) {
                                     <dt className="text-xs opacity-65">{t('Last backup')}</dt>
                                     <dd className="font-medium">{timeAgo(backup.latest_at)}</dd>
                                     <dd className="text-xs opacity-60">{backup.disk === 'local' ? t('Stored on this server') : t('Stored on {disk}', { disk: backup.disk })}</dd>
+                                    <dd className="mt-1 text-xs opacity-80">
+                                        {backup.restore === null
+                                            ? t('Restore test: not run yet')
+                                            : backup.restore.ok
+                                              ? t('Restore test passed {when}, {n} tables', { when: timeAgo(backup.restore.at), n: num(backup.restore.tables) })
+                                              : t('Restore test failed {when}', { when: timeAgo(backup.restore.at) })}
+                                    </dd>
                                 </div>
                             </dl>
                         </Card>

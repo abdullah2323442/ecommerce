@@ -271,4 +271,29 @@ class SellerReportsTest extends TestCase
         $buyer = User::factory()->create(['account_type' => AccountType::Public]);
         $this->actingAs($buyer)->get('/market')->assertInertia(fn ($p) => $p->where('sellerBrand', null));
     }
+
+    public function test_returns_are_counted_per_month_for_each_business_and_a_business_can_be_named(): void
+    {
+        $clothing = Sector::create(['slug' => 'clothing', 'name' => 'Clothing', 'unit' => 'piece']);
+        $seller = $this->seller('Rahim Traders');
+        $chair = $this->listing($seller, 'Teak chair');
+        $shirt = Listing::create(['seller_id' => $seller->id, 'sector_id' => $clothing->id, 'title' => 'Shirt', 'public_price' => 500, 'status' => 'published', 'commission_kind' => 'percent', 'commission_value' => 2, 'approved_at' => now()]);
+
+        $back = $this->order($chair, 'returned', '2026-10-05 12:00:00');
+        $back->forceFill(['returned_at' => Carbon::parse('2026-10-09 10:00:00')])->save();
+        $this->order($shirt, 'delivered', '2026-10-06 12:00:00');
+
+        $october = fn (array $months) => collect($months)->firstWhere('month', '2026-10');
+        $this->assertSame(1, $october($this->reports->months($seller, 3))['returns']);
+        $this->assertSame(1, $october($this->reports->months($seller, 3, $this->wood->id))['returns']);
+        $this->assertSame(0, $october($this->reports->months($seller, 3, $clothing->id))['returns'], 'The shirts business had nothing come back.');
+
+        $this->actingAs($seller)->put('/wholesale/sell/business-name', ['business' => 'wood', 'name' => 'Rahim Furniture'])->assertSessionHasNoErrors();
+        $this->actingAs($seller)->get('/wholesale/sell/reports')->assertInertia(fn (Assert $p) => $p
+            ->where('businesses.1.name', 'Rahim Furniture')->where('businesses.1.sector', 'Wood'));
+
+        $this->actingAs($seller)->put('/wholesale/sell/business-name', ['business' => 'wood', 'name' => ''])->assertSessionHasNoErrors();
+        $this->assertNull($seller->fresh()->business_names);
+        $this->actingAs($seller)->put('/wholesale/sell/business-name', ['business' => 'food', 'name' => 'Nope'])->assertRedirect();
+    }
 }

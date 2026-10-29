@@ -284,4 +284,49 @@ class ReviewsAndPhotosTest extends TestCase
         $this->assertSame('market/x.jpg', $this->chair->fresh()->photo_path);
         $this->assertSame(0, ListingPhoto::count());
     }
+
+    public function test_the_seller_adds_a_video_and_the_buyer_plays_it_on_the_product_page(): void
+    {
+        $this->actingAs($this->seller)->post("/wholesale/sell/{$this->chair->id}/video", ['video' => UploadedFile::fake()->create('chair.mp4', 2000, 'video/mp4')])->assertSessionHasNoErrors();
+        $path = $this->chair->fresh()->video_path;
+
+        $this->assertNotNull($path);
+        Storage::assertExists($path);
+        auth()->logout();
+        $this->get(route('market.video', $this->chair))->assertOk();
+        $this->get("/market/{$this->chair->id}")->assertInertia(fn (Assert $p) => $p->where('video', route('market.video', $this->chair)));
+    }
+
+    public function test_only_a_short_video_file_is_taken_and_a_new_one_replaces_the_old(): void
+    {
+        $this->actingAs($this->seller)->post("/wholesale/sell/{$this->chair->id}/video", ['video' => UploadedFile::fake()->create('big.mp4', 25000, 'video/mp4')])->assertSessionHasErrors('video');
+        $this->actingAs($this->seller)->post("/wholesale/sell/{$this->chair->id}/video", ['video' => UploadedFile::fake()->create('a.exe', 100, 'application/octet-stream')])->assertSessionHasErrors('video');
+        $this->assertNull($this->chair->fresh()->video_path);
+
+        $this->actingAs($this->seller)->post("/wholesale/sell/{$this->chair->id}/video", ['video' => UploadedFile::fake()->create('one.mp4', 500, 'video/mp4')]);
+        $first = $this->chair->fresh()->video_path;
+        $this->actingAs($this->seller)->post("/wholesale/sell/{$this->chair->id}/video", ['video' => UploadedFile::fake()->create('two.webm', 500, 'video/webm')]);
+
+        Storage::assertMissing($first);
+        Storage::assertExists($this->chair->fresh()->video_path);
+    }
+
+    public function test_the_video_is_only_served_while_the_product_is_shown_and_only_its_seller_removes_it(): void
+    {
+        $this->actingAs($this->seller)->post("/wholesale/sell/{$this->chair->id}/video", ['video' => UploadedFile::fake()->create('chair.mp4', 500, 'video/mp4')]);
+        $other = User::factory()->create(['account_type' => AccountType::Wholesaler, 'categories' => ['wood']])->fresh();
+
+        $this->actingAs($other)->delete("/wholesale/sell/{$this->chair->id}/video")->assertRedirect('/');
+        $this->assertNotNull($this->chair->fresh()->video_path);
+
+        $this->chair->update(['status' => 'paused']);
+        auth()->logout();
+        $this->get(route('market.video', $this->chair))->assertRedirect('/');
+        $this->actingAs($this->seller)->get(route('market.video', $this->chair))->assertOk();
+
+        $path = $this->chair->fresh()->video_path;
+        $this->actingAs($this->seller)->delete("/wholesale/sell/{$this->chair->id}/video")->assertSessionHasNoErrors();
+        Storage::assertMissing($path);
+        $this->assertNull($this->chair->fresh()->video_path);
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\ActivityLog;
 use App\Models\Medicine;
+use App\Models\MedicineBarcode;
 use App\Models\QuantityStep;
 use App\Models\User;
 use App\Services\Audit\ActivityLogger;
@@ -40,11 +41,70 @@ class MedicineController extends Controller
             'medicine' => MedicinePresenter::one($medicine->load('company:id,name,logo_url,logo_path')),
             'fields' => $medicine->only([...self::PACKING, ...self::PRICES]),
             'units' => PublicCart::unitsFor($medicine),
+            'active' => (bool) $medicine->is_active,
+            'barcodes' => MedicineBarcode::where('medicine_id', $medicine->id)->orderBy('id')->get(['id', 'code']),
             'steps' => QuantityStep::where('medicine_id', $medicine->id)->orderBy('unit')->orderBy('min_qty')->get(['unit', 'min_qty', 'kind', 'value']),
             'history' => ActivityLog::where('subject_type', $medicine->getMorphClass())->where('subject_id', $medicine->id)
                 ->whereIn('action', ['medicine.units_changed', 'medicine.mrp_changed'])->latest('id')->limit(10)->get()
                 ->map(fn ($l) => ['action' => $l->action, 'changes' => $l->changes, 'at' => $l->created_at->toDateTimeString(), 'by' => User::whereKey($l->actor_id)->value('name')]),
         ]);
+    }
+
+    /** The medicines that are switched off, so one can be found and switched on again (spec ch 11: a discontinued or renamed medicine is marked inactive). */
+    public function inactive(Request $request): Response
+    {
+        $this->authorize('manage-stock');
+        $q = trim((string) $request->query('q', ''));
+
+        $rows = Medicine::query()->with('company:id,name')->where('is_active', false)
+            ->when($q !== '', fn ($query) => $query->where(fn ($w) => $w->where('brand_name', 'like', '%'.$q.'%')->orWhere('generic_name', 'like', '%'.$q.'%')))
+            ->orderBy('brand_name')->paginate(30)->withQueryString()
+            ->through(fn (Medicine $m) => ['id' => $m->id, 'name' => $m->brand_name, 'strength' => $m->strength, 'company' => $m->company?->name]);
+
+        return Inertia::render('admin/stock/inactive', ['rows' => $rows, 'q' => $q]);
+    }
+
+    /** Switch a medicine off or on. Off: it is not offered for new orders and stays in every old memo and report. */
+    public function active(Request $request, Medicine $medicine): RedirectResponse
+    {
+        $this->authorize('manage-stock');
+        $on = (bool) $request->validate(['active' => ['required', 'boolean']])['active'];
+
+        if ((bool) $medicine->is_active === $on) {
+            return back()->with('status', __('Nothing changed.'));
+        }
+
+        $medicine->update(['is_active' => $on]);
+        $this->activity->record($on ? 'medicine.switched_on' : 'medicine.switched_off', $medicine, [], $request->user());
+
+        return back()->with('status', $on ? __('The medicine is on again.') : __('The medicine is switched off. It is not offered for new orders, and old memos keep it.'));
+    }
+
+    /** Another barcode for the same medicine: packs of one brand can carry different codes (spec ch 06). */
+    public function addBarcode(Request $request, Medicine $medicine): RedirectResponse
+    {
+        $this->authorize('manage-stock');
+        $code = MedicineBarcode::clean((string) $request->validate(['code' => ['required', 'string', 'max:64']])['code']);
+
+        if ($code === '' || MedicineBarcode::where('code', $code)->exists()) {
+            throw ValidationException::withMessages(['code' => __('That barcode is already linked.')]);
+        }
+
+        MedicineBarcode::create(['medicine_id' => $medicine->id, 'code' => $code]);
+        $this->activity->record('stock.barcode_linked', $medicine, ['code' => $code], $request->user());
+
+        return back()->with('status', __('Barcode linked.'));
+    }
+
+    public function removeBarcode(Request $request, Medicine $medicine, MedicineBarcode $barcode): RedirectResponse
+    {
+        $this->authorize('manage-stock');
+        abort_unless($barcode->medicine_id === $medicine->id, 404);
+
+        $barcode->delete();
+        $this->activity->record('stock.barcode_removed', $medicine, ['code' => $barcode->code], $request->user());
+
+        return back()->with('status', __('Barcode removed.'));
     }
 
     /** Replace the quantity discount steps of this medicine (spec ch 4). An empty list means no discount. */

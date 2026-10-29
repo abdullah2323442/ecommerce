@@ -9,13 +9,17 @@ use App\Models\MpoBid;
 use App\Models\MpoListing;
 use App\Models\Preorder;
 use App\Models\User;
+use App\Services\Media\ImageCompressor;
 use App\Services\Mpo\MpoService;
 use App\Services\Stock\StockException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
  * The owner's side of the MPO sector (spec ch 10): open accounts (only the owner can), set the territory and companies, read the
@@ -67,7 +71,7 @@ class MpoController extends Controller
 
         return Inertia::render('admin/mpo/show', [
             'mpo' => [
-                'id' => $user->id, 'number' => $user->mpo_number, 'name' => $user->name, 'phone' => $user->phone, 'email' => $user->email, 'area' => $user->area, 'note' => $user->mpo_note,
+                'id' => $user->id, 'number' => $user->mpo_number, 'name' => $user->name, 'phone' => $user->phone, 'email' => $user->email, 'area' => $user->area, 'note' => $user->mpo_note, 'photo' => $user->photo_path ? route('admin.mpo.photo.show', ['user' => $user->id, 'v' => substr(md5($user->photo_path), 0, 8)]) : null,
                 'closed' => $user->isSuspended(), 'failed' => (int) $user->mpo_failed, 'submitted' => MpoListing::where('user_id', $user->id)->count(), 'approved' => MpoListing::where('user_id', $user->id)->where('status', 'approved')->count(),
                 'sold' => Preorder::whereIn('mpo_listing_id', MpoListing::where('user_id', $user->id)->select('id'))->where('status', 'fulfilled')->count(), 'since' => $user->created_at?->toIso8601String(), 'company_ids' => $user->mpoCompanies()->pluck('companies.id'),
                 'products' => $user->mpoProducts()->with('company:id,name')->orderBy('brand_name')->get()->map(fn ($m) => ['id' => $m->id, 'name' => trim($m->brand_name.' '.$m->strength), 'company' => $m->company?->name]),
@@ -76,6 +80,35 @@ class MpoController extends Controller
             'listings' => MpoListing::where('user_id', $user->id)->with('medicine:id,brand_name,strength')->latest('id')->limit(50)->get()
                 ->map(fn (MpoListing $l) => ['id' => $l->id, 'name' => trim($l->medicine->brand_name.' '.$l->medicine->strength), 'status' => $l->status, 'stock_status' => $l->stock_status]),
         ]);
+    }
+
+    /** The MPO's photo, kept for the owner's eyes only (spec ch 10: the relationship is personal and confidential). */
+    public function photo(Request $request, User $user, ImageCompressor $images): RedirectResponse
+    {
+        $this->authorize('manage-accounts');
+        $this->mpo($user);
+        $data = $request->validate(['photo' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:3072'], 'remove' => ['nullable', 'boolean']]);
+
+        if (! $request->hasFile('photo') && ! ($data['remove'] ?? false)) {
+            throw ValidationException::withMessages(['photo' => __('Choose a photo first.')]);
+        }
+
+        if ($user->photo_path) {
+            Storage::delete($user->photo_path);
+        }
+
+        $user->forceFill(['photo_path' => $request->hasFile('photo') ? $images->store($request->file('photo'), 'mpo', 500) : null])->save();
+
+        return back()->with('status', __('Saved.'));
+    }
+
+    public function showPhoto(User $user): StreamedResponse
+    {
+        $this->authorize('manage-accounts');
+        $this->mpo($user);
+        abort_unless($user->photo_path && Storage::exists($user->photo_path), 404);
+
+        return Storage::response($user->photo_path, null, ['Cache-Control' => 'private, max-age=3600']);
     }
 
     public function update(Request $request, User $user): RedirectResponse
